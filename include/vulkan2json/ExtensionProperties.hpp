@@ -1,0 +1,65 @@
+/*
+ * Copyright (c) 2021 Naomasa Matsubayashi
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+#ifndef VULKAN2JSON_EXTENSIONPROPERTIES_HPP
+#define VULKAN2JSON_EXTENSIONPROPERTIES_HPP
+
+#include <cstddef>
+#include <cstdint>
+#include <utility>
+#include <cstring>
+#include <string>
+#include <algorithm>
+#include <nlohmann/json.hpp>
+#include <vulkan/vulkan.hpp>
+#include <vulkan2json/exceptions.hpp>
+
+namespace VULKAN_HPP_NAMESPACE {
+inline void to_json( nlohmann::json &j, const ExtensionProperties &p ) {
+  j = nlohmann::json::object();
+  j[ "extensionName" ] = std::string( p.extensionName.begin(), std::find( p.extensionName.begin(), p.extensionName.end(), '\0' ) );
+  j[ "specVersion" ] = p.specVersion;
+}
+}
+inline void to_json( nlohmann::json &j, const VkExtensionProperties &p ) {
+  to_json( j, VULKAN_HPP_NAMESPACE :: ExtensionProperties ( p ) );
+}
+namespace VULKAN_HPP_NAMESPACE {
+inline void from_json( const nlohmann::json &j, ExtensionProperties &p ) {
+  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ExtensionProperties" );
+  {
+    std::string s = j[ "extensionName" ];
+    if( !p.extensionName.empty() ) {
+      p.extensionName[ p.extensionName.size() - 1u ] = '\0';
+      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.extensionName.size() - 1u ) ), p.extensionName.begin() );
+    }
+  }
+  p.specVersion = j[ "specVersion" ];
+}
+}
+inline void from_json( const nlohmann::json &j, VkExtensionProperties &p ) {
+  VULKAN_HPP_NAMESPACE :: ExtensionProperties temp;
+  from_json( j, temp );
+  p = VkExtensionProperties ( temp );
+}
+
+
+#endif

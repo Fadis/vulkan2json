@@ -23,7 +23,7 @@
 #
 
 
-def get_header():
+def get_header( name ):
   return '''/*
  * Copyright (c) 2021 Naomasa Matsubayashi
  *
@@ -45,8 +45,8 @@ def get_header():
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef VULKAN2JSON_HPP
-#define VULKAN2JSON_HPP
+#ifndef VULKAN2JSON_%s_HPP
+#define VULKAN2JSON_%s_HPP
 
 #include <cstddef>
 #include <cstdint>
@@ -54,25 +54,10 @@ def get_header():
 #include <cstring>
 #include <string>
 #include <algorithm>
-#include <stdexcept>
 #include <nlohmann/json.hpp>
 #include <vulkan/vulkan.hpp>
+#include <vulkan2json/exceptions.hpp>
 
-namespace vulkan2json {
-  struct invalid_enum_value : public std::invalid_argument {
-    using std::invalid_argument::invalid_argument;
-  };
-  struct invalid_flag_value : public std::invalid_argument {
-    using std::invalid_argument::invalid_argument;
-  };
-  struct invalid_array_value : public std::invalid_argument {
-    using std::invalid_argument::invalid_argument;
-  };
-  struct invalid_object_value : public std::invalid_argument {
-    using std::invalid_argument::invalid_argument;
-  };
-}
-namespace VULKAN_HPP_NAMESPACE {
+''' % ( name.upper(), name.upper() )
 
-'''
 

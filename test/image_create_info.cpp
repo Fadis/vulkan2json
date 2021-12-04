@@ -25,7 +25,7 @@
 #include <iostream>
 #include <boost/test/included/unit_test.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/vulkan2json.hpp>
+#include <vulkan2json/ImageCreateInfo.hpp>
 
 BOOST_AUTO_TEST_CASE(ImageCreateInfo) {
   vk::ImageCreateInfo image_create_info;

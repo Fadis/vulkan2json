@@ -228,12 +228,34 @@ class vulkan_struct:
       },
       indent=2
     )
+  def generate_includes( self ):
+    m = ""
+    for v in self.members:
+      if v.member_type == member_type_t.vulkan_struct_type:
+        name = vulkan_class_name( v.value_type )
+        m += "#include <vulkan2json/%s.hpp>\n" % name.get_include_name()
+      elif v.member_type == member_type_t.vulkan_struct:
+        name = vulkan_class_name( v.value_type )
+        m += "#include <vulkan2json/%s.hpp>\n" % name.get_include_name()
+      elif v.member_type == member_type_t.array1d_of_vulkan_struct:
+        array_1d_match = re.match( array_1d_rule, v.value_type )
+        if array_1d_match:
+          name = vulkan_class_name( array_1d_match.group( 1 ) )
+          m += "#include <vulkan2json/%s.hpp>\n" % name.get_include_name()
+      elif v.member_type == member_type_t.array2d_of_vulkan_struct:
+        array_2d_match = re.match( array_2d_rule, v.value_type )
+        if array_2d_match:
+          name = vulkan_class_name( array_2d_match.group( 1 ) )
+          m += "#include <vulkan2json/%s.hpp>\n" % name.get_include_name()
+    return m
+
   def generate_impl( self ):
     name = self.name.get_name()
     cname = self.name.get_cname()
     m = ''
     if len( self.static_defs ):
       m += '#if ' + ' && '.join( [ x for x in self.static_defs.keys() ] ) + '\n'
+    m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % name
     m += "  j = nlohmann::json::object();\n"
     for v in self.members:
@@ -276,16 +298,18 @@ class vulkan_struct:
       if len( v.xor_defs ):
         m += "#endif\n"
     m += "}\n"
-    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % cname
-    m += "  to_json( j, %s ( p ) );\n" % name
     m += "}\n"
+    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % cname
+    m += "  to_json( j, VULKAN_HPP_NAMESPACE :: %s ( p ) );\n" % name
+    m += "}\n"
+    m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % name
     m += "  if( !j.is_object() ) throw vulkan2json::invalid_object_value( \"incompatible value for %s\" );\n" % name
     for v in self.members:
       if len( v.xor_defs ):
         m += "#if " + ' && '.join( [ x for x in v.xor_defs.keys() ] ) + '\n'
       if v.member_type == member_type_t.vulkan_struct:
-        m+= "  p.%s = j[ \"%s\" ];\n" % ( v.name, v.name )
+        m+= "  p.%s = %s ( j[ \"%s\" ] );\n" % ( v.name, v.value_type, v.name )
       elif v.member_type == member_type_t.boolean:
         m+= "  p.%s = j[ \"%s\" ];\n" % ( v.name, v.name )
       elif v.member_type == member_type_t.numeric:
@@ -335,8 +359,9 @@ class vulkan_struct:
       if len( v.xor_defs ):
         m += "#endif\n"
     m += "}\n"
+    m += "}\n"
     m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % cname
-    m += "  %s temp;\n" % name
+    m += "  VULKAN_HPP_NAMESPACE :: %s temp;\n" % name
     m += "  from_json( j, temp );\n"
     m += "  p = %s ( temp );\n" % cname
     m += "}\n"

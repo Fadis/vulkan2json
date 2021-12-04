@@ -39,21 +39,28 @@ class_names = get_class_name( vulkan_header_path )
 handle_names = get_handle_name( vulkan_header_path )
 structs = get_struct( os.path.join( vulkan_header_path, 'vulkan_structs.hpp' ), handle_names, class_names )
 
-out = get_header()
+
+outdir = '../include/vulkan2json'
 
 for v in enums.values():
-  out += v.generate_impl()
-  out += '\n'
+  with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
+    out = get_header( v.name.get_include_name() )
+    out += v.generate_impl()
+    out += get_footer()
+    fd.write( out )
 
 for v in flags.values():
-  out += v.generate_impl()
-  out += '\n'
+  with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
+    out = get_header( v.name.get_include_name() )
+    out += v.generate_impl()
+    out += get_footer()
+    fd.write( out )
 
 for v in structs.values():
-  out += v.generate_impl()
-  out += '\n'
-
-out += get_footer()
-
-print( out )
+  with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
+    out = get_header( v.name.get_include_name() )
+    out += v.generate_includes()
+    out += v.generate_impl()
+    out += get_footer()
+    fd.write( out )
 

@@ -75,6 +75,7 @@ class vulkan_enum:
     name = self.name.get_name()
     cname = self.name.get_cname()
     m = "#ifdef %s\n" % self.ext_def
+    m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % name
     for v in self.to_table:
       if len( v[ 2 ] ):
@@ -83,9 +84,11 @@ class vulkan_enum:
       if len( v[ 2 ] ):
         m += "#endif\n"
     m += "}\n"
-    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % cname
-    m += "  to_json( j, %s ( p ) );\n" % name
     m += "}\n"
+    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % cname
+    m += "  to_json( j, VULKAN_HPP_NAMESPACE :: %s ( p ) );\n" % name
+    m += "}\n"
+    m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % name
     m += "  if( j.is_string() ) {\n"
     for v in self.from_table:
@@ -101,8 +104,9 @@ class vulkan_enum:
     m += "  }\n"
     m += "  throw vulkan2json::invalid_enum_value( \"incompatible value for %s\" );\n" % name
     m += "}\n"
+    m += "}\n"
     m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % cname
-    m += "  %s temp;\n" % name
+    m += "  VULKAN_HPP_NAMESPACE :: %s temp;\n" % name
     m += "  from_json( j, temp );\n"
     m += "  p = %s ( temp );\n" % cname
     m += "}\n"
@@ -112,9 +116,13 @@ class vulkan_enum:
     name = self.name.get_name()
     cname = self.name.get_cname()
     m = "#ifdef %s\n" % self.ext_def
+    m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "void to_json( nlohmann::json &j, const %s &p );\n" % name
+    m += "}\n"
     m += "void to_json( nlohmann::json &j, const %s &p );\n" % cname
+    m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "void from_json( const nlohmann::json &j, %s &p );\n" % name
+    m += "}\n"
     m += "void from_json( const nlohmann::json &j, %s &p );\n" % name
     m += "#endif\n"
     return m;
@@ -167,6 +175,7 @@ class vulkan_flag:
     flagbits = self.name.get_flagbits()
     flags = self.name.get_flags()
     m = "#ifdef %s\n" % self.ext_def
+    m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % flagbits
     for v in self.to_table:
       if len( v[ 2 ] ):
@@ -210,6 +219,7 @@ class vulkan_flag:
     m += "    }\n"
     m += "  }\n"
     m += "  else throw vulkan2json::invalid_flag_value( \"incompatible value for %s\" );\n" % flags
+    m += "}\n"
     m += "}\n"
     m += "#endif\n"
     return m;

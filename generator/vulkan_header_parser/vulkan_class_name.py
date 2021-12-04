@@ -52,16 +52,25 @@ class vulkan_class_name:
       versioned_name = versioned_name[ :-len( self.ext_suffix ) ]
     self.version_suffix = get_version_suffix( versioned_name )
     self.name = versioned_name
+    self.include_name = self.name
     if len( self.version_suffix ):
       self.name = self.name[ :-len( self.version_suffix ) ]
+    if self.name[-8:] == 'FlagBits':
+      self.name = self.name[:-8]
+      self.include_name = self.name + 'Flags'
+    elif self.name[-5:] == 'Flags':
+      self.name = self.name[:-5]
+      self.include_name = self.name + 'Flags'
   def remove_flagbits( self ):
-    self.name = self.name.replace( 'FlagBits', '' )
+    pass
   def get_flagbits( self ):
     return self.name + 'FlagBits' + self.version_suffix + self.ext_suffix
   def get_flags( self ):
     return self.name + 'Flags' + self.version_suffix + self.ext_suffix
   def get_name( self ):
     return self.name + self.version_suffix + self.ext_suffix
+  def get_include_name( self ):
+    return self.include_name + self.version_suffix + self.ext_suffix
   def get_cname( self ):
     return 'Vk' + self.name + self.version_suffix + self.ext_suffix
 

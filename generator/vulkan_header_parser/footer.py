@@ -25,7 +25,6 @@
 
 def get_footer():
   return '''
-}
 
 #endif
 '''
