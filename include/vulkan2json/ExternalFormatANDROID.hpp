@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_USE_PLATFORM_ANDROID_KHR )
 namespace VULKAN_HPP_NAMESPACE {
@@ -48,7 +51,9 @@ inline void to_json( nlohmann::json &j, const VkExternalFormatANDROID &p ) {
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, ExternalFormatANDROID &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ExternalFormatANDROID" );
-  p.externalFormat = j[ "externalFormat" ];
+  if( j.find( "externalFormat" ) != j.end() ) {
+    p.externalFormat = j[ "externalFormat" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkExternalFormatANDROID &p ) {

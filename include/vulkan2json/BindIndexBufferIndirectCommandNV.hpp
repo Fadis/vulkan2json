@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_BINDINDEXBUFFERINDIRECTCOMMANDNV_HPP
 #define VULKAN2JSON_BINDINDEXBUFFERINDIRECTCOMMANDNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/IndexType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const BindIndexBufferIndirectCommandNV &p ) {
-  j = nlohmann::json::object();
-  j[ "size" ] = p.size;
-  j[ "indexType" ] = p.indexType;
+void to_json( nlohmann::json &j, const BindIndexBufferIndirectCommandNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkBindIndexBufferIndirectCommandNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: BindIndexBufferIndirectCommandNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkBindIndexBufferIndirectCommandNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, BindIndexBufferIndirectCommandNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for BindIndexBufferIndirectCommandNV" );
-  p.size = j[ "size" ];
-  p.indexType = IndexType ( j[ "indexType" ] );
+  void from_json( const nlohmann::json &j, BindIndexBufferIndirectCommandNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkBindIndexBufferIndirectCommandNV &p ) {
-  VULKAN_HPP_NAMESPACE :: BindIndexBufferIndirectCommandNV temp;
-  from_json( j, temp );
-  p = VkBindIndexBufferIndirectCommandNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkBindIndexBufferIndirectCommandNV &p );
 
 
 #endif

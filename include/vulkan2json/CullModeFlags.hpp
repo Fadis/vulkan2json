@@ -22,100 +22,17 @@
 #ifndef VULKAN2JSON_CULLMODEFLAGS_HPP
 #define VULKAN2JSON_CULLMODEFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CullModeFlagBits &p ) {
-  if( CullModeFlagBits :: eNone == p ) {
-    j = "None";
-    return;
-  }
-  if( CullModeFlagBits :: eFront == p ) {
-    j = "Front";
-    return;
-  }
-  if( CullModeFlagBits :: eBack == p ) {
-    j = "Back";
-    return;
-  }
+  void to_json( nlohmann::json &j, const CullModeFlagBits &p );
+  void to_json( nlohmann::json &j, const CullModeFlags &p );
+  void from_json( const nlohmann::json &j, CullModeFlagBits &p );
+  void from_json( const nlohmann::json &j, CullModeFlags &p );
 }
-inline void from_json( const nlohmann::json &j, CullModeFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "None" == j.get< std::string >() ) {
-      p = CullModeFlagBits :: eNone ;
-      return;
-    }
-    if( "eNone" == j.get< std::string >() ) {
-      p = CullModeFlagBits :: eNone ;
-      return;
-    }
-    if( "VK_CULL_MODE_NONE" == j.get< std::string >() ) {
-      p = CullModeFlagBits :: eNone ;
-      return;
-    }
-    if( "Front" == j.get< std::string >() ) {
-      p = CullModeFlagBits :: eFront ;
-      return;
-    }
-    if( "eFront" == j.get< std::string >() ) {
-      p = CullModeFlagBits :: eFront ;
-      return;
-    }
-    if( "VK_CULL_MODE_FRONT_BIT" == j.get< std::string >() ) {
-      p = CullModeFlagBits :: eFront ;
-      return;
-    }
-    if( "Back" == j.get< std::string >() ) {
-      p = CullModeFlagBits :: eBack ;
-      return;
-    }
-    if( "eBack" == j.get< std::string >() ) {
-      p = CullModeFlagBits :: eBack ;
-      return;
-    }
-    if( "VK_CULL_MODE_BACK_BIT" == j.get< std::string >() ) {
-      p = CullModeFlagBits :: eBack ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for CullModeFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = CullModeFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for CullModeFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const CullModeFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( CullModeFlagBits ) * 8u; ++n ) {
-    if( p & CullModeFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, CullModeFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, CullModeFlags &p ) {
-  if( j.is_array() ) {
-    p = CullModeFlags ( 0 );
-    for( auto &e:  j ) {
-      CullModeFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for CullModeFlags" );
-}
-}
-#endif
 
 
 #endif

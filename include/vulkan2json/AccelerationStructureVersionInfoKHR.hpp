@@ -22,38 +22,19 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTUREVERSIONINFOKHR_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTUREVERSIONINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureVersionInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "pVersionData" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pVersionData ) );
+void to_json( nlohmann::json &j, const AccelerationStructureVersionInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAccelerationStructureVersionInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AccelerationStructureVersionInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAccelerationStructureVersionInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AccelerationStructureVersionInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AccelerationStructureVersionInfoKHR" );
+  void from_json( const nlohmann::json &j, AccelerationStructureVersionInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAccelerationStructureVersionInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: AccelerationStructureVersionInfoKHR temp;
-  from_json( j, temp );
-  p = VkAccelerationStructureVersionInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkAccelerationStructureVersionInfoKHR &p );
 
 
 #endif

@@ -22,42 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINERASTERIZATIONSTATESTREAMCREATEINFOEXT_HPP
 #define VULKAN2JSON_PIPELINERASTERIZATIONSTATESTREAMCREATEINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineRasterizationStateStreamCreateFlagsEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineRasterizationStateStreamCreateInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "rasterizationStream" ] = p.rasterizationStream;
+void to_json( nlohmann::json &j, const PipelineRasterizationStateStreamCreateInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineRasterizationStateStreamCreateInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineRasterizationStateStreamCreateInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineRasterizationStateStreamCreateInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineRasterizationStateStreamCreateInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineRasterizationStateStreamCreateInfoEXT" );
-  p.flags = PipelineRasterizationStateStreamCreateFlagsEXT ( j[ "flags" ] );
-  p.rasterizationStream = j[ "rasterizationStream" ];
+  void from_json( const nlohmann::json &j, PipelineRasterizationStateStreamCreateInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineRasterizationStateStreamCreateInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineRasterizationStateStreamCreateInfoEXT temp;
-  from_json( j, temp );
-  p = VkPipelineRasterizationStateStreamCreateInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineRasterizationStateStreamCreateInfoEXT &p );
 
 
 #endif

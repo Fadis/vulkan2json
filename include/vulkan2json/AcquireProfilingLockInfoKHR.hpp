@@ -22,42 +22,19 @@
 #ifndef VULKAN2JSON_ACQUIREPROFILINGLOCKINFOKHR_HPP
 #define VULKAN2JSON_ACQUIREPROFILINGLOCKINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/AcquireProfilingLockFlagsKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AcquireProfilingLockInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "timeout" ] = p.timeout;
+void to_json( nlohmann::json &j, const AcquireProfilingLockInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAcquireProfilingLockInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AcquireProfilingLockInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAcquireProfilingLockInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AcquireProfilingLockInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AcquireProfilingLockInfoKHR" );
-  p.flags = AcquireProfilingLockFlagsKHR ( j[ "flags" ] );
-  p.timeout = j[ "timeout" ];
+  void from_json( const nlohmann::json &j, AcquireProfilingLockInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAcquireProfilingLockInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: AcquireProfilingLockInfoKHR temp;
-  from_json( j, temp );
-  p = VkAcquireProfilingLockInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkAcquireProfilingLockInfoKHR &p );
 
 
 #endif

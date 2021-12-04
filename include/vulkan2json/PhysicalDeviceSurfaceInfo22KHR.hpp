@@ -22,37 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESURFACEINFO22KHR_HPP
 #define VULKAN2JSON_PHYSICALDEVICESURFACEINFO22KHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceSurfaceInfo2KHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
+void to_json( nlohmann::json &j, const PhysicalDeviceSurfaceInfo2KHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceSurfaceInfo2KHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceSurfaceInfo2KHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceSurfaceInfo2KHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceSurfaceInfo2KHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceSurfaceInfo2KHR" );
+  void from_json( const nlohmann::json &j, PhysicalDeviceSurfaceInfo2KHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceSurfaceInfo2KHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceSurfaceInfo2KHR temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceSurfaceInfo2KHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceSurfaceInfo2KHR &p );
 
 
 #endif

@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const FormatFeatureFlagBits &p ) {
   if( FormatFeatureFlagBits :: eSampledImage == p ) {
@@ -119,13 +120,13 @@ inline void to_json( nlohmann::json &j, const FormatFeatureFlagBits &p ) {
     j = "SampledImageFilterCubicIMG";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( FormatFeatureFlagBits :: eVideoDecodeOutputKHR == p ) {
     j = "VideoDecodeOutputKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( FormatFeatureFlagBits :: eVideoDecodeDpbKHR == p ) {
     j = "VideoDecodeDpbKHR";
     return;
@@ -143,13 +144,13 @@ inline void to_json( nlohmann::json &j, const FormatFeatureFlagBits &p ) {
     j = "FragmentShadingRateAttachmentKHR";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( FormatFeatureFlagBits :: eVideoEncodeInputKHR == p ) {
     j = "VideoEncodeInputKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( FormatFeatureFlagBits :: eVideoEncodeDpbKHR == p ) {
     j = "VideoEncodeDpbKHR";
     return;
@@ -434,37 +435,37 @@ inline void from_json( const nlohmann::json &j, FormatFeatureFlagBits &p ) {
       p = FormatFeatureFlagBits :: eSampledImageFilterCubicIMG ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeOutputKHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoDecodeOutputKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeOutputKHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoDecodeOutputKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_FORMAT_FEATURE_VIDEO_DECODE_OUTPUT_BIT_KHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoDecodeOutputKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeDpbKHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoDecodeDpbKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeDpbKHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoDecodeDpbKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_FORMAT_FEATURE_VIDEO_DECODE_DPB_BIT_KHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoDecodeDpbKHR ;
       return;
@@ -506,37 +507,37 @@ inline void from_json( const nlohmann::json &j, FormatFeatureFlagBits &p ) {
       p = FormatFeatureFlagBits :: eFragmentShadingRateAttachmentKHR ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeInputKHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoEncodeInputKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeInputKHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoEncodeInputKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_FORMAT_FEATURE_VIDEO_ENCODE_INPUT_BIT_KHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoEncodeInputKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeDpbKHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoEncodeDpbKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeDpbKHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoEncodeDpbKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_FORMAT_FEATURE_VIDEO_ENCODE_DPB_BIT_KHR" == j.get< std::string >() ) {
       p = FormatFeatureFlagBits :: eVideoEncodeDpbKHR ;
       return;
@@ -643,7 +644,6 @@ inline void from_json( const nlohmann::json &j, FormatFeatureFlags &p ) {
   else throw vulkan2json::invalid_flag_value( "incompatible value for FormatFeatureFlags" );
 }
 }
-#endif
 
 
 #endif

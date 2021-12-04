@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_SPECIALIZATIONINFO_HPP
 #define VULKAN2JSON_SPECIALIZATIONINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SpecializationInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "mapEntryCount" ] = p.mapEntryCount;
-  j[ "pMapEntries" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pMapEntries ) );
-  j[ "dataSize" ] = p.dataSize;
-  j[ "pData" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pData ) );
+void to_json( nlohmann::json &j, const SpecializationInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSpecializationInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SpecializationInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSpecializationInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SpecializationInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SpecializationInfo" );
-  p.mapEntryCount = j[ "mapEntryCount" ];
-  p.dataSize = j[ "dataSize" ];
+  void from_json( const nlohmann::json &j, SpecializationInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSpecializationInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: SpecializationInfo temp;
-  from_json( j, temp );
-  p = VkSpecializationInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkSpecializationInfo &p );
 
 
 #endif

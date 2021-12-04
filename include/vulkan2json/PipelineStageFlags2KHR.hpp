@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_SYNCHRONIZATION_2_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const PipelineStageFlagBits2KHR &p ) {
   if( PipelineStageFlagBits2KHR :: eNone == p ) {
@@ -135,13 +136,13 @@ inline void to_json( nlohmann::json &j, const PipelineStageFlagBits2KHR &p ) {
     j = "PreRasterizationShaders";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( PipelineStageFlagBits2KHR :: eVideoDecode == p ) {
     j = "VideoDecode";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( PipelineStageFlagBits2KHR :: eVideoEncode == p ) {
     j = "VideoEncode";
     return;
@@ -502,37 +503,37 @@ inline void from_json( const nlohmann::json &j, PipelineStageFlagBits2KHR &p ) {
       p = PipelineStageFlagBits2KHR :: ePreRasterizationShaders ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecode" == j.get< std::string >() ) {
       p = PipelineStageFlagBits2KHR :: eVideoDecode ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecode" == j.get< std::string >() ) {
       p = PipelineStageFlagBits2KHR :: eVideoDecode ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_PIPELINE_STAGE_2_VIDEO_DECODE_BIT_KHR" == j.get< std::string >() ) {
       p = PipelineStageFlagBits2KHR :: eVideoDecode ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncode" == j.get< std::string >() ) {
       p = PipelineStageFlagBits2KHR :: eVideoEncode ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncode" == j.get< std::string >() ) {
       p = PipelineStageFlagBits2KHR :: eVideoEncode ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_PIPELINE_STAGE_2_VIDEO_ENCODE_BIT_KHR" == j.get< std::string >() ) {
       p = PipelineStageFlagBits2KHR :: eVideoEncode ;
       return;
@@ -723,7 +724,6 @@ inline void from_json( const nlohmann::json &j, PipelineStageFlags2KHR &p ) {
   else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineStageFlags2KHR" );
 }
 }
-#endif
 
 
 #endif

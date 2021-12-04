@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEFEATURES22_HPP
 #define VULKAN2JSON_PHYSICALDEVICEFEATURES22_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PhysicalDeviceFeatures.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceFeatures2 &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "features" ] = p.features;
+void to_json( nlohmann::json &j, const PhysicalDeviceFeatures2 &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceFeatures2 &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceFeatures2 ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceFeatures2 &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceFeatures2 &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceFeatures2" );
-  p.features = PhysicalDeviceFeatures ( j[ "features" ] );
+  void from_json( const nlohmann::json &j, PhysicalDeviceFeatures2 &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceFeatures2 &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceFeatures2 temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceFeatures2 ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceFeatures2 &p );
 
 
 #endif

@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_PIPELINETESSELLATIONSTATECREATEFLAGS_HPP
 #define VULKAN2JSON_PIPELINETESSELLATIONSTATECREATEFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineTessellationStateCreateFlagBits &p ) {
+  void to_json( nlohmann::json &j, const PipelineTessellationStateCreateFlagBits &p );
+  void to_json( nlohmann::json &j, const PipelineTessellationStateCreateFlags &p );
+  void from_json( const nlohmann::json &j, PipelineTessellationStateCreateFlagBits &p );
+  void from_json( const nlohmann::json &j, PipelineTessellationStateCreateFlags &p );
 }
-inline void from_json( const nlohmann::json &j, PipelineTessellationStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineTessellationStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineTessellationStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineTessellationStateCreateFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const PipelineTessellationStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineTessellationStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineTessellationStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineTessellationStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, PipelineTessellationStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineTessellationStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineTessellationStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineTessellationStateCreateFlags" );
-}
-}
-#endif
 
 
 #endif

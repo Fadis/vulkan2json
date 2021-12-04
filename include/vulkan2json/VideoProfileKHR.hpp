@@ -32,6 +32,13 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/VideoCodecOperationFlagsKHR.hpp>
+#include <vulkan2json/VideoChromaSubsamplingFlagsKHR.hpp>
+#include <vulkan2json/VideoComponentBitDepthFlagsKHR.hpp>
+#include <vulkan2json/VideoComponentBitDepthFlagsKHR.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/VideoCodecOperationFlagsKHR.hpp>
 #include <vulkan2json/VideoChromaSubsamplingFlagsKHR.hpp>
@@ -55,10 +62,18 @@ inline void to_json( nlohmann::json &j, const VkVideoProfileKHR &p ) {
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoProfileKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoProfileKHR" );
-  p.videoCodecOperation = VideoCodecOperationFlagBitsKHR ( j[ "videoCodecOperation" ] );
-  p.chromaSubsampling = VideoChromaSubsamplingFlagsKHR ( j[ "chromaSubsampling" ] );
-  p.lumaBitDepth = VideoComponentBitDepthFlagsKHR ( j[ "lumaBitDepth" ] );
-  p.chromaBitDepth = VideoComponentBitDepthFlagsKHR ( j[ "chromaBitDepth" ] );
+  if( j.find( "videoCodecOperation" ) != j.end() ) {
+    p.videoCodecOperation = VideoCodecOperationFlagBitsKHR ( j[ "videoCodecOperation" ] );
+  }
+  if( j.find( "chromaSubsampling" ) != j.end() ) {
+    p.chromaSubsampling = VideoChromaSubsamplingFlagsKHR ( j[ "chromaSubsampling" ] );
+  }
+  if( j.find( "lumaBitDepth" ) != j.end() ) {
+    p.lumaBitDepth = VideoComponentBitDepthFlagsKHR ( j[ "lumaBitDepth" ] );
+  }
+  if( j.find( "chromaBitDepth" ) != j.end() ) {
+    p.chromaBitDepth = VideoComponentBitDepthFlagsKHR ( j[ "chromaBitDepth" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoProfileKHR &p ) {

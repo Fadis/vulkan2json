@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_SWAPCHAINCREATEINFOKHR_HPP
 #define VULKAN2JSON_SWAPCHAINCREATEINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/SwapchainCreateFlagsKHR.hpp>
-#include <vulkan2json/Format.hpp>
-#include <vulkan2json/ColorSpaceKHR.hpp>
-#include <vulkan2json/Extent2D.hpp>
-#include <vulkan2json/ImageUsageFlags.hpp>
-#include <vulkan2json/SharingMode.hpp>
-#include <vulkan2json/SurfaceTransformFlagsKHR.hpp>
-#include <vulkan2json/CompositeAlphaFlagsKHR.hpp>
-#include <vulkan2json/PresentModeKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SwapchainCreateInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "minImageCount" ] = p.minImageCount;
-  j[ "imageFormat" ] = p.imageFormat;
-  j[ "imageColorSpace" ] = p.imageColorSpace;
-  j[ "imageExtent" ] = p.imageExtent;
-  j[ "imageArrayLayers" ] = p.imageArrayLayers;
-  j[ "imageUsage" ] = p.imageUsage;
-  j[ "imageSharingMode" ] = p.imageSharingMode;
-  j[ "queueFamilyIndexCount" ] = p.queueFamilyIndexCount;
-  j[ "pQueueFamilyIndices" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pQueueFamilyIndices ) );
-  j[ "preTransform" ] = p.preTransform;
-  j[ "compositeAlpha" ] = p.compositeAlpha;
-  j[ "presentMode" ] = p.presentMode;
-  j[ "clipped" ] = bool( p.clipped );
+void to_json( nlohmann::json &j, const SwapchainCreateInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSwapchainCreateInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SwapchainCreateInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSwapchainCreateInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SwapchainCreateInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SwapchainCreateInfoKHR" );
-  p.flags = SwapchainCreateFlagsKHR ( j[ "flags" ] );
-  p.minImageCount = j[ "minImageCount" ];
-  p.imageFormat = Format ( j[ "imageFormat" ] );
-  p.imageColorSpace = ColorSpaceKHR ( j[ "imageColorSpace" ] );
-  p.imageExtent = Extent2D ( j[ "imageExtent" ] );
-  p.imageArrayLayers = j[ "imageArrayLayers" ];
-  p.imageUsage = ImageUsageFlags ( j[ "imageUsage" ] );
-  p.imageSharingMode = SharingMode ( j[ "imageSharingMode" ] );
-  p.queueFamilyIndexCount = j[ "queueFamilyIndexCount" ];
-  p.preTransform = SurfaceTransformFlagBitsKHR ( j[ "preTransform" ] );
-  p.compositeAlpha = CompositeAlphaFlagBitsKHR ( j[ "compositeAlpha" ] );
-  p.presentMode = PresentModeKHR ( j[ "presentMode" ] );
-  p.clipped = j[ "clipped" ];
+  void from_json( const nlohmann::json &j, SwapchainCreateInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSwapchainCreateInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: SwapchainCreateInfoKHR temp;
-  from_json( j, temp );
-  p = VkSwapchainCreateInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkSwapchainCreateInfoKHR &p );
 
 
 #endif

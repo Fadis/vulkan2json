@@ -22,36 +22,19 @@
 #ifndef VULKAN2JSON_DISPLAYPLANEPROPERTIESKHR_HPP
 #define VULKAN2JSON_DISPLAYPLANEPROPERTIESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DisplayPlanePropertiesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "currentStackIndex" ] = p.currentStackIndex;
+void to_json( nlohmann::json &j, const DisplayPlanePropertiesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDisplayPlanePropertiesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DisplayPlanePropertiesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDisplayPlanePropertiesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DisplayPlanePropertiesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DisplayPlanePropertiesKHR" );
-  p.currentStackIndex = j[ "currentStackIndex" ];
+  void from_json( const nlohmann::json &j, DisplayPlanePropertiesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDisplayPlanePropertiesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: DisplayPlanePropertiesKHR temp;
-  from_json( j, temp );
-  p = VkDisplayPlanePropertiesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkDisplayPlanePropertiesKHR &p );
 
 
 #endif

@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEWORKGROUPMEMORYEXPLICITLAYOUTFEATURESKHR_HPP
 #define VULKAN2JSON_PHYSICALDEVICEWORKGROUPMEMORYEXPLICITLAYOUTFEATURESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "workgroupMemoryExplicitLayout" ] = bool( p.workgroupMemoryExplicitLayout );
-  j[ "workgroupMemoryExplicitLayoutScalarBlockLayout" ] = bool( p.workgroupMemoryExplicitLayoutScalarBlockLayout );
-  j[ "workgroupMemoryExplicitLayout8BitAccess" ] = bool( p.workgroupMemoryExplicitLayout8BitAccess );
-  j[ "workgroupMemoryExplicitLayout16BitAccess" ] = bool( p.workgroupMemoryExplicitLayout16BitAccess );
+void to_json( nlohmann::json &j, const PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR" );
-  p.workgroupMemoryExplicitLayout = j[ "workgroupMemoryExplicitLayout" ];
-  p.workgroupMemoryExplicitLayoutScalarBlockLayout = j[ "workgroupMemoryExplicitLayoutScalarBlockLayout" ];
-  p.workgroupMemoryExplicitLayout8BitAccess = j[ "workgroupMemoryExplicitLayout8BitAccess" ];
-  p.workgroupMemoryExplicitLayout16BitAccess = j[ "workgroupMemoryExplicitLayout16BitAccess" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR &p );
 
 
 #endif

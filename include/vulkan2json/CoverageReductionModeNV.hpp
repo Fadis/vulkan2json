@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_COVERAGEREDUCTIONMODENV_HPP
 #define VULKAN2JSON_COVERAGEREDUCTIONMODENV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_NV_COVERAGE_REDUCTION_MODE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CoverageReductionModeNV &p ) {
-  if( CoverageReductionModeNV :: eMerge == p ) {
-    j = "Merge";
-    return;
-  }
+void to_json( nlohmann::json &j, const CoverageReductionModeNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkCoverageReductionModeNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: CoverageReductionModeNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkCoverageReductionModeNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, CoverageReductionModeNV &p ) {
-  if( j.is_string() ) {
-    if( "Merge" == j.get< std::string >() ) {
-      p = CoverageReductionModeNV :: eMerge ;
-      return;
-    }
-    if( "eMerge" == j.get< std::string >() ) {
-      p = CoverageReductionModeNV :: eMerge ;
-      return;
-    }
-    if( "VK_COVERAGE_REDUCTION_MODE_MERGE_NV" == j.get< std::string >() ) {
-      p = CoverageReductionModeNV :: eMerge ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for CoverageReductionModeNV" );
-  }
-  if( j.is_number() ) {
-    p = CoverageReductionModeNV ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for CoverageReductionModeNV" );
+void from_json( const nlohmann::json &j, CoverageReductionModeNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkCoverageReductionModeNV &p ) {
-  VULKAN_HPP_NAMESPACE :: CoverageReductionModeNV temp;
-  from_json( j, temp );
-  p = VkCoverageReductionModeNV ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkCoverageReductionModeNV &p );
 
 
 #endif

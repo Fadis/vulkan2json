@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_QUERYPOOLPERFORMANCEQUERYCREATEINFOINTEL_HPP
 #define VULKAN2JSON_QUERYPOOLPERFORMANCEQUERYCREATEINFOINTEL_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/QueryPoolSamplingModeINTEL.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const QueryPoolPerformanceQueryCreateInfoINTEL &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "performanceCountersSampling" ] = p.performanceCountersSampling;
+void to_json( nlohmann::json &j, const QueryPoolPerformanceQueryCreateInfoINTEL &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkQueryPoolPerformanceQueryCreateInfoINTEL &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: QueryPoolPerformanceQueryCreateInfoINTEL ( p ) );
-}
+void to_json( nlohmann::json &j, const VkQueryPoolPerformanceQueryCreateInfoINTEL &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, QueryPoolPerformanceQueryCreateInfoINTEL &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for QueryPoolPerformanceQueryCreateInfoINTEL" );
-  p.performanceCountersSampling = QueryPoolSamplingModeINTEL ( j[ "performanceCountersSampling" ] );
+  void from_json( const nlohmann::json &j, QueryPoolPerformanceQueryCreateInfoINTEL &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkQueryPoolPerformanceQueryCreateInfoINTEL &p ) {
-  VULKAN_HPP_NAMESPACE :: QueryPoolPerformanceQueryCreateInfoINTEL temp;
-  from_json( j, temp );
-  p = VkQueryPoolPerformanceQueryCreateInfoINTEL ( temp );
-}
+void from_json( const nlohmann::json &j, VkQueryPoolPerformanceQueryCreateInfoINTEL &p );
 
 
 #endif

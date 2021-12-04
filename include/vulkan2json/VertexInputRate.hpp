@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_VERTEXINPUTRATE_HPP
 #define VULKAN2JSON_VERTEXINPUTRATE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const VertexInputRate &p ) {
-  if( VertexInputRate :: eVertex == p ) {
-    j = "Vertex";
-    return;
-  }
+void to_json( nlohmann::json &j, const VertexInputRate &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkVertexInputRate &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: VertexInputRate ( p ) );
-}
+void to_json( nlohmann::json &j, const VkVertexInputRate &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, VertexInputRate &p ) {
-  if( j.is_string() ) {
-    if( "Vertex" == j.get< std::string >() ) {
-      p = VertexInputRate :: eVertex ;
-      return;
-    }
-    if( "eVertex" == j.get< std::string >() ) {
-      p = VertexInputRate :: eVertex ;
-      return;
-    }
-    if( "VK_VERTEX_INPUT_RATE_VERTEX" == j.get< std::string >() ) {
-      p = VertexInputRate :: eVertex ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for VertexInputRate" );
-  }
-  if( j.is_number() ) {
-    p = VertexInputRate ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for VertexInputRate" );
+void from_json( const nlohmann::json &j, VertexInputRate &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkVertexInputRate &p ) {
-  VULKAN_HPP_NAMESPACE :: VertexInputRate temp;
-  from_json( j, temp );
-  p = VkVertexInputRate ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkVertexInputRate &p );
 
 
 #endif

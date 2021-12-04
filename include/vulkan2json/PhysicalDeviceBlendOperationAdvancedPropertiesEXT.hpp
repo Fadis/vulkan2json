@@ -22,49 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEBLENDOPERATIONADVANCEDPROPERTIESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICEBLENDOPERATIONADVANCEDPROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceBlendOperationAdvancedPropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "advancedBlendMaxColorAttachments" ] = p.advancedBlendMaxColorAttachments;
-  j[ "advancedBlendIndependentBlend" ] = bool( p.advancedBlendIndependentBlend );
-  j[ "advancedBlendNonPremultipliedSrcColor" ] = bool( p.advancedBlendNonPremultipliedSrcColor );
-  j[ "advancedBlendNonPremultipliedDstColor" ] = bool( p.advancedBlendNonPremultipliedDstColor );
-  j[ "advancedBlendCorrelatedOverlap" ] = bool( p.advancedBlendCorrelatedOverlap );
-  j[ "advancedBlendAllOperations" ] = bool( p.advancedBlendAllOperations );
+void to_json( nlohmann::json &j, const PhysicalDeviceBlendOperationAdvancedPropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceBlendOperationAdvancedPropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceBlendOperationAdvancedPropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceBlendOperationAdvancedPropertiesEXT" );
-  p.advancedBlendMaxColorAttachments = j[ "advancedBlendMaxColorAttachments" ];
-  p.advancedBlendIndependentBlend = j[ "advancedBlendIndependentBlend" ];
-  p.advancedBlendNonPremultipliedSrcColor = j[ "advancedBlendNonPremultipliedSrcColor" ];
-  p.advancedBlendNonPremultipliedDstColor = j[ "advancedBlendNonPremultipliedDstColor" ];
-  p.advancedBlendCorrelatedOverlap = j[ "advancedBlendCorrelatedOverlap" ];
-  p.advancedBlendAllOperations = j[ "advancedBlendAllOperations" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceBlendOperationAdvancedPropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceBlendOperationAdvancedPropertiesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT &p );
 
 
 #endif

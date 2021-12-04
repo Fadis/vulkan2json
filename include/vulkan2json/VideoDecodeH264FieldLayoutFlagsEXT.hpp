@@ -32,16 +32,17 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_VIDEO_DECODE_H264_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoDecodeH264FieldLayoutFlagBitsEXT &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoDecodeH264FieldLayoutFlagBitsEXT :: eVkVideoDecodeH264ProgressivePicturesOnly == p ) {
     j = "VkVideoDecodeH264ProgressivePicturesOnly";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoDecodeH264FieldLayoutFlagBitsEXT :: eLineInterlacedPlane == p ) {
     j = "LineInterlacedPlane";
     return;
@@ -50,37 +51,37 @@ inline void to_json( nlohmann::json &j, const VideoDecodeH264FieldLayoutFlagBits
 }
 inline void from_json( const nlohmann::json &j, VideoDecodeH264FieldLayoutFlagBitsEXT &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VkVideoDecodeH264ProgressivePicturesOnly" == j.get< std::string >() ) {
       p = VideoDecodeH264FieldLayoutFlagBitsEXT :: eVkVideoDecodeH264ProgressivePicturesOnly ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVkVideoDecodeH264ProgressivePicturesOnly" == j.get< std::string >() ) {
       p = VideoDecodeH264FieldLayoutFlagBitsEXT :: eVkVideoDecodeH264ProgressivePicturesOnly ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_DECODE_H264_PROGRESSIVE_PICTURES_ONLY_EXT" == j.get< std::string >() ) {
       p = VideoDecodeH264FieldLayoutFlagBitsEXT :: eVkVideoDecodeH264ProgressivePicturesOnly ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "LineInterlacedPlane" == j.get< std::string >() ) {
       p = VideoDecodeH264FieldLayoutFlagBitsEXT :: eLineInterlacedPlane ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eLineInterlacedPlane" == j.get< std::string >() ) {
       p = VideoDecodeH264FieldLayoutFlagBitsEXT :: eLineInterlacedPlane ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_DECODE_H264_FIELD_LAYOUT_LINE_INTERLACED_PLANE_BIT_EXT" == j.get< std::string >() ) {
       p = VideoDecodeH264FieldLayoutFlagBitsEXT :: eLineInterlacedPlane ;
       return;
@@ -115,7 +116,6 @@ inline void from_json( const nlohmann::json &j, VideoDecodeH264FieldLayoutFlagsE
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoDecodeH264FieldLayoutFlagsEXT" );
 }
 }
-#endif
 
 
 #endif

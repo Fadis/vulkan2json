@@ -22,38 +22,19 @@
 #ifndef VULKAN2JSON_VIEWPORTWSCALINGNV_HPP
 #define VULKAN2JSON_VIEWPORTWSCALINGNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ViewportWScalingNV &p ) {
-  j = nlohmann::json::object();
-  j[ "xcoeff" ] = p.xcoeff;
-  j[ "ycoeff" ] = p.ycoeff;
+void to_json( nlohmann::json &j, const ViewportWScalingNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkViewportWScalingNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ViewportWScalingNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkViewportWScalingNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ViewportWScalingNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ViewportWScalingNV" );
-  p.xcoeff = j[ "xcoeff" ];
-  p.ycoeff = j[ "ycoeff" ];
+  void from_json( const nlohmann::json &j, ViewportWScalingNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkViewportWScalingNV &p ) {
-  VULKAN_HPP_NAMESPACE :: ViewportWScalingNV temp;
-  from_json( j, temp );
-  p = VkViewportWScalingNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkViewportWScalingNV &p );
 
 
 #endif

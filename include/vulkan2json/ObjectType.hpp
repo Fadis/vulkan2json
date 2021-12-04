@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const ObjectType &p ) {
   if( ObjectType :: eUnknown == p ) {
@@ -167,13 +168,13 @@ inline void to_json( nlohmann::json &j, const ObjectType &p ) {
     j = "DebugReportCallbackEXT";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( ObjectType :: eVideoSessionKHR == p ) {
     j = "VideoSessionKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( ObjectType :: eVideoSessionParametersKHR == p ) {
     j = "VideoSessionParametersKHR";
     return;
@@ -627,37 +628,37 @@ inline void from_json( const nlohmann::json &j, ObjectType &p ) {
       p = ObjectType :: eDebugReportCallbackEXT ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoSessionKHR" == j.get< std::string >() ) {
       p = ObjectType :: eVideoSessionKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoSessionKHR" == j.get< std::string >() ) {
       p = ObjectType :: eVideoSessionKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_OBJECT_TYPE_VIDEO_SESSION_KHR" == j.get< std::string >() ) {
       p = ObjectType :: eVideoSessionKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoSessionParametersKHR" == j.get< std::string >() ) {
       p = ObjectType :: eVideoSessionParametersKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoSessionParametersKHR" == j.get< std::string >() ) {
       p = ObjectType :: eVideoSessionParametersKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_OBJECT_TYPE_VIDEO_SESSION_PARAMETERS_KHR" == j.get< std::string >() ) {
       p = ObjectType :: eVideoSessionParametersKHR ;
       return;
@@ -808,7 +809,6 @@ inline void from_json( const nlohmann::json &j, VkObjectType &p ) {
   from_json( j, temp );
   p = VkObjectType ( temp );
 }
-#endif
 
 
 #endif

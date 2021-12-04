@@ -32,10 +32,11 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_VIDEO_ENCODE_H264_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoEncodeH264CreateFlagBitsEXT &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoEncodeH264CreateFlagBitsEXT :: eDefault == p ) {
     j = "Default";
     return;
@@ -44,19 +45,19 @@ inline void to_json( nlohmann::json &j, const VideoEncodeH264CreateFlagBitsEXT &
 }
 inline void from_json( const nlohmann::json &j, VideoEncodeH264CreateFlagBitsEXT &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Default" == j.get< std::string >() ) {
       p = VideoEncodeH264CreateFlagBitsEXT :: eDefault ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eDefault" == j.get< std::string >() ) {
       p = VideoEncodeH264CreateFlagBitsEXT :: eDefault ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_ENCODE_H264_CREATE_DEFAULT_EXT" == j.get< std::string >() ) {
       p = VideoEncodeH264CreateFlagBitsEXT :: eDefault ;
       return;
@@ -91,7 +92,6 @@ inline void from_json( const nlohmann::json &j, VideoEncodeH264CreateFlagsEXT &p
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoEncodeH264CreateFlagsEXT" );
 }
 }
-#endif
 
 
 #endif

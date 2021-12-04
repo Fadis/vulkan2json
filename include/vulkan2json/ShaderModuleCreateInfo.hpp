@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_SHADERMODULECREATEINFO_HPP
 #define VULKAN2JSON_SHADERMODULECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ShaderModuleCreateFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ShaderModuleCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "codeSize" ] = p.codeSize;
-  j[ "pCode" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pCode ) );
+void to_json( nlohmann::json &j, const ShaderModuleCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkShaderModuleCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ShaderModuleCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkShaderModuleCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ShaderModuleCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ShaderModuleCreateInfo" );
-  p.flags = ShaderModuleCreateFlags ( j[ "flags" ] );
-  p.codeSize = j[ "codeSize" ];
+  void from_json( const nlohmann::json &j, ShaderModuleCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkShaderModuleCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: ShaderModuleCreateInfo temp;
-  from_json( j, temp );
-  p = VkShaderModuleCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkShaderModuleCreateInfo &p );
 
 
 #endif

@@ -22,47 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEACCELERATIONSTRUCTUREFEATURESKHR_HPP
 #define VULKAN2JSON_PHYSICALDEVICEACCELERATIONSTRUCTUREFEATURESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceAccelerationStructureFeaturesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "accelerationStructure" ] = bool( p.accelerationStructure );
-  j[ "accelerationStructureCaptureReplay" ] = bool( p.accelerationStructureCaptureReplay );
-  j[ "accelerationStructureIndirectBuild" ] = bool( p.accelerationStructureIndirectBuild );
-  j[ "accelerationStructureHostCommands" ] = bool( p.accelerationStructureHostCommands );
-  j[ "descriptorBindingAccelerationStructureUpdateAfterBind" ] = bool( p.descriptorBindingAccelerationStructureUpdateAfterBind );
+void to_json( nlohmann::json &j, const PhysicalDeviceAccelerationStructureFeaturesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceAccelerationStructureFeaturesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceAccelerationStructureFeaturesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceAccelerationStructureFeaturesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceAccelerationStructureFeaturesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceAccelerationStructureFeaturesKHR" );
-  p.accelerationStructure = j[ "accelerationStructure" ];
-  p.accelerationStructureCaptureReplay = j[ "accelerationStructureCaptureReplay" ];
-  p.accelerationStructureIndirectBuild = j[ "accelerationStructureIndirectBuild" ];
-  p.accelerationStructureHostCommands = j[ "accelerationStructureHostCommands" ];
-  p.descriptorBindingAccelerationStructureUpdateAfterBind = j[ "descriptorBindingAccelerationStructureUpdateAfterBind" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceAccelerationStructureFeaturesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceAccelerationStructureFeaturesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceAccelerationStructureFeaturesKHR temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceAccelerationStructureFeaturesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceAccelerationStructureFeaturesKHR &p );
 
 
 #endif

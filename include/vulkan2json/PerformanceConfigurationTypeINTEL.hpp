@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PERFORMANCECONFIGURATIONTYPEINTEL_HPP
 #define VULKAN2JSON_PERFORMANCECONFIGURATIONTYPEINTEL_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_INTEL_PERFORMANCE_QUERY_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PerformanceConfigurationTypeINTEL &p ) {
+void to_json( nlohmann::json &j, const PerformanceConfigurationTypeINTEL &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPerformanceConfigurationTypeINTEL &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PerformanceConfigurationTypeINTEL ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPerformanceConfigurationTypeINTEL &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PerformanceConfigurationTypeINTEL &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PerformanceConfigurationTypeINTEL" );
-  }
-  if( j.is_number() ) {
-    p = PerformanceConfigurationTypeINTEL ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PerformanceConfigurationTypeINTEL" );
+void from_json( const nlohmann::json &j, PerformanceConfigurationTypeINTEL &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPerformanceConfigurationTypeINTEL &p ) {
-  VULKAN_HPP_NAMESPACE :: PerformanceConfigurationTypeINTEL temp;
-  from_json( j, temp );
-  p = VkPerformanceConfigurationTypeINTEL ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPerformanceConfigurationTypeINTEL &p );
 
 
 #endif

@@ -22,38 +22,19 @@
 #ifndef VULKAN2JSON_SAMPLELOCATIONEXT_HPP
 #define VULKAN2JSON_SAMPLELOCATIONEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SampleLocationEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "x" ] = p.x;
-  j[ "y" ] = p.y;
+void to_json( nlohmann::json &j, const SampleLocationEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSampleLocationEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SampleLocationEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSampleLocationEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SampleLocationEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SampleLocationEXT" );
-  p.x = j[ "x" ];
-  p.y = j[ "y" ];
+  void from_json( const nlohmann::json &j, SampleLocationEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSampleLocationEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: SampleLocationEXT temp;
-  from_json( j, temp );
-  p = VkSampleLocationEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkSampleLocationEXT &p );
 
 
 #endif

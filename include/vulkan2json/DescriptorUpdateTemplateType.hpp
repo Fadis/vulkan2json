@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_DESCRIPTORUPDATETEMPLATETYPE_HPP
 #define VULKAN2JSON_DESCRIPTORUPDATETEMPLATETYPE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DescriptorUpdateTemplateType &p ) {
-  if( DescriptorUpdateTemplateType :: eDescriptorSet == p ) {
-    j = "DescriptorSet";
-    return;
-  }
+void to_json( nlohmann::json &j, const DescriptorUpdateTemplateType &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDescriptorUpdateTemplateType &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DescriptorUpdateTemplateType ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDescriptorUpdateTemplateType &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DescriptorUpdateTemplateType &p ) {
-  if( j.is_string() ) {
-    if( "DescriptorSet" == j.get< std::string >() ) {
-      p = DescriptorUpdateTemplateType :: eDescriptorSet ;
-      return;
-    }
-    if( "eDescriptorSet" == j.get< std::string >() ) {
-      p = DescriptorUpdateTemplateType :: eDescriptorSet ;
-      return;
-    }
-    if( "VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET" == j.get< std::string >() ) {
-      p = DescriptorUpdateTemplateType :: eDescriptorSet ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DescriptorUpdateTemplateType" );
-  }
-  if( j.is_number() ) {
-    p = DescriptorUpdateTemplateType ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DescriptorUpdateTemplateType" );
+void from_json( const nlohmann::json &j, DescriptorUpdateTemplateType &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDescriptorUpdateTemplateType &p ) {
-  VULKAN_HPP_NAMESPACE :: DescriptorUpdateTemplateType temp;
-  from_json( j, temp );
-  p = VkDescriptorUpdateTemplateType ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkDescriptorUpdateTemplateType &p );
 
 
 #endif

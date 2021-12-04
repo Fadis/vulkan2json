@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICE16BITSTORAGEFEATURES_HPP
 #define VULKAN2JSON_PHYSICALDEVICE16BITSTORAGEFEATURES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDevice16BitStorageFeatures &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "storageBuffer16BitAccess" ] = bool( p.storageBuffer16BitAccess );
-  j[ "uniformAndStorageBuffer16BitAccess" ] = bool( p.uniformAndStorageBuffer16BitAccess );
-  j[ "storagePushConstant16" ] = bool( p.storagePushConstant16 );
-  j[ "storageInputOutput16" ] = bool( p.storageInputOutput16 );
+void to_json( nlohmann::json &j, const PhysicalDevice16BitStorageFeatures &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDevice16BitStorageFeatures &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDevice16BitStorageFeatures ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDevice16BitStorageFeatures &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDevice16BitStorageFeatures &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDevice16BitStorageFeatures" );
-  p.storageBuffer16BitAccess = j[ "storageBuffer16BitAccess" ];
-  p.uniformAndStorageBuffer16BitAccess = j[ "uniformAndStorageBuffer16BitAccess" ];
-  p.storagePushConstant16 = j[ "storagePushConstant16" ];
-  p.storageInputOutput16 = j[ "storageInputOutput16" ];
+  void from_json( const nlohmann::json &j, PhysicalDevice16BitStorageFeatures &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDevice16BitStorageFeatures &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDevice16BitStorageFeatures temp;
-  from_json( j, temp );
-  p = VkPhysicalDevice16BitStorageFeatures ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDevice16BitStorageFeatures &p );
 
 
 #endif

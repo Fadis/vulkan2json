@@ -22,53 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICERAYTRACINGPROPERTIESNV_HPP
 #define VULKAN2JSON_PHYSICALDEVICERAYTRACINGPROPERTIESNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceRayTracingPropertiesNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "shaderGroupHandleSize" ] = p.shaderGroupHandleSize;
-  j[ "maxRecursionDepth" ] = p.maxRecursionDepth;
-  j[ "maxShaderGroupStride" ] = p.maxShaderGroupStride;
-  j[ "shaderGroupBaseAlignment" ] = p.shaderGroupBaseAlignment;
-  j[ "maxGeometryCount" ] = p.maxGeometryCount;
-  j[ "maxInstanceCount" ] = p.maxInstanceCount;
-  j[ "maxTriangleCount" ] = p.maxTriangleCount;
-  j[ "maxDescriptorSetAccelerationStructures" ] = p.maxDescriptorSetAccelerationStructures;
+void to_json( nlohmann::json &j, const PhysicalDeviceRayTracingPropertiesNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceRayTracingPropertiesNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceRayTracingPropertiesNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceRayTracingPropertiesNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceRayTracingPropertiesNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceRayTracingPropertiesNV" );
-  p.shaderGroupHandleSize = j[ "shaderGroupHandleSize" ];
-  p.maxRecursionDepth = j[ "maxRecursionDepth" ];
-  p.maxShaderGroupStride = j[ "maxShaderGroupStride" ];
-  p.shaderGroupBaseAlignment = j[ "shaderGroupBaseAlignment" ];
-  p.maxGeometryCount = j[ "maxGeometryCount" ];
-  p.maxInstanceCount = j[ "maxInstanceCount" ];
-  p.maxTriangleCount = j[ "maxTriangleCount" ];
-  p.maxDescriptorSetAccelerationStructures = j[ "maxDescriptorSetAccelerationStructures" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceRayTracingPropertiesNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceRayTracingPropertiesNV &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceRayTracingPropertiesNV temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceRayTracingPropertiesNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceRayTracingPropertiesNV &p );
 
 
 #endif

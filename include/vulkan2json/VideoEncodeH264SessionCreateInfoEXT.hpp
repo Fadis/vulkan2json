@@ -32,6 +32,11 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/VideoEncodeH264CreateFlagsEXT.hpp>
+#include <vulkan2json/Extent2D.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/VideoEncodeH264CreateFlagsEXT.hpp>
 #include <vulkan2json/Extent2D.hpp>
@@ -52,8 +57,12 @@ inline void to_json( nlohmann::json &j, const VkVideoEncodeH264SessionCreateInfo
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoEncodeH264SessionCreateInfoEXT &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoEncodeH264SessionCreateInfoEXT" );
-  p.flags = VideoEncodeH264CreateFlagsEXT ( j[ "flags" ] );
-  p.maxPictureSizeInMbs = Extent2D ( j[ "maxPictureSizeInMbs" ] );
+  if( j.find( "flags" ) != j.end() ) {
+    p.flags = VideoEncodeH264CreateFlagsEXT ( j[ "flags" ] );
+  }
+  if( j.find( "maxPictureSizeInMbs" ) != j.end() ) {
+    p.maxPictureSizeInMbs = Extent2D ( j[ "maxPictureSizeInMbs" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoEncodeH264SessionCreateInfoEXT &p ) {

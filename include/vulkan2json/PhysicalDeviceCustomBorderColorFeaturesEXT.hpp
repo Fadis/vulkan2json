@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICECUSTOMBORDERCOLORFEATURESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICECUSTOMBORDERCOLORFEATURESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceCustomBorderColorFeaturesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "customBorderColors" ] = bool( p.customBorderColors );
-  j[ "customBorderColorWithoutFormat" ] = bool( p.customBorderColorWithoutFormat );
+void to_json( nlohmann::json &j, const PhysicalDeviceCustomBorderColorFeaturesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceCustomBorderColorFeaturesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceCustomBorderColorFeaturesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceCustomBorderColorFeaturesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceCustomBorderColorFeaturesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceCustomBorderColorFeaturesEXT" );
-  p.customBorderColors = j[ "customBorderColors" ];
-  p.customBorderColorWithoutFormat = j[ "customBorderColorWithoutFormat" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceCustomBorderColorFeaturesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceCustomBorderColorFeaturesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceCustomBorderColorFeaturesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceCustomBorderColorFeaturesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceCustomBorderColorFeaturesEXT &p );
 
 
 #endif

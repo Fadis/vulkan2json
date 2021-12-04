@@ -22,89 +22,19 @@
 #ifndef VULKAN2JSON_SHADERGROUPSHADERKHR_HPP
 #define VULKAN2JSON_SHADERGROUPSHADERKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_RAY_TRACING_PIPELINE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ShaderGroupShaderKHR &p ) {
-  if( ShaderGroupShaderKHR :: eGeneral == p ) {
-    j = "General";
-    return;
-  }
-  if( ShaderGroupShaderKHR :: eClosestHit == p ) {
-    j = "ClosestHit";
-    return;
-  }
-  if( ShaderGroupShaderKHR :: eAnyHit == p ) {
-    j = "AnyHit";
-    return;
-  }
+void to_json( nlohmann::json &j, const ShaderGroupShaderKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkShaderGroupShaderKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ShaderGroupShaderKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkShaderGroupShaderKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ShaderGroupShaderKHR &p ) {
-  if( j.is_string() ) {
-    if( "General" == j.get< std::string >() ) {
-      p = ShaderGroupShaderKHR :: eGeneral ;
-      return;
-    }
-    if( "eGeneral" == j.get< std::string >() ) {
-      p = ShaderGroupShaderKHR :: eGeneral ;
-      return;
-    }
-    if( "VK_SHADER_GROUP_SHADER_GENERAL_KHR" == j.get< std::string >() ) {
-      p = ShaderGroupShaderKHR :: eGeneral ;
-      return;
-    }
-    if( "ClosestHit" == j.get< std::string >() ) {
-      p = ShaderGroupShaderKHR :: eClosestHit ;
-      return;
-    }
-    if( "eClosestHit" == j.get< std::string >() ) {
-      p = ShaderGroupShaderKHR :: eClosestHit ;
-      return;
-    }
-    if( "VK_SHADER_GROUP_SHADER_CLOSEST_HIT_KHR" == j.get< std::string >() ) {
-      p = ShaderGroupShaderKHR :: eClosestHit ;
-      return;
-    }
-    if( "AnyHit" == j.get< std::string >() ) {
-      p = ShaderGroupShaderKHR :: eAnyHit ;
-      return;
-    }
-    if( "eAnyHit" == j.get< std::string >() ) {
-      p = ShaderGroupShaderKHR :: eAnyHit ;
-      return;
-    }
-    if( "VK_SHADER_GROUP_SHADER_ANY_HIT_KHR" == j.get< std::string >() ) {
-      p = ShaderGroupShaderKHR :: eAnyHit ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ShaderGroupShaderKHR" );
-  }
-  if( j.is_number() ) {
-    p = ShaderGroupShaderKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ShaderGroupShaderKHR" );
+void from_json( const nlohmann::json &j, ShaderGroupShaderKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkShaderGroupShaderKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: ShaderGroupShaderKHR temp;
-  from_json( j, temp );
-  p = VkShaderGroupShaderKHR ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkShaderGroupShaderKHR &p );
 
 
 #endif

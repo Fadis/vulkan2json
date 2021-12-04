@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_MUTABLEDESCRIPTORTYPECREATEINFOVALVE_HPP
 #define VULKAN2JSON_MUTABLEDESCRIPTORTYPECREATEINFOVALVE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MutableDescriptorTypeCreateInfoVALVE &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "mutableDescriptorTypeListCount" ] = p.mutableDescriptorTypeListCount;
-  j[ "pMutableDescriptorTypeLists" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pMutableDescriptorTypeLists ) );
+void to_json( nlohmann::json &j, const MutableDescriptorTypeCreateInfoVALVE &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkMutableDescriptorTypeCreateInfoVALVE &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: MutableDescriptorTypeCreateInfoVALVE ( p ) );
-}
+void to_json( nlohmann::json &j, const VkMutableDescriptorTypeCreateInfoVALVE &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, MutableDescriptorTypeCreateInfoVALVE &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MutableDescriptorTypeCreateInfoVALVE" );
-  p.mutableDescriptorTypeListCount = j[ "mutableDescriptorTypeListCount" ];
+  void from_json( const nlohmann::json &j, MutableDescriptorTypeCreateInfoVALVE &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkMutableDescriptorTypeCreateInfoVALVE &p ) {
-  VULKAN_HPP_NAMESPACE :: MutableDescriptorTypeCreateInfoVALVE temp;
-  from_json( j, temp );
-  p = VkMutableDescriptorTypeCreateInfoVALVE ( temp );
-}
+void from_json( const nlohmann::json &j, VkMutableDescriptorTypeCreateInfoVALVE &p );
 
 
 #endif

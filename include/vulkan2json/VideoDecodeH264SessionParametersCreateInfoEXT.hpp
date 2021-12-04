@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_ENABLE_BETA_EXTENSIONS )
 namespace VULKAN_HPP_NAMESPACE {
@@ -50,8 +53,12 @@ inline void to_json( nlohmann::json &j, const VkVideoDecodeH264SessionParameters
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoDecodeH264SessionParametersCreateInfoEXT &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoDecodeH264SessionParametersCreateInfoEXT" );
-  p.maxSpsStdCount = j[ "maxSpsStdCount" ];
-  p.maxPpsStdCount = j[ "maxPpsStdCount" ];
+  if( j.find( "maxSpsStdCount" ) != j.end() ) {
+    p.maxSpsStdCount = j[ "maxSpsStdCount" ];
+  }
+  if( j.find( "maxPpsStdCount" ) != j.end() ) {
+    p.maxPpsStdCount = j[ "maxPpsStdCount" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoDecodeH264SessionParametersCreateInfoEXT &p ) {

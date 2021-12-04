@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_USE_PLATFORM_GGP )
 namespace VULKAN_HPP_NAMESPACE {

@@ -41,6 +41,7 @@ def get_version_suffix( name ):
   else:
     return ""
 
+flags_black_list = set( [ "ValidationFlags" ] )
 
 class vulkan_class_name:
   def __init__( self, name_ ):
@@ -55,12 +56,13 @@ class vulkan_class_name:
     self.include_name = self.name
     if len( self.version_suffix ):
       self.name = self.name[ :-len( self.version_suffix ) ]
-    if self.name[-8:] == 'FlagBits':
-      self.name = self.name[:-8]
-      self.include_name = self.name + 'Flags'
-    elif self.name[-5:] == 'Flags':
-      self.name = self.name[:-5]
-      self.include_name = self.name + 'Flags'
+    if not self.name in flags_black_list:
+      if self.name[-8:] == 'FlagBits':
+        self.name = self.name[:-8]
+        self.include_name = self.name + 'Flags'
+      elif self.name[-5:] == 'Flags':
+        self.name = self.name[:-5]
+        self.include_name = self.name + 'Flags'
   def remove_flagbits( self ):
     pass
   def get_flagbits( self ):

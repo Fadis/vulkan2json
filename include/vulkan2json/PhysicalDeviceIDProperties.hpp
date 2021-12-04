@@ -22,59 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEIDPROPERTIES_HPP
 #define VULKAN2JSON_PHYSICALDEVICEIDPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceIDProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "deviceUUID" ] = nlohmann::json::array();
-  std::copy( p.deviceUUID.begin(), p.deviceUUID.end(), std::back_inserter( j[ "deviceUUID" ] ) );
-  j[ "driverUUID" ] = nlohmann::json::array();
-  std::copy( p.driverUUID.begin(), p.driverUUID.end(), std::back_inserter( j[ "driverUUID" ] ) );
-  j[ "deviceLUID" ] = nlohmann::json::array();
-  std::copy( p.deviceLUID.begin(), p.deviceLUID.end(), std::back_inserter( j[ "deviceLUID" ] ) );
-  j[ "deviceNodeMask" ] = p.deviceNodeMask;
-  j[ "deviceLUIDValid" ] = bool( p.deviceLUIDValid );
+void to_json( nlohmann::json &j, const PhysicalDeviceIDProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceIDProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceIDProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceIDProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceIDProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceIDProperties" );
-  if( !j[ "deviceUUID" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PhysicalDeviceIDProperties.deviceUUID" );
-  if( !j[ "deviceUUID" ].size() > p.deviceUUID.size() ) throw vulkan2json::invalid_array_value( "too many values in array for PhysicalDeviceIDProperties.deviceUUID" );
-  std::fill( p.deviceUUID.begin(), p.deviceUUID.end(), 0 );
-  std::copy( j[ "deviceUUID" ].begin(), j[ "deviceUUID" ].end(), p.deviceUUID.begin() );
-  if( !j[ "driverUUID" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PhysicalDeviceIDProperties.driverUUID" );
-  if( !j[ "driverUUID" ].size() > p.driverUUID.size() ) throw vulkan2json::invalid_array_value( "too many values in array for PhysicalDeviceIDProperties.driverUUID" );
-  std::fill( p.driverUUID.begin(), p.driverUUID.end(), 0 );
-  std::copy( j[ "driverUUID" ].begin(), j[ "driverUUID" ].end(), p.driverUUID.begin() );
-  if( !j[ "deviceLUID" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PhysicalDeviceIDProperties.deviceLUID" );
-  if( !j[ "deviceLUID" ].size() > p.deviceLUID.size() ) throw vulkan2json::invalid_array_value( "too many values in array for PhysicalDeviceIDProperties.deviceLUID" );
-  std::fill( p.deviceLUID.begin(), p.deviceLUID.end(), 0 );
-  std::copy( j[ "deviceLUID" ].begin(), j[ "deviceLUID" ].end(), p.deviceLUID.begin() );
-  p.deviceNodeMask = j[ "deviceNodeMask" ];
-  p.deviceLUIDValid = j[ "deviceLUIDValid" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceIDProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceIDProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceIDProperties temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceIDProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceIDProperties &p );
 
 
 #endif

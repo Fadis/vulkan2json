@@ -22,47 +22,19 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTURECREATEINFOKHR_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTURECREATEINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/AccelerationStructureCreateFlagsKHR.hpp>
-#include <vulkan2json/AccelerationStructureTypeKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureCreateInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "createFlags" ] = p.createFlags;
-  j[ "offset" ] = p.offset;
-  j[ "size" ] = p.size;
-  j[ "type" ] = p.type;
+void to_json( nlohmann::json &j, const AccelerationStructureCreateInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAccelerationStructureCreateInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AccelerationStructureCreateInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAccelerationStructureCreateInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AccelerationStructureCreateInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AccelerationStructureCreateInfoKHR" );
-  p.createFlags = AccelerationStructureCreateFlagsKHR ( j[ "createFlags" ] );
-  p.offset = j[ "offset" ];
-  p.size = j[ "size" ];
-  p.type = AccelerationStructureTypeKHR ( j[ "type" ] );
+  void from_json( const nlohmann::json &j, AccelerationStructureCreateInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAccelerationStructureCreateInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: AccelerationStructureCreateInfoKHR temp;
-  from_json( j, temp );
-  p = VkAccelerationStructureCreateInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkAccelerationStructureCreateInfoKHR &p );
 
 
 #endif

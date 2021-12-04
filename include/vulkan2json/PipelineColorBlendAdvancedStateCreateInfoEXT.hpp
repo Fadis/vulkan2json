@@ -22,44 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECOLORBLENDADVANCEDSTATECREATEINFOEXT_HPP
 #define VULKAN2JSON_PIPELINECOLORBLENDADVANCEDSTATECREATEINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/BlendOverlapEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineColorBlendAdvancedStateCreateInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "srcPremultiplied" ] = bool( p.srcPremultiplied );
-  j[ "dstPremultiplied" ] = bool( p.dstPremultiplied );
-  j[ "blendOverlap" ] = p.blendOverlap;
+void to_json( nlohmann::json &j, const PipelineColorBlendAdvancedStateCreateInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineColorBlendAdvancedStateCreateInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineColorBlendAdvancedStateCreateInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineColorBlendAdvancedStateCreateInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineColorBlendAdvancedStateCreateInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineColorBlendAdvancedStateCreateInfoEXT" );
-  p.srcPremultiplied = j[ "srcPremultiplied" ];
-  p.dstPremultiplied = j[ "dstPremultiplied" ];
-  p.blendOverlap = BlendOverlapEXT ( j[ "blendOverlap" ] );
+  void from_json( const nlohmann::json &j, PipelineColorBlendAdvancedStateCreateInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineColorBlendAdvancedStateCreateInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineColorBlendAdvancedStateCreateInfoEXT temp;
-  from_json( j, temp );
-  p = VkPipelineColorBlendAdvancedStateCreateInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineColorBlendAdvancedStateCreateInfoEXT &p );
 
 
 #endif

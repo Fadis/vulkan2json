@@ -22,44 +22,19 @@
 #ifndef VULKAN2JSON_SEMAPHOREWAITINFO_HPP
 #define VULKAN2JSON_SEMAPHOREWAITINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/SemaphoreWaitFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SemaphoreWaitInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "semaphoreCount" ] = p.semaphoreCount;
-  j[ "pSemaphores" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pSemaphores ) );
-  j[ "pValues" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pValues ) );
+void to_json( nlohmann::json &j, const SemaphoreWaitInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSemaphoreWaitInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SemaphoreWaitInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSemaphoreWaitInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SemaphoreWaitInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SemaphoreWaitInfo" );
-  p.flags = SemaphoreWaitFlags ( j[ "flags" ] );
-  p.semaphoreCount = j[ "semaphoreCount" ];
+  void from_json( const nlohmann::json &j, SemaphoreWaitInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSemaphoreWaitInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: SemaphoreWaitInfo temp;
-  from_json( j, temp );
-  p = VkSemaphoreWaitInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkSemaphoreWaitInfo &p );
 
 
 #endif

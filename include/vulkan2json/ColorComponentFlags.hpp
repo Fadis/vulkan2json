@@ -22,100 +22,17 @@
 #ifndef VULKAN2JSON_COLORCOMPONENTFLAGS_HPP
 #define VULKAN2JSON_COLORCOMPONENTFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ColorComponentFlagBits &p ) {
-  if( ColorComponentFlagBits :: eR == p ) {
-    j = "R";
-    return;
-  }
-  if( ColorComponentFlagBits :: eG == p ) {
-    j = "G";
-    return;
-  }
-  if( ColorComponentFlagBits :: eB == p ) {
-    j = "B";
-    return;
-  }
+  void to_json( nlohmann::json &j, const ColorComponentFlagBits &p );
+  void to_json( nlohmann::json &j, const ColorComponentFlags &p );
+  void from_json( const nlohmann::json &j, ColorComponentFlagBits &p );
+  void from_json( const nlohmann::json &j, ColorComponentFlags &p );
 }
-inline void from_json( const nlohmann::json &j, ColorComponentFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "R" == j.get< std::string >() ) {
-      p = ColorComponentFlagBits :: eR ;
-      return;
-    }
-    if( "eR" == j.get< std::string >() ) {
-      p = ColorComponentFlagBits :: eR ;
-      return;
-    }
-    if( "VK_COLOR_COMPONENT_R_BIT" == j.get< std::string >() ) {
-      p = ColorComponentFlagBits :: eR ;
-      return;
-    }
-    if( "G" == j.get< std::string >() ) {
-      p = ColorComponentFlagBits :: eG ;
-      return;
-    }
-    if( "eG" == j.get< std::string >() ) {
-      p = ColorComponentFlagBits :: eG ;
-      return;
-    }
-    if( "VK_COLOR_COMPONENT_G_BIT" == j.get< std::string >() ) {
-      p = ColorComponentFlagBits :: eG ;
-      return;
-    }
-    if( "B" == j.get< std::string >() ) {
-      p = ColorComponentFlagBits :: eB ;
-      return;
-    }
-    if( "eB" == j.get< std::string >() ) {
-      p = ColorComponentFlagBits :: eB ;
-      return;
-    }
-    if( "VK_COLOR_COMPONENT_B_BIT" == j.get< std::string >() ) {
-      p = ColorComponentFlagBits :: eB ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ColorComponentFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = ColorComponentFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ColorComponentFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const ColorComponentFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( ColorComponentFlagBits ) * 8u; ++n ) {
-    if( p & ColorComponentFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, ColorComponentFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, ColorComponentFlags &p ) {
-  if( j.is_array() ) {
-    p = ColorComponentFlags ( 0 );
-    for( auto &e:  j ) {
-      ColorComponentFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for ColorComponentFlags" );
-}
-}
-#endif
 
 
 #endif

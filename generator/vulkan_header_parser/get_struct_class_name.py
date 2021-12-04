@@ -43,7 +43,7 @@ def get_struct_class_name( filename ):
   using_rule = re.compile( "^\s*using\s+(\S+)\s*=\s*(\S+?)\s*;\s*$" );
   struct_name = ''
   parse_state = parse_state_t.namespace
-  class_names = set()
+  class_names = {}
   with open( filename, 'r' ) as fd:
     for line in fd:
       if parse_state == parse_state_t.namespace:
@@ -54,7 +54,7 @@ def get_struct_class_name( filename ):
         struct_match = re.match( struct_rule, line.rstrip() )
         if struct_match:
           parse_state = parse_state_t.in_struct
-          class_names.add( struct_match.group( 1 ) )
+          class_names[ struct_match.group( 1 ) ] = struct_match.group( 1 )
           continue
         union_match = re.match( union_rule, line.rstrip() )
         if union_match:
@@ -62,13 +62,13 @@ def get_struct_class_name( filename ):
           continue
         using_match = re.match( using_rule, line.rstrip() )
         if using_match:
-          class_names.add( using_match.group( 1 ) )
+          class_names[ using_match.group( 1 ) ] = using_match.group( 2 )
           continue
       elif parse_state == parse_state_t.struct_name:
         struct_name_match = re.match( struct_name_rule, line.rstrip() )
         if struct_name_match:
           parse_state = parse_state_t.in_struct
-          class_names.add( struct_match.group( 1 ) )
+          class_names[ struct_name_match.group( 1 ) ] = struct_name_match.group( 1 )
           continue
       elif parse_state == parse_state_t.in_struct:
         public_match = re.match( public_rule, line.rstrip() )

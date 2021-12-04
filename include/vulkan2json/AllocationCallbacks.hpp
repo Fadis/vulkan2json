@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_ALLOCATIONCALLBACKS_HPP
 #define VULKAN2JSON_ALLOCATIONCALLBACKS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AllocationCallbacks &p ) {
-  j = nlohmann::json::object();
-  j[ "pUserData" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pUserData ) );
-  j[ "pfnAllocation" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pfnAllocation ) );
-  j[ "pfnReallocation" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pfnReallocation ) );
-  j[ "pfnFree" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pfnFree ) );
-  j[ "pfnInternalAllocation" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pfnInternalAllocation ) );
-  j[ "pfnInternalFree" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pfnInternalFree ) );
+void to_json( nlohmann::json &j, const AllocationCallbacks &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAllocationCallbacks &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AllocationCallbacks ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAllocationCallbacks &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AllocationCallbacks &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AllocationCallbacks" );
+  void from_json( const nlohmann::json &j, AllocationCallbacks &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAllocationCallbacks &p ) {
-  VULKAN_HPP_NAMESPACE :: AllocationCallbacks temp;
-  from_json( j, temp );
-  p = VkAllocationCallbacks ( temp );
-}
+void from_json( const nlohmann::json &j, VkAllocationCallbacks &p );
 
 
 #endif

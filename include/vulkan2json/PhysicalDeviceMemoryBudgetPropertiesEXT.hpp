@@ -22,49 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEMEMORYBUDGETPROPERTIESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICEMEMORYBUDGETPROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceMemoryBudgetPropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "heapBudget" ] = nlohmann::json::array();
-  std::copy( p.heapBudget.begin(), p.heapBudget.end(), std::back_inserter( j[ "heapBudget" ] ) );
-  j[ "heapUsage" ] = nlohmann::json::array();
-  std::copy( p.heapUsage.begin(), p.heapUsage.end(), std::back_inserter( j[ "heapUsage" ] ) );
+void to_json( nlohmann::json &j, const PhysicalDeviceMemoryBudgetPropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceMemoryBudgetPropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceMemoryBudgetPropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceMemoryBudgetPropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceMemoryBudgetPropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceMemoryBudgetPropertiesEXT" );
-  if( !j[ "heapBudget" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PhysicalDeviceMemoryBudgetPropertiesEXT.heapBudget" );
-  if( !j[ "heapBudget" ].size() > p.heapBudget.size() ) throw vulkan2json::invalid_array_value( "too many values in array for PhysicalDeviceMemoryBudgetPropertiesEXT.heapBudget" );
-  std::fill( p.heapBudget.begin(), p.heapBudget.end(), 0 );
-  std::copy( j[ "heapBudget" ].begin(), j[ "heapBudget" ].end(), p.heapBudget.begin() );
-  if( !j[ "heapUsage" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PhysicalDeviceMemoryBudgetPropertiesEXT.heapUsage" );
-  if( !j[ "heapUsage" ].size() > p.heapUsage.size() ) throw vulkan2json::invalid_array_value( "too many values in array for PhysicalDeviceMemoryBudgetPropertiesEXT.heapUsage" );
-  std::fill( p.heapUsage.begin(), p.heapUsage.end(), 0 );
-  std::copy( j[ "heapUsage" ].begin(), j[ "heapUsage" ].end(), p.heapUsage.begin() );
+  void from_json( const nlohmann::json &j, PhysicalDeviceMemoryBudgetPropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceMemoryBudgetPropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceMemoryBudgetPropertiesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceMemoryBudgetPropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceMemoryBudgetPropertiesEXT &p );
 
 
 #endif

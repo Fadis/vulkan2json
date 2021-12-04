@@ -22,38 +22,19 @@
 #ifndef VULKAN2JSON_VERTEXINPUTBINDINGDIVISORDESCRIPTIONEXT_HPP
 #define VULKAN2JSON_VERTEXINPUTBINDINGDIVISORDESCRIPTIONEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const VertexInputBindingDivisorDescriptionEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "binding" ] = p.binding;
-  j[ "divisor" ] = p.divisor;
+void to_json( nlohmann::json &j, const VertexInputBindingDivisorDescriptionEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkVertexInputBindingDivisorDescriptionEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: VertexInputBindingDivisorDescriptionEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkVertexInputBindingDivisorDescriptionEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, VertexInputBindingDivisorDescriptionEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VertexInputBindingDivisorDescriptionEXT" );
-  p.binding = j[ "binding" ];
-  p.divisor = j[ "divisor" ];
+  void from_json( const nlohmann::json &j, VertexInputBindingDivisorDescriptionEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkVertexInputBindingDivisorDescriptionEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: VertexInputBindingDivisorDescriptionEXT temp;
-  from_json( j, temp );
-  p = VkVertexInputBindingDivisorDescriptionEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkVertexInputBindingDivisorDescriptionEXT &p );
 
 
 #endif

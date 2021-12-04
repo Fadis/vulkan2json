@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_MULTIDRAWINDEXEDINFOEXT_HPP
 #define VULKAN2JSON_MULTIDRAWINDEXEDINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MultiDrawIndexedInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "firstIndex" ] = p.firstIndex;
-  j[ "indexCount" ] = p.indexCount;
-  j[ "vertexOffset" ] = p.vertexOffset;
+void to_json( nlohmann::json &j, const MultiDrawIndexedInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkMultiDrawIndexedInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: MultiDrawIndexedInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkMultiDrawIndexedInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, MultiDrawIndexedInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MultiDrawIndexedInfoEXT" );
-  p.firstIndex = j[ "firstIndex" ];
-  p.indexCount = j[ "indexCount" ];
-  p.vertexOffset = j[ "vertexOffset" ];
+  void from_json( const nlohmann::json &j, MultiDrawIndexedInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkMultiDrawIndexedInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: MultiDrawIndexedInfoEXT temp;
-  from_json( j, temp );
-  p = VkMultiDrawIndexedInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkMultiDrawIndexedInfoEXT &p );
 
 
 #endif

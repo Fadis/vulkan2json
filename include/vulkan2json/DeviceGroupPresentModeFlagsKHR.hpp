@@ -22,100 +22,17 @@
 #ifndef VULKAN2JSON_DEVICEGROUPPRESENTMODEFLAGSKHR_HPP
 #define VULKAN2JSON_DEVICEGROUPPRESENTMODEFLAGSKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_SWAPCHAIN_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DeviceGroupPresentModeFlagBitsKHR &p ) {
-  if( DeviceGroupPresentModeFlagBitsKHR :: eLocal == p ) {
-    j = "Local";
-    return;
-  }
-  if( DeviceGroupPresentModeFlagBitsKHR :: eRemote == p ) {
-    j = "Remote";
-    return;
-  }
-  if( DeviceGroupPresentModeFlagBitsKHR :: eSum == p ) {
-    j = "Sum";
-    return;
-  }
+  void to_json( nlohmann::json &j, const DeviceGroupPresentModeFlagBitsKHR &p );
+  void to_json( nlohmann::json &j, const DeviceGroupPresentModeFlagsKHR &p );
+  void from_json( const nlohmann::json &j, DeviceGroupPresentModeFlagBitsKHR &p );
+  void from_json( const nlohmann::json &j, DeviceGroupPresentModeFlagsKHR &p );
 }
-inline void from_json( const nlohmann::json &j, DeviceGroupPresentModeFlagBitsKHR &p ) {
-  if( j.is_string() ) {
-    if( "Local" == j.get< std::string >() ) {
-      p = DeviceGroupPresentModeFlagBitsKHR :: eLocal ;
-      return;
-    }
-    if( "eLocal" == j.get< std::string >() ) {
-      p = DeviceGroupPresentModeFlagBitsKHR :: eLocal ;
-      return;
-    }
-    if( "VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR" == j.get< std::string >() ) {
-      p = DeviceGroupPresentModeFlagBitsKHR :: eLocal ;
-      return;
-    }
-    if( "Remote" == j.get< std::string >() ) {
-      p = DeviceGroupPresentModeFlagBitsKHR :: eRemote ;
-      return;
-    }
-    if( "eRemote" == j.get< std::string >() ) {
-      p = DeviceGroupPresentModeFlagBitsKHR :: eRemote ;
-      return;
-    }
-    if( "VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR" == j.get< std::string >() ) {
-      p = DeviceGroupPresentModeFlagBitsKHR :: eRemote ;
-      return;
-    }
-    if( "Sum" == j.get< std::string >() ) {
-      p = DeviceGroupPresentModeFlagBitsKHR :: eSum ;
-      return;
-    }
-    if( "eSum" == j.get< std::string >() ) {
-      p = DeviceGroupPresentModeFlagBitsKHR :: eSum ;
-      return;
-    }
-    if( "VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR" == j.get< std::string >() ) {
-      p = DeviceGroupPresentModeFlagBitsKHR :: eSum ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DeviceGroupPresentModeFlagBitsKHR" );
-  }
-  if( j.is_number() ) {
-    p = DeviceGroupPresentModeFlagBitsKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DeviceGroupPresentModeFlagBitsKHR" );
-}
-inline void to_json( nlohmann::json &j, const DeviceGroupPresentModeFlagsKHR &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DeviceGroupPresentModeFlagBitsKHR ) * 8u; ++n ) {
-    if( p & DeviceGroupPresentModeFlagsKHR ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DeviceGroupPresentModeFlagBitsKHR ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, DeviceGroupPresentModeFlagsKHR &p ) {
-  if( j.is_array() ) {
-    p = DeviceGroupPresentModeFlagsKHR ( 0 );
-    for( auto &e:  j ) {
-      DeviceGroupPresentModeFlagBitsKHR temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DeviceGroupPresentModeFlagsKHR" );
-}
-}
-#endif
 
 
 #endif

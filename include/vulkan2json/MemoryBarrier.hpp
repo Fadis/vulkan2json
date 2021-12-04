@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_MEMORYBARRIER_HPP
 #define VULKAN2JSON_MEMORYBARRIER_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/AccessFlags.hpp>
-#include <vulkan2json/AccessFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MemoryBarrier &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "srcAccessMask" ] = p.srcAccessMask;
-  j[ "dstAccessMask" ] = p.dstAccessMask;
+void to_json( nlohmann::json &j, const MemoryBarrier &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkMemoryBarrier &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: MemoryBarrier ( p ) );
-}
+void to_json( nlohmann::json &j, const VkMemoryBarrier &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, MemoryBarrier &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MemoryBarrier" );
-  p.srcAccessMask = AccessFlags ( j[ "srcAccessMask" ] );
-  p.dstAccessMask = AccessFlags ( j[ "dstAccessMask" ] );
+  void from_json( const nlohmann::json &j, MemoryBarrier &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkMemoryBarrier &p ) {
-  VULKAN_HPP_NAMESPACE :: MemoryBarrier temp;
-  from_json( j, temp );
-  p = VkMemoryBarrier ( temp );
-}
+void from_json( const nlohmann::json &j, VkMemoryBarrier &p );
 
 
 #endif

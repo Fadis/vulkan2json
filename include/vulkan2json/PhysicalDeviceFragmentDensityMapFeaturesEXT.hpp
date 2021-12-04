@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEFRAGMENTDENSITYMAPFEATURESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICEFRAGMENTDENSITYMAPFEATURESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceFragmentDensityMapFeaturesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "fragmentDensityMap" ] = bool( p.fragmentDensityMap );
-  j[ "fragmentDensityMapDynamic" ] = bool( p.fragmentDensityMapDynamic );
-  j[ "fragmentDensityMapNonSubsampledImages" ] = bool( p.fragmentDensityMapNonSubsampledImages );
+void to_json( nlohmann::json &j, const PhysicalDeviceFragmentDensityMapFeaturesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceFragmentDensityMapFeaturesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceFragmentDensityMapFeaturesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceFragmentDensityMapFeaturesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceFragmentDensityMapFeaturesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceFragmentDensityMapFeaturesEXT" );
-  p.fragmentDensityMap = j[ "fragmentDensityMap" ];
-  p.fragmentDensityMapDynamic = j[ "fragmentDensityMapDynamic" ];
-  p.fragmentDensityMapNonSubsampledImages = j[ "fragmentDensityMapNonSubsampledImages" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceFragmentDensityMapFeaturesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceFragmentDensityMapFeaturesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceFragmentDensityMapFeaturesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceFragmentDensityMapFeaturesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceFragmentDensityMapFeaturesEXT &p );
 
 
 #endif

@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const Result &p ) {
   if( Result :: eSuccess == p ) {
@@ -163,7 +164,7 @@ inline void to_json( nlohmann::json &j, const Result &p ) {
     j = "ErrorNotPermittedEXT";
     return;
   }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( Result :: eErrorFullScreenExclusiveModeLostEXT == p ) {
     j = "ErrorFullScreenExclusiveModeLostEXT";
     return;
@@ -601,19 +602,19 @@ inline void from_json( const nlohmann::json &j, Result &p ) {
       p = Result :: eErrorNotPermittedEXT ;
       return;
     }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "ErrorFullScreenExclusiveModeLostEXT" == j.get< std::string >() ) {
       p = Result :: eErrorFullScreenExclusiveModeLostEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eErrorFullScreenExclusiveModeLostEXT" == j.get< std::string >() ) {
       p = Result :: eErrorFullScreenExclusiveModeLostEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT" == j.get< std::string >() ) {
       p = Result :: eErrorFullScreenExclusiveModeLostEXT ;
       return;
@@ -752,7 +753,6 @@ inline void from_json( const nlohmann::json &j, VkResult &p ) {
   from_json( j, temp );
   p = VkResult ( temp );
 }
-#endif
 
 
 #endif

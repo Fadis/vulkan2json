@@ -22,46 +22,19 @@
 #ifndef VULKAN2JSON_COMPONENTMAPPING_HPP
 #define VULKAN2JSON_COMPONENTMAPPING_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/ComponentSwizzle.hpp>
-#include <vulkan2json/ComponentSwizzle.hpp>
-#include <vulkan2json/ComponentSwizzle.hpp>
-#include <vulkan2json/ComponentSwizzle.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ComponentMapping &p ) {
-  j = nlohmann::json::object();
-  j[ "r" ] = p.r;
-  j[ "g" ] = p.g;
-  j[ "b" ] = p.b;
-  j[ "a" ] = p.a;
+void to_json( nlohmann::json &j, const ComponentMapping &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkComponentMapping &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ComponentMapping ( p ) );
-}
+void to_json( nlohmann::json &j, const VkComponentMapping &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ComponentMapping &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ComponentMapping" );
-  p.r = ComponentSwizzle ( j[ "r" ] );
-  p.g = ComponentSwizzle ( j[ "g" ] );
-  p.b = ComponentSwizzle ( j[ "b" ] );
-  p.a = ComponentSwizzle ( j[ "a" ] );
+  void from_json( const nlohmann::json &j, ComponentMapping &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkComponentMapping &p ) {
-  VULKAN_HPP_NAMESPACE :: ComponentMapping temp;
-  from_json( j, temp );
-  p = VkComponentMapping ( temp );
-}
+void from_json( const nlohmann::json &j, VkComponentMapping &p );
 
 
 #endif

@@ -22,37 +22,19 @@
 #ifndef VULKAN2JSON_MUTABLEDESCRIPTORTYPELISTVALVE_HPP
 #define VULKAN2JSON_MUTABLEDESCRIPTORTYPELISTVALVE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MutableDescriptorTypeListVALVE &p ) {
-  j = nlohmann::json::object();
-  j[ "descriptorTypeCount" ] = p.descriptorTypeCount;
-  j[ "pDescriptorTypes" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pDescriptorTypes ) );
+void to_json( nlohmann::json &j, const MutableDescriptorTypeListVALVE &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkMutableDescriptorTypeListVALVE &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: MutableDescriptorTypeListVALVE ( p ) );
-}
+void to_json( nlohmann::json &j, const VkMutableDescriptorTypeListVALVE &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, MutableDescriptorTypeListVALVE &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MutableDescriptorTypeListVALVE" );
-  p.descriptorTypeCount = j[ "descriptorTypeCount" ];
+  void from_json( const nlohmann::json &j, MutableDescriptorTypeListVALVE &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkMutableDescriptorTypeListVALVE &p ) {
-  VULKAN_HPP_NAMESPACE :: MutableDescriptorTypeListVALVE temp;
-  from_json( j, temp );
-  p = VkMutableDescriptorTypeListVALVE ( temp );
-}
+void from_json( const nlohmann::json &j, VkMutableDescriptorTypeListVALVE &p );
 
 
 #endif

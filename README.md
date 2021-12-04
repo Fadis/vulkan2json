@@ -1,6 +1,6 @@
 # vulkan2json
 
-Header-only C++ library that implements functions for nlohmann::json to serialize/deserialize Vulkan objects.
+C++ library that implements functions for nlohmann::json to serialize/deserialize Vulkan objects.
 
 ## Requirements
 

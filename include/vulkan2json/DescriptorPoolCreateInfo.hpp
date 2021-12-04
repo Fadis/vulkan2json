@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_DESCRIPTORPOOLCREATEINFO_HPP
 #define VULKAN2JSON_DESCRIPTORPOOLCREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DescriptorPoolCreateFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DescriptorPoolCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "maxSets" ] = p.maxSets;
-  j[ "poolSizeCount" ] = p.poolSizeCount;
-  j[ "pPoolSizes" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pPoolSizes ) );
+void to_json( nlohmann::json &j, const DescriptorPoolCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDescriptorPoolCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DescriptorPoolCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDescriptorPoolCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DescriptorPoolCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DescriptorPoolCreateInfo" );
-  p.flags = DescriptorPoolCreateFlags ( j[ "flags" ] );
-  p.maxSets = j[ "maxSets" ];
-  p.poolSizeCount = j[ "poolSizeCount" ];
+  void from_json( const nlohmann::json &j, DescriptorPoolCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDescriptorPoolCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: DescriptorPoolCreateInfo temp;
-  from_json( j, temp );
-  p = VkDescriptorPoolCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkDescriptorPoolCreateInfo &p );
 
 
 #endif

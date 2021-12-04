@@ -32,6 +32,10 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/VideoCodecOperationFlagsKHR.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/VideoCodecOperationFlagsKHR.hpp>
 #if defined( VK_ENABLE_BETA_EXTENSIONS )
@@ -49,7 +53,9 @@ inline void to_json( nlohmann::json &j, const VkVideoQueueFamilyProperties2KHR &
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoQueueFamilyProperties2KHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoQueueFamilyProperties2KHR" );
-  p.videoCodecOperations = VideoCodecOperationFlagsKHR ( j[ "videoCodecOperations" ] );
+  if( j.find( "videoCodecOperations" ) != j.end() ) {
+    p.videoCodecOperations = VideoCodecOperationFlagsKHR ( j[ "videoCodecOperations" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoQueueFamilyProperties2KHR &p ) {

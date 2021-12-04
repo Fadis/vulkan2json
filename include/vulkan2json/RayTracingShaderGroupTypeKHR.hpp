@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_RAYTRACINGSHADERGROUPTYPEKHR_HPP
 #define VULKAN2JSON_RAYTRACINGSHADERGROUPTYPEKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_RAY_TRACING_PIPELINE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const RayTracingShaderGroupTypeKHR &p ) {
-  if( RayTracingShaderGroupTypeKHR :: eGeneral == p ) {
-    j = "General";
-    return;
-  }
-  if( RayTracingShaderGroupTypeKHR :: eTrianglesHitGroup == p ) {
-    j = "TrianglesHitGroup";
-    return;
-  }
+void to_json( nlohmann::json &j, const RayTracingShaderGroupTypeKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkRayTracingShaderGroupTypeKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: RayTracingShaderGroupTypeKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkRayTracingShaderGroupTypeKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, RayTracingShaderGroupTypeKHR &p ) {
-  if( j.is_string() ) {
-    if( "General" == j.get< std::string >() ) {
-      p = RayTracingShaderGroupTypeKHR :: eGeneral ;
-      return;
-    }
-    if( "eGeneral" == j.get< std::string >() ) {
-      p = RayTracingShaderGroupTypeKHR :: eGeneral ;
-      return;
-    }
-    if( "VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR" == j.get< std::string >() ) {
-      p = RayTracingShaderGroupTypeKHR :: eGeneral ;
-      return;
-    }
-    if( "TrianglesHitGroup" == j.get< std::string >() ) {
-      p = RayTracingShaderGroupTypeKHR :: eTrianglesHitGroup ;
-      return;
-    }
-    if( "eTrianglesHitGroup" == j.get< std::string >() ) {
-      p = RayTracingShaderGroupTypeKHR :: eTrianglesHitGroup ;
-      return;
-    }
-    if( "VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR" == j.get< std::string >() ) {
-      p = RayTracingShaderGroupTypeKHR :: eTrianglesHitGroup ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for RayTracingShaderGroupTypeKHR" );
-  }
-  if( j.is_number() ) {
-    p = RayTracingShaderGroupTypeKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for RayTracingShaderGroupTypeKHR" );
+void from_json( const nlohmann::json &j, RayTracingShaderGroupTypeKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkRayTracingShaderGroupTypeKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: RayTracingShaderGroupTypeKHR temp;
-  from_json( j, temp );
-  p = VkRayTracingShaderGroupTypeKHR ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkRayTracingShaderGroupTypeKHR &p );
 
 
 #endif

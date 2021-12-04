@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_DISCARDRECTANGLEMODEEXT_HPP
 #define VULKAN2JSON_DISCARDRECTANGLEMODEEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_DISCARD_RECTANGLES_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DiscardRectangleModeEXT &p ) {
-  if( DiscardRectangleModeEXT :: eInclusive == p ) {
-    j = "Inclusive";
-    return;
-  }
+void to_json( nlohmann::json &j, const DiscardRectangleModeEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDiscardRectangleModeEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DiscardRectangleModeEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDiscardRectangleModeEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DiscardRectangleModeEXT &p ) {
-  if( j.is_string() ) {
-    if( "Inclusive" == j.get< std::string >() ) {
-      p = DiscardRectangleModeEXT :: eInclusive ;
-      return;
-    }
-    if( "eInclusive" == j.get< std::string >() ) {
-      p = DiscardRectangleModeEXT :: eInclusive ;
-      return;
-    }
-    if( "VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT" == j.get< std::string >() ) {
-      p = DiscardRectangleModeEXT :: eInclusive ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DiscardRectangleModeEXT" );
-  }
-  if( j.is_number() ) {
-    p = DiscardRectangleModeEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DiscardRectangleModeEXT" );
+void from_json( const nlohmann::json &j, DiscardRectangleModeEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDiscardRectangleModeEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DiscardRectangleModeEXT temp;
-  from_json( j, temp );
-  p = VkDiscardRectangleModeEXT ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkDiscardRectangleModeEXT &p );
 
 
 #endif

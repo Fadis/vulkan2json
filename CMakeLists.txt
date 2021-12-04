@@ -67,5 +67,5 @@ link_directories(
 
 add_definitions( -DVK_ENABLE_BETA_EXTENSIONS )
 
-subdirs( include test )
+subdirs( include src test )
 

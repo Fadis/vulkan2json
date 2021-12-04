@@ -22,47 +22,19 @@
 #ifndef VULKAN2JSON_DEBUGMARKEROBJECTTAGINFOEXT_HPP
 #define VULKAN2JSON_DEBUGMARKEROBJECTTAGINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DebugReportObjectTypeEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DebugMarkerObjectTagInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "objectType" ] = p.objectType;
-  j[ "object" ] = p.object;
-  j[ "tagName" ] = p.tagName;
-  j[ "tagSize" ] = p.tagSize;
-  j[ "pTag" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pTag ) );
+void to_json( nlohmann::json &j, const DebugMarkerObjectTagInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDebugMarkerObjectTagInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DebugMarkerObjectTagInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDebugMarkerObjectTagInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DebugMarkerObjectTagInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DebugMarkerObjectTagInfoEXT" );
-  p.objectType = DebugReportObjectTypeEXT ( j[ "objectType" ] );
-  p.object = j[ "object" ];
-  p.tagName = j[ "tagName" ];
-  p.tagSize = j[ "tagSize" ];
+  void from_json( const nlohmann::json &j, DebugMarkerObjectTagInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDebugMarkerObjectTagInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DebugMarkerObjectTagInfoEXT temp;
-  from_json( j, temp );
-  p = VkDebugMarkerObjectTagInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkDebugMarkerObjectTagInfoEXT &p );
 
 
 #endif

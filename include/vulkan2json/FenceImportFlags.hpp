@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_FENCEIMPORTFLAGS_HPP
 #define VULKAN2JSON_FENCEIMPORTFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const FenceImportFlagBits &p ) {
+  void to_json( nlohmann::json &j, const FenceImportFlagBits &p );
+  void to_json( nlohmann::json &j, const FenceImportFlags &p );
+  void from_json( const nlohmann::json &j, FenceImportFlagBits &p );
+  void from_json( const nlohmann::json &j, FenceImportFlags &p );
 }
-inline void from_json( const nlohmann::json &j, FenceImportFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for FenceImportFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = FenceImportFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for FenceImportFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const FenceImportFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( FenceImportFlagBits ) * 8u; ++n ) {
-    if( p & FenceImportFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, FenceImportFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, FenceImportFlags &p ) {
-  if( j.is_array() ) {
-    p = FenceImportFlags ( 0 );
-    for( auto &e:  j ) {
-      FenceImportFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for FenceImportFlags" );
-}
-}
-#endif
 
 
 #endif

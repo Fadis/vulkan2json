@@ -32,6 +32,11 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/VideoEncodeRateControlFlagsKHR.hpp>
+#include <vulkan2json/VideoEncodeRateControlModeFlagsKHR.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/VideoEncodeRateControlFlagsKHR.hpp>
 #include <vulkan2json/VideoEncodeRateControlModeFlagsKHR.hpp>
@@ -56,13 +61,27 @@ inline void to_json( nlohmann::json &j, const VkVideoEncodeRateControlInfoKHR &p
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoEncodeRateControlInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoEncodeRateControlInfoKHR" );
-  p.flags = VideoEncodeRateControlFlagsKHR ( j[ "flags" ] );
-  p.rateControlMode = VideoEncodeRateControlModeFlagBitsKHR ( j[ "rateControlMode" ] );
-  p.averageBitrate = j[ "averageBitrate" ];
-  p.peakToAverageBitrateRatio = j[ "peakToAverageBitrateRatio" ];
-  p.frameRateNumerator = j[ "frameRateNumerator" ];
-  p.frameRateDenominator = j[ "frameRateDenominator" ];
-  p.virtualBufferSizeInMs = j[ "virtualBufferSizeInMs" ];
+  if( j.find( "flags" ) != j.end() ) {
+    p.flags = VideoEncodeRateControlFlagsKHR ( j[ "flags" ] );
+  }
+  if( j.find( "rateControlMode" ) != j.end() ) {
+    p.rateControlMode = VideoEncodeRateControlModeFlagBitsKHR ( j[ "rateControlMode" ] );
+  }
+  if( j.find( "averageBitrate" ) != j.end() ) {
+    p.averageBitrate = j[ "averageBitrate" ];
+  }
+  if( j.find( "peakToAverageBitrateRatio" ) != j.end() ) {
+    p.peakToAverageBitrateRatio = j[ "peakToAverageBitrateRatio" ];
+  }
+  if( j.find( "frameRateNumerator" ) != j.end() ) {
+    p.frameRateNumerator = j[ "frameRateNumerator" ];
+  }
+  if( j.find( "frameRateDenominator" ) != j.end() ) {
+    p.frameRateDenominator = j[ "frameRateDenominator" ];
+  }
+  if( j.find( "virtualBufferSizeInMs" ) != j.end() ) {
+    p.virtualBufferSizeInMs = j[ "virtualBufferSizeInMs" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoEncodeRateControlInfoKHR &p ) {

@@ -22,84 +22,17 @@
 #ifndef VULKAN2JSON_DEBUGUTILSMESSAGETYPEFLAGSEXT_HPP
 #define VULKAN2JSON_DEBUGUTILSMESSAGETYPEFLAGSEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_DEBUG_UTILS_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DebugUtilsMessageTypeFlagBitsEXT &p ) {
-  if( DebugUtilsMessageTypeFlagBitsEXT :: eGeneral == p ) {
-    j = "General";
-    return;
-  }
-  if( DebugUtilsMessageTypeFlagBitsEXT :: eValidation == p ) {
-    j = "Validation";
-    return;
-  }
+  void to_json( nlohmann::json &j, const DebugUtilsMessageTypeFlagBitsEXT &p );
+  void to_json( nlohmann::json &j, const DebugUtilsMessageTypeFlagsEXT &p );
+  void from_json( const nlohmann::json &j, DebugUtilsMessageTypeFlagBitsEXT &p );
+  void from_json( const nlohmann::json &j, DebugUtilsMessageTypeFlagsEXT &p );
 }
-inline void from_json( const nlohmann::json &j, DebugUtilsMessageTypeFlagBitsEXT &p ) {
-  if( j.is_string() ) {
-    if( "General" == j.get< std::string >() ) {
-      p = DebugUtilsMessageTypeFlagBitsEXT :: eGeneral ;
-      return;
-    }
-    if( "eGeneral" == j.get< std::string >() ) {
-      p = DebugUtilsMessageTypeFlagBitsEXT :: eGeneral ;
-      return;
-    }
-    if( "VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT" == j.get< std::string >() ) {
-      p = DebugUtilsMessageTypeFlagBitsEXT :: eGeneral ;
-      return;
-    }
-    if( "Validation" == j.get< std::string >() ) {
-      p = DebugUtilsMessageTypeFlagBitsEXT :: eValidation ;
-      return;
-    }
-    if( "eValidation" == j.get< std::string >() ) {
-      p = DebugUtilsMessageTypeFlagBitsEXT :: eValidation ;
-      return;
-    }
-    if( "VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT" == j.get< std::string >() ) {
-      p = DebugUtilsMessageTypeFlagBitsEXT :: eValidation ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DebugUtilsMessageTypeFlagBitsEXT" );
-  }
-  if( j.is_number() ) {
-    p = DebugUtilsMessageTypeFlagBitsEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DebugUtilsMessageTypeFlagBitsEXT" );
-}
-inline void to_json( nlohmann::json &j, const DebugUtilsMessageTypeFlagsEXT &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DebugUtilsMessageTypeFlagBitsEXT ) * 8u; ++n ) {
-    if( p & DebugUtilsMessageTypeFlagsEXT ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DebugUtilsMessageTypeFlagBitsEXT ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, DebugUtilsMessageTypeFlagsEXT &p ) {
-  if( j.is_array() ) {
-    p = DebugUtilsMessageTypeFlagsEXT ( 0 );
-    for( auto &e:  j ) {
-      DebugUtilsMessageTypeFlagBitsEXT temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DebugUtilsMessageTypeFlagsEXT" );
-}
-}
-#endif
 
 
 #endif

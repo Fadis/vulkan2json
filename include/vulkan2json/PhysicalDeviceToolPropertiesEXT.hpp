@@ -22,72 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICETOOLPROPERTIESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICETOOLPROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ToolPurposeFlagsEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceToolPropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "name" ] = std::string( p.name.begin(), std::find( p.name.begin(), p.name.end(), '\0' ) );
-  j[ "version" ] = std::string( p.version.begin(), std::find( p.version.begin(), p.version.end(), '\0' ) );
-  j[ "purposes" ] = p.purposes;
-  j[ "description" ] = std::string( p.description.begin(), std::find( p.description.begin(), p.description.end(), '\0' ) );
-  j[ "layer" ] = std::string( p.layer.begin(), std::find( p.layer.begin(), p.layer.end(), '\0' ) );
+void to_json( nlohmann::json &j, const PhysicalDeviceToolPropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceToolPropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceToolPropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceToolPropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceToolPropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceToolPropertiesEXT" );
-  {
-    std::string s = j[ "name" ];
-    if( !p.name.empty() ) {
-      p.name[ p.name.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.name.size() - 1u ) ), p.name.begin() );
-    }
-  }
-  {
-    std::string s = j[ "version" ];
-    if( !p.version.empty() ) {
-      p.version[ p.version.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.version.size() - 1u ) ), p.version.begin() );
-    }
-  }
-  p.purposes = ToolPurposeFlagsEXT ( j[ "purposes" ] );
-  {
-    std::string s = j[ "description" ];
-    if( !p.description.empty() ) {
-      p.description[ p.description.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.description.size() - 1u ) ), p.description.begin() );
-    }
-  }
-  {
-    std::string s = j[ "layer" ];
-    if( !p.layer.empty() ) {
-      p.layer[ p.layer.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.layer.size() - 1u ) ), p.layer.begin() );
-    }
-  }
+  void from_json( const nlohmann::json &j, PhysicalDeviceToolPropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceToolPropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceToolPropertiesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceToolPropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceToolPropertiesEXT &p );
 
 
 #endif

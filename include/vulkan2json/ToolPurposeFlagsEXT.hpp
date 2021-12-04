@@ -22,148 +22,17 @@
 #ifndef VULKAN2JSON_TOOLPURPOSEFLAGSEXT_HPP
 #define VULKAN2JSON_TOOLPURPOSEFLAGSEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_TOOLING_INFO_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ToolPurposeFlagBitsEXT &p ) {
-  if( ToolPurposeFlagBitsEXT :: eValidation == p ) {
-    j = "Validation";
-    return;
-  }
-  if( ToolPurposeFlagBitsEXT :: eProfiling == p ) {
-    j = "Profiling";
-    return;
-  }
-  if( ToolPurposeFlagBitsEXT :: eTracing == p ) {
-    j = "Tracing";
-    return;
-  }
-  if( ToolPurposeFlagBitsEXT :: eAdditionalFeatures == p ) {
-    j = "AdditionalFeatures";
-    return;
-  }
-  if( ToolPurposeFlagBitsEXT :: eModifyingFeatures == p ) {
-    j = "ModifyingFeatures";
-    return;
-  }
-  if( ToolPurposeFlagBitsEXT :: eDebugReporting == p ) {
-    j = "DebugReporting";
-    return;
-  }
+  void to_json( nlohmann::json &j, const ToolPurposeFlagBitsEXT &p );
+  void to_json( nlohmann::json &j, const ToolPurposeFlagsEXT &p );
+  void from_json( const nlohmann::json &j, ToolPurposeFlagBitsEXT &p );
+  void from_json( const nlohmann::json &j, ToolPurposeFlagsEXT &p );
 }
-inline void from_json( const nlohmann::json &j, ToolPurposeFlagBitsEXT &p ) {
-  if( j.is_string() ) {
-    if( "Validation" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eValidation ;
-      return;
-    }
-    if( "eValidation" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eValidation ;
-      return;
-    }
-    if( "VK_TOOL_PURPOSE_VALIDATION_BIT_EXT" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eValidation ;
-      return;
-    }
-    if( "Profiling" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eProfiling ;
-      return;
-    }
-    if( "eProfiling" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eProfiling ;
-      return;
-    }
-    if( "VK_TOOL_PURPOSE_PROFILING_BIT_EXT" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eProfiling ;
-      return;
-    }
-    if( "Tracing" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eTracing ;
-      return;
-    }
-    if( "eTracing" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eTracing ;
-      return;
-    }
-    if( "VK_TOOL_PURPOSE_TRACING_BIT_EXT" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eTracing ;
-      return;
-    }
-    if( "AdditionalFeatures" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eAdditionalFeatures ;
-      return;
-    }
-    if( "eAdditionalFeatures" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eAdditionalFeatures ;
-      return;
-    }
-    if( "VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eAdditionalFeatures ;
-      return;
-    }
-    if( "ModifyingFeatures" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eModifyingFeatures ;
-      return;
-    }
-    if( "eModifyingFeatures" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eModifyingFeatures ;
-      return;
-    }
-    if( "VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eModifyingFeatures ;
-      return;
-    }
-    if( "DebugReporting" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eDebugReporting ;
-      return;
-    }
-    if( "eDebugReporting" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eDebugReporting ;
-      return;
-    }
-    if( "VK_TOOL_PURPOSE_DEBUG_REPORTING_BIT_EXT" == j.get< std::string >() ) {
-      p = ToolPurposeFlagBitsEXT :: eDebugReporting ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ToolPurposeFlagBitsEXT" );
-  }
-  if( j.is_number() ) {
-    p = ToolPurposeFlagBitsEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ToolPurposeFlagBitsEXT" );
-}
-inline void to_json( nlohmann::json &j, const ToolPurposeFlagsEXT &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( ToolPurposeFlagBitsEXT ) * 8u; ++n ) {
-    if( p & ToolPurposeFlagsEXT ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, ToolPurposeFlagBitsEXT ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, ToolPurposeFlagsEXT &p ) {
-  if( j.is_array() ) {
-    p = ToolPurposeFlagsEXT ( 0 );
-    for( auto &e:  j ) {
-      ToolPurposeFlagBitsEXT temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for ToolPurposeFlagsEXT" );
-}
-}
-#endif
 
 
 #endif

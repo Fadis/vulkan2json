@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_IMAGEBLIT22KHR_HPP
 #define VULKAN2JSON_IMAGEBLIT22KHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ImageSubresourceLayers.hpp>
-#include <vulkan2json/Offset3D.hpp>
-#include <vulkan2json/ImageSubresourceLayers.hpp>
-#include <vulkan2json/Offset3D.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImageBlit2KHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "srcSubresource" ] = p.srcSubresource;
-  j[ "srcOffsets" ] = nlohmann::json::array();
-  std::copy( p.srcOffsets.begin(), p.srcOffsets.end(), std::back_inserter( j[ "srcOffsets" ] ) );
-  j[ "dstSubresource" ] = p.dstSubresource;
-  j[ "dstOffsets" ] = nlohmann::json::array();
-  std::copy( p.dstOffsets.begin(), p.dstOffsets.end(), std::back_inserter( j[ "dstOffsets" ] ) );
+void to_json( nlohmann::json &j, const ImageBlit2KHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkImageBlit2KHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ImageBlit2KHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkImageBlit2KHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ImageBlit2KHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ImageBlit2KHR" );
-  p.srcSubresource = ImageSubresourceLayers ( j[ "srcSubresource" ] );
-  if( !j[ "srcOffsets" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for ImageBlit2KHR.srcOffsets" );
-  if( !j[ "srcOffsets" ].size() > p.srcOffsets.size() ) throw vulkan2json::invalid_array_value(  "too many values in array for ImageBlit2KHR.srcOffsets" );
-  std::fill( p.srcOffsets.begin(), p.srcOffsets.end(), std::remove_cv_t< std::remove_reference_t< decltype( *p.srcOffsets.begin() ) > >() );
-  std::copy( j[ "srcOffsets" ].begin(), j[ "srcOffsets" ].end(), p.srcOffsets.begin() );
-  p.dstSubresource = ImageSubresourceLayers ( j[ "dstSubresource" ] );
-  if( !j[ "dstOffsets" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for ImageBlit2KHR.dstOffsets" );
-  if( !j[ "dstOffsets" ].size() > p.dstOffsets.size() ) throw vulkan2json::invalid_array_value(  "too many values in array for ImageBlit2KHR.dstOffsets" );
-  std::fill( p.dstOffsets.begin(), p.dstOffsets.end(), std::remove_cv_t< std::remove_reference_t< decltype( *p.dstOffsets.begin() ) > >() );
-  std::copy( j[ "dstOffsets" ].begin(), j[ "dstOffsets" ].end(), p.dstOffsets.begin() );
+  void from_json( const nlohmann::json &j, ImageBlit2KHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkImageBlit2KHR &p ) {
-  VULKAN_HPP_NAMESPACE :: ImageBlit2KHR temp;
-  from_json( j, temp );
-  p = VkImageBlit2KHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkImageBlit2KHR &p );
 
 
 #endif

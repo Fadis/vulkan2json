@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICE8BITSTORAGEFEATURES_HPP
 #define VULKAN2JSON_PHYSICALDEVICE8BITSTORAGEFEATURES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDevice8BitStorageFeatures &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "storageBuffer8BitAccess" ] = bool( p.storageBuffer8BitAccess );
-  j[ "uniformAndStorageBuffer8BitAccess" ] = bool( p.uniformAndStorageBuffer8BitAccess );
-  j[ "storagePushConstant8" ] = bool( p.storagePushConstant8 );
+void to_json( nlohmann::json &j, const PhysicalDevice8BitStorageFeatures &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDevice8BitStorageFeatures &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDevice8BitStorageFeatures ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDevice8BitStorageFeatures &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDevice8BitStorageFeatures &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDevice8BitStorageFeatures" );
-  p.storageBuffer8BitAccess = j[ "storageBuffer8BitAccess" ];
-  p.uniformAndStorageBuffer8BitAccess = j[ "uniformAndStorageBuffer8BitAccess" ];
-  p.storagePushConstant8 = j[ "storagePushConstant8" ];
+  void from_json( const nlohmann::json &j, PhysicalDevice8BitStorageFeatures &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDevice8BitStorageFeatures &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDevice8BitStorageFeatures temp;
-  from_json( j, temp );
-  p = VkPhysicalDevice8BitStorageFeatures ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDevice8BitStorageFeatures &p );
 
 
 #endif

@@ -32,6 +32,16 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/Format.hpp>
+#include <vulkan2json/FormatFeatureFlags.hpp>
+#include <vulkan2json/ComponentMapping.hpp>
+#include <vulkan2json/SamplerYcbcrModelConversion.hpp>
+#include <vulkan2json/SamplerYcbcrRange.hpp>
+#include <vulkan2json/ChromaLocation.hpp>
+#include <vulkan2json/ChromaLocation.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/Format.hpp>
 #include <vulkan2json/FormatFeatureFlags.hpp>
@@ -62,14 +72,30 @@ inline void to_json( nlohmann::json &j, const VkAndroidHardwareBufferFormatPrope
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, AndroidHardwareBufferFormatPropertiesANDROID &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AndroidHardwareBufferFormatPropertiesANDROID" );
-  p.format = Format ( j[ "format" ] );
-  p.externalFormat = j[ "externalFormat" ];
-  p.formatFeatures = FormatFeatureFlags ( j[ "formatFeatures" ] );
-  p.samplerYcbcrConversionComponents = ComponentMapping ( j[ "samplerYcbcrConversionComponents" ] );
-  p.suggestedYcbcrModel = SamplerYcbcrModelConversion ( j[ "suggestedYcbcrModel" ] );
-  p.suggestedYcbcrRange = SamplerYcbcrRange ( j[ "suggestedYcbcrRange" ] );
-  p.suggestedXChromaOffset = ChromaLocation ( j[ "suggestedXChromaOffset" ] );
-  p.suggestedYChromaOffset = ChromaLocation ( j[ "suggestedYChromaOffset" ] );
+  if( j.find( "format" ) != j.end() ) {
+    p.format = Format ( j[ "format" ] );
+  }
+  if( j.find( "externalFormat" ) != j.end() ) {
+    p.externalFormat = j[ "externalFormat" ];
+  }
+  if( j.find( "formatFeatures" ) != j.end() ) {
+    p.formatFeatures = FormatFeatureFlags ( j[ "formatFeatures" ] );
+  }
+  if( j.find( "samplerYcbcrConversionComponents" ) != j.end() ) {
+    p.samplerYcbcrConversionComponents = ComponentMapping ( j[ "samplerYcbcrConversionComponents" ] );
+  }
+  if( j.find( "suggestedYcbcrModel" ) != j.end() ) {
+    p.suggestedYcbcrModel = SamplerYcbcrModelConversion ( j[ "suggestedYcbcrModel" ] );
+  }
+  if( j.find( "suggestedYcbcrRange" ) != j.end() ) {
+    p.suggestedYcbcrRange = SamplerYcbcrRange ( j[ "suggestedYcbcrRange" ] );
+  }
+  if( j.find( "suggestedXChromaOffset" ) != j.end() ) {
+    p.suggestedXChromaOffset = ChromaLocation ( j[ "suggestedXChromaOffset" ] );
+  }
+  if( j.find( "suggestedYChromaOffset" ) != j.end() ) {
+    p.suggestedYChromaOffset = ChromaLocation ( j[ "suggestedYChromaOffset" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkAndroidHardwareBufferFormatPropertiesANDROID &p ) {

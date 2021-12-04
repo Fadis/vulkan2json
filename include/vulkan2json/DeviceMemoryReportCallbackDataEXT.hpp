@@ -22,54 +22,19 @@
 #ifndef VULKAN2JSON_DEVICEMEMORYREPORTCALLBACKDATAEXT_HPP
 #define VULKAN2JSON_DEVICEMEMORYREPORTCALLBACKDATAEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DeviceMemoryReportFlagsEXT.hpp>
-#include <vulkan2json/DeviceMemoryReportEventTypeEXT.hpp>
-#include <vulkan2json/ObjectType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DeviceMemoryReportCallbackDataEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "type" ] = p.type;
-  j[ "memoryObjectId" ] = p.memoryObjectId;
-  j[ "size" ] = p.size;
-  j[ "objectType" ] = p.objectType;
-  j[ "objectHandle" ] = p.objectHandle;
-  j[ "heapIndex" ] = p.heapIndex;
+void to_json( nlohmann::json &j, const DeviceMemoryReportCallbackDataEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDeviceMemoryReportCallbackDataEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DeviceMemoryReportCallbackDataEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDeviceMemoryReportCallbackDataEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DeviceMemoryReportCallbackDataEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DeviceMemoryReportCallbackDataEXT" );
-  p.flags = DeviceMemoryReportFlagsEXT ( j[ "flags" ] );
-  p.type = DeviceMemoryReportEventTypeEXT ( j[ "type" ] );
-  p.memoryObjectId = j[ "memoryObjectId" ];
-  p.size = j[ "size" ];
-  p.objectType = ObjectType ( j[ "objectType" ] );
-  p.objectHandle = j[ "objectHandle" ];
-  p.heapIndex = j[ "heapIndex" ];
+  void from_json( const nlohmann::json &j, DeviceMemoryReportCallbackDataEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDeviceMemoryReportCallbackDataEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DeviceMemoryReportCallbackDataEXT temp;
-  from_json( j, temp );
-  p = VkDeviceMemoryReportCallbackDataEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkDeviceMemoryReportCallbackDataEXT &p );
 
 
 #endif

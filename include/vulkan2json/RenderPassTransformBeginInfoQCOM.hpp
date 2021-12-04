@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_RENDERPASSTRANSFORMBEGININFOQCOM_HPP
 #define VULKAN2JSON_RENDERPASSTRANSFORMBEGININFOQCOM_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/SurfaceTransformFlagsKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const RenderPassTransformBeginInfoQCOM &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "transform" ] = p.transform;
+void to_json( nlohmann::json &j, const RenderPassTransformBeginInfoQCOM &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkRenderPassTransformBeginInfoQCOM &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: RenderPassTransformBeginInfoQCOM ( p ) );
-}
+void to_json( nlohmann::json &j, const VkRenderPassTransformBeginInfoQCOM &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, RenderPassTransformBeginInfoQCOM &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for RenderPassTransformBeginInfoQCOM" );
-  p.transform = SurfaceTransformFlagBitsKHR ( j[ "transform" ] );
+  void from_json( const nlohmann::json &j, RenderPassTransformBeginInfoQCOM &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkRenderPassTransformBeginInfoQCOM &p ) {
-  VULKAN_HPP_NAMESPACE :: RenderPassTransformBeginInfoQCOM temp;
-  from_json( j, temp );
-  p = VkRenderPassTransformBeginInfoQCOM ( temp );
-}
+void from_json( const nlohmann::json &j, VkRenderPassTransformBeginInfoQCOM &p );
 
 
 #endif

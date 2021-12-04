@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_SPARSEIMAGEFORMATPROPERTIES_HPP
 #define VULKAN2JSON_SPARSEIMAGEFORMATPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/ImageAspectFlags.hpp>
-#include <vulkan2json/Extent3D.hpp>
-#include <vulkan2json/SparseImageFormatFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SparseImageFormatProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "aspectMask" ] = p.aspectMask;
-  j[ "imageGranularity" ] = p.imageGranularity;
-  j[ "flags" ] = p.flags;
+void to_json( nlohmann::json &j, const SparseImageFormatProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSparseImageFormatProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SparseImageFormatProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSparseImageFormatProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SparseImageFormatProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SparseImageFormatProperties" );
-  p.aspectMask = ImageAspectFlags ( j[ "aspectMask" ] );
-  p.imageGranularity = Extent3D ( j[ "imageGranularity" ] );
-  p.flags = SparseImageFormatFlags ( j[ "flags" ] );
+  void from_json( const nlohmann::json &j, SparseImageFormatProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSparseImageFormatProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: SparseImageFormatProperties temp;
-  from_json( j, temp );
-  p = VkSparseImageFormatProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkSparseImageFormatProperties &p );
 
 
 #endif

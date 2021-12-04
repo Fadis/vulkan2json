@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESAMPLERYCBCRCONVERSIONFEATURES_HPP
 #define VULKAN2JSON_PHYSICALDEVICESAMPLERYCBCRCONVERSIONFEATURES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceSamplerYcbcrConversionFeatures &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "samplerYcbcrConversion" ] = bool( p.samplerYcbcrConversion );
+void to_json( nlohmann::json &j, const PhysicalDeviceSamplerYcbcrConversionFeatures &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceSamplerYcbcrConversionFeatures &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceSamplerYcbcrConversionFeatures ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceSamplerYcbcrConversionFeatures &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceSamplerYcbcrConversionFeatures &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceSamplerYcbcrConversionFeatures" );
-  p.samplerYcbcrConversion = j[ "samplerYcbcrConversion" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceSamplerYcbcrConversionFeatures &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceSamplerYcbcrConversionFeatures &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceSamplerYcbcrConversionFeatures temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceSamplerYcbcrConversionFeatures ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceSamplerYcbcrConversionFeatures &p );
 
 
 #endif

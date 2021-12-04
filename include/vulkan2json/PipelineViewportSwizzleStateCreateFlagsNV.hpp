@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_PIPELINEVIEWPORTSWIZZLESTATECREATEFLAGSNV_HPP
 #define VULKAN2JSON_PIPELINEVIEWPORTSWIZZLESTATECREATEFLAGSNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineViewportSwizzleStateCreateFlagBitsNV &p ) {
+  void to_json( nlohmann::json &j, const PipelineViewportSwizzleStateCreateFlagBitsNV &p );
+  void to_json( nlohmann::json &j, const PipelineViewportSwizzleStateCreateFlagsNV &p );
+  void from_json( const nlohmann::json &j, PipelineViewportSwizzleStateCreateFlagBitsNV &p );
+  void from_json( const nlohmann::json &j, PipelineViewportSwizzleStateCreateFlagsNV &p );
 }
-inline void from_json( const nlohmann::json &j, PipelineViewportSwizzleStateCreateFlagBitsNV &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineViewportSwizzleStateCreateFlagBitsNV" );
-  }
-  if( j.is_number() ) {
-    p = PipelineViewportSwizzleStateCreateFlagBitsNV ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineViewportSwizzleStateCreateFlagBitsNV" );
-}
-inline void to_json( nlohmann::json &j, const PipelineViewportSwizzleStateCreateFlagsNV &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineViewportSwizzleStateCreateFlagBitsNV ) * 8u; ++n ) {
-    if( p & PipelineViewportSwizzleStateCreateFlagsNV ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineViewportSwizzleStateCreateFlagBitsNV ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, PipelineViewportSwizzleStateCreateFlagsNV &p ) {
-  if( j.is_array() ) {
-    p = PipelineViewportSwizzleStateCreateFlagsNV ( 0 );
-    for( auto &e:  j ) {
-      PipelineViewportSwizzleStateCreateFlagBitsNV temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineViewportSwizzleStateCreateFlagsNV" );
-}
-}
-#endif
 
 
 #endif

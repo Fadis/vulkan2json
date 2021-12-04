@@ -22,56 +22,19 @@
 #ifndef VULKAN2JSON_SUBPASSDESCRIPTION22_HPP
 #define VULKAN2JSON_SUBPASSDESCRIPTION22_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/SubpassDescriptionFlags.hpp>
-#include <vulkan2json/PipelineBindPoint.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SubpassDescription2 &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "pipelineBindPoint" ] = p.pipelineBindPoint;
-  j[ "viewMask" ] = p.viewMask;
-  j[ "inputAttachmentCount" ] = p.inputAttachmentCount;
-  j[ "pInputAttachments" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pInputAttachments ) );
-  j[ "colorAttachmentCount" ] = p.colorAttachmentCount;
-  j[ "pColorAttachments" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pColorAttachments ) );
-  j[ "pResolveAttachments" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pResolveAttachments ) );
-  j[ "pDepthStencilAttachment" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pDepthStencilAttachment ) );
-  j[ "preserveAttachmentCount" ] = p.preserveAttachmentCount;
-  j[ "pPreserveAttachments" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pPreserveAttachments ) );
+void to_json( nlohmann::json &j, const SubpassDescription2 &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSubpassDescription2 &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SubpassDescription2 ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSubpassDescription2 &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SubpassDescription2 &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SubpassDescription2" );
-  p.flags = SubpassDescriptionFlags ( j[ "flags" ] );
-  p.pipelineBindPoint = PipelineBindPoint ( j[ "pipelineBindPoint" ] );
-  p.viewMask = j[ "viewMask" ];
-  p.inputAttachmentCount = j[ "inputAttachmentCount" ];
-  p.colorAttachmentCount = j[ "colorAttachmentCount" ];
-  p.preserveAttachmentCount = j[ "preserveAttachmentCount" ];
+  void from_json( const nlohmann::json &j, SubpassDescription2 &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSubpassDescription2 &p ) {
-  VULKAN_HPP_NAMESPACE :: SubpassDescription2 temp;
-  from_json( j, temp );
-  p = VkSubpassDescription2 ( temp );
-}
+void from_json( const nlohmann::json &j, VkSubpassDescription2 &p );
 
 
 #endif

@@ -22,47 +22,19 @@
 #ifndef VULKAN2JSON_BUFFERVIEWCREATEINFO_HPP
 #define VULKAN2JSON_BUFFERVIEWCREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/BufferViewCreateFlags.hpp>
-#include <vulkan2json/Format.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const BufferViewCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "format" ] = p.format;
-  j[ "offset" ] = p.offset;
-  j[ "range" ] = p.range;
+void to_json( nlohmann::json &j, const BufferViewCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkBufferViewCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: BufferViewCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkBufferViewCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, BufferViewCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for BufferViewCreateInfo" );
-  p.flags = BufferViewCreateFlags ( j[ "flags" ] );
-  p.format = Format ( j[ "format" ] );
-  p.offset = j[ "offset" ];
-  p.range = j[ "range" ];
+  void from_json( const nlohmann::json &j, BufferViewCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkBufferViewCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: BufferViewCreateInfo temp;
-  from_json( j, temp );
-  p = VkBufferViewCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkBufferViewCreateInfo &p );
 
 
 #endif

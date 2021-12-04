@@ -22,89 +22,19 @@
 #ifndef VULKAN2JSON_POLYGONMODE_HPP
 #define VULKAN2JSON_POLYGONMODE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PolygonMode &p ) {
-  if( PolygonMode :: eFill == p ) {
-    j = "Fill";
-    return;
-  }
-  if( PolygonMode :: eLine == p ) {
-    j = "Line";
-    return;
-  }
-  if( PolygonMode :: ePoint == p ) {
-    j = "Point";
-    return;
-  }
+void to_json( nlohmann::json &j, const PolygonMode &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPolygonMode &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PolygonMode ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPolygonMode &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PolygonMode &p ) {
-  if( j.is_string() ) {
-    if( "Fill" == j.get< std::string >() ) {
-      p = PolygonMode :: eFill ;
-      return;
-    }
-    if( "eFill" == j.get< std::string >() ) {
-      p = PolygonMode :: eFill ;
-      return;
-    }
-    if( "VK_POLYGON_MODE_FILL" == j.get< std::string >() ) {
-      p = PolygonMode :: eFill ;
-      return;
-    }
-    if( "Line" == j.get< std::string >() ) {
-      p = PolygonMode :: eLine ;
-      return;
-    }
-    if( "eLine" == j.get< std::string >() ) {
-      p = PolygonMode :: eLine ;
-      return;
-    }
-    if( "VK_POLYGON_MODE_LINE" == j.get< std::string >() ) {
-      p = PolygonMode :: eLine ;
-      return;
-    }
-    if( "Point" == j.get< std::string >() ) {
-      p = PolygonMode :: ePoint ;
-      return;
-    }
-    if( "ePoint" == j.get< std::string >() ) {
-      p = PolygonMode :: ePoint ;
-      return;
-    }
-    if( "VK_POLYGON_MODE_POINT" == j.get< std::string >() ) {
-      p = PolygonMode :: ePoint ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PolygonMode" );
-  }
-  if( j.is_number() ) {
-    p = PolygonMode ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PolygonMode" );
+void from_json( const nlohmann::json &j, PolygonMode &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPolygonMode &p ) {
-  VULKAN_HPP_NAMESPACE :: PolygonMode temp;
-  from_json( j, temp );
-  p = VkPolygonMode ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPolygonMode &p );
 
 
 #endif

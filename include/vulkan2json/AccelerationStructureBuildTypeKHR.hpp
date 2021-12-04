@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTUREBUILDTYPEKHR_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTUREBUILDTYPEKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_ACCELERATION_STRUCTURE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureBuildTypeKHR &p ) {
-  if( AccelerationStructureBuildTypeKHR :: eHost == p ) {
-    j = "Host";
-    return;
-  }
-  if( AccelerationStructureBuildTypeKHR :: eDevice == p ) {
-    j = "Device";
-    return;
-  }
+void to_json( nlohmann::json &j, const AccelerationStructureBuildTypeKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAccelerationStructureBuildTypeKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AccelerationStructureBuildTypeKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAccelerationStructureBuildTypeKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AccelerationStructureBuildTypeKHR &p ) {
-  if( j.is_string() ) {
-    if( "Host" == j.get< std::string >() ) {
-      p = AccelerationStructureBuildTypeKHR :: eHost ;
-      return;
-    }
-    if( "eHost" == j.get< std::string >() ) {
-      p = AccelerationStructureBuildTypeKHR :: eHost ;
-      return;
-    }
-    if( "VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_KHR" == j.get< std::string >() ) {
-      p = AccelerationStructureBuildTypeKHR :: eHost ;
-      return;
-    }
-    if( "Device" == j.get< std::string >() ) {
-      p = AccelerationStructureBuildTypeKHR :: eDevice ;
-      return;
-    }
-    if( "eDevice" == j.get< std::string >() ) {
-      p = AccelerationStructureBuildTypeKHR :: eDevice ;
-      return;
-    }
-    if( "VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR" == j.get< std::string >() ) {
-      p = AccelerationStructureBuildTypeKHR :: eDevice ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for AccelerationStructureBuildTypeKHR" );
-  }
-  if( j.is_number() ) {
-    p = AccelerationStructureBuildTypeKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for AccelerationStructureBuildTypeKHR" );
+void from_json( const nlohmann::json &j, AccelerationStructureBuildTypeKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAccelerationStructureBuildTypeKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: AccelerationStructureBuildTypeKHR temp;
-  from_json( j, temp );
-  p = VkAccelerationStructureBuildTypeKHR ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkAccelerationStructureBuildTypeKHR &p );
 
 
 #endif

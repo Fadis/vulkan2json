@@ -32,6 +32,13 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/VideoDecodeFlagsKHR.hpp>
+#include <vulkan2json/Offset2D.hpp>
+#include <vulkan2json/Extent2D.hpp>
+#include <vulkan2json/VideoPictureResourceKHR.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/VideoDecodeFlagsKHR.hpp>
 #include <vulkan2json/Offset2D.hpp>
@@ -60,13 +67,27 @@ inline void to_json( nlohmann::json &j, const VkVideoDecodeInfoKHR &p ) {
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoDecodeInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoDecodeInfoKHR" );
-  p.flags = VideoDecodeFlagsKHR ( j[ "flags" ] );
-  p.codedOffset = Offset2D ( j[ "codedOffset" ] );
-  p.codedExtent = Extent2D ( j[ "codedExtent" ] );
-  p.srcBufferOffset = j[ "srcBufferOffset" ];
-  p.srcBufferRange = j[ "srcBufferRange" ];
-  p.dstPictureResource = VideoPictureResourceKHR ( j[ "dstPictureResource" ] );
-  p.referenceSlotCount = j[ "referenceSlotCount" ];
+  if( j.find( "flags" ) != j.end() ) {
+    p.flags = VideoDecodeFlagsKHR ( j[ "flags" ] );
+  }
+  if( j.find( "codedOffset" ) != j.end() ) {
+    p.codedOffset = Offset2D ( j[ "codedOffset" ] );
+  }
+  if( j.find( "codedExtent" ) != j.end() ) {
+    p.codedExtent = Extent2D ( j[ "codedExtent" ] );
+  }
+  if( j.find( "srcBufferOffset" ) != j.end() ) {
+    p.srcBufferOffset = j[ "srcBufferOffset" ];
+  }
+  if( j.find( "srcBufferRange" ) != j.end() ) {
+    p.srcBufferRange = j[ "srcBufferRange" ];
+  }
+  if( j.find( "dstPictureResource" ) != j.end() ) {
+    p.dstPictureResource = VideoPictureResourceKHR ( j[ "dstPictureResource" ] );
+  }
+  if( j.find( "referenceSlotCount" ) != j.end() ) {
+    p.referenceSlotCount = j[ "referenceSlotCount" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoDecodeInfoKHR &p ) {

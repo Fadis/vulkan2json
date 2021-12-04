@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_IMAGETILING_HPP
 #define VULKAN2JSON_IMAGETILING_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImageTiling &p ) {
-  if( ImageTiling :: eOptimal == p ) {
-    j = "Optimal";
-    return;
-  }
-  if( ImageTiling :: eLinear == p ) {
-    j = "Linear";
-    return;
-  }
+void to_json( nlohmann::json &j, const ImageTiling &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkImageTiling &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ImageTiling ( p ) );
-}
+void to_json( nlohmann::json &j, const VkImageTiling &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ImageTiling &p ) {
-  if( j.is_string() ) {
-    if( "Optimal" == j.get< std::string >() ) {
-      p = ImageTiling :: eOptimal ;
-      return;
-    }
-    if( "eOptimal" == j.get< std::string >() ) {
-      p = ImageTiling :: eOptimal ;
-      return;
-    }
-    if( "VK_IMAGE_TILING_OPTIMAL" == j.get< std::string >() ) {
-      p = ImageTiling :: eOptimal ;
-      return;
-    }
-    if( "Linear" == j.get< std::string >() ) {
-      p = ImageTiling :: eLinear ;
-      return;
-    }
-    if( "eLinear" == j.get< std::string >() ) {
-      p = ImageTiling :: eLinear ;
-      return;
-    }
-    if( "VK_IMAGE_TILING_LINEAR" == j.get< std::string >() ) {
-      p = ImageTiling :: eLinear ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ImageTiling" );
-  }
-  if( j.is_number() ) {
-    p = ImageTiling ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ImageTiling" );
+void from_json( const nlohmann::json &j, ImageTiling &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkImageTiling &p ) {
-  VULKAN_HPP_NAMESPACE :: ImageTiling temp;
-  from_json( j, temp );
-  p = VkImageTiling ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkImageTiling &p );
 
 
 #endif

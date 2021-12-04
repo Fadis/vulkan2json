@@ -22,50 +22,19 @@
 #ifndef VULKAN2JSON_DEVICECREATEINFO_HPP
 #define VULKAN2JSON_DEVICECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DeviceCreateFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DeviceCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "queueCreateInfoCount" ] = p.queueCreateInfoCount;
-  j[ "pQueueCreateInfos" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pQueueCreateInfos ) );
-  j[ "enabledLayerCount" ] = p.enabledLayerCount;
-  j[ "ppEnabledLayerNames" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.ppEnabledLayerNames ) );
-  j[ "enabledExtensionCount" ] = p.enabledExtensionCount;
-  j[ "ppEnabledExtensionNames" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.ppEnabledExtensionNames ) );
-  j[ "pEnabledFeatures" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pEnabledFeatures ) );
+void to_json( nlohmann::json &j, const DeviceCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDeviceCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DeviceCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDeviceCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DeviceCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DeviceCreateInfo" );
-  p.flags = DeviceCreateFlags ( j[ "flags" ] );
-  p.queueCreateInfoCount = j[ "queueCreateInfoCount" ];
-  p.enabledLayerCount = j[ "enabledLayerCount" ];
-  p.enabledExtensionCount = j[ "enabledExtensionCount" ];
+  void from_json( const nlohmann::json &j, DeviceCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDeviceCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: DeviceCreateInfo temp;
-  from_json( j, temp );
-  p = VkDeviceCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkDeviceCreateInfo &p );
 
 
 #endif

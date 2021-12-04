@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_IMAGETYPE_HPP
 #define VULKAN2JSON_IMAGETYPE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImageType &p ) {
-  if( ImageType :: e1D == p ) {
-    j = "1D";
-    return;
-  }
-  if( ImageType :: e2D == p ) {
-    j = "2D";
-    return;
-  }
+void to_json( nlohmann::json &j, const ImageType &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkImageType &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ImageType ( p ) );
-}
+void to_json( nlohmann::json &j, const VkImageType &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ImageType &p ) {
-  if( j.is_string() ) {
-    if( "1D" == j.get< std::string >() ) {
-      p = ImageType :: e1D ;
-      return;
-    }
-    if( "e1D" == j.get< std::string >() ) {
-      p = ImageType :: e1D ;
-      return;
-    }
-    if( "VK_IMAGE_TYPE_1D" == j.get< std::string >() ) {
-      p = ImageType :: e1D ;
-      return;
-    }
-    if( "2D" == j.get< std::string >() ) {
-      p = ImageType :: e2D ;
-      return;
-    }
-    if( "e2D" == j.get< std::string >() ) {
-      p = ImageType :: e2D ;
-      return;
-    }
-    if( "VK_IMAGE_TYPE_2D" == j.get< std::string >() ) {
-      p = ImageType :: e2D ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ImageType" );
-  }
-  if( j.is_number() ) {
-    p = ImageType ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ImageType" );
+void from_json( const nlohmann::json &j, ImageType &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkImageType &p ) {
-  VULKAN_HPP_NAMESPACE :: ImageType temp;
-  from_json( j, temp );
-  p = VkImageType ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkImageType &p );
 
 
 #endif

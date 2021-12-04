@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_DISPLAYPRESENTINFOKHR_HPP
 #define VULKAN2JSON_DISPLAYPRESENTINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/Rect2D.hpp>
-#include <vulkan2json/Rect2D.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DisplayPresentInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "srcRect" ] = p.srcRect;
-  j[ "dstRect" ] = p.dstRect;
-  j[ "persistent" ] = bool( p.persistent );
+void to_json( nlohmann::json &j, const DisplayPresentInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDisplayPresentInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DisplayPresentInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDisplayPresentInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DisplayPresentInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DisplayPresentInfoKHR" );
-  p.srcRect = Rect2D ( j[ "srcRect" ] );
-  p.dstRect = Rect2D ( j[ "dstRect" ] );
-  p.persistent = j[ "persistent" ];
+  void from_json( const nlohmann::json &j, DisplayPresentInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDisplayPresentInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: DisplayPresentInfoKHR temp;
-  from_json( j, temp );
-  p = VkDisplayPresentInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkDisplayPresentInfoKHR &p );
 
 
 #endif

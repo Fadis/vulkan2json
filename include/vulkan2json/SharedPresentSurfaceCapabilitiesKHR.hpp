@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_SHAREDPRESENTSURFACECAPABILITIESKHR_HPP
 #define VULKAN2JSON_SHAREDPRESENTSURFACECAPABILITIESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ImageUsageFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SharedPresentSurfaceCapabilitiesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "sharedPresentSupportedUsageFlags" ] = p.sharedPresentSupportedUsageFlags;
+void to_json( nlohmann::json &j, const SharedPresentSurfaceCapabilitiesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSharedPresentSurfaceCapabilitiesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SharedPresentSurfaceCapabilitiesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSharedPresentSurfaceCapabilitiesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SharedPresentSurfaceCapabilitiesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SharedPresentSurfaceCapabilitiesKHR" );
-  p.sharedPresentSupportedUsageFlags = ImageUsageFlags ( j[ "sharedPresentSupportedUsageFlags" ] );
+  void from_json( const nlohmann::json &j, SharedPresentSurfaceCapabilitiesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSharedPresentSurfaceCapabilitiesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: SharedPresentSurfaceCapabilitiesKHR temp;
-  from_json( j, temp );
-  p = VkSharedPresentSurfaceCapabilitiesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkSharedPresentSurfaceCapabilitiesKHR &p );
 
 
 #endif

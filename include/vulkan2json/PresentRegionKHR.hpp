@@ -22,37 +22,19 @@
 #ifndef VULKAN2JSON_PRESENTREGIONKHR_HPP
 #define VULKAN2JSON_PRESENTREGIONKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PresentRegionKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "rectangleCount" ] = p.rectangleCount;
-  j[ "pRectangles" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pRectangles ) );
+void to_json( nlohmann::json &j, const PresentRegionKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPresentRegionKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PresentRegionKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPresentRegionKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PresentRegionKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PresentRegionKHR" );
-  p.rectangleCount = j[ "rectangleCount" ];
+  void from_json( const nlohmann::json &j, PresentRegionKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPresentRegionKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PresentRegionKHR temp;
-  from_json( j, temp );
-  p = VkPresentRegionKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPresentRegionKHR &p );
 
 
 #endif

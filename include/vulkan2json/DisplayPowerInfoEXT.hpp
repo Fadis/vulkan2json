@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_DISPLAYPOWERINFOEXT_HPP
 #define VULKAN2JSON_DISPLAYPOWERINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DisplayPowerStateEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DisplayPowerInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "powerState" ] = p.powerState;
+void to_json( nlohmann::json &j, const DisplayPowerInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDisplayPowerInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DisplayPowerInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDisplayPowerInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DisplayPowerInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DisplayPowerInfoEXT" );
-  p.powerState = DisplayPowerStateEXT ( j[ "powerState" ] );
+  void from_json( const nlohmann::json &j, DisplayPowerInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDisplayPowerInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DisplayPowerInfoEXT temp;
-  from_json( j, temp );
-  p = VkDisplayPowerInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkDisplayPowerInfoEXT &p );
 
 
 #endif

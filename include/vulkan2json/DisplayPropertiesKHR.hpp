@@ -22,48 +22,19 @@
 #ifndef VULKAN2JSON_DISPLAYPROPERTIESKHR_HPP
 #define VULKAN2JSON_DISPLAYPROPERTIESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/Extent2D.hpp>
-#include <vulkan2json/Extent2D.hpp>
-#include <vulkan2json/SurfaceTransformFlagsKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DisplayPropertiesKHR &p ) {
-  j = nlohmann::json::object();
-  if( p.displayName ) j[ "displayName" ] = std::string( p.displayName );
-  j[ "physicalDimensions" ] = p.physicalDimensions;
-  j[ "physicalResolution" ] = p.physicalResolution;
-  j[ "supportedTransforms" ] = p.supportedTransforms;
-  j[ "planeReorderPossible" ] = bool( p.planeReorderPossible );
-  j[ "persistentContent" ] = bool( p.persistentContent );
+void to_json( nlohmann::json &j, const DisplayPropertiesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDisplayPropertiesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DisplayPropertiesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDisplayPropertiesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DisplayPropertiesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DisplayPropertiesKHR" );
-  p.physicalDimensions = Extent2D ( j[ "physicalDimensions" ] );
-  p.physicalResolution = Extent2D ( j[ "physicalResolution" ] );
-  p.supportedTransforms = SurfaceTransformFlagsKHR ( j[ "supportedTransforms" ] );
-  p.planeReorderPossible = j[ "planeReorderPossible" ];
-  p.persistentContent = j[ "persistentContent" ];
+  void from_json( const nlohmann::json &j, DisplayPropertiesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDisplayPropertiesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: DisplayPropertiesKHR temp;
-  from_json( j, temp );
-  p = VkDisplayPropertiesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkDisplayPropertiesKHR &p );
 
 
 #endif

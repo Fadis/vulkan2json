@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_TESSELLATIONDOMAINORIGIN_HPP
 #define VULKAN2JSON_TESSELLATIONDOMAINORIGIN_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const TessellationDomainOrigin &p ) {
-  if( TessellationDomainOrigin :: eUpperLeft == p ) {
-    j = "UpperLeft";
-    return;
-  }
+void to_json( nlohmann::json &j, const TessellationDomainOrigin &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkTessellationDomainOrigin &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: TessellationDomainOrigin ( p ) );
-}
+void to_json( nlohmann::json &j, const VkTessellationDomainOrigin &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, TessellationDomainOrigin &p ) {
-  if( j.is_string() ) {
-    if( "UpperLeft" == j.get< std::string >() ) {
-      p = TessellationDomainOrigin :: eUpperLeft ;
-      return;
-    }
-    if( "eUpperLeft" == j.get< std::string >() ) {
-      p = TessellationDomainOrigin :: eUpperLeft ;
-      return;
-    }
-    if( "VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT" == j.get< std::string >() ) {
-      p = TessellationDomainOrigin :: eUpperLeft ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for TessellationDomainOrigin" );
-  }
-  if( j.is_number() ) {
-    p = TessellationDomainOrigin ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for TessellationDomainOrigin" );
+void from_json( const nlohmann::json &j, TessellationDomainOrigin &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkTessellationDomainOrigin &p ) {
-  VULKAN_HPP_NAMESPACE :: TessellationDomainOrigin temp;
-  from_json( j, temp );
-  p = VkTessellationDomainOrigin ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkTessellationDomainOrigin &p );
 
 
 #endif

@@ -22,59 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEDRIVERPROPERTIES_HPP
 #define VULKAN2JSON_PHYSICALDEVICEDRIVERPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DriverId.hpp>
-#include <vulkan2json/ConformanceVersion.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceDriverProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "driverID" ] = p.driverID;
-  j[ "driverName" ] = std::string( p.driverName.begin(), std::find( p.driverName.begin(), p.driverName.end(), '\0' ) );
-  j[ "driverInfo" ] = std::string( p.driverInfo.begin(), std::find( p.driverInfo.begin(), p.driverInfo.end(), '\0' ) );
-  j[ "conformanceVersion" ] = p.conformanceVersion;
+void to_json( nlohmann::json &j, const PhysicalDeviceDriverProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceDriverProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceDriverProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceDriverProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceDriverProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceDriverProperties" );
-  p.driverID = DriverId ( j[ "driverID" ] );
-  {
-    std::string s = j[ "driverName" ];
-    if( !p.driverName.empty() ) {
-      p.driverName[ p.driverName.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.driverName.size() - 1u ) ), p.driverName.begin() );
-    }
-  }
-  {
-    std::string s = j[ "driverInfo" ];
-    if( !p.driverInfo.empty() ) {
-      p.driverInfo[ p.driverInfo.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.driverInfo.size() - 1u ) ), p.driverInfo.begin() );
-    }
-  }
-  p.conformanceVersion = ConformanceVersion ( j[ "conformanceVersion" ] );
+  void from_json( const nlohmann::json &j, PhysicalDeviceDriverProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceDriverProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceDriverProperties temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceDriverProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceDriverProperties &p );
 
 
 #endif

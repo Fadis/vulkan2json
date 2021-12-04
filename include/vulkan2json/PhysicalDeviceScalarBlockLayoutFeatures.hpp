@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESCALARBLOCKLAYOUTFEATURES_HPP
 #define VULKAN2JSON_PHYSICALDEVICESCALARBLOCKLAYOUTFEATURES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceScalarBlockLayoutFeatures &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "scalarBlockLayout" ] = bool( p.scalarBlockLayout );
+void to_json( nlohmann::json &j, const PhysicalDeviceScalarBlockLayoutFeatures &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceScalarBlockLayoutFeatures &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceScalarBlockLayoutFeatures ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceScalarBlockLayoutFeatures &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceScalarBlockLayoutFeatures &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceScalarBlockLayoutFeatures" );
-  p.scalarBlockLayout = j[ "scalarBlockLayout" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceScalarBlockLayoutFeatures &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceScalarBlockLayoutFeatures &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceScalarBlockLayoutFeatures temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceScalarBlockLayoutFeatures ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceScalarBlockLayoutFeatures &p );
 
 
 #endif

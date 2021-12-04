@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECOLORWRITECREATEINFOEXT_HPP
 #define VULKAN2JSON_PIPELINECOLORWRITECREATEINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineColorWriteCreateInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "attachmentCount" ] = p.attachmentCount;
-  j[ "pColorWriteEnables" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pColorWriteEnables ) );
+void to_json( nlohmann::json &j, const PipelineColorWriteCreateInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineColorWriteCreateInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineColorWriteCreateInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineColorWriteCreateInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineColorWriteCreateInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineColorWriteCreateInfoEXT" );
-  p.attachmentCount = j[ "attachmentCount" ];
+  void from_json( const nlohmann::json &j, PipelineColorWriteCreateInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineColorWriteCreateInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineColorWriteCreateInfoEXT temp;
-  from_json( j, temp );
-  p = VkPipelineColorWriteCreateInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineColorWriteCreateInfoEXT &p );
 
 
 #endif

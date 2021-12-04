@@ -22,89 +22,19 @@
 #ifndef VULKAN2JSON_SCOPENV_HPP
 #define VULKAN2JSON_SCOPENV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_NV_COOPERATIVE_MATRIX_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ScopeNV &p ) {
-  if( ScopeNV :: eDevice == p ) {
-    j = "Device";
-    return;
-  }
-  if( ScopeNV :: eWorkgroup == p ) {
-    j = "Workgroup";
-    return;
-  }
-  if( ScopeNV :: eSubgroup == p ) {
-    j = "Subgroup";
-    return;
-  }
+void to_json( nlohmann::json &j, const ScopeNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkScopeNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ScopeNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkScopeNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ScopeNV &p ) {
-  if( j.is_string() ) {
-    if( "Device" == j.get< std::string >() ) {
-      p = ScopeNV :: eDevice ;
-      return;
-    }
-    if( "eDevice" == j.get< std::string >() ) {
-      p = ScopeNV :: eDevice ;
-      return;
-    }
-    if( "VK_SCOPE_DEVICE_NV" == j.get< std::string >() ) {
-      p = ScopeNV :: eDevice ;
-      return;
-    }
-    if( "Workgroup" == j.get< std::string >() ) {
-      p = ScopeNV :: eWorkgroup ;
-      return;
-    }
-    if( "eWorkgroup" == j.get< std::string >() ) {
-      p = ScopeNV :: eWorkgroup ;
-      return;
-    }
-    if( "VK_SCOPE_WORKGROUP_NV" == j.get< std::string >() ) {
-      p = ScopeNV :: eWorkgroup ;
-      return;
-    }
-    if( "Subgroup" == j.get< std::string >() ) {
-      p = ScopeNV :: eSubgroup ;
-      return;
-    }
-    if( "eSubgroup" == j.get< std::string >() ) {
-      p = ScopeNV :: eSubgroup ;
-      return;
-    }
-    if( "VK_SCOPE_SUBGROUP_NV" == j.get< std::string >() ) {
-      p = ScopeNV :: eSubgroup ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ScopeNV" );
-  }
-  if( j.is_number() ) {
-    p = ScopeNV ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ScopeNV" );
+void from_json( const nlohmann::json &j, ScopeNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkScopeNV &p ) {
-  VULKAN_HPP_NAMESPACE :: ScopeNV temp;
-  from_json( j, temp );
-  p = VkScopeNV ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkScopeNV &p );
 
 
 #endif

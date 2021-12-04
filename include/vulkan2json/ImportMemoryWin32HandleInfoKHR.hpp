@@ -32,6 +32,10 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/ExternalMemoryHandleTypeFlags.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/ExternalMemoryHandleTypeFlags.hpp>
 #if defined( VK_USE_PLATFORM_WIN32_KHR )
@@ -49,7 +53,9 @@ inline void to_json( nlohmann::json &j, const VkImportMemoryWin32HandleInfoKHR &
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, ImportMemoryWin32HandleInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ImportMemoryWin32HandleInfoKHR" );
-  p.handleType = ExternalMemoryHandleTypeFlagBits ( j[ "handleType" ] );
+  if( j.find( "handleType" ) != j.end() ) {
+    p.handleType = ExternalMemoryHandleTypeFlagBits ( j[ "handleType" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkImportMemoryWin32HandleInfoKHR &p ) {

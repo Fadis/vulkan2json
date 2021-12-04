@@ -22,58 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINEEXECUTABLEPROPERTIESKHR_HPP
 #define VULKAN2JSON_PIPELINEEXECUTABLEPROPERTIESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ShaderStageFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineExecutablePropertiesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "stages" ] = p.stages;
-  j[ "name" ] = std::string( p.name.begin(), std::find( p.name.begin(), p.name.end(), '\0' ) );
-  j[ "description" ] = std::string( p.description.begin(), std::find( p.description.begin(), p.description.end(), '\0' ) );
-  j[ "subgroupSize" ] = p.subgroupSize;
+void to_json( nlohmann::json &j, const PipelineExecutablePropertiesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineExecutablePropertiesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineExecutablePropertiesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineExecutablePropertiesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineExecutablePropertiesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineExecutablePropertiesKHR" );
-  p.stages = ShaderStageFlags ( j[ "stages" ] );
-  {
-    std::string s = j[ "name" ];
-    if( !p.name.empty() ) {
-      p.name[ p.name.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.name.size() - 1u ) ), p.name.begin() );
-    }
-  }
-  {
-    std::string s = j[ "description" ];
-    if( !p.description.empty() ) {
-      p.description[ p.description.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.description.size() - 1u ) ), p.description.begin() );
-    }
-  }
-  p.subgroupSize = j[ "subgroupSize" ];
+  void from_json( const nlohmann::json &j, PipelineExecutablePropertiesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineExecutablePropertiesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineExecutablePropertiesKHR temp;
-  from_json( j, temp );
-  p = VkPipelineExecutablePropertiesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineExecutablePropertiesKHR &p );
 
 
 #endif

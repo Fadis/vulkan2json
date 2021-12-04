@@ -32,10 +32,11 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_VIDEO_QUEUE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoCapabilitiesFlagBitsKHR &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoCapabilitiesFlagBitsKHR :: eProtectedContent == p ) {
     j = "ProtectedContent";
     return;
@@ -44,19 +45,19 @@ inline void to_json( nlohmann::json &j, const VideoCapabilitiesFlagBitsKHR &p ) 
 }
 inline void from_json( const nlohmann::json &j, VideoCapabilitiesFlagBitsKHR &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "ProtectedContent" == j.get< std::string >() ) {
       p = VideoCapabilitiesFlagBitsKHR :: eProtectedContent ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eProtectedContent" == j.get< std::string >() ) {
       p = VideoCapabilitiesFlagBitsKHR :: eProtectedContent ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CAPABILITIES_PROTECTED_CONTENT_BIT_KHR" == j.get< std::string >() ) {
       p = VideoCapabilitiesFlagBitsKHR :: eProtectedContent ;
       return;
@@ -91,7 +92,6 @@ inline void from_json( const nlohmann::json &j, VideoCapabilitiesFlagsKHR &p ) {
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoCapabilitiesFlagsKHR" );
 }
 }
-#endif
 
 
 #endif

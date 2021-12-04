@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_FRAGMENTSHADINGRATETYPENV_HPP
 #define VULKAN2JSON_FRAGMENTSHADINGRATETYPENV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_NV_FRAGMENT_SHADING_RATE_ENUMS_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const FragmentShadingRateTypeNV &p ) {
-  if( FragmentShadingRateTypeNV :: eFragmentSize == p ) {
-    j = "FragmentSize";
-    return;
-  }
+void to_json( nlohmann::json &j, const FragmentShadingRateTypeNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkFragmentShadingRateTypeNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: FragmentShadingRateTypeNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkFragmentShadingRateTypeNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, FragmentShadingRateTypeNV &p ) {
-  if( j.is_string() ) {
-    if( "FragmentSize" == j.get< std::string >() ) {
-      p = FragmentShadingRateTypeNV :: eFragmentSize ;
-      return;
-    }
-    if( "eFragmentSize" == j.get< std::string >() ) {
-      p = FragmentShadingRateTypeNV :: eFragmentSize ;
-      return;
-    }
-    if( "VK_FRAGMENT_SHADING_RATE_TYPE_FRAGMENT_SIZE_NV" == j.get< std::string >() ) {
-      p = FragmentShadingRateTypeNV :: eFragmentSize ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for FragmentShadingRateTypeNV" );
-  }
-  if( j.is_number() ) {
-    p = FragmentShadingRateTypeNV ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for FragmentShadingRateTypeNV" );
+void from_json( const nlohmann::json &j, FragmentShadingRateTypeNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkFragmentShadingRateTypeNV &p ) {
-  VULKAN_HPP_NAMESPACE :: FragmentShadingRateTypeNV temp;
-  from_json( j, temp );
-  p = VkFragmentShadingRateTypeNV ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkFragmentShadingRateTypeNV &p );
 
 
 #endif

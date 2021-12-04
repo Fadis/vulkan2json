@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESHADERCLOCKFEATURESKHR_HPP
 #define VULKAN2JSON_PHYSICALDEVICESHADERCLOCKFEATURESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceShaderClockFeaturesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "shaderSubgroupClock" ] = bool( p.shaderSubgroupClock );
-  j[ "shaderDeviceClock" ] = bool( p.shaderDeviceClock );
+void to_json( nlohmann::json &j, const PhysicalDeviceShaderClockFeaturesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceShaderClockFeaturesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderClockFeaturesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceShaderClockFeaturesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceShaderClockFeaturesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceShaderClockFeaturesKHR" );
-  p.shaderSubgroupClock = j[ "shaderSubgroupClock" ];
-  p.shaderDeviceClock = j[ "shaderDeviceClock" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceShaderClockFeaturesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceShaderClockFeaturesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderClockFeaturesKHR temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceShaderClockFeaturesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceShaderClockFeaturesKHR &p );
 
 
 #endif

@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTUREINSTANCEKHR_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTUREINSTANCEKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/TransformMatrixKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureInstanceKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "transform" ] = p.transform;
-  j[ "instanceCustomIndex" ] = p.instanceCustomIndex;
-  j[ "mask" ] = p.mask;
-  j[ "instanceShaderBindingTableRecordOffset" ] = p.instanceShaderBindingTableRecordOffset;
-  j[ "accelerationStructureReference" ] = p.accelerationStructureReference;
+void to_json( nlohmann::json &j, const AccelerationStructureInstanceKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAccelerationStructureInstanceKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AccelerationStructureInstanceKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAccelerationStructureInstanceKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AccelerationStructureInstanceKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AccelerationStructureInstanceKHR" );
-  p.transform = TransformMatrixKHR ( j[ "transform" ] );
-  p.instanceCustomIndex = j[ "instanceCustomIndex" ];
-  p.mask = j[ "mask" ];
-  p.instanceShaderBindingTableRecordOffset = j[ "instanceShaderBindingTableRecordOffset" ];
-  p.accelerationStructureReference = j[ "accelerationStructureReference" ];
+  void from_json( const nlohmann::json &j, AccelerationStructureInstanceKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAccelerationStructureInstanceKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: AccelerationStructureInstanceKHR temp;
-  from_json( j, temp );
-  p = VkAccelerationStructureInstanceKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkAccelerationStructureInstanceKHR &p );
 
 
 #endif

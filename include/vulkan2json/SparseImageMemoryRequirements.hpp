@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_SPARSEIMAGEMEMORYREQUIREMENTS_HPP
 #define VULKAN2JSON_SPARSEIMAGEMEMORYREQUIREMENTS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/SparseImageFormatProperties.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SparseImageMemoryRequirements &p ) {
-  j = nlohmann::json::object();
-  j[ "formatProperties" ] = p.formatProperties;
-  j[ "imageMipTailFirstLod" ] = p.imageMipTailFirstLod;
-  j[ "imageMipTailSize" ] = p.imageMipTailSize;
-  j[ "imageMipTailOffset" ] = p.imageMipTailOffset;
-  j[ "imageMipTailStride" ] = p.imageMipTailStride;
+void to_json( nlohmann::json &j, const SparseImageMemoryRequirements &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSparseImageMemoryRequirements &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SparseImageMemoryRequirements ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSparseImageMemoryRequirements &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SparseImageMemoryRequirements &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SparseImageMemoryRequirements" );
-  p.formatProperties = SparseImageFormatProperties ( j[ "formatProperties" ] );
-  p.imageMipTailFirstLod = j[ "imageMipTailFirstLod" ];
-  p.imageMipTailSize = j[ "imageMipTailSize" ];
-  p.imageMipTailOffset = j[ "imageMipTailOffset" ];
-  p.imageMipTailStride = j[ "imageMipTailStride" ];
+  void from_json( const nlohmann::json &j, SparseImageMemoryRequirements &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSparseImageMemoryRequirements &p ) {
-  VULKAN_HPP_NAMESPACE :: SparseImageMemoryRequirements temp;
-  from_json( j, temp );
-  p = VkSparseImageMemoryRequirements ( temp );
-}
+void from_json( const nlohmann::json &j, VkSparseImageMemoryRequirements &p );
 
 
 #endif

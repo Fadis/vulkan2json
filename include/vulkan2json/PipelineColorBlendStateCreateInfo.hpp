@@ -22,54 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECOLORBLENDSTATECREATEINFO_HPP
 #define VULKAN2JSON_PIPELINECOLORBLENDSTATECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineColorBlendStateCreateFlags.hpp>
-#include <vulkan2json/LogicOp.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineColorBlendStateCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "logicOpEnable" ] = bool( p.logicOpEnable );
-  j[ "logicOp" ] = p.logicOp;
-  j[ "attachmentCount" ] = p.attachmentCount;
-  j[ "pAttachments" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pAttachments ) );
-  j[ "blendConstants" ] = nlohmann::json::array();
-  std::copy( p.blendConstants.begin(), p.blendConstants.end(), std::back_inserter( j[ "blendConstants" ] ) );
+void to_json( nlohmann::json &j, const PipelineColorBlendStateCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineColorBlendStateCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineColorBlendStateCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineColorBlendStateCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineColorBlendStateCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineColorBlendStateCreateInfo" );
-  p.flags = PipelineColorBlendStateCreateFlags ( j[ "flags" ] );
-  p.logicOpEnable = j[ "logicOpEnable" ];
-  p.logicOp = LogicOp ( j[ "logicOp" ] );
-  p.attachmentCount = j[ "attachmentCount" ];
-  if( !j[ "blendConstants" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PipelineColorBlendStateCreateInfo.blendConstants" );
-  if( !j[ "blendConstants" ].size() > p.blendConstants.size() ) throw vulkan2json::invalid_array_value( "too many values in array for PipelineColorBlendStateCreateInfo.blendConstants" );
-  std::fill( p.blendConstants.begin(), p.blendConstants.end(), 0 );
-  std::copy( j[ "blendConstants" ].begin(), j[ "blendConstants" ].end(), p.blendConstants.begin() );
+  void from_json( const nlohmann::json &j, PipelineColorBlendStateCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineColorBlendStateCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineColorBlendStateCreateInfo temp;
-  from_json( j, temp );
-  p = VkPipelineColorBlendStateCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineColorBlendStateCreateInfo &p );
 
 
 #endif

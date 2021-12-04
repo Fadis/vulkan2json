@@ -22,49 +22,19 @@
 #ifndef VULKAN2JSON_FRAMEBUFFERMIXEDSAMPLESCOMBINATIONNV_HPP
 #define VULKAN2JSON_FRAMEBUFFERMIXEDSAMPLESCOMBINATIONNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/CoverageReductionModeNV.hpp>
-#include <vulkan2json/SampleCountFlags.hpp>
-#include <vulkan2json/SampleCountFlags.hpp>
-#include <vulkan2json/SampleCountFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const FramebufferMixedSamplesCombinationNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "coverageReductionMode" ] = p.coverageReductionMode;
-  j[ "rasterizationSamples" ] = p.rasterizationSamples;
-  j[ "depthStencilSamples" ] = p.depthStencilSamples;
-  j[ "colorSamples" ] = p.colorSamples;
+void to_json( nlohmann::json &j, const FramebufferMixedSamplesCombinationNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkFramebufferMixedSamplesCombinationNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: FramebufferMixedSamplesCombinationNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkFramebufferMixedSamplesCombinationNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, FramebufferMixedSamplesCombinationNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for FramebufferMixedSamplesCombinationNV" );
-  p.coverageReductionMode = CoverageReductionModeNV ( j[ "coverageReductionMode" ] );
-  p.rasterizationSamples = SampleCountFlagBits ( j[ "rasterizationSamples" ] );
-  p.depthStencilSamples = SampleCountFlags ( j[ "depthStencilSamples" ] );
-  p.colorSamples = SampleCountFlags ( j[ "colorSamples" ] );
+  void from_json( const nlohmann::json &j, FramebufferMixedSamplesCombinationNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkFramebufferMixedSamplesCombinationNV &p ) {
-  VULKAN_HPP_NAMESPACE :: FramebufferMixedSamplesCombinationNV temp;
-  from_json( j, temp );
-  p = VkFramebufferMixedSamplesCombinationNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkFramebufferMixedSamplesCombinationNV &p );
 
 
 #endif

@@ -22,46 +22,19 @@
 #ifndef VULKAN2JSON_EXTERNALIMAGEFORMATPROPERTIESNV_HPP
 #define VULKAN2JSON_EXTERNALIMAGEFORMATPROPERTIESNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/ImageFormatProperties.hpp>
-#include <vulkan2json/ExternalMemoryFeatureFlagsNV.hpp>
-#include <vulkan2json/ExternalMemoryHandleTypeFlagsNV.hpp>
-#include <vulkan2json/ExternalMemoryHandleTypeFlagsNV.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ExternalImageFormatPropertiesNV &p ) {
-  j = nlohmann::json::object();
-  j[ "imageFormatProperties" ] = p.imageFormatProperties;
-  j[ "externalMemoryFeatures" ] = p.externalMemoryFeatures;
-  j[ "exportFromImportedHandleTypes" ] = p.exportFromImportedHandleTypes;
-  j[ "compatibleHandleTypes" ] = p.compatibleHandleTypes;
+void to_json( nlohmann::json &j, const ExternalImageFormatPropertiesNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkExternalImageFormatPropertiesNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ExternalImageFormatPropertiesNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkExternalImageFormatPropertiesNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ExternalImageFormatPropertiesNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ExternalImageFormatPropertiesNV" );
-  p.imageFormatProperties = ImageFormatProperties ( j[ "imageFormatProperties" ] );
-  p.externalMemoryFeatures = ExternalMemoryFeatureFlagsNV ( j[ "externalMemoryFeatures" ] );
-  p.exportFromImportedHandleTypes = ExternalMemoryHandleTypeFlagsNV ( j[ "exportFromImportedHandleTypes" ] );
-  p.compatibleHandleTypes = ExternalMemoryHandleTypeFlagsNV ( j[ "compatibleHandleTypes" ] );
+  void from_json( const nlohmann::json &j, ExternalImageFormatPropertiesNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkExternalImageFormatPropertiesNV &p ) {
-  VULKAN_HPP_NAMESPACE :: ExternalImageFormatPropertiesNV temp;
-  from_json( j, temp );
-  p = VkExternalImageFormatPropertiesNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkExternalImageFormatPropertiesNV &p );
 
 
 #endif

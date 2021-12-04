@@ -22,46 +22,19 @@
 #ifndef VULKAN2JSON_QUEUEFAMILYGLOBALPRIORITYPROPERTIESEXT_HPP
 #define VULKAN2JSON_QUEUEFAMILYGLOBALPRIORITYPROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/QueueGlobalPriorityEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const QueueFamilyGlobalPriorityPropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "priorityCount" ] = p.priorityCount;
-  j[ "priorities" ] = nlohmann::json::array();
-  std::copy( p.priorities.begin(), p.priorities.end(), std::back_inserter( j[ "priorities" ] ) );
+void to_json( nlohmann::json &j, const QueueFamilyGlobalPriorityPropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkQueueFamilyGlobalPriorityPropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: QueueFamilyGlobalPriorityPropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkQueueFamilyGlobalPriorityPropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, QueueFamilyGlobalPriorityPropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for QueueFamilyGlobalPriorityPropertiesEXT" );
-  p.priorityCount = j[ "priorityCount" ];
-  if( !j[ "priorities" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for QueueFamilyGlobalPriorityPropertiesEXT.priorities" );
-  if( !j[ "priorities" ].size() > p.priorities.size() ) throw vulkan2json::invalid_array_value(  "too many values in array for QueueFamilyGlobalPriorityPropertiesEXT.priorities" );
-  std::fill( p.priorities.begin(), p.priorities.end(), std::remove_cv_t< std::remove_reference_t< decltype( *p.priorities.begin() ) > >() );
-  std::copy( j[ "priorities" ].begin(), j[ "priorities" ].end(), p.priorities.begin() );
+  void from_json( const nlohmann::json &j, QueueFamilyGlobalPriorityPropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkQueueFamilyGlobalPriorityPropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: QueueFamilyGlobalPriorityPropertiesEXT temp;
-  from_json( j, temp );
-  p = VkQueueFamilyGlobalPriorityPropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkQueueFamilyGlobalPriorityPropertiesEXT &p );
 
 
 #endif

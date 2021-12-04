@@ -22,68 +22,17 @@
 #ifndef VULKAN2JSON_PIPELINESHADERSTAGECREATEFLAGS_HPP
 #define VULKAN2JSON_PIPELINESHADERSTAGECREATEFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineShaderStageCreateFlagBits &p ) {
-  if( PipelineShaderStageCreateFlagBits :: eAllowVaryingSubgroupSizeEXT == p ) {
-    j = "AllowVaryingSubgroupSizeEXT";
-    return;
-  }
+  void to_json( nlohmann::json &j, const PipelineShaderStageCreateFlagBits &p );
+  void to_json( nlohmann::json &j, const PipelineShaderStageCreateFlags &p );
+  void from_json( const nlohmann::json &j, PipelineShaderStageCreateFlagBits &p );
+  void from_json( const nlohmann::json &j, PipelineShaderStageCreateFlags &p );
 }
-inline void from_json( const nlohmann::json &j, PipelineShaderStageCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "AllowVaryingSubgroupSizeEXT" == j.get< std::string >() ) {
-      p = PipelineShaderStageCreateFlagBits :: eAllowVaryingSubgroupSizeEXT ;
-      return;
-    }
-    if( "eAllowVaryingSubgroupSizeEXT" == j.get< std::string >() ) {
-      p = PipelineShaderStageCreateFlagBits :: eAllowVaryingSubgroupSizeEXT ;
-      return;
-    }
-    if( "VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT_EXT" == j.get< std::string >() ) {
-      p = PipelineShaderStageCreateFlagBits :: eAllowVaryingSubgroupSizeEXT ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineShaderStageCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineShaderStageCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineShaderStageCreateFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const PipelineShaderStageCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineShaderStageCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineShaderStageCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineShaderStageCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, PipelineShaderStageCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineShaderStageCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineShaderStageCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineShaderStageCreateFlags" );
-}
-}
-#endif
 
 
 #endif

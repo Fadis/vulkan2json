@@ -22,116 +22,17 @@
 #ifndef VULKAN2JSON_GEOMETRYINSTANCEFLAGSKHR_HPP
 #define VULKAN2JSON_GEOMETRYINSTANCEFLAGSKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_ACCELERATION_STRUCTURE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const GeometryInstanceFlagBitsKHR &p ) {
-  if( GeometryInstanceFlagBitsKHR :: eTriangleFacingCullDisable == p ) {
-    j = "TriangleFacingCullDisable";
-    return;
-  }
-  if( GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwise == p ) {
-    j = "TriangleFrontCounterclockwise";
-    return;
-  }
-  if( GeometryInstanceFlagBitsKHR :: eForceOpaque == p ) {
-    j = "ForceOpaque";
-    return;
-  }
-  if( GeometryInstanceFlagBitsKHR :: eForceNoOpaque == p ) {
-    j = "ForceNoOpaque";
-    return;
-  }
+  void to_json( nlohmann::json &j, const GeometryInstanceFlagBitsKHR &p );
+  void to_json( nlohmann::json &j, const GeometryInstanceFlagsKHR &p );
+  void from_json( const nlohmann::json &j, GeometryInstanceFlagBitsKHR &p );
+  void from_json( const nlohmann::json &j, GeometryInstanceFlagsKHR &p );
 }
-inline void from_json( const nlohmann::json &j, GeometryInstanceFlagBitsKHR &p ) {
-  if( j.is_string() ) {
-    if( "TriangleFacingCullDisable" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eTriangleFacingCullDisable ;
-      return;
-    }
-    if( "eTriangleFacingCullDisable" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eTriangleFacingCullDisable ;
-      return;
-    }
-    if( "VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eTriangleFacingCullDisable ;
-      return;
-    }
-    if( "TriangleFrontCounterclockwise" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwise ;
-      return;
-    }
-    if( "eTriangleFrontCounterclockwise" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwise ;
-      return;
-    }
-    if( "VK_GEOMETRY_INSTANCE_TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT_KHR" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwise ;
-      return;
-    }
-    if( "ForceOpaque" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eForceOpaque ;
-      return;
-    }
-    if( "eForceOpaque" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eForceOpaque ;
-      return;
-    }
-    if( "VK_GEOMETRY_INSTANCE_FORCE_OPAQUE_BIT_KHR" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eForceOpaque ;
-      return;
-    }
-    if( "ForceNoOpaque" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eForceNoOpaque ;
-      return;
-    }
-    if( "eForceNoOpaque" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eForceNoOpaque ;
-      return;
-    }
-    if( "VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQUE_BIT_KHR" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eForceNoOpaque ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for GeometryInstanceFlagBitsKHR" );
-  }
-  if( j.is_number() ) {
-    p = GeometryInstanceFlagBitsKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for GeometryInstanceFlagBitsKHR" );
-}
-inline void to_json( nlohmann::json &j, const GeometryInstanceFlagsKHR &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( GeometryInstanceFlagBitsKHR ) * 8u; ++n ) {
-    if( p & GeometryInstanceFlagsKHR ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, GeometryInstanceFlagBitsKHR ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, GeometryInstanceFlagsKHR &p ) {
-  if( j.is_array() ) {
-    p = GeometryInstanceFlagsKHR ( 0 );
-    for( auto &e:  j ) {
-      GeometryInstanceFlagBitsKHR temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for GeometryInstanceFlagsKHR" );
-}
-}
-#endif
 
 
 #endif

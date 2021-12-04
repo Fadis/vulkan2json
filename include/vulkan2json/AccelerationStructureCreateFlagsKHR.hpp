@@ -22,68 +22,17 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTURECREATEFLAGSKHR_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTURECREATEFLAGSKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_ACCELERATION_STRUCTURE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureCreateFlagBitsKHR &p ) {
-  if( AccelerationStructureCreateFlagBitsKHR :: eDeviceAddressCaptureReplay == p ) {
-    j = "DeviceAddressCaptureReplay";
-    return;
-  }
+  void to_json( nlohmann::json &j, const AccelerationStructureCreateFlagBitsKHR &p );
+  void to_json( nlohmann::json &j, const AccelerationStructureCreateFlagsKHR &p );
+  void from_json( const nlohmann::json &j, AccelerationStructureCreateFlagBitsKHR &p );
+  void from_json( const nlohmann::json &j, AccelerationStructureCreateFlagsKHR &p );
 }
-inline void from_json( const nlohmann::json &j, AccelerationStructureCreateFlagBitsKHR &p ) {
-  if( j.is_string() ) {
-    if( "DeviceAddressCaptureReplay" == j.get< std::string >() ) {
-      p = AccelerationStructureCreateFlagBitsKHR :: eDeviceAddressCaptureReplay ;
-      return;
-    }
-    if( "eDeviceAddressCaptureReplay" == j.get< std::string >() ) {
-      p = AccelerationStructureCreateFlagBitsKHR :: eDeviceAddressCaptureReplay ;
-      return;
-    }
-    if( "VK_ACCELERATION_STRUCTURE_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR" == j.get< std::string >() ) {
-      p = AccelerationStructureCreateFlagBitsKHR :: eDeviceAddressCaptureReplay ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for AccelerationStructureCreateFlagBitsKHR" );
-  }
-  if( j.is_number() ) {
-    p = AccelerationStructureCreateFlagBitsKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for AccelerationStructureCreateFlagBitsKHR" );
-}
-inline void to_json( nlohmann::json &j, const AccelerationStructureCreateFlagsKHR &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( AccelerationStructureCreateFlagBitsKHR ) * 8u; ++n ) {
-    if( p & AccelerationStructureCreateFlagsKHR ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, AccelerationStructureCreateFlagBitsKHR ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, AccelerationStructureCreateFlagsKHR &p ) {
-  if( j.is_array() ) {
-    p = AccelerationStructureCreateFlagsKHR ( 0 );
-    for( auto &e:  j ) {
-      AccelerationStructureCreateFlagBitsKHR temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for AccelerationStructureCreateFlagsKHR" );
-}
-}
-#endif
 
 
 #endif

@@ -22,105 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICETYPE_HPP
 #define VULKAN2JSON_PHYSICALDEVICETYPE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceType &p ) {
-  if( PhysicalDeviceType :: eOther == p ) {
-    j = "Other";
-    return;
-  }
-  if( PhysicalDeviceType :: eIntegratedGpu == p ) {
-    j = "IntegratedGpu";
-    return;
-  }
-  if( PhysicalDeviceType :: eDiscreteGpu == p ) {
-    j = "DiscreteGpu";
-    return;
-  }
-  if( PhysicalDeviceType :: eVirtualGpu == p ) {
-    j = "VirtualGpu";
-    return;
-  }
+void to_json( nlohmann::json &j, const PhysicalDeviceType &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceType &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceType ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceType &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceType &p ) {
-  if( j.is_string() ) {
-    if( "Other" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eOther ;
-      return;
-    }
-    if( "eOther" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eOther ;
-      return;
-    }
-    if( "VK_PHYSICAL_DEVICE_TYPE_OTHER" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eOther ;
-      return;
-    }
-    if( "IntegratedGpu" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eIntegratedGpu ;
-      return;
-    }
-    if( "eIntegratedGpu" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eIntegratedGpu ;
-      return;
-    }
-    if( "VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eIntegratedGpu ;
-      return;
-    }
-    if( "DiscreteGpu" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eDiscreteGpu ;
-      return;
-    }
-    if( "eDiscreteGpu" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eDiscreteGpu ;
-      return;
-    }
-    if( "VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eDiscreteGpu ;
-      return;
-    }
-    if( "VirtualGpu" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eVirtualGpu ;
-      return;
-    }
-    if( "eVirtualGpu" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eVirtualGpu ;
-      return;
-    }
-    if( "VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU" == j.get< std::string >() ) {
-      p = PhysicalDeviceType :: eVirtualGpu ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PhysicalDeviceType" );
-  }
-  if( j.is_number() ) {
-    p = PhysicalDeviceType ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PhysicalDeviceType" );
+void from_json( const nlohmann::json &j, PhysicalDeviceType &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceType &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceType temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceType ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPhysicalDeviceType &p );
 
 
 #endif

@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECREATIONFEEDBACKCREATEINFOEXT_HPP
 #define VULKAN2JSON_PIPELINECREATIONFEEDBACKCREATEINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineCreationFeedbackCreateInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "pPipelineCreationFeedback" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pPipelineCreationFeedback ) );
-  j[ "pipelineStageCreationFeedbackCount" ] = p.pipelineStageCreationFeedbackCount;
-  j[ "pPipelineStageCreationFeedbacks" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pPipelineStageCreationFeedbacks ) );
+void to_json( nlohmann::json &j, const PipelineCreationFeedbackCreateInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineCreationFeedbackCreateInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineCreationFeedbackCreateInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineCreationFeedbackCreateInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineCreationFeedbackCreateInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineCreationFeedbackCreateInfoEXT" );
-  p.pipelineStageCreationFeedbackCount = j[ "pipelineStageCreationFeedbackCount" ];
+  void from_json( const nlohmann::json &j, PipelineCreationFeedbackCreateInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineCreationFeedbackCreateInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineCreationFeedbackCreateInfoEXT temp;
-  from_json( j, temp );
-  p = VkPipelineCreationFeedbackCreateInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineCreationFeedbackCreateInfoEXT &p );
 
 
 #endif

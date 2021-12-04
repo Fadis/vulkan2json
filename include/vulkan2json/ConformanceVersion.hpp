@@ -22,42 +22,19 @@
 #ifndef VULKAN2JSON_CONFORMANCEVERSION_HPP
 #define VULKAN2JSON_CONFORMANCEVERSION_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ConformanceVersion &p ) {
-  j = nlohmann::json::object();
-  j[ "major" ] = p.major;
-  j[ "minor" ] = p.minor;
-  j[ "subminor" ] = p.subminor;
-  j[ "patch" ] = p.patch;
+void to_json( nlohmann::json &j, const ConformanceVersion &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkConformanceVersion &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ConformanceVersion ( p ) );
-}
+void to_json( nlohmann::json &j, const VkConformanceVersion &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ConformanceVersion &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ConformanceVersion" );
-  p.major = j[ "major" ];
-  p.minor = j[ "minor" ];
-  p.subminor = j[ "subminor" ];
-  p.patch = j[ "patch" ];
+  void from_json( const nlohmann::json &j, ConformanceVersion &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkConformanceVersion &p ) {
-  VULKAN_HPP_NAMESPACE :: ConformanceVersion temp;
-  from_json( j, temp );
-  p = VkConformanceVersion ( temp );
-}
+void from_json( const nlohmann::json &j, VkConformanceVersion &p );
 
 
 #endif

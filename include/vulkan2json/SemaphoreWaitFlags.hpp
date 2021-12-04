@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_SEMAPHOREWAITFLAGS_HPP
 #define VULKAN2JSON_SEMAPHOREWAITFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_2
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SemaphoreWaitFlagBits &p ) {
+  void to_json( nlohmann::json &j, const SemaphoreWaitFlagBits &p );
+  void to_json( nlohmann::json &j, const SemaphoreWaitFlags &p );
+  void from_json( const nlohmann::json &j, SemaphoreWaitFlagBits &p );
+  void from_json( const nlohmann::json &j, SemaphoreWaitFlags &p );
 }
-inline void from_json( const nlohmann::json &j, SemaphoreWaitFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for SemaphoreWaitFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = SemaphoreWaitFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for SemaphoreWaitFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const SemaphoreWaitFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( SemaphoreWaitFlagBits ) * 8u; ++n ) {
-    if( p & SemaphoreWaitFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, SemaphoreWaitFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, SemaphoreWaitFlags &p ) {
-  if( j.is_array() ) {
-    p = SemaphoreWaitFlags ( 0 );
-    for( auto &e:  j ) {
-      SemaphoreWaitFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for SemaphoreWaitFlags" );
-}
-}
-#endif
 
 
 #endif

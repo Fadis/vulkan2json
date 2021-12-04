@@ -32,10 +32,11 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_VIDEO_DECODE_QUEUE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoDecodeFlagBitsKHR &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoDecodeFlagBitsKHR :: eDefault == p ) {
     j = "Default";
     return;
@@ -44,19 +45,19 @@ inline void to_json( nlohmann::json &j, const VideoDecodeFlagBitsKHR &p ) {
 }
 inline void from_json( const nlohmann::json &j, VideoDecodeFlagBitsKHR &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Default" == j.get< std::string >() ) {
       p = VideoDecodeFlagBitsKHR :: eDefault ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eDefault" == j.get< std::string >() ) {
       p = VideoDecodeFlagBitsKHR :: eDefault ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_DECODE_DEFAULT_KHR" == j.get< std::string >() ) {
       p = VideoDecodeFlagBitsKHR :: eDefault ;
       return;
@@ -91,7 +92,6 @@ inline void from_json( const nlohmann::json &j, VideoDecodeFlagsKHR &p ) {
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoDecodeFlagsKHR" );
 }
 }
-#endif
 
 
 #endif

@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_SURFACEFORMAT22KHR_HPP
 #define VULKAN2JSON_SURFACEFORMAT22KHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/SurfaceFormatKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SurfaceFormat2KHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "surfaceFormat" ] = p.surfaceFormat;
+void to_json( nlohmann::json &j, const SurfaceFormat2KHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSurfaceFormat2KHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SurfaceFormat2KHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSurfaceFormat2KHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SurfaceFormat2KHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SurfaceFormat2KHR" );
-  p.surfaceFormat = SurfaceFormatKHR ( j[ "surfaceFormat" ] );
+  void from_json( const nlohmann::json &j, SurfaceFormat2KHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSurfaceFormat2KHR &p ) {
-  VULKAN_HPP_NAMESPACE :: SurfaceFormat2KHR temp;
-  from_json( j, temp );
-  p = VkSurfaceFormat2KHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkSurfaceFormat2KHR &p );
 
 
 #endif

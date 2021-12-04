@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_RENDERPASSSAMPLELOCATIONSBEGININFOEXT_HPP
 #define VULKAN2JSON_RENDERPASSSAMPLELOCATIONSBEGININFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const RenderPassSampleLocationsBeginInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "attachmentInitialSampleLocationsCount" ] = p.attachmentInitialSampleLocationsCount;
-  j[ "pAttachmentInitialSampleLocations" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pAttachmentInitialSampleLocations ) );
-  j[ "postSubpassSampleLocationsCount" ] = p.postSubpassSampleLocationsCount;
-  j[ "pPostSubpassSampleLocations" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pPostSubpassSampleLocations ) );
+void to_json( nlohmann::json &j, const RenderPassSampleLocationsBeginInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkRenderPassSampleLocationsBeginInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: RenderPassSampleLocationsBeginInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkRenderPassSampleLocationsBeginInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, RenderPassSampleLocationsBeginInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for RenderPassSampleLocationsBeginInfoEXT" );
-  p.attachmentInitialSampleLocationsCount = j[ "attachmentInitialSampleLocationsCount" ];
-  p.postSubpassSampleLocationsCount = j[ "postSubpassSampleLocationsCount" ];
+  void from_json( const nlohmann::json &j, RenderPassSampleLocationsBeginInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkRenderPassSampleLocationsBeginInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: RenderPassSampleLocationsBeginInfoEXT temp;
-  from_json( j, temp );
-  p = VkRenderPassSampleLocationsBeginInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkRenderPassSampleLocationsBeginInfoEXT &p );
 
 
 #endif

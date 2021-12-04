@@ -22,46 +22,19 @@
 #ifndef VULKAN2JSON_COPYIMAGEINFO22KHR_HPP
 #define VULKAN2JSON_COPYIMAGEINFO22KHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ImageLayout.hpp>
-#include <vulkan2json/ImageLayout.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CopyImageInfo2KHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "srcImageLayout" ] = p.srcImageLayout;
-  j[ "dstImageLayout" ] = p.dstImageLayout;
-  j[ "regionCount" ] = p.regionCount;
-  j[ "pRegions" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pRegions ) );
+void to_json( nlohmann::json &j, const CopyImageInfo2KHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkCopyImageInfo2KHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: CopyImageInfo2KHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkCopyImageInfo2KHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, CopyImageInfo2KHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for CopyImageInfo2KHR" );
-  p.srcImageLayout = ImageLayout ( j[ "srcImageLayout" ] );
-  p.dstImageLayout = ImageLayout ( j[ "dstImageLayout" ] );
-  p.regionCount = j[ "regionCount" ];
+  void from_json( const nlohmann::json &j, CopyImageInfo2KHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkCopyImageInfo2KHR &p ) {
-  VULKAN_HPP_NAMESPACE :: CopyImageInfo2KHR temp;
-  from_json( j, temp );
-  p = VkCopyImageInfo2KHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkCopyImageInfo2KHR &p );
 
 
 #endif

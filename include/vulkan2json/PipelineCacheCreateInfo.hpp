@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECACHECREATEINFO_HPP
 #define VULKAN2JSON_PIPELINECACHECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineCacheCreateFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineCacheCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "initialDataSize" ] = p.initialDataSize;
-  j[ "pInitialData" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pInitialData ) );
+void to_json( nlohmann::json &j, const PipelineCacheCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineCacheCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineCacheCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineCacheCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineCacheCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineCacheCreateInfo" );
-  p.flags = PipelineCacheCreateFlags ( j[ "flags" ] );
-  p.initialDataSize = j[ "initialDataSize" ];
+  void from_json( const nlohmann::json &j, PipelineCacheCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineCacheCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineCacheCreateInfo temp;
-  from_json( j, temp );
-  p = VkPipelineCacheCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineCacheCreateInfo &p );
 
 
 #endif

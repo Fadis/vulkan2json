@@ -32,28 +32,29 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_VIDEO_QUEUE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoChromaSubsamplingFlagBitsKHR &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoChromaSubsamplingFlagBitsKHR :: eInvalid == p ) {
     j = "Invalid";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoChromaSubsamplingFlagBitsKHR :: eMonochrome == p ) {
     j = "Monochrome";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoChromaSubsamplingFlagBitsKHR :: e420 == p ) {
     j = "420";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoChromaSubsamplingFlagBitsKHR :: e422 == p ) {
     j = "422";
     return;
@@ -62,73 +63,73 @@ inline void to_json( nlohmann::json &j, const VideoChromaSubsamplingFlagBitsKHR 
 }
 inline void from_json( const nlohmann::json &j, VideoChromaSubsamplingFlagBitsKHR &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Invalid" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: eInvalid ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eInvalid" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: eInvalid ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CHROMA_SUBSAMPLING_INVALID_BIT_KHR" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: eInvalid ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Monochrome" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: eMonochrome ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eMonochrome" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: eMonochrome ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CHROMA_SUBSAMPLING_MONOCHROME_BIT_KHR" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: eMonochrome ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "420" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: e420 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "e420" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: e420 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CHROMA_SUBSAMPLING_420_BIT_KHR" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: e420 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "422" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: e422 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "e422" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: e422 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CHROMA_SUBSAMPLING_422_BIT_KHR" == j.get< std::string >() ) {
       p = VideoChromaSubsamplingFlagBitsKHR :: e422 ;
       return;
@@ -163,7 +164,6 @@ inline void from_json( const nlohmann::json &j, VideoChromaSubsamplingFlagsKHR &
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoChromaSubsamplingFlagsKHR" );
 }
 }
-#endif
 
 
 #endif

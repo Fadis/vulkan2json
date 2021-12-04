@@ -32,6 +32,10 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/ExternalSemaphoreHandleTypeFlags.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/ExternalSemaphoreHandleTypeFlags.hpp>
 #if defined( VK_USE_PLATFORM_FUCHSIA )
@@ -49,7 +53,9 @@ inline void to_json( nlohmann::json &j, const VkSemaphoreGetZirconHandleInfoFUCH
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, SemaphoreGetZirconHandleInfoFUCHSIA &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SemaphoreGetZirconHandleInfoFUCHSIA" );
-  p.handleType = ExternalSemaphoreHandleTypeFlagBits ( j[ "handleType" ] );
+  if( j.find( "handleType" ) != j.end() ) {
+    p.handleType = ExternalSemaphoreHandleTypeFlagBits ( j[ "handleType" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkSemaphoreGetZirconHandleInfoFUCHSIA &p ) {

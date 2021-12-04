@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_CULAUNCHINFONVX_HPP
 #define VULKAN2JSON_CULAUNCHINFONVX_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CuLaunchInfoNVX &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "gridDimX" ] = p.gridDimX;
-  j[ "gridDimY" ] = p.gridDimY;
-  j[ "gridDimZ" ] = p.gridDimZ;
-  j[ "blockDimX" ] = p.blockDimX;
-  j[ "blockDimY" ] = p.blockDimY;
-  j[ "blockDimZ" ] = p.blockDimZ;
-  j[ "sharedMemBytes" ] = p.sharedMemBytes;
-  j[ "paramCount" ] = p.paramCount;
-  j[ "pParams" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pParams ) );
-  j[ "extraCount" ] = p.extraCount;
-  j[ "pExtras" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pExtras ) );
+void to_json( nlohmann::json &j, const CuLaunchInfoNVX &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkCuLaunchInfoNVX &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: CuLaunchInfoNVX ( p ) );
-}
+void to_json( nlohmann::json &j, const VkCuLaunchInfoNVX &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, CuLaunchInfoNVX &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for CuLaunchInfoNVX" );
-  p.gridDimX = j[ "gridDimX" ];
-  p.gridDimY = j[ "gridDimY" ];
-  p.gridDimZ = j[ "gridDimZ" ];
-  p.blockDimX = j[ "blockDimX" ];
-  p.blockDimY = j[ "blockDimY" ];
-  p.blockDimZ = j[ "blockDimZ" ];
-  p.sharedMemBytes = j[ "sharedMemBytes" ];
-  p.paramCount = j[ "paramCount" ];
-  p.extraCount = j[ "extraCount" ];
+  void from_json( const nlohmann::json &j, CuLaunchInfoNVX &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkCuLaunchInfoNVX &p ) {
-  VULKAN_HPP_NAMESPACE :: CuLaunchInfoNVX temp;
-  from_json( j, temp );
-  p = VkCuLaunchInfoNVX ( temp );
-}
+void from_json( const nlohmann::json &j, VkCuLaunchInfoNVX &p );
 
 
 #endif

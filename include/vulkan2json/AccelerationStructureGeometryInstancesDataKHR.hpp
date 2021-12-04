@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTUREGEOMETRYINSTANCESDATAKHR_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTUREGEOMETRYINSTANCESDATAKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureGeometryInstancesDataKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "arrayOfPointers" ] = bool( p.arrayOfPointers );
+void to_json( nlohmann::json &j, const AccelerationStructureGeometryInstancesDataKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAccelerationStructureGeometryInstancesDataKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AccelerationStructureGeometryInstancesDataKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAccelerationStructureGeometryInstancesDataKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AccelerationStructureGeometryInstancesDataKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AccelerationStructureGeometryInstancesDataKHR" );
-  p.arrayOfPointers = j[ "arrayOfPointers" ];
+  void from_json( const nlohmann::json &j, AccelerationStructureGeometryInstancesDataKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAccelerationStructureGeometryInstancesDataKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: AccelerationStructureGeometryInstancesDataKHR temp;
-  from_json( j, temp );
-  p = VkAccelerationStructureGeometryInstancesDataKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkAccelerationStructureGeometryInstancesDataKHR &p );
 
 
 #endif

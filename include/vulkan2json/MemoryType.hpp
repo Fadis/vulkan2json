@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_MEMORYTYPE_HPP
 #define VULKAN2JSON_MEMORYTYPE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/MemoryPropertyFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MemoryType &p ) {
-  j = nlohmann::json::object();
-  j[ "propertyFlags" ] = p.propertyFlags;
-  j[ "heapIndex" ] = p.heapIndex;
+void to_json( nlohmann::json &j, const MemoryType &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkMemoryType &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: MemoryType ( p ) );
-}
+void to_json( nlohmann::json &j, const VkMemoryType &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, MemoryType &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MemoryType" );
-  p.propertyFlags = MemoryPropertyFlags ( j[ "propertyFlags" ] );
-  p.heapIndex = j[ "heapIndex" ];
+  void from_json( const nlohmann::json &j, MemoryType &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkMemoryType &p ) {
-  VULKAN_HPP_NAMESPACE :: MemoryType temp;
-  from_json( j, temp );
-  p = VkMemoryType ( temp );
-}
+void from_json( const nlohmann::json &j, VkMemoryType &p );
 
 
 #endif

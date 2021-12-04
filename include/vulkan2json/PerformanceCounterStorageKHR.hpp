@@ -22,121 +22,19 @@
 #ifndef VULKAN2JSON_PERFORMANCECOUNTERSTORAGEKHR_HPP
 #define VULKAN2JSON_PERFORMANCECOUNTERSTORAGEKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_PERFORMANCE_QUERY_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PerformanceCounterStorageKHR &p ) {
-  if( PerformanceCounterStorageKHR :: eInt32 == p ) {
-    j = "Int32";
-    return;
-  }
-  if( PerformanceCounterStorageKHR :: eInt64 == p ) {
-    j = "Int64";
-    return;
-  }
-  if( PerformanceCounterStorageKHR :: eUint32 == p ) {
-    j = "Uint32";
-    return;
-  }
-  if( PerformanceCounterStorageKHR :: eUint64 == p ) {
-    j = "Uint64";
-    return;
-  }
-  if( PerformanceCounterStorageKHR :: eFloat32 == p ) {
-    j = "Float32";
-    return;
-  }
+void to_json( nlohmann::json &j, const PerformanceCounterStorageKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPerformanceCounterStorageKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PerformanceCounterStorageKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPerformanceCounterStorageKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PerformanceCounterStorageKHR &p ) {
-  if( j.is_string() ) {
-    if( "Int32" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eInt32 ;
-      return;
-    }
-    if( "eInt32" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eInt32 ;
-      return;
-    }
-    if( "VK_PERFORMANCE_COUNTER_STORAGE_INT32_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eInt32 ;
-      return;
-    }
-    if( "Int64" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eInt64 ;
-      return;
-    }
-    if( "eInt64" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eInt64 ;
-      return;
-    }
-    if( "VK_PERFORMANCE_COUNTER_STORAGE_INT64_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eInt64 ;
-      return;
-    }
-    if( "Uint32" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eUint32 ;
-      return;
-    }
-    if( "eUint32" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eUint32 ;
-      return;
-    }
-    if( "VK_PERFORMANCE_COUNTER_STORAGE_UINT32_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eUint32 ;
-      return;
-    }
-    if( "Uint64" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eUint64 ;
-      return;
-    }
-    if( "eUint64" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eUint64 ;
-      return;
-    }
-    if( "VK_PERFORMANCE_COUNTER_STORAGE_UINT64_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eUint64 ;
-      return;
-    }
-    if( "Float32" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eFloat32 ;
-      return;
-    }
-    if( "eFloat32" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eFloat32 ;
-      return;
-    }
-    if( "VK_PERFORMANCE_COUNTER_STORAGE_FLOAT32_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterStorageKHR :: eFloat32 ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PerformanceCounterStorageKHR" );
-  }
-  if( j.is_number() ) {
-    p = PerformanceCounterStorageKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PerformanceCounterStorageKHR" );
+void from_json( const nlohmann::json &j, PerformanceCounterStorageKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPerformanceCounterStorageKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PerformanceCounterStorageKHR temp;
-  from_json( j, temp );
-  p = VkPerformanceCounterStorageKHR ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPerformanceCounterStorageKHR &p );
 
 
 #endif

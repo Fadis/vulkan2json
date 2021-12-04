@@ -22,46 +22,19 @@
 #ifndef VULKAN2JSON_EXTERNALSEMAPHOREPROPERTIES_HPP
 #define VULKAN2JSON_EXTERNALSEMAPHOREPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ExternalSemaphoreHandleTypeFlags.hpp>
-#include <vulkan2json/ExternalSemaphoreHandleTypeFlags.hpp>
-#include <vulkan2json/ExternalSemaphoreFeatureFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ExternalSemaphoreProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "exportFromImportedHandleTypes" ] = p.exportFromImportedHandleTypes;
-  j[ "compatibleHandleTypes" ] = p.compatibleHandleTypes;
-  j[ "externalSemaphoreFeatures" ] = p.externalSemaphoreFeatures;
+void to_json( nlohmann::json &j, const ExternalSemaphoreProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkExternalSemaphoreProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ExternalSemaphoreProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkExternalSemaphoreProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ExternalSemaphoreProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ExternalSemaphoreProperties" );
-  p.exportFromImportedHandleTypes = ExternalSemaphoreHandleTypeFlags ( j[ "exportFromImportedHandleTypes" ] );
-  p.compatibleHandleTypes = ExternalSemaphoreHandleTypeFlags ( j[ "compatibleHandleTypes" ] );
-  p.externalSemaphoreFeatures = ExternalSemaphoreFeatureFlags ( j[ "externalSemaphoreFeatures" ] );
+  void from_json( const nlohmann::json &j, ExternalSemaphoreProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkExternalSemaphoreProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: ExternalSemaphoreProperties temp;
-  from_json( j, temp );
-  p = VkExternalSemaphoreProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkExternalSemaphoreProperties &p );
 
 
 #endif

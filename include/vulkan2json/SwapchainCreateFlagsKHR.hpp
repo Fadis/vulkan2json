@@ -22,84 +22,17 @@
 #ifndef VULKAN2JSON_SWAPCHAINCREATEFLAGSKHR_HPP
 #define VULKAN2JSON_SWAPCHAINCREATEFLAGSKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_SWAPCHAIN_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SwapchainCreateFlagBitsKHR &p ) {
-  if( SwapchainCreateFlagBitsKHR :: eSplitInstanceBindRegions == p ) {
-    j = "SplitInstanceBindRegions";
-    return;
-  }
-  if( SwapchainCreateFlagBitsKHR :: eProtected == p ) {
-    j = "Protected";
-    return;
-  }
+  void to_json( nlohmann::json &j, const SwapchainCreateFlagBitsKHR &p );
+  void to_json( nlohmann::json &j, const SwapchainCreateFlagsKHR &p );
+  void from_json( const nlohmann::json &j, SwapchainCreateFlagBitsKHR &p );
+  void from_json( const nlohmann::json &j, SwapchainCreateFlagsKHR &p );
 }
-inline void from_json( const nlohmann::json &j, SwapchainCreateFlagBitsKHR &p ) {
-  if( j.is_string() ) {
-    if( "SplitInstanceBindRegions" == j.get< std::string >() ) {
-      p = SwapchainCreateFlagBitsKHR :: eSplitInstanceBindRegions ;
-      return;
-    }
-    if( "eSplitInstanceBindRegions" == j.get< std::string >() ) {
-      p = SwapchainCreateFlagBitsKHR :: eSplitInstanceBindRegions ;
-      return;
-    }
-    if( "VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR" == j.get< std::string >() ) {
-      p = SwapchainCreateFlagBitsKHR :: eSplitInstanceBindRegions ;
-      return;
-    }
-    if( "Protected" == j.get< std::string >() ) {
-      p = SwapchainCreateFlagBitsKHR :: eProtected ;
-      return;
-    }
-    if( "eProtected" == j.get< std::string >() ) {
-      p = SwapchainCreateFlagBitsKHR :: eProtected ;
-      return;
-    }
-    if( "VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR" == j.get< std::string >() ) {
-      p = SwapchainCreateFlagBitsKHR :: eProtected ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for SwapchainCreateFlagBitsKHR" );
-  }
-  if( j.is_number() ) {
-    p = SwapchainCreateFlagBitsKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for SwapchainCreateFlagBitsKHR" );
-}
-inline void to_json( nlohmann::json &j, const SwapchainCreateFlagsKHR &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( SwapchainCreateFlagBitsKHR ) * 8u; ++n ) {
-    if( p & SwapchainCreateFlagsKHR ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, SwapchainCreateFlagBitsKHR ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, SwapchainCreateFlagsKHR &p ) {
-  if( j.is_array() ) {
-    p = SwapchainCreateFlagsKHR ( 0 );
-    for( auto &e:  j ) {
-      SwapchainCreateFlagBitsKHR temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for SwapchainCreateFlagsKHR" );
-}
-}
-#endif
 
 
 #endif

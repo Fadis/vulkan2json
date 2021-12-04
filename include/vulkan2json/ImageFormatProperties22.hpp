@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_IMAGEFORMATPROPERTIES22_HPP
 #define VULKAN2JSON_IMAGEFORMATPROPERTIES22_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ImageFormatProperties.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImageFormatProperties2 &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "imageFormatProperties" ] = p.imageFormatProperties;
+void to_json( nlohmann::json &j, const ImageFormatProperties2 &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkImageFormatProperties2 &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ImageFormatProperties2 ( p ) );
-}
+void to_json( nlohmann::json &j, const VkImageFormatProperties2 &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ImageFormatProperties2 &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ImageFormatProperties2" );
-  p.imageFormatProperties = ImageFormatProperties ( j[ "imageFormatProperties" ] );
+  void from_json( const nlohmann::json &j, ImageFormatProperties2 &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkImageFormatProperties2 &p ) {
-  VULKAN_HPP_NAMESPACE :: ImageFormatProperties2 temp;
-  from_json( j, temp );
-  p = VkImageFormatProperties2 ( temp );
-}
+void from_json( const nlohmann::json &j, VkImageFormatProperties2 &p );
 
 
 #endif

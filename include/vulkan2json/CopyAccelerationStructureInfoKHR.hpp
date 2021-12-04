@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_COPYACCELERATIONSTRUCTUREINFOKHR_HPP
 #define VULKAN2JSON_COPYACCELERATIONSTRUCTUREINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/CopyAccelerationStructureModeKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CopyAccelerationStructureInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "mode" ] = p.mode;
+void to_json( nlohmann::json &j, const CopyAccelerationStructureInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkCopyAccelerationStructureInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: CopyAccelerationStructureInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkCopyAccelerationStructureInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, CopyAccelerationStructureInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for CopyAccelerationStructureInfoKHR" );
-  p.mode = CopyAccelerationStructureModeKHR ( j[ "mode" ] );
+  void from_json( const nlohmann::json &j, CopyAccelerationStructureInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkCopyAccelerationStructureInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: CopyAccelerationStructureInfoKHR temp;
-  from_json( j, temp );
-  p = VkCopyAccelerationStructureInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkCopyAccelerationStructureInfoKHR &p );
 
 
 #endif

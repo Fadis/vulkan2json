@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_DISPLAYEVENTINFOEXT_HPP
 #define VULKAN2JSON_DISPLAYEVENTINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DisplayEventTypeEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DisplayEventInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "displayEvent" ] = p.displayEvent;
+void to_json( nlohmann::json &j, const DisplayEventInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDisplayEventInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DisplayEventInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDisplayEventInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DisplayEventInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DisplayEventInfoEXT" );
-  p.displayEvent = DisplayEventTypeEXT ( j[ "displayEvent" ] );
+  void from_json( const nlohmann::json &j, DisplayEventInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDisplayEventInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DisplayEventInfoEXT temp;
-  from_json( j, temp );
-  p = VkDisplayEventInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkDisplayEventInfoEXT &p );
 
 
 #endif

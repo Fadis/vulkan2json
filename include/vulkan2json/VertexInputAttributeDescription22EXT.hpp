@@ -22,46 +22,19 @@
 #ifndef VULKAN2JSON_VERTEXINPUTATTRIBUTEDESCRIPTION22EXT_HPP
 #define VULKAN2JSON_VERTEXINPUTATTRIBUTEDESCRIPTION22EXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/Format.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const VertexInputAttributeDescription2EXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "location" ] = p.location;
-  j[ "binding" ] = p.binding;
-  j[ "format" ] = p.format;
-  j[ "offset" ] = p.offset;
+void to_json( nlohmann::json &j, const VertexInputAttributeDescription2EXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkVertexInputAttributeDescription2EXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: VertexInputAttributeDescription2EXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkVertexInputAttributeDescription2EXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, VertexInputAttributeDescription2EXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VertexInputAttributeDescription2EXT" );
-  p.location = j[ "location" ];
-  p.binding = j[ "binding" ];
-  p.format = Format ( j[ "format" ] );
-  p.offset = j[ "offset" ];
+  void from_json( const nlohmann::json &j, VertexInputAttributeDescription2EXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkVertexInputAttributeDescription2EXT &p ) {
-  VULKAN_HPP_NAMESPACE :: VertexInputAttributeDescription2EXT temp;
-  from_json( j, temp );
-  p = VkVertexInputAttributeDescription2EXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkVertexInputAttributeDescription2EXT &p );
 
 
 #endif

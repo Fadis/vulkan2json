@@ -22,121 +22,19 @@
 #ifndef VULKAN2JSON_PERFORMANCECOUNTERSCOPEKHR_HPP
 #define VULKAN2JSON_PERFORMANCECOUNTERSCOPEKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_PERFORMANCE_QUERY_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PerformanceCounterScopeKHR &p ) {
-  if( PerformanceCounterScopeKHR :: eCommandBuffer == p ) {
-    j = "CommandBuffer";
-    return;
-  }
-  if( PerformanceCounterScopeKHR :: eRenderPass == p ) {
-    j = "RenderPass";
-    return;
-  }
-  if( PerformanceCounterScopeKHR :: eCommand == p ) {
-    j = "Command";
-    return;
-  }
-  if( PerformanceCounterScopeKHR :: eVkQueryScopeCommandBuffer == p ) {
-    j = "VkQueryScopeCommandBuffer";
-    return;
-  }
-  if( PerformanceCounterScopeKHR :: eVkQueryScopeCommand == p ) {
-    j = "VkQueryScopeCommand";
-    return;
-  }
+void to_json( nlohmann::json &j, const PerformanceCounterScopeKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPerformanceCounterScopeKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PerformanceCounterScopeKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPerformanceCounterScopeKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PerformanceCounterScopeKHR &p ) {
-  if( j.is_string() ) {
-    if( "CommandBuffer" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eCommandBuffer ;
-      return;
-    }
-    if( "eCommandBuffer" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eCommandBuffer ;
-      return;
-    }
-    if( "VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_BUFFER_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eCommandBuffer ;
-      return;
-    }
-    if( "RenderPass" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eRenderPass ;
-      return;
-    }
-    if( "eRenderPass" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eRenderPass ;
-      return;
-    }
-    if( "VK_PERFORMANCE_COUNTER_SCOPE_RENDER_PASS_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eRenderPass ;
-      return;
-    }
-    if( "Command" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eCommand ;
-      return;
-    }
-    if( "eCommand" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eCommand ;
-      return;
-    }
-    if( "VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eCommand ;
-      return;
-    }
-    if( "VkQueryScopeCommandBuffer" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eVkQueryScopeCommandBuffer ;
-      return;
-    }
-    if( "eVkQueryScopeCommandBuffer" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eVkQueryScopeCommandBuffer ;
-      return;
-    }
-    if( "VK_QUERY_SCOPE_COMMAND_BUFFER_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eVkQueryScopeCommandBuffer ;
-      return;
-    }
-    if( "VkQueryScopeCommand" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eVkQueryScopeCommand ;
-      return;
-    }
-    if( "eVkQueryScopeCommand" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eVkQueryScopeCommand ;
-      return;
-    }
-    if( "VK_QUERY_SCOPE_COMMAND_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterScopeKHR :: eVkQueryScopeCommand ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PerformanceCounterScopeKHR" );
-  }
-  if( j.is_number() ) {
-    p = PerformanceCounterScopeKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PerformanceCounterScopeKHR" );
+void from_json( const nlohmann::json &j, PerformanceCounterScopeKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPerformanceCounterScopeKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PerformanceCounterScopeKHR temp;
-  from_json( j, temp );
-  p = VkPerformanceCounterScopeKHR ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPerformanceCounterScopeKHR &p );
 
 
 #endif

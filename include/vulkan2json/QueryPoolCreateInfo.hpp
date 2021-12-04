@@ -22,48 +22,19 @@
 #ifndef VULKAN2JSON_QUERYPOOLCREATEINFO_HPP
 #define VULKAN2JSON_QUERYPOOLCREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/QueryPoolCreateFlags.hpp>
-#include <vulkan2json/QueryType.hpp>
-#include <vulkan2json/QueryPipelineStatisticFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const QueryPoolCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "queryType" ] = p.queryType;
-  j[ "queryCount" ] = p.queryCount;
-  j[ "pipelineStatistics" ] = p.pipelineStatistics;
+void to_json( nlohmann::json &j, const QueryPoolCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkQueryPoolCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: QueryPoolCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkQueryPoolCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, QueryPoolCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for QueryPoolCreateInfo" );
-  p.flags = QueryPoolCreateFlags ( j[ "flags" ] );
-  p.queryType = QueryType ( j[ "queryType" ] );
-  p.queryCount = j[ "queryCount" ];
-  p.pipelineStatistics = QueryPipelineStatisticFlags ( j[ "pipelineStatistics" ] );
+  void from_json( const nlohmann::json &j, QueryPoolCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkQueryPoolCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: QueryPoolCreateInfo temp;
-  from_json( j, temp );
-  p = VkQueryPoolCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkQueryPoolCreateInfo &p );
 
 
 #endif

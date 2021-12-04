@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTUREGEOMETRYKHR_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTUREGEOMETRYKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/GeometryTypeKHR.hpp>
-#include <vulkan2json/GeometryFlagsKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureGeometryKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "geometryType" ] = p.geometryType;
-  j[ "flags" ] = p.flags;
+void to_json( nlohmann::json &j, const AccelerationStructureGeometryKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAccelerationStructureGeometryKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AccelerationStructureGeometryKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAccelerationStructureGeometryKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AccelerationStructureGeometryKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AccelerationStructureGeometryKHR" );
-  p.geometryType = GeometryTypeKHR ( j[ "geometryType" ] );
-  p.flags = GeometryFlagsKHR ( j[ "flags" ] );
+  void from_json( const nlohmann::json &j, AccelerationStructureGeometryKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAccelerationStructureGeometryKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: AccelerationStructureGeometryKHR temp;
-  from_json( j, temp );
-  p = VkAccelerationStructureGeometryKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkAccelerationStructureGeometryKHR &p );
 
 
 #endif

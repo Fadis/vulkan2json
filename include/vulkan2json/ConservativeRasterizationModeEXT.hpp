@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_CONSERVATIVERASTERIZATIONMODEEXT_HPP
 #define VULKAN2JSON_CONSERVATIVERASTERIZATIONMODEEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ConservativeRasterizationModeEXT &p ) {
-  if( ConservativeRasterizationModeEXT :: eDisabled == p ) {
-    j = "Disabled";
-    return;
-  }
-  if( ConservativeRasterizationModeEXT :: eOverestimate == p ) {
-    j = "Overestimate";
-    return;
-  }
+void to_json( nlohmann::json &j, const ConservativeRasterizationModeEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkConservativeRasterizationModeEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ConservativeRasterizationModeEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkConservativeRasterizationModeEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ConservativeRasterizationModeEXT &p ) {
-  if( j.is_string() ) {
-    if( "Disabled" == j.get< std::string >() ) {
-      p = ConservativeRasterizationModeEXT :: eDisabled ;
-      return;
-    }
-    if( "eDisabled" == j.get< std::string >() ) {
-      p = ConservativeRasterizationModeEXT :: eDisabled ;
-      return;
-    }
-    if( "VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT" == j.get< std::string >() ) {
-      p = ConservativeRasterizationModeEXT :: eDisabled ;
-      return;
-    }
-    if( "Overestimate" == j.get< std::string >() ) {
-      p = ConservativeRasterizationModeEXT :: eOverestimate ;
-      return;
-    }
-    if( "eOverestimate" == j.get< std::string >() ) {
-      p = ConservativeRasterizationModeEXT :: eOverestimate ;
-      return;
-    }
-    if( "VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT" == j.get< std::string >() ) {
-      p = ConservativeRasterizationModeEXT :: eOverestimate ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ConservativeRasterizationModeEXT" );
-  }
-  if( j.is_number() ) {
-    p = ConservativeRasterizationModeEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ConservativeRasterizationModeEXT" );
+void from_json( const nlohmann::json &j, ConservativeRasterizationModeEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkConservativeRasterizationModeEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: ConservativeRasterizationModeEXT temp;
-  from_json( j, temp );
-  p = VkConservativeRasterizationModeEXT ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkConservativeRasterizationModeEXT &p );
 
 
 #endif

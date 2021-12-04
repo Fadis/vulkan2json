@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_FRONTFACE_HPP
 #define VULKAN2JSON_FRONTFACE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const FrontFace &p ) {
-  if( FrontFace :: eCounterClockwise == p ) {
-    j = "CounterClockwise";
-    return;
-  }
+void to_json( nlohmann::json &j, const FrontFace &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkFrontFace &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: FrontFace ( p ) );
-}
+void to_json( nlohmann::json &j, const VkFrontFace &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, FrontFace &p ) {
-  if( j.is_string() ) {
-    if( "CounterClockwise" == j.get< std::string >() ) {
-      p = FrontFace :: eCounterClockwise ;
-      return;
-    }
-    if( "eCounterClockwise" == j.get< std::string >() ) {
-      p = FrontFace :: eCounterClockwise ;
-      return;
-    }
-    if( "VK_FRONT_FACE_COUNTER_CLOCKWISE" == j.get< std::string >() ) {
-      p = FrontFace :: eCounterClockwise ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for FrontFace" );
-  }
-  if( j.is_number() ) {
-    p = FrontFace ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for FrontFace" );
+void from_json( const nlohmann::json &j, FrontFace &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkFrontFace &p ) {
-  VULKAN_HPP_NAMESPACE :: FrontFace temp;
-  from_json( j, temp );
-  p = VkFrontFace ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkFrontFace &p );
 
 
 #endif

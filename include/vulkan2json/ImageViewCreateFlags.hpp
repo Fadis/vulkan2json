@@ -22,68 +22,17 @@
 #ifndef VULKAN2JSON_IMAGEVIEWCREATEFLAGS_HPP
 #define VULKAN2JSON_IMAGEVIEWCREATEFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImageViewCreateFlagBits &p ) {
-  if( ImageViewCreateFlagBits :: eFragmentDensityMapDynamicEXT == p ) {
-    j = "FragmentDensityMapDynamicEXT";
-    return;
-  }
+  void to_json( nlohmann::json &j, const ImageViewCreateFlagBits &p );
+  void to_json( nlohmann::json &j, const ImageViewCreateFlags &p );
+  void from_json( const nlohmann::json &j, ImageViewCreateFlagBits &p );
+  void from_json( const nlohmann::json &j, ImageViewCreateFlags &p );
 }
-inline void from_json( const nlohmann::json &j, ImageViewCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "FragmentDensityMapDynamicEXT" == j.get< std::string >() ) {
-      p = ImageViewCreateFlagBits :: eFragmentDensityMapDynamicEXT ;
-      return;
-    }
-    if( "eFragmentDensityMapDynamicEXT" == j.get< std::string >() ) {
-      p = ImageViewCreateFlagBits :: eFragmentDensityMapDynamicEXT ;
-      return;
-    }
-    if( "VK_IMAGE_VIEW_CREATE_FRAGMENT_DENSITY_MAP_DYNAMIC_BIT_EXT" == j.get< std::string >() ) {
-      p = ImageViewCreateFlagBits :: eFragmentDensityMapDynamicEXT ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ImageViewCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = ImageViewCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ImageViewCreateFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const ImageViewCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( ImageViewCreateFlagBits ) * 8u; ++n ) {
-    if( p & ImageViewCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, ImageViewCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, ImageViewCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = ImageViewCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      ImageViewCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for ImageViewCreateFlags" );
-}
-}
-#endif
 
 
 #endif

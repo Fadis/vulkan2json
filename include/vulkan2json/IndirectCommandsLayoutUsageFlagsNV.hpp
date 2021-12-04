@@ -22,84 +22,17 @@
 #ifndef VULKAN2JSON_INDIRECTCOMMANDSLAYOUTUSAGEFLAGSNV_HPP
 #define VULKAN2JSON_INDIRECTCOMMANDSLAYOUTUSAGEFLAGSNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_NV_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const IndirectCommandsLayoutUsageFlagBitsNV &p ) {
-  if( IndirectCommandsLayoutUsageFlagBitsNV :: eExplicitPreprocess == p ) {
-    j = "ExplicitPreprocess";
-    return;
-  }
-  if( IndirectCommandsLayoutUsageFlagBitsNV :: eIndexedSequences == p ) {
-    j = "IndexedSequences";
-    return;
-  }
+  void to_json( nlohmann::json &j, const IndirectCommandsLayoutUsageFlagBitsNV &p );
+  void to_json( nlohmann::json &j, const IndirectCommandsLayoutUsageFlagsNV &p );
+  void from_json( const nlohmann::json &j, IndirectCommandsLayoutUsageFlagBitsNV &p );
+  void from_json( const nlohmann::json &j, IndirectCommandsLayoutUsageFlagsNV &p );
 }
-inline void from_json( const nlohmann::json &j, IndirectCommandsLayoutUsageFlagBitsNV &p ) {
-  if( j.is_string() ) {
-    if( "ExplicitPreprocess" == j.get< std::string >() ) {
-      p = IndirectCommandsLayoutUsageFlagBitsNV :: eExplicitPreprocess ;
-      return;
-    }
-    if( "eExplicitPreprocess" == j.get< std::string >() ) {
-      p = IndirectCommandsLayoutUsageFlagBitsNV :: eExplicitPreprocess ;
-      return;
-    }
-    if( "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EXPLICIT_PREPROCESS_BIT_NV" == j.get< std::string >() ) {
-      p = IndirectCommandsLayoutUsageFlagBitsNV :: eExplicitPreprocess ;
-      return;
-    }
-    if( "IndexedSequences" == j.get< std::string >() ) {
-      p = IndirectCommandsLayoutUsageFlagBitsNV :: eIndexedSequences ;
-      return;
-    }
-    if( "eIndexedSequences" == j.get< std::string >() ) {
-      p = IndirectCommandsLayoutUsageFlagBitsNV :: eIndexedSequences ;
-      return;
-    }
-    if( "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NV" == j.get< std::string >() ) {
-      p = IndirectCommandsLayoutUsageFlagBitsNV :: eIndexedSequences ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for IndirectCommandsLayoutUsageFlagBitsNV" );
-  }
-  if( j.is_number() ) {
-    p = IndirectCommandsLayoutUsageFlagBitsNV ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for IndirectCommandsLayoutUsageFlagBitsNV" );
-}
-inline void to_json( nlohmann::json &j, const IndirectCommandsLayoutUsageFlagsNV &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( IndirectCommandsLayoutUsageFlagBitsNV ) * 8u; ++n ) {
-    if( p & IndirectCommandsLayoutUsageFlagsNV ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, IndirectCommandsLayoutUsageFlagBitsNV ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, IndirectCommandsLayoutUsageFlagsNV &p ) {
-  if( j.is_array() ) {
-    p = IndirectCommandsLayoutUsageFlagsNV ( 0 );
-    for( auto &e:  j ) {
-      IndirectCommandsLayoutUsageFlagBitsNV temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for IndirectCommandsLayoutUsageFlagsNV" );
-}
-}
-#endif
 
 
 #endif

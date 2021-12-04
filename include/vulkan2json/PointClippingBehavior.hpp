@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_POINTCLIPPINGBEHAVIOR_HPP
 #define VULKAN2JSON_POINTCLIPPINGBEHAVIOR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PointClippingBehavior &p ) {
-  if( PointClippingBehavior :: eAllClipPlanes == p ) {
-    j = "AllClipPlanes";
-    return;
-  }
+void to_json( nlohmann::json &j, const PointClippingBehavior &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPointClippingBehavior &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PointClippingBehavior ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPointClippingBehavior &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PointClippingBehavior &p ) {
-  if( j.is_string() ) {
-    if( "AllClipPlanes" == j.get< std::string >() ) {
-      p = PointClippingBehavior :: eAllClipPlanes ;
-      return;
-    }
-    if( "eAllClipPlanes" == j.get< std::string >() ) {
-      p = PointClippingBehavior :: eAllClipPlanes ;
-      return;
-    }
-    if( "VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES" == j.get< std::string >() ) {
-      p = PointClippingBehavior :: eAllClipPlanes ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PointClippingBehavior" );
-  }
-  if( j.is_number() ) {
-    p = PointClippingBehavior ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PointClippingBehavior" );
+void from_json( const nlohmann::json &j, PointClippingBehavior &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPointClippingBehavior &p ) {
-  VULKAN_HPP_NAMESPACE :: PointClippingBehavior temp;
-  from_json( j, temp );
-  p = VkPointClippingBehavior ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPointClippingBehavior &p );
 
 
 #endif

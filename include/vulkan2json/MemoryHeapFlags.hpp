@@ -22,84 +22,17 @@
 #ifndef VULKAN2JSON_MEMORYHEAPFLAGS_HPP
 #define VULKAN2JSON_MEMORYHEAPFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MemoryHeapFlagBits &p ) {
-  if( MemoryHeapFlagBits :: eDeviceLocal == p ) {
-    j = "DeviceLocal";
-    return;
-  }
-  if( MemoryHeapFlagBits :: eMultiInstance == p ) {
-    j = "MultiInstance";
-    return;
-  }
+  void to_json( nlohmann::json &j, const MemoryHeapFlagBits &p );
+  void to_json( nlohmann::json &j, const MemoryHeapFlags &p );
+  void from_json( const nlohmann::json &j, MemoryHeapFlagBits &p );
+  void from_json( const nlohmann::json &j, MemoryHeapFlags &p );
 }
-inline void from_json( const nlohmann::json &j, MemoryHeapFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "DeviceLocal" == j.get< std::string >() ) {
-      p = MemoryHeapFlagBits :: eDeviceLocal ;
-      return;
-    }
-    if( "eDeviceLocal" == j.get< std::string >() ) {
-      p = MemoryHeapFlagBits :: eDeviceLocal ;
-      return;
-    }
-    if( "VK_MEMORY_HEAP_DEVICE_LOCAL_BIT" == j.get< std::string >() ) {
-      p = MemoryHeapFlagBits :: eDeviceLocal ;
-      return;
-    }
-    if( "MultiInstance" == j.get< std::string >() ) {
-      p = MemoryHeapFlagBits :: eMultiInstance ;
-      return;
-    }
-    if( "eMultiInstance" == j.get< std::string >() ) {
-      p = MemoryHeapFlagBits :: eMultiInstance ;
-      return;
-    }
-    if( "VK_MEMORY_HEAP_MULTI_INSTANCE_BIT" == j.get< std::string >() ) {
-      p = MemoryHeapFlagBits :: eMultiInstance ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for MemoryHeapFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = MemoryHeapFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for MemoryHeapFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const MemoryHeapFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( MemoryHeapFlagBits ) * 8u; ++n ) {
-    if( p & MemoryHeapFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, MemoryHeapFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, MemoryHeapFlags &p ) {
-  if( j.is_array() ) {
-    p = MemoryHeapFlags ( 0 );
-    for( auto &e:  j ) {
-      MemoryHeapFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for MemoryHeapFlags" );
-}
-}
-#endif
 
 
 #endif

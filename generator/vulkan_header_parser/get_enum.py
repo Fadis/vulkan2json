@@ -36,13 +36,14 @@ class vulkan_enum:
     self.name = vulkan_class_name( name_ )
     self.ext = ext_
     self.ext_def = to_extension_name_def( self.ext )
-    self.defs = copy.deepcopy( defs_ )
+    self.static_defs = copy.deepcopy( defs_ )
     self.from_table = []
     self.to_table = []
+    self.conditional = len( self.static_defs ) != 0
   def add( self, name_, cname_, defs_ ):
     xor_defs = {}
     for d in defs_.keys():
-      if not d in self.defs:
+      if not d in self.static_defs:
         xor_defs[ d ] = defs_[ d ]
     e_match = re.match( e_rule, name_ )
     if e_match:
@@ -58,6 +59,8 @@ class vulkan_enum:
       self.to_table.append(
         ( name_, e_match.group( 1 ), xor_defs )
       )
+      if len( xor_defs ):
+        self.conditional = True
   def __str__( self ):
     return json.dumps(
       {
@@ -74,26 +77,31 @@ class vulkan_enum:
   def generate_impl( self ):
     name = self.name.get_name()
     cname = self.name.get_cname()
-    m = "#ifdef %s\n" % self.ext_def
+    inline = ""
+    if self.conditional:
+      inline = "inline "
+    m = ""
+    if len( self.static_defs ):
+      m += '#if ' + ' && '.join( [ x for x in self.static_defs.keys() ] ) + '\n'
     m += "namespace VULKAN_HPP_NAMESPACE {\n"
-    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % name
+    m += "%svoid to_json( nlohmann::json &j, const %s &p ) {\n" % ( inline, name )
     for v in self.to_table:
       if len( v[ 2 ] ):
-        m += "#if " + ' && '.join( [ 'defined('+x+')' for x in v[ 2 ].keys() ] ) + '\n'
+        m += "#if " + ' && '.join( [ x for x in v[ 2 ].keys() ] ) + '\n'
       m += "  if( %s :: %s == p ) {\n    j = \"%s\";\n    return;\n  }\n" % ( name, v[ 0 ], v[ 1 ] )
       if len( v[ 2 ] ):
         m += "#endif\n"
     m += "}\n"
     m += "}\n"
-    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % cname
+    m += "%svoid to_json( nlohmann::json &j, const %s &p ) {\n" % ( inline, cname )
     m += "  to_json( j, VULKAN_HPP_NAMESPACE :: %s ( p ) );\n" % name
     m += "}\n"
     m += "namespace VULKAN_HPP_NAMESPACE {\n"
-    m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % name
+    m += "%svoid from_json( const nlohmann::json &j, %s &p ) {\n" % ( inline, name )
     m += "  if( j.is_string() ) {\n"
     for v in self.from_table:
       if len( v[ 2 ] ):
-        m += "#if " + ' && '.join( [ 'defined('+x+')' for x in v[ 2 ].keys() ] ) + '\n'
+        m += "#if " + ' && '.join( [ x for x in v[ 2 ].keys() ] ) + '\n'
       m += "    if( \"%s\" == j.get< std::string >() ) {\n      p = %s :: %s ;\n      return;\n    }\n" % ( v[ 0 ], name, v[ 1 ] )
       if len( v[ 2 ] ):
         m += "#endif\n"
@@ -105,17 +113,20 @@ class vulkan_enum:
     m += "  throw vulkan2json::invalid_enum_value( \"incompatible value for %s\" );\n" % name
     m += "}\n"
     m += "}\n"
-    m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % cname
+    m += "%svoid from_json( const nlohmann::json &j, %s &p ) {\n" % ( inline, cname )
     m += "  VULKAN_HPP_NAMESPACE :: %s temp;\n" % name
     m += "  from_json( j, temp );\n"
     m += "  p = %s ( temp );\n" % cname
     m += "}\n"
-    m += "#endif\n"
+    if len( self.static_defs ):
+      m += "#endif\n"
     return m;
   def generate_forward( self ):
     name = self.name.get_name()
     cname = self.name.get_cname()
-    m = "#ifdef %s\n" % self.ext_def
+    m = ""
+    if len( self.static_defs ):
+      m += '#if ' + ' && '.join( [ x for x in self.static_defs.keys() ] ) + '\n'
     m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "void to_json( nlohmann::json &j, const %s &p );\n" % name
     m += "}\n"
@@ -123,8 +134,33 @@ class vulkan_enum:
     m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "void from_json( const nlohmann::json &j, %s &p );\n" % name
     m += "}\n"
-    m += "void from_json( const nlohmann::json &j, %s &p );\n" % name
-    m += "#endif\n"
+    m += "void from_json( const nlohmann::json &j, %s &p );\n" % cname
+    if len( self.static_defs ):
+      m += "#endif\n"
+    return m;
+  def generate_test( self ):
+    name = self.name.get_name()
+    cname = self.name.get_cname()
+    m = ""
+    m += "#include <vulkan2json/%s.hpp>\n" % name
+    m += "BOOST_AUTO_TEST_CASE(%s) {\n" % name
+    if len( self.static_defs ):
+      m += '#if ' + ' && '.join( [ x for x in self.static_defs.keys() ] ) + '\n'
+    for v in self.to_table:
+      if len( v[ 2 ] ):
+        m += "#if " + ' && '.join( [ x for x in v[ 2 ].keys() ] ) + '\n'
+      m += "  {\n";
+      m += "    const auto original = VULKAN_HPP_NAMESPACE :: %s :: %s ;\n" % ( name, v[ 0 ] )
+      m += "    const nlohmann::json expected = \"%s\";\n" % v[ 1 ]
+      m += "    const nlohmann::json serialized = original;\n"
+      m += "    const auto deserialized = VULKAN_HPP_NAMESPACE :: %s ( serialized );\n" % name
+      m += "    BOOST_CHECK( deserialized == original );\n"
+      m += "  }\n";
+      if len( v[ 2 ] ):
+        m += "#endif\n"
+    if len( self.static_defs ):
+      m += "#endif\n"
+    m += "}\n"
     return m;
 
 
@@ -134,14 +170,15 @@ class vulkan_flag:
     self.name.remove_flagbits()
     self.ext = ext_
     self.ext_def = to_extension_name_def( self.ext )
-    self.defs = defs_
+    self.static_defs = defs_
     self.from_table = []
     self.to_table = []
     self.has_cname = has_cname_
+    self.conditional = len( self.static_defs ) != 0
   def add( self, name_, cname_, defs_ ):
     xor_defs = {}
     for d in defs_.keys():
-      if d in self.defs:
+      if d in self.static_defs:
         xor_defs[ d ] = defs_[ d ]
     e_match = re.match( e_rule, name_ )
     if e_match:
@@ -157,6 +194,8 @@ class vulkan_flag:
       self.to_table.append(
         ( name_, e_match.group( 1 ), xor_defs )
       )
+      if len( xor_defs ):
+        self.conditional = True
   def __str__( self ):
     return json.dumps(
       {
@@ -174,21 +213,26 @@ class vulkan_flag:
   def generate_impl( self ):
     flagbits = self.name.get_flagbits()
     flags = self.name.get_flags()
-    m = "#ifdef %s\n" % self.ext_def
+    inline = ""
+    if self.conditional:
+      inline = "inline "
+    m = ""
+    if len( self.static_defs ):
+      m += "#if " + ' && '.join( [ x for x in v[ 2 ].keys() ] ) + '\n'
     m += "namespace VULKAN_HPP_NAMESPACE {\n"
-    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % flagbits
+    m += "%svoid to_json( nlohmann::json &j, const %s &p ) {\n" % ( inline, flagbits )
     for v in self.to_table:
       if len( v[ 2 ] ):
-        m += "#if " + ' && '.join( [ 'defined('+x+')' for x in v[ 2 ].keys() ] ) + '\n'
+        m += "#if " + ' && '.join( [ x for x in v[ 2 ].keys() ] ) + '\n'
       m += "  if( %s :: %s == p ) {\n    j = \"%s\";\n    return;\n  }\n" % ( flagbits, v[ 0 ], v[ 1 ] )
       if len( v[ 2 ] ):
         m += "#endif\n"
     m += "}\n"
-    m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % flagbits
+    m += "%svoid from_json( const nlohmann::json &j, %s &p ) {\n" % ( inline, flagbits )
     m += "  if( j.is_string() ) {\n"
     for v in self.from_table:
       if len( v[ 2 ] ):
-        m += "#if " + ' && '.join( [ 'defined('+x+')' for x in v[ 2 ].keys() ] ) + '\n'
+        m += "#if " + ' && '.join( [ x for x in v[ 2 ].keys() ] ) + '\n'
       m += "    if( \"%s\" == j.get< std::string >() ) {\n      p = %s :: %s ;\n      return;\n    }\n" % ( v[ 0 ], flagbits, v[ 1 ] )
       if len( v[ 2 ] ):
         m += "#endif\n"
@@ -199,7 +243,7 @@ class vulkan_flag:
     m += "  }\n"
     m += "  throw vulkan2json::invalid_enum_value( \"incompatible value for %s\" );\n" % flagbits
     m += "}\n"
-    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % flags
+    m += "%svoid to_json( nlohmann::json &j, const %s &p ) {\n" % ( inline, flags )
     m += "  j = nlohmann::json::array();\n"
     m += "  for( unsigned int n = 0u; n != sizeof( %s ) * 8u; ++n ) {\n" % flagbits
     m += "    if( p & %s ( 1 << n ) ) {\n" % flags
@@ -209,7 +253,7 @@ class vulkan_flag:
     m += "    }\n"
     m += "  }\n"
     m += "}\n"
-    m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % flags
+    m += "%svoid from_json( const nlohmann::json &j, %s &p ) {\n" % ( inline, flags )
     m += "  if( j.is_array() ) {\n"
     m += "    p = %s ( 0 );\n" % flags
     m += "    for( auto &e:  j ) {\n"
@@ -221,17 +265,70 @@ class vulkan_flag:
     m += "  else throw vulkan2json::invalid_flag_value( \"incompatible value for %s\" );\n" % flags
     m += "}\n"
     m += "}\n"
-    m += "#endif\n"
+    if len( self.static_defs ):
+      m += "#endif\n"
     return m;
   def generate_forward( self ):
     flagbits = self.name.get_flagbits()
     flags = self.name.get_flags()
-    m = "#ifdef %s\n" % self.ext_def
-    m += "void to_json( nlohmann::json &j, const %s &p );\n" % flagbits
-    m += "void to_json( nlohmann::json &j, const %s &p );\n" % flags
-    m += "void from_json( const nlohmann::json &j, %s &p );\n" % flagbits
-    m += "void from_json( const nlohmann::json &j, %s &p );\n" % flags
-    m += "#endif\n"
+    m = ""
+    if len( self.static_defs ):
+      m += "#if " + ' && '.join( [ x for x in v[ 2 ].keys() ] ) + '\n'
+    m += "namespace VULKAN_HPP_NAMESPACE {\n"
+    m += "  void to_json( nlohmann::json &j, const %s &p );\n" % flagbits
+    m += "  void to_json( nlohmann::json &j, const %s &p );\n" % flags
+    m += "  void from_json( const nlohmann::json &j, %s &p );\n" % flagbits
+    m += "  void from_json( const nlohmann::json &j, %s &p );\n" % flags
+    m += "}\n"
+    if len( self.static_defs ):
+      m += "#endif\n"
+    return m;
+  def generate_test( self ):
+    name = self.name.get_include_name()
+    flagbits = self.name.get_flagbits()
+    flags = self.name.get_flags()
+    m = ""
+    m += "#include <vulkan2json/%s.hpp>\n" % name
+    m += "BOOST_AUTO_TEST_CASE(%s) {\n" % name
+    if len( self.static_defs ):
+      m += '#if ' + ' && '.join( [ x for x in self.static_defs.keys() ] ) + '\n'
+    for v in self.to_table:
+      if len( v[ 2 ] ):
+        m += "#if " + ' && '.join( [ x for x in v[ 2 ].keys() ] ) + '\n'
+      m += "  {\n";
+      m += "    const auto original = VULKAN_HPP_NAMESPACE :: %s :: %s ;\n" % ( flagbits, v[ 0 ] )
+      m += "    const nlohmann::json expected = \"%s\";\n" % v[ 1 ]
+      m += "    const nlohmann::json serialized = original;\n"
+      m += "    const auto deserialized = VULKAN_HPP_NAMESPACE :: %s ( serialized );\n" % flagbits
+      m += "    BOOST_CHECK( deserialized == original );\n"
+      m += "  }\n";
+      if len( v[ 2 ] ):
+        m += "#endif\n"
+    for i in range( 0, len( self.to_table ) ):
+      for j in range( i, len( self.to_table ) ):
+        v = self.to_table[ i ]
+        w = self.to_table[ j ]
+        if v[ 0 ] != w[ 0 ]:
+          if len( v[ 2 ] ):
+            m += "#if " + ' && '.join( [ x for x in v[ 2 ].keys() ] ) + '\n'
+          if len( w[ 2 ] ):
+            m += "#if " + ' && '.join( [ x for x in w[ 2 ].keys() ] ) + '\n'
+          m += "  {\n";
+          m += "    const VULKAN_HPP_NAMESPACE :: %s original = VULKAN_HPP_NAMESPACE :: %s :: %s | VULKAN_HPP_NAMESPACE :: %s :: %s;\n" % ( flags, flagbits, v[ 0 ], flagbits, w[ 0 ] )
+          m += "    const nlohmann::json serialized = original;\n"
+          m += "    nlohmann::json expected = nlohmann::json::array();\n"
+          m += "    expected.push_back( \"%s\" )" % v[ 1 ]
+          m += "    expected.push_back( \"%s\" )" % w[ 1 ]
+          m += "    const auto deserialized = VULKAN_HPP_NAMESPACE :: %s ( serialized );\n" % flags
+          m += "    BOOST_CHECK( original == deserialized );\n"
+          m += "  }\n";
+          if len( v[ 2 ] ):
+            m += "#endif\n"
+          if len( v[ 2 ] ):
+            m += "#endif\n"
+    if len( self.static_defs ):
+      m += "#endif\n"
+    m += "}\n"
     return m;
 
 
@@ -292,8 +389,9 @@ def get_enum_class_name( filename ):
 
 def get_enum( filename ):
   ext_rule = re.compile( "\s*//===\s*(\S+)\s*===\s*" );
-  ifdef_rule = re.compile( "^#\s*if\s+defined\(\s*(\S+)\s*\)\s*$" );
-  endif_rule = re.compile( "^#\s*endif\s+/\*\s*(\S+)\s*\*/\s*$" );
+  if_rule = re.compile( "^#\s*if\s+(.+)$" );
+  ifdef_rule = re.compile( "^#\s*ifdef\s+(.+)$" );
+  endif_rule = re.compile( "^#\s*endif.*$" );
 
   multi_line_enum_rule = re.compile( "^\s*enum\s+class\s*$" );
   enum_rule = re.compile( "^\s*enum\s+class\s+(\S+)\s*$" );
@@ -304,6 +402,9 @@ def get_enum( filename ):
   
   flagbits_rule = re.compile( "\S+?FlagBits.*" );
   assign_rule = re.compile( "^\s*(\S+?)\s*=\s*(\S+?)\s*,\s*$" );
+  
+  ifdef = {}
+  ifdef_stack = []
   
   parse_state = parse_state_t.namespace
 
@@ -320,20 +421,32 @@ def get_enum( filename ):
       ext_match = re.match( ext_rule, line.rstrip() )
       if ext_match:
         current_ext = ext_match.group( 1 )
+      if_match = re.match( if_rule, line.rstrip() )
+      if if_match:
+        if if_match.group( 1 ) in ifdef:
+          ifdef[ if_match.group( 1 ) ] += 1
+        else:
+          ifdef[ if_match.group( 1 ) ] = 1
+        ifdef_stack.append( if_match.group( 1 ) )
+        continue
       ifdef_match = re.match( ifdef_rule, line.rstrip() )
       if ifdef_match:
-        if ifdef_match.group( 1 ) in ifdef:
-          ifdef[ ifdef_match.group( 1 ) ] += 1
+        if_expr = 'defined('+ifdef_match.group( 1 )+')'
+        if if_expr in ifdef:
+          ifdef[ if_expr ] += 1
         else:
-          ifdef[ ifdef_match.group( 1 ) ] = 1
+          ifdef[ if_expr ] = 1
+        ifdef_stack.append( if_expr )
         continue
       endif_match = re.match( endif_rule, line.rstrip() )
       if endif_match:
-        if endif_match.group( 1 ) in ifdef:
-          if ifdef[ endif_match.group( 1 ) ] > 1:
-            ifdef[ endif_match.group( 1 ) ] -= 1
-          else:
-            del ifdef[ endif_match.group( 1 ) ]
+        if len( ifdef_stack ):
+          closed = ifdef_stack.pop()
+          if closed in ifdef:
+            if ifdef[ closed ] > 1:
+              ifdef[ closed ] -= 1
+            else:
+              del ifdef[ closed ]
         continue
       if parse_state == parse_state_t.namespace:
         multi_line_enum_match = re.match( multi_line_enum_rule, line.rstrip() )

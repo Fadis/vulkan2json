@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_MULTISAMPLEPROPERTIESEXT_HPP
 #define VULKAN2JSON_MULTISAMPLEPROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/Extent2D.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MultisamplePropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "maxSampleLocationGridSize" ] = p.maxSampleLocationGridSize;
+void to_json( nlohmann::json &j, const MultisamplePropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkMultisamplePropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: MultisamplePropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkMultisamplePropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, MultisamplePropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MultisamplePropertiesEXT" );
-  p.maxSampleLocationGridSize = Extent2D ( j[ "maxSampleLocationGridSize" ] );
+  void from_json( const nlohmann::json &j, MultisamplePropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkMultisamplePropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: MultisamplePropertiesEXT temp;
-  from_json( j, temp );
-  p = VkMultisamplePropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkMultisamplePropertiesEXT &p );
 
 
 #endif

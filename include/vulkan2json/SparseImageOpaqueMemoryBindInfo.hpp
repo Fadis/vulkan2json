@@ -22,37 +22,19 @@
 #ifndef VULKAN2JSON_SPARSEIMAGEOPAQUEMEMORYBINDINFO_HPP
 #define VULKAN2JSON_SPARSEIMAGEOPAQUEMEMORYBINDINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SparseImageOpaqueMemoryBindInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "bindCount" ] = p.bindCount;
-  j[ "pBinds" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pBinds ) );
+void to_json( nlohmann::json &j, const SparseImageOpaqueMemoryBindInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSparseImageOpaqueMemoryBindInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SparseImageOpaqueMemoryBindInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSparseImageOpaqueMemoryBindInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SparseImageOpaqueMemoryBindInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SparseImageOpaqueMemoryBindInfo" );
-  p.bindCount = j[ "bindCount" ];
+  void from_json( const nlohmann::json &j, SparseImageOpaqueMemoryBindInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSparseImageOpaqueMemoryBindInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: SparseImageOpaqueMemoryBindInfo temp;
-  from_json( j, temp );
-  p = VkSparseImageOpaqueMemoryBindInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkSparseImageOpaqueMemoryBindInfo &p );
 
 
 #endif

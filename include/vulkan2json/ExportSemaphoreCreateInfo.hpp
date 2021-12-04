@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_EXPORTSEMAPHORECREATEINFO_HPP
 #define VULKAN2JSON_EXPORTSEMAPHORECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ExternalSemaphoreHandleTypeFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ExportSemaphoreCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "handleTypes" ] = p.handleTypes;
+void to_json( nlohmann::json &j, const ExportSemaphoreCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkExportSemaphoreCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ExportSemaphoreCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkExportSemaphoreCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ExportSemaphoreCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ExportSemaphoreCreateInfo" );
-  p.handleTypes = ExternalSemaphoreHandleTypeFlags ( j[ "handleTypes" ] );
+  void from_json( const nlohmann::json &j, ExportSemaphoreCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkExportSemaphoreCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: ExportSemaphoreCreateInfo temp;
-  from_json( j, temp );
-  p = VkExportSemaphoreCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkExportSemaphoreCreateInfo &p );
 
 
 #endif

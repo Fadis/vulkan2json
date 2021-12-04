@@ -22,71 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEMESHSHADERPROPERTIESNV_HPP
 #define VULKAN2JSON_PHYSICALDEVICEMESHSHADERPROPERTIESNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceMeshShaderPropertiesNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "maxDrawMeshTasksCount" ] = p.maxDrawMeshTasksCount;
-  j[ "maxTaskWorkGroupInvocations" ] = p.maxTaskWorkGroupInvocations;
-  j[ "maxTaskWorkGroupSize" ] = nlohmann::json::array();
-  std::copy( p.maxTaskWorkGroupSize.begin(), p.maxTaskWorkGroupSize.end(), std::back_inserter( j[ "maxTaskWorkGroupSize" ] ) );
-  j[ "maxTaskTotalMemorySize" ] = p.maxTaskTotalMemorySize;
-  j[ "maxTaskOutputCount" ] = p.maxTaskOutputCount;
-  j[ "maxMeshWorkGroupInvocations" ] = p.maxMeshWorkGroupInvocations;
-  j[ "maxMeshWorkGroupSize" ] = nlohmann::json::array();
-  std::copy( p.maxMeshWorkGroupSize.begin(), p.maxMeshWorkGroupSize.end(), std::back_inserter( j[ "maxMeshWorkGroupSize" ] ) );
-  j[ "maxMeshTotalMemorySize" ] = p.maxMeshTotalMemorySize;
-  j[ "maxMeshOutputVertices" ] = p.maxMeshOutputVertices;
-  j[ "maxMeshOutputPrimitives" ] = p.maxMeshOutputPrimitives;
-  j[ "maxMeshMultiviewViewCount" ] = p.maxMeshMultiviewViewCount;
-  j[ "meshOutputPerVertexGranularity" ] = p.meshOutputPerVertexGranularity;
-  j[ "meshOutputPerPrimitiveGranularity" ] = p.meshOutputPerPrimitiveGranularity;
+void to_json( nlohmann::json &j, const PhysicalDeviceMeshShaderPropertiesNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceMeshShaderPropertiesNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceMeshShaderPropertiesNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceMeshShaderPropertiesNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceMeshShaderPropertiesNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceMeshShaderPropertiesNV" );
-  p.maxDrawMeshTasksCount = j[ "maxDrawMeshTasksCount" ];
-  p.maxTaskWorkGroupInvocations = j[ "maxTaskWorkGroupInvocations" ];
-  if( !j[ "maxTaskWorkGroupSize" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PhysicalDeviceMeshShaderPropertiesNV.maxTaskWorkGroupSize" );
-  if( !j[ "maxTaskWorkGroupSize" ].size() > p.maxTaskWorkGroupSize.size() ) throw vulkan2json::invalid_array_value( "too many values in array for PhysicalDeviceMeshShaderPropertiesNV.maxTaskWorkGroupSize" );
-  std::fill( p.maxTaskWorkGroupSize.begin(), p.maxTaskWorkGroupSize.end(), 0 );
-  std::copy( j[ "maxTaskWorkGroupSize" ].begin(), j[ "maxTaskWorkGroupSize" ].end(), p.maxTaskWorkGroupSize.begin() );
-  p.maxTaskTotalMemorySize = j[ "maxTaskTotalMemorySize" ];
-  p.maxTaskOutputCount = j[ "maxTaskOutputCount" ];
-  p.maxMeshWorkGroupInvocations = j[ "maxMeshWorkGroupInvocations" ];
-  if( !j[ "maxMeshWorkGroupSize" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PhysicalDeviceMeshShaderPropertiesNV.maxMeshWorkGroupSize" );
-  if( !j[ "maxMeshWorkGroupSize" ].size() > p.maxMeshWorkGroupSize.size() ) throw vulkan2json::invalid_array_value( "too many values in array for PhysicalDeviceMeshShaderPropertiesNV.maxMeshWorkGroupSize" );
-  std::fill( p.maxMeshWorkGroupSize.begin(), p.maxMeshWorkGroupSize.end(), 0 );
-  std::copy( j[ "maxMeshWorkGroupSize" ].begin(), j[ "maxMeshWorkGroupSize" ].end(), p.maxMeshWorkGroupSize.begin() );
-  p.maxMeshTotalMemorySize = j[ "maxMeshTotalMemorySize" ];
-  p.maxMeshOutputVertices = j[ "maxMeshOutputVertices" ];
-  p.maxMeshOutputPrimitives = j[ "maxMeshOutputPrimitives" ];
-  p.maxMeshMultiviewViewCount = j[ "maxMeshMultiviewViewCount" ];
-  p.meshOutputPerVertexGranularity = j[ "meshOutputPerVertexGranularity" ];
-  p.meshOutputPerPrimitiveGranularity = j[ "meshOutputPerPrimitiveGranularity" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceMeshShaderPropertiesNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceMeshShaderPropertiesNV &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceMeshShaderPropertiesNV temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceMeshShaderPropertiesNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceMeshShaderPropertiesNV &p );
 
 
 #endif

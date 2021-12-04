@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTUREMEMORYREQUIREMENTSTYPENV_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTUREMEMORYREQUIREMENTSTYPENV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_NV_RAY_TRACING_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureMemoryRequirementsTypeNV &p ) {
-  if( AccelerationStructureMemoryRequirementsTypeNV :: eObject == p ) {
-    j = "Object";
-    return;
-  }
-  if( AccelerationStructureMemoryRequirementsTypeNV :: eBuildScratch == p ) {
-    j = "BuildScratch";
-    return;
-  }
+void to_json( nlohmann::json &j, const AccelerationStructureMemoryRequirementsTypeNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAccelerationStructureMemoryRequirementsTypeNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AccelerationStructureMemoryRequirementsTypeNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAccelerationStructureMemoryRequirementsTypeNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AccelerationStructureMemoryRequirementsTypeNV &p ) {
-  if( j.is_string() ) {
-    if( "Object" == j.get< std::string >() ) {
-      p = AccelerationStructureMemoryRequirementsTypeNV :: eObject ;
-      return;
-    }
-    if( "eObject" == j.get< std::string >() ) {
-      p = AccelerationStructureMemoryRequirementsTypeNV :: eObject ;
-      return;
-    }
-    if( "VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_OBJECT_NV" == j.get< std::string >() ) {
-      p = AccelerationStructureMemoryRequirementsTypeNV :: eObject ;
-      return;
-    }
-    if( "BuildScratch" == j.get< std::string >() ) {
-      p = AccelerationStructureMemoryRequirementsTypeNV :: eBuildScratch ;
-      return;
-    }
-    if( "eBuildScratch" == j.get< std::string >() ) {
-      p = AccelerationStructureMemoryRequirementsTypeNV :: eBuildScratch ;
-      return;
-    }
-    if( "VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_BUILD_SCRATCH_NV" == j.get< std::string >() ) {
-      p = AccelerationStructureMemoryRequirementsTypeNV :: eBuildScratch ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for AccelerationStructureMemoryRequirementsTypeNV" );
-  }
-  if( j.is_number() ) {
-    p = AccelerationStructureMemoryRequirementsTypeNV ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for AccelerationStructureMemoryRequirementsTypeNV" );
+void from_json( const nlohmann::json &j, AccelerationStructureMemoryRequirementsTypeNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAccelerationStructureMemoryRequirementsTypeNV &p ) {
-  VULKAN_HPP_NAMESPACE :: AccelerationStructureMemoryRequirementsTypeNV temp;
-  from_json( j, temp );
-  p = VkAccelerationStructureMemoryRequirementsTypeNV ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkAccelerationStructureMemoryRequirementsTypeNV &p );
 
 
 #endif

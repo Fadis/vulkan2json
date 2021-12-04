@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_ENABLE_BETA_EXTENSIONS )
 namespace VULKAN_HPP_NAMESPACE {
@@ -56,12 +59,24 @@ inline void to_json( nlohmann::json &j, const VkVideoEncodeH264NaluSliceEXT &p )
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoEncodeH264NaluSliceEXT &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoEncodeH264NaluSliceEXT" );
-  p.mbCount = j[ "mbCount" ];
-  p.refFinalList0EntryCount = j[ "refFinalList0EntryCount" ];
-  p.refFinalList1EntryCount = j[ "refFinalList1EntryCount" ];
-  p.precedingNaluBytes = j[ "precedingNaluBytes" ];
-  p.minQp = j[ "minQp" ];
-  p.maxQp = j[ "maxQp" ];
+  if( j.find( "mbCount" ) != j.end() ) {
+    p.mbCount = j[ "mbCount" ];
+  }
+  if( j.find( "refFinalList0EntryCount" ) != j.end() ) {
+    p.refFinalList0EntryCount = j[ "refFinalList0EntryCount" ];
+  }
+  if( j.find( "refFinalList1EntryCount" ) != j.end() ) {
+    p.refFinalList1EntryCount = j[ "refFinalList1EntryCount" ];
+  }
+  if( j.find( "precedingNaluBytes" ) != j.end() ) {
+    p.precedingNaluBytes = j[ "precedingNaluBytes" ];
+  }
+  if( j.find( "minQp" ) != j.end() ) {
+    p.minQp = j[ "minQp" ];
+  }
+  if( j.find( "maxQp" ) != j.end() ) {
+    p.maxQp = j[ "maxQp" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoEncodeH264NaluSliceEXT &p ) {

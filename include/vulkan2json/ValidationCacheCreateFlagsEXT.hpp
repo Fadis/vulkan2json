@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_VALIDATIONCACHECREATEFLAGSEXT_HPP
 #define VULKAN2JSON_VALIDATIONCACHECREATEFLAGSEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_VALIDATION_CACHE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ValidationCacheCreateFlagBitsEXT &p ) {
+  void to_json( nlohmann::json &j, const ValidationCacheCreateFlagBitsEXT &p );
+  void to_json( nlohmann::json &j, const ValidationCacheCreateFlagsEXT &p );
+  void from_json( const nlohmann::json &j, ValidationCacheCreateFlagBitsEXT &p );
+  void from_json( const nlohmann::json &j, ValidationCacheCreateFlagsEXT &p );
 }
-inline void from_json( const nlohmann::json &j, ValidationCacheCreateFlagBitsEXT &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ValidationCacheCreateFlagBitsEXT" );
-  }
-  if( j.is_number() ) {
-    p = ValidationCacheCreateFlagBitsEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ValidationCacheCreateFlagBitsEXT" );
-}
-inline void to_json( nlohmann::json &j, const ValidationCacheCreateFlagsEXT &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( ValidationCacheCreateFlagBitsEXT ) * 8u; ++n ) {
-    if( p & ValidationCacheCreateFlagsEXT ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, ValidationCacheCreateFlagBitsEXT ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, ValidationCacheCreateFlagsEXT &p ) {
-  if( j.is_array() ) {
-    p = ValidationCacheCreateFlagsEXT ( 0 );
-    for( auto &e:  j ) {
-      ValidationCacheCreateFlagBitsEXT temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for ValidationCacheCreateFlagsEXT" );
-}
-}
-#endif
 
 
 #endif

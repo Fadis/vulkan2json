@@ -32,6 +32,11 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/Offset2D.hpp>
+#include <vulkan2json/Extent2D.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/Offset2D.hpp>
 #include <vulkan2json/Extent2D.hpp>
@@ -52,9 +57,15 @@ inline void to_json( nlohmann::json &j, const VkVideoPictureResourceKHR &p ) {
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoPictureResourceKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoPictureResourceKHR" );
-  p.codedOffset = Offset2D ( j[ "codedOffset" ] );
-  p.codedExtent = Extent2D ( j[ "codedExtent" ] );
-  p.baseArrayLayer = j[ "baseArrayLayer" ];
+  if( j.find( "codedOffset" ) != j.end() ) {
+    p.codedOffset = Offset2D ( j[ "codedOffset" ] );
+  }
+  if( j.find( "codedExtent" ) != j.end() ) {
+    p.codedExtent = Extent2D ( j[ "codedExtent" ] );
+  }
+  if( j.find( "baseArrayLayer" ) != j.end() ) {
+    p.baseArrayLayer = j[ "baseArrayLayer" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoPictureResourceKHR &p ) {

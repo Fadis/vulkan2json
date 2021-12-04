@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_VERTEXINPUTBINDINGDESCRIPTION_HPP
 #define VULKAN2JSON_VERTEXINPUTBINDINGDESCRIPTION_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/VertexInputRate.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const VertexInputBindingDescription &p ) {
-  j = nlohmann::json::object();
-  j[ "binding" ] = p.binding;
-  j[ "stride" ] = p.stride;
-  j[ "inputRate" ] = p.inputRate;
+void to_json( nlohmann::json &j, const VertexInputBindingDescription &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkVertexInputBindingDescription &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: VertexInputBindingDescription ( p ) );
-}
+void to_json( nlohmann::json &j, const VkVertexInputBindingDescription &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, VertexInputBindingDescription &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VertexInputBindingDescription" );
-  p.binding = j[ "binding" ];
-  p.stride = j[ "stride" ];
-  p.inputRate = VertexInputRate ( j[ "inputRate" ] );
+  void from_json( const nlohmann::json &j, VertexInputBindingDescription &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkVertexInputBindingDescription &p ) {
-  VULKAN_HPP_NAMESPACE :: VertexInputBindingDescription temp;
-  from_json( j, temp );
-  p = VkVertexInputBindingDescription ( temp );
-}
+void from_json( const nlohmann::json &j, VkVertexInputBindingDescription &p );
 
 
 #endif

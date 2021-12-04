@@ -22,49 +22,19 @@
 #ifndef VULKAN2JSON_BUFFERIMAGECOPY_HPP
 #define VULKAN2JSON_BUFFERIMAGECOPY_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/ImageSubresourceLayers.hpp>
-#include <vulkan2json/Offset3D.hpp>
-#include <vulkan2json/Extent3D.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const BufferImageCopy &p ) {
-  j = nlohmann::json::object();
-  j[ "bufferOffset" ] = p.bufferOffset;
-  j[ "bufferRowLength" ] = p.bufferRowLength;
-  j[ "bufferImageHeight" ] = p.bufferImageHeight;
-  j[ "imageSubresource" ] = p.imageSubresource;
-  j[ "imageOffset" ] = p.imageOffset;
-  j[ "imageExtent" ] = p.imageExtent;
+void to_json( nlohmann::json &j, const BufferImageCopy &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkBufferImageCopy &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: BufferImageCopy ( p ) );
-}
+void to_json( nlohmann::json &j, const VkBufferImageCopy &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, BufferImageCopy &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for BufferImageCopy" );
-  p.bufferOffset = j[ "bufferOffset" ];
-  p.bufferRowLength = j[ "bufferRowLength" ];
-  p.bufferImageHeight = j[ "bufferImageHeight" ];
-  p.imageSubresource = ImageSubresourceLayers ( j[ "imageSubresource" ] );
-  p.imageOffset = Offset3D ( j[ "imageOffset" ] );
-  p.imageExtent = Extent3D ( j[ "imageExtent" ] );
+  void from_json( const nlohmann::json &j, BufferImageCopy &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkBufferImageCopy &p ) {
-  VULKAN_HPP_NAMESPACE :: BufferImageCopy temp;
-  from_json( j, temp );
-  p = VkBufferImageCopy ( temp );
-}
+void from_json( const nlohmann::json &j, VkBufferImageCopy &p );
 
 
 #endif

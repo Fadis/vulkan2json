@@ -22,105 +22,19 @@
 #ifndef VULKAN2JSON_PERFORMANCEVALUETYPEINTEL_HPP
 #define VULKAN2JSON_PERFORMANCEVALUETYPEINTEL_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_INTEL_PERFORMANCE_QUERY_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PerformanceValueTypeINTEL &p ) {
-  if( PerformanceValueTypeINTEL :: eUint32 == p ) {
-    j = "Uint32";
-    return;
-  }
-  if( PerformanceValueTypeINTEL :: eUint64 == p ) {
-    j = "Uint64";
-    return;
-  }
-  if( PerformanceValueTypeINTEL :: eFloat == p ) {
-    j = "Float";
-    return;
-  }
-  if( PerformanceValueTypeINTEL :: eBool == p ) {
-    j = "Bool";
-    return;
-  }
+void to_json( nlohmann::json &j, const PerformanceValueTypeINTEL &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPerformanceValueTypeINTEL &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PerformanceValueTypeINTEL ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPerformanceValueTypeINTEL &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PerformanceValueTypeINTEL &p ) {
-  if( j.is_string() ) {
-    if( "Uint32" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eUint32 ;
-      return;
-    }
-    if( "eUint32" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eUint32 ;
-      return;
-    }
-    if( "VK_PERFORMANCE_VALUE_TYPE_UINT32_INTEL" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eUint32 ;
-      return;
-    }
-    if( "Uint64" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eUint64 ;
-      return;
-    }
-    if( "eUint64" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eUint64 ;
-      return;
-    }
-    if( "VK_PERFORMANCE_VALUE_TYPE_UINT64_INTEL" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eUint64 ;
-      return;
-    }
-    if( "Float" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eFloat ;
-      return;
-    }
-    if( "eFloat" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eFloat ;
-      return;
-    }
-    if( "VK_PERFORMANCE_VALUE_TYPE_FLOAT_INTEL" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eFloat ;
-      return;
-    }
-    if( "Bool" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eBool ;
-      return;
-    }
-    if( "eBool" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eBool ;
-      return;
-    }
-    if( "VK_PERFORMANCE_VALUE_TYPE_BOOL_INTEL" == j.get< std::string >() ) {
-      p = PerformanceValueTypeINTEL :: eBool ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PerformanceValueTypeINTEL" );
-  }
-  if( j.is_number() ) {
-    p = PerformanceValueTypeINTEL ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PerformanceValueTypeINTEL" );
+void from_json( const nlohmann::json &j, PerformanceValueTypeINTEL &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPerformanceValueTypeINTEL &p ) {
-  VULKAN_HPP_NAMESPACE :: PerformanceValueTypeINTEL temp;
-  from_json( j, temp );
-  p = VkPerformanceValueTypeINTEL ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPerformanceValueTypeINTEL &p );
 
 
 #endif

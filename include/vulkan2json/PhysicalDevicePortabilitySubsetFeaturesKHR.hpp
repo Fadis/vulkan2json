@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_ENABLE_BETA_EXTENSIONS )
 namespace VULKAN_HPP_NAMESPACE {
@@ -62,21 +65,51 @@ inline void to_json( nlohmann::json &j, const VkPhysicalDevicePortabilitySubsetF
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, PhysicalDevicePortabilitySubsetFeaturesKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDevicePortabilitySubsetFeaturesKHR" );
-  p.constantAlphaColorBlendFactors = j[ "constantAlphaColorBlendFactors" ];
-  p.events = j[ "events" ];
-  p.imageViewFormatReinterpretation = j[ "imageViewFormatReinterpretation" ];
-  p.imageViewFormatSwizzle = j[ "imageViewFormatSwizzle" ];
-  p.imageView2DOn3DImage = j[ "imageView2DOn3DImage" ];
-  p.multisampleArrayImage = j[ "multisampleArrayImage" ];
-  p.mutableComparisonSamplers = j[ "mutableComparisonSamplers" ];
-  p.pointPolygons = j[ "pointPolygons" ];
-  p.samplerMipLodBias = j[ "samplerMipLodBias" ];
-  p.separateStencilMaskRef = j[ "separateStencilMaskRef" ];
-  p.shaderSampleRateInterpolationFunctions = j[ "shaderSampleRateInterpolationFunctions" ];
-  p.tessellationIsolines = j[ "tessellationIsolines" ];
-  p.tessellationPointMode = j[ "tessellationPointMode" ];
-  p.triangleFans = j[ "triangleFans" ];
-  p.vertexAttributeAccessBeyondStride = j[ "vertexAttributeAccessBeyondStride" ];
+  if( j.find( "constantAlphaColorBlendFactors" ) != j.end() ) {
+    p.constantAlphaColorBlendFactors = j[ "constantAlphaColorBlendFactors" ];
+  }
+  if( j.find( "events" ) != j.end() ) {
+    p.events = j[ "events" ];
+  }
+  if( j.find( "imageViewFormatReinterpretation" ) != j.end() ) {
+    p.imageViewFormatReinterpretation = j[ "imageViewFormatReinterpretation" ];
+  }
+  if( j.find( "imageViewFormatSwizzle" ) != j.end() ) {
+    p.imageViewFormatSwizzle = j[ "imageViewFormatSwizzle" ];
+  }
+  if( j.find( "imageView2DOn3DImage" ) != j.end() ) {
+    p.imageView2DOn3DImage = j[ "imageView2DOn3DImage" ];
+  }
+  if( j.find( "multisampleArrayImage" ) != j.end() ) {
+    p.multisampleArrayImage = j[ "multisampleArrayImage" ];
+  }
+  if( j.find( "mutableComparisonSamplers" ) != j.end() ) {
+    p.mutableComparisonSamplers = j[ "mutableComparisonSamplers" ];
+  }
+  if( j.find( "pointPolygons" ) != j.end() ) {
+    p.pointPolygons = j[ "pointPolygons" ];
+  }
+  if( j.find( "samplerMipLodBias" ) != j.end() ) {
+    p.samplerMipLodBias = j[ "samplerMipLodBias" ];
+  }
+  if( j.find( "separateStencilMaskRef" ) != j.end() ) {
+    p.separateStencilMaskRef = j[ "separateStencilMaskRef" ];
+  }
+  if( j.find( "shaderSampleRateInterpolationFunctions" ) != j.end() ) {
+    p.shaderSampleRateInterpolationFunctions = j[ "shaderSampleRateInterpolationFunctions" ];
+  }
+  if( j.find( "tessellationIsolines" ) != j.end() ) {
+    p.tessellationIsolines = j[ "tessellationIsolines" ];
+  }
+  if( j.find( "tessellationPointMode" ) != j.end() ) {
+    p.tessellationPointMode = j[ "tessellationPointMode" ];
+  }
+  if( j.find( "triangleFans" ) != j.end() ) {
+    p.triangleFans = j[ "triangleFans" ];
+  }
+  if( j.find( "vertexAttributeAccessBeyondStride" ) != j.end() ) {
+    p.vertexAttributeAccessBeyondStride = j[ "vertexAttributeAccessBeyondStride" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkPhysicalDevicePortabilitySubsetFeaturesKHR &p ) {

@@ -22,44 +22,19 @@
 #ifndef VULKAN2JSON_SUBPASSDESCRIPTIONDEPTHSTENCILRESOLVE_HPP
 #define VULKAN2JSON_SUBPASSDESCRIPTIONDEPTHSTENCILRESOLVE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ResolveModeFlags.hpp>
-#include <vulkan2json/ResolveModeFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SubpassDescriptionDepthStencilResolve &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "depthResolveMode" ] = p.depthResolveMode;
-  j[ "stencilResolveMode" ] = p.stencilResolveMode;
-  j[ "pDepthStencilResolveAttachment" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pDepthStencilResolveAttachment ) );
+void to_json( nlohmann::json &j, const SubpassDescriptionDepthStencilResolve &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSubpassDescriptionDepthStencilResolve &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SubpassDescriptionDepthStencilResolve ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSubpassDescriptionDepthStencilResolve &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SubpassDescriptionDepthStencilResolve &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SubpassDescriptionDepthStencilResolve" );
-  p.depthResolveMode = ResolveModeFlagBits ( j[ "depthResolveMode" ] );
-  p.stencilResolveMode = ResolveModeFlagBits ( j[ "stencilResolveMode" ] );
+  void from_json( const nlohmann::json &j, SubpassDescriptionDepthStencilResolve &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSubpassDescriptionDepthStencilResolve &p ) {
-  VULKAN_HPP_NAMESPACE :: SubpassDescriptionDepthStencilResolve temp;
-  from_json( j, temp );
-  p = VkSubpassDescriptionDepthStencilResolve ( temp );
-}
+void from_json( const nlohmann::json &j, VkSubpassDescriptionDepthStencilResolve &p );
 
 
 #endif

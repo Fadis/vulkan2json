@@ -32,22 +32,23 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_VIDEO_QUEUE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoComponentBitDepthFlagBitsKHR &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoComponentBitDepthFlagBitsKHR :: eInvalid == p ) {
     j = "Invalid";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoComponentBitDepthFlagBitsKHR :: e8 == p ) {
     j = "8";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoComponentBitDepthFlagBitsKHR :: e10 == p ) {
     j = "10";
     return;
@@ -56,55 +57,55 @@ inline void to_json( nlohmann::json &j, const VideoComponentBitDepthFlagBitsKHR 
 }
 inline void from_json( const nlohmann::json &j, VideoComponentBitDepthFlagBitsKHR &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Invalid" == j.get< std::string >() ) {
       p = VideoComponentBitDepthFlagBitsKHR :: eInvalid ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eInvalid" == j.get< std::string >() ) {
       p = VideoComponentBitDepthFlagBitsKHR :: eInvalid ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_COMPONENT_BIT_DEPTH_INVALID_KHR" == j.get< std::string >() ) {
       p = VideoComponentBitDepthFlagBitsKHR :: eInvalid ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "8" == j.get< std::string >() ) {
       p = VideoComponentBitDepthFlagBitsKHR :: e8 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "e8" == j.get< std::string >() ) {
       p = VideoComponentBitDepthFlagBitsKHR :: e8 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_COMPONENT_BIT_DEPTH_8_BIT_KHR" == j.get< std::string >() ) {
       p = VideoComponentBitDepthFlagBitsKHR :: e8 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "10" == j.get< std::string >() ) {
       p = VideoComponentBitDepthFlagBitsKHR :: e10 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "e10" == j.get< std::string >() ) {
       p = VideoComponentBitDepthFlagBitsKHR :: e10 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_COMPONENT_BIT_DEPTH_10_BIT_KHR" == j.get< std::string >() ) {
       p = VideoComponentBitDepthFlagBitsKHR :: e10 ;
       return;
@@ -139,7 +140,6 @@ inline void from_json( const nlohmann::json &j, VideoComponentBitDepthFlagsKHR &
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoComponentBitDepthFlagsKHR" );
 }
 }
-#endif
 
 
 #endif

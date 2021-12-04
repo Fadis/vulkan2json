@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_PIPELINEDISCARDRECTANGLESTATECREATEFLAGSEXT_HPP
 #define VULKAN2JSON_PIPELINEDISCARDRECTANGLESTATECREATEFLAGSEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_DISCARD_RECTANGLES_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineDiscardRectangleStateCreateFlagBitsEXT &p ) {
+  void to_json( nlohmann::json &j, const PipelineDiscardRectangleStateCreateFlagBitsEXT &p );
+  void to_json( nlohmann::json &j, const PipelineDiscardRectangleStateCreateFlagsEXT &p );
+  void from_json( const nlohmann::json &j, PipelineDiscardRectangleStateCreateFlagBitsEXT &p );
+  void from_json( const nlohmann::json &j, PipelineDiscardRectangleStateCreateFlagsEXT &p );
 }
-inline void from_json( const nlohmann::json &j, PipelineDiscardRectangleStateCreateFlagBitsEXT &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineDiscardRectangleStateCreateFlagBitsEXT" );
-  }
-  if( j.is_number() ) {
-    p = PipelineDiscardRectangleStateCreateFlagBitsEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineDiscardRectangleStateCreateFlagBitsEXT" );
-}
-inline void to_json( nlohmann::json &j, const PipelineDiscardRectangleStateCreateFlagsEXT &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineDiscardRectangleStateCreateFlagBitsEXT ) * 8u; ++n ) {
-    if( p & PipelineDiscardRectangleStateCreateFlagsEXT ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineDiscardRectangleStateCreateFlagBitsEXT ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, PipelineDiscardRectangleStateCreateFlagsEXT &p ) {
-  if( j.is_array() ) {
-    p = PipelineDiscardRectangleStateCreateFlagsEXT ( 0 );
-    for( auto &e:  j ) {
-      PipelineDiscardRectangleStateCreateFlagBitsEXT temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineDiscardRectangleStateCreateFlagsEXT" );
-}
-}
-#endif
 
 
 #endif

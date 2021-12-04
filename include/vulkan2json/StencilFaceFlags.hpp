@@ -22,100 +22,17 @@
 #ifndef VULKAN2JSON_STENCILFACEFLAGS_HPP
 #define VULKAN2JSON_STENCILFACEFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const StencilFaceFlagBits &p ) {
-  if( StencilFaceFlagBits :: eFront == p ) {
-    j = "Front";
-    return;
-  }
-  if( StencilFaceFlagBits :: eBack == p ) {
-    j = "Back";
-    return;
-  }
-  if( StencilFaceFlagBits :: eFrontAndBack == p ) {
-    j = "FrontAndBack";
-    return;
-  }
+  void to_json( nlohmann::json &j, const StencilFaceFlagBits &p );
+  void to_json( nlohmann::json &j, const StencilFaceFlags &p );
+  void from_json( const nlohmann::json &j, StencilFaceFlagBits &p );
+  void from_json( const nlohmann::json &j, StencilFaceFlags &p );
 }
-inline void from_json( const nlohmann::json &j, StencilFaceFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "Front" == j.get< std::string >() ) {
-      p = StencilFaceFlagBits :: eFront ;
-      return;
-    }
-    if( "eFront" == j.get< std::string >() ) {
-      p = StencilFaceFlagBits :: eFront ;
-      return;
-    }
-    if( "VK_STENCIL_FACE_FRONT_BIT" == j.get< std::string >() ) {
-      p = StencilFaceFlagBits :: eFront ;
-      return;
-    }
-    if( "Back" == j.get< std::string >() ) {
-      p = StencilFaceFlagBits :: eBack ;
-      return;
-    }
-    if( "eBack" == j.get< std::string >() ) {
-      p = StencilFaceFlagBits :: eBack ;
-      return;
-    }
-    if( "VK_STENCIL_FACE_BACK_BIT" == j.get< std::string >() ) {
-      p = StencilFaceFlagBits :: eBack ;
-      return;
-    }
-    if( "FrontAndBack" == j.get< std::string >() ) {
-      p = StencilFaceFlagBits :: eFrontAndBack ;
-      return;
-    }
-    if( "eFrontAndBack" == j.get< std::string >() ) {
-      p = StencilFaceFlagBits :: eFrontAndBack ;
-      return;
-    }
-    if( "VK_STENCIL_FACE_FRONT_AND_BACK" == j.get< std::string >() ) {
-      p = StencilFaceFlagBits :: eFrontAndBack ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for StencilFaceFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = StencilFaceFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for StencilFaceFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const StencilFaceFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( StencilFaceFlagBits ) * 8u; ++n ) {
-    if( p & StencilFaceFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, StencilFaceFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, StencilFaceFlags &p ) {
-  if( j.is_array() ) {
-    p = StencilFaceFlags ( 0 );
-    for( auto &e:  j ) {
-      StencilFaceFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for StencilFaceFlags" );
-}
-}
-#endif
 
 
 #endif

@@ -32,34 +32,35 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_VIDEO_ENCODE_H264_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoEncodeH264CapabilitiesFlagBitsEXT &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityCabac == p ) {
     j = "VkVideoEncodeH264CapabilityCabac";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityCavlc == p ) {
     j = "VkVideoEncodeH264CapabilityCavlc";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityTransform8X8 == p ) {
     j = "VkVideoEncodeH264CapabilityTransform8X8";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityChromaQpOffset == p ) {
     j = "VkVideoEncodeH264CapabilityChromaQpOffset";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilitySecondChromaQpOffset == p ) {
     j = "VkVideoEncodeH264CapabilitySecondChromaQpOffset";
     return;
@@ -68,91 +69,91 @@ inline void to_json( nlohmann::json &j, const VideoEncodeH264CapabilitiesFlagBit
 }
 inline void from_json( const nlohmann::json &j, VideoEncodeH264CapabilitiesFlagBitsEXT &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VkVideoEncodeH264CapabilityCabac" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityCabac ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVkVideoEncodeH264CapabilityCabac" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityCabac ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_ENCODE_H264_CAPABILITY_CABAC_BIT_EXT" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityCabac ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VkVideoEncodeH264CapabilityCavlc" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityCavlc ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVkVideoEncodeH264CapabilityCavlc" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityCavlc ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_ENCODE_H264_CAPABILITY_CAVLC_BIT_EXT" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityCavlc ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VkVideoEncodeH264CapabilityTransform8X8" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityTransform8X8 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVkVideoEncodeH264CapabilityTransform8X8" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityTransform8X8 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_ENCODE_H264_CAPABILITY_TRANSFORM_8X8_BIT_EXT" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityTransform8X8 ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VkVideoEncodeH264CapabilityChromaQpOffset" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityChromaQpOffset ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVkVideoEncodeH264CapabilityChromaQpOffset" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityChromaQpOffset ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_ENCODE_H264_CAPABILITY_CHROMA_QP_OFFSET_BIT_EXT" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilityChromaQpOffset ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VkVideoEncodeH264CapabilitySecondChromaQpOffset" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilitySecondChromaQpOffset ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVkVideoEncodeH264CapabilitySecondChromaQpOffset" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilitySecondChromaQpOffset ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_ENCODE_H264_CAPABILITY_SECOND_CHROMA_QP_OFFSET_BIT_EXT" == j.get< std::string >() ) {
       p = VideoEncodeH264CapabilitiesFlagBitsEXT :: eVkVideoEncodeH264CapabilitySecondChromaQpOffset ;
       return;
@@ -187,7 +188,6 @@ inline void from_json( const nlohmann::json &j, VideoEncodeH264CapabilitiesFlags
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoEncodeH264CapabilitiesFlagsEXT" );
 }
 }
-#endif
 
 
 #endif

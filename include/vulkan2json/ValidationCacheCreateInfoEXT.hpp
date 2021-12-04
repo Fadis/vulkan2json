@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_VALIDATIONCACHECREATEINFOEXT_HPP
 #define VULKAN2JSON_VALIDATIONCACHECREATEINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ValidationCacheCreateFlagsEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ValidationCacheCreateInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "initialDataSize" ] = p.initialDataSize;
-  j[ "pInitialData" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pInitialData ) );
+void to_json( nlohmann::json &j, const ValidationCacheCreateInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkValidationCacheCreateInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ValidationCacheCreateInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkValidationCacheCreateInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ValidationCacheCreateInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ValidationCacheCreateInfoEXT" );
-  p.flags = ValidationCacheCreateFlagsEXT ( j[ "flags" ] );
-  p.initialDataSize = j[ "initialDataSize" ];
+  void from_json( const nlohmann::json &j, ValidationCacheCreateInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkValidationCacheCreateInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: ValidationCacheCreateInfoEXT temp;
-  from_json( j, temp );
-  p = VkValidationCacheCreateInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkValidationCacheCreateInfoEXT &p );
 
 
 #endif

@@ -22,64 +22,19 @@
 #ifndef VULKAN2JSON_PERFORMANCECOUNTERDESCRIPTIONKHR_HPP
 #define VULKAN2JSON_PERFORMANCECOUNTERDESCRIPTIONKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PerformanceCounterDescriptionFlagsKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PerformanceCounterDescriptionKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "name" ] = std::string( p.name.begin(), std::find( p.name.begin(), p.name.end(), '\0' ) );
-  j[ "category" ] = std::string( p.category.begin(), std::find( p.category.begin(), p.category.end(), '\0' ) );
-  j[ "description" ] = std::string( p.description.begin(), std::find( p.description.begin(), p.description.end(), '\0' ) );
+void to_json( nlohmann::json &j, const PerformanceCounterDescriptionKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPerformanceCounterDescriptionKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PerformanceCounterDescriptionKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPerformanceCounterDescriptionKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PerformanceCounterDescriptionKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PerformanceCounterDescriptionKHR" );
-  p.flags = PerformanceCounterDescriptionFlagsKHR ( j[ "flags" ] );
-  {
-    std::string s = j[ "name" ];
-    if( !p.name.empty() ) {
-      p.name[ p.name.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.name.size() - 1u ) ), p.name.begin() );
-    }
-  }
-  {
-    std::string s = j[ "category" ];
-    if( !p.category.empty() ) {
-      p.category[ p.category.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.category.size() - 1u ) ), p.category.begin() );
-    }
-  }
-  {
-    std::string s = j[ "description" ];
-    if( !p.description.empty() ) {
-      p.description[ p.description.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.description.size() - 1u ) ), p.description.begin() );
-    }
-  }
+  void from_json( const nlohmann::json &j, PerformanceCounterDescriptionKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPerformanceCounterDescriptionKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PerformanceCounterDescriptionKHR temp;
-  from_json( j, temp );
-  p = VkPerformanceCounterDescriptionKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPerformanceCounterDescriptionKHR &p );
 
 
 #endif

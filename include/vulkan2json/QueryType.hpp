@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const QueryType &p ) {
   if( QueryType :: eOcclusion == p ) {
@@ -47,7 +48,7 @@ inline void to_json( nlohmann::json &j, const QueryType &p ) {
     j = "Timestamp";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( QueryType :: eResultStatusOnlyKHR == p ) {
     j = "ResultStatusOnlyKHR";
     return;
@@ -121,19 +122,19 @@ inline void from_json( const nlohmann::json &j, QueryType &p ) {
       p = QueryType :: eTimestamp ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "ResultStatusOnlyKHR" == j.get< std::string >() ) {
       p = QueryType :: eResultStatusOnlyKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eResultStatusOnlyKHR" == j.get< std::string >() ) {
       p = QueryType :: eResultStatusOnlyKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_QUERY_TYPE_RESULT_STATUS_ONLY_KHR" == j.get< std::string >() ) {
       p = QueryType :: eResultStatusOnlyKHR ;
       return;
@@ -224,7 +225,6 @@ inline void from_json( const nlohmann::json &j, VkQueryType &p ) {
   from_json( j, temp );
   p = VkQueryType ( temp );
 }
-#endif
 
 
 #endif

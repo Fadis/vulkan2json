@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_IMPORTFENCEFDINFOKHR_HPP
 #define VULKAN2JSON_IMPORTFENCEFDINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/FenceImportFlags.hpp>
-#include <vulkan2json/ExternalFenceHandleTypeFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImportFenceFdInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "handleType" ] = p.handleType;
-  j[ "fd" ] = p.fd;
+void to_json( nlohmann::json &j, const ImportFenceFdInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkImportFenceFdInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ImportFenceFdInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkImportFenceFdInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ImportFenceFdInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ImportFenceFdInfoKHR" );
-  p.flags = FenceImportFlags ( j[ "flags" ] );
-  p.handleType = ExternalFenceHandleTypeFlagBits ( j[ "handleType" ] );
-  p.fd = j[ "fd" ];
+  void from_json( const nlohmann::json &j, ImportFenceFdInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkImportFenceFdInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: ImportFenceFdInfoKHR temp;
-  from_json( j, temp );
-  p = VkImportFenceFdInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkImportFenceFdInfoKHR &p );
 
 
 #endif

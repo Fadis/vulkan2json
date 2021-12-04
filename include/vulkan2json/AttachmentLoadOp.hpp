@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_ATTACHMENTLOADOP_HPP
 #define VULKAN2JSON_ATTACHMENTLOADOP_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AttachmentLoadOp &p ) {
-  if( AttachmentLoadOp :: eLoad == p ) {
-    j = "Load";
-    return;
-  }
-  if( AttachmentLoadOp :: eClear == p ) {
-    j = "Clear";
-    return;
-  }
+void to_json( nlohmann::json &j, const AttachmentLoadOp &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAttachmentLoadOp &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AttachmentLoadOp ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAttachmentLoadOp &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AttachmentLoadOp &p ) {
-  if( j.is_string() ) {
-    if( "Load" == j.get< std::string >() ) {
-      p = AttachmentLoadOp :: eLoad ;
-      return;
-    }
-    if( "eLoad" == j.get< std::string >() ) {
-      p = AttachmentLoadOp :: eLoad ;
-      return;
-    }
-    if( "VK_ATTACHMENT_LOAD_OP_LOAD" == j.get< std::string >() ) {
-      p = AttachmentLoadOp :: eLoad ;
-      return;
-    }
-    if( "Clear" == j.get< std::string >() ) {
-      p = AttachmentLoadOp :: eClear ;
-      return;
-    }
-    if( "eClear" == j.get< std::string >() ) {
-      p = AttachmentLoadOp :: eClear ;
-      return;
-    }
-    if( "VK_ATTACHMENT_LOAD_OP_CLEAR" == j.get< std::string >() ) {
-      p = AttachmentLoadOp :: eClear ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for AttachmentLoadOp" );
-  }
-  if( j.is_number() ) {
-    p = AttachmentLoadOp ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for AttachmentLoadOp" );
+void from_json( const nlohmann::json &j, AttachmentLoadOp &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAttachmentLoadOp &p ) {
-  VULKAN_HPP_NAMESPACE :: AttachmentLoadOp temp;
-  from_json( j, temp );
-  p = VkAttachmentLoadOp ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkAttachmentLoadOp &p );
 
 
 #endif

@@ -22,84 +22,17 @@
 #ifndef VULKAN2JSON_EXTERNALMEMORYFEATUREFLAGSNV_HPP
 #define VULKAN2JSON_EXTERNALMEMORYFEATUREFLAGSNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ExternalMemoryFeatureFlagBitsNV &p ) {
-  if( ExternalMemoryFeatureFlagBitsNV :: eDedicatedOnly == p ) {
-    j = "DedicatedOnly";
-    return;
-  }
-  if( ExternalMemoryFeatureFlagBitsNV :: eExportable == p ) {
-    j = "Exportable";
-    return;
-  }
+  void to_json( nlohmann::json &j, const ExternalMemoryFeatureFlagBitsNV &p );
+  void to_json( nlohmann::json &j, const ExternalMemoryFeatureFlagsNV &p );
+  void from_json( const nlohmann::json &j, ExternalMemoryFeatureFlagBitsNV &p );
+  void from_json( const nlohmann::json &j, ExternalMemoryFeatureFlagsNV &p );
 }
-inline void from_json( const nlohmann::json &j, ExternalMemoryFeatureFlagBitsNV &p ) {
-  if( j.is_string() ) {
-    if( "DedicatedOnly" == j.get< std::string >() ) {
-      p = ExternalMemoryFeatureFlagBitsNV :: eDedicatedOnly ;
-      return;
-    }
-    if( "eDedicatedOnly" == j.get< std::string >() ) {
-      p = ExternalMemoryFeatureFlagBitsNV :: eDedicatedOnly ;
-      return;
-    }
-    if( "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV" == j.get< std::string >() ) {
-      p = ExternalMemoryFeatureFlagBitsNV :: eDedicatedOnly ;
-      return;
-    }
-    if( "Exportable" == j.get< std::string >() ) {
-      p = ExternalMemoryFeatureFlagBitsNV :: eExportable ;
-      return;
-    }
-    if( "eExportable" == j.get< std::string >() ) {
-      p = ExternalMemoryFeatureFlagBitsNV :: eExportable ;
-      return;
-    }
-    if( "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV" == j.get< std::string >() ) {
-      p = ExternalMemoryFeatureFlagBitsNV :: eExportable ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ExternalMemoryFeatureFlagBitsNV" );
-  }
-  if( j.is_number() ) {
-    p = ExternalMemoryFeatureFlagBitsNV ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ExternalMemoryFeatureFlagBitsNV" );
-}
-inline void to_json( nlohmann::json &j, const ExternalMemoryFeatureFlagsNV &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( ExternalMemoryFeatureFlagBitsNV ) * 8u; ++n ) {
-    if( p & ExternalMemoryFeatureFlagsNV ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, ExternalMemoryFeatureFlagBitsNV ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, ExternalMemoryFeatureFlagsNV &p ) {
-  if( j.is_array() ) {
-    p = ExternalMemoryFeatureFlagsNV ( 0 );
-    for( auto &e:  j ) {
-      ExternalMemoryFeatureFlagBitsNV temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for ExternalMemoryFeatureFlagsNV" );
-}
-}
-#endif
 
 
 #endif

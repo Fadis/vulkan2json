@@ -22,53 +22,19 @@
 #ifndef VULKAN2JSON_SUBPASSDEPENDENCY_HPP
 #define VULKAN2JSON_SUBPASSDEPENDENCY_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/PipelineStageFlags.hpp>
-#include <vulkan2json/PipelineStageFlags.hpp>
-#include <vulkan2json/AccessFlags.hpp>
-#include <vulkan2json/AccessFlags.hpp>
-#include <vulkan2json/DependencyFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SubpassDependency &p ) {
-  j = nlohmann::json::object();
-  j[ "srcSubpass" ] = p.srcSubpass;
-  j[ "dstSubpass" ] = p.dstSubpass;
-  j[ "srcStageMask" ] = p.srcStageMask;
-  j[ "dstStageMask" ] = p.dstStageMask;
-  j[ "srcAccessMask" ] = p.srcAccessMask;
-  j[ "dstAccessMask" ] = p.dstAccessMask;
-  j[ "dependencyFlags" ] = p.dependencyFlags;
+void to_json( nlohmann::json &j, const SubpassDependency &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSubpassDependency &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SubpassDependency ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSubpassDependency &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SubpassDependency &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SubpassDependency" );
-  p.srcSubpass = j[ "srcSubpass" ];
-  p.dstSubpass = j[ "dstSubpass" ];
-  p.srcStageMask = PipelineStageFlags ( j[ "srcStageMask" ] );
-  p.dstStageMask = PipelineStageFlags ( j[ "dstStageMask" ] );
-  p.srcAccessMask = AccessFlags ( j[ "srcAccessMask" ] );
-  p.dstAccessMask = AccessFlags ( j[ "dstAccessMask" ] );
-  p.dependencyFlags = DependencyFlags ( j[ "dependencyFlags" ] );
+  void from_json( const nlohmann::json &j, SubpassDependency &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSubpassDependency &p ) {
-  VULKAN_HPP_NAMESPACE :: SubpassDependency temp;
-  from_json( j, temp );
-  p = VkSubpassDependency ( temp );
-}
+void from_json( const nlohmann::json &j, VkSubpassDependency &p );
 
 
 #endif

@@ -27,12 +27,17 @@ import sys
 import re
 
 def get_handle_class_name( filename ):
-  class_names = set()
-  class_rule = re.compile( "^\s*class\s*(\S+)\s*$" );
+  class_names = {}
+  class_rule = re.compile( "^\s*class\s*(\S+)\s*$" )
+  using_rule = re.compile( "^\s*using\s+(\S+)\s*=\s*(\S+?)\s*;\s*$" )
   with open( filename, 'r' ) as fd:
     for line in fd:
       class_match = re.match( class_rule, line.rstrip() )
       if class_match:
-        class_names.add( class_match.group( 1 ) )
+        class_names[ class_match.group( 1 ) ] = class_match.group( 1 )
+        continue
+      using_match = re.match( using_rule, line.rstrip() )
+      if using_match:
+        class_names[ using_match.group( 1 ) ] = using_match.group( 2 )
   return class_names
 

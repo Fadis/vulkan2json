@@ -22,49 +22,19 @@
 #ifndef VULKAN2JSON_IMAGECOPY_HPP
 #define VULKAN2JSON_IMAGECOPY_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/ImageSubresourceLayers.hpp>
-#include <vulkan2json/Offset3D.hpp>
-#include <vulkan2json/ImageSubresourceLayers.hpp>
-#include <vulkan2json/Offset3D.hpp>
-#include <vulkan2json/Extent3D.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImageCopy &p ) {
-  j = nlohmann::json::object();
-  j[ "srcSubresource" ] = p.srcSubresource;
-  j[ "srcOffset" ] = p.srcOffset;
-  j[ "dstSubresource" ] = p.dstSubresource;
-  j[ "dstOffset" ] = p.dstOffset;
-  j[ "extent" ] = p.extent;
+void to_json( nlohmann::json &j, const ImageCopy &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkImageCopy &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ImageCopy ( p ) );
-}
+void to_json( nlohmann::json &j, const VkImageCopy &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ImageCopy &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ImageCopy" );
-  p.srcSubresource = ImageSubresourceLayers ( j[ "srcSubresource" ] );
-  p.srcOffset = Offset3D ( j[ "srcOffset" ] );
-  p.dstSubresource = ImageSubresourceLayers ( j[ "dstSubresource" ] );
-  p.dstOffset = Offset3D ( j[ "dstOffset" ] );
-  p.extent = Extent3D ( j[ "extent" ] );
+  void from_json( const nlohmann::json &j, ImageCopy &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkImageCopy &p ) {
-  VULKAN_HPP_NAMESPACE :: ImageCopy temp;
-  from_json( j, temp );
-  p = VkImageCopy ( temp );
-}
+void from_json( const nlohmann::json &j, VkImageCopy &p );
 
 
 #endif

@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_WIN32_SURFACE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const Win32SurfaceCreateFlagBitsKHR &p ) {
 }
@@ -67,7 +68,6 @@ inline void from_json( const nlohmann::json &j, Win32SurfaceCreateFlagsKHR &p ) 
   else throw vulkan2json::invalid_flag_value( "incompatible value for Win32SurfaceCreateFlagsKHR" );
 }
 }
-#endif
 
 
 #endif

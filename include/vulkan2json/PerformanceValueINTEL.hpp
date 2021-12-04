@@ -22,37 +22,19 @@
 #ifndef VULKAN2JSON_PERFORMANCEVALUEINTEL_HPP
 #define VULKAN2JSON_PERFORMANCEVALUEINTEL_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/PerformanceValueTypeINTEL.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PerformanceValueINTEL &p ) {
-  j = nlohmann::json::object();
-  j[ "type" ] = p.type;
+void to_json( nlohmann::json &j, const PerformanceValueINTEL &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPerformanceValueINTEL &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PerformanceValueINTEL ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPerformanceValueINTEL &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PerformanceValueINTEL &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PerformanceValueINTEL" );
-  p.type = PerformanceValueTypeINTEL ( j[ "type" ] );
+  void from_json( const nlohmann::json &j, PerformanceValueINTEL &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPerformanceValueINTEL &p ) {
-  VULKAN_HPP_NAMESPACE :: PerformanceValueINTEL temp;
-  from_json( j, temp );
-  p = VkPerformanceValueINTEL ( temp );
-}
+void from_json( const nlohmann::json &j, VkPerformanceValueINTEL &p );
 
 
 #endif

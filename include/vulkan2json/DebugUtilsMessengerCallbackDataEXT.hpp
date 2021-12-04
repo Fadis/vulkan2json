@@ -22,53 +22,19 @@
 #ifndef VULKAN2JSON_DEBUGUTILSMESSENGERCALLBACKDATAEXT_HPP
 #define VULKAN2JSON_DEBUGUTILSMESSENGERCALLBACKDATAEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DebugUtilsMessengerCallbackDataFlagsEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DebugUtilsMessengerCallbackDataEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  if( p.pMessageIdName ) j[ "pMessageIdName" ] = std::string( p.pMessageIdName );
-  j[ "messageIdNumber" ] = p.messageIdNumber;
-  if( p.pMessage ) j[ "pMessage" ] = std::string( p.pMessage );
-  j[ "queueLabelCount" ] = p.queueLabelCount;
-  j[ "pQueueLabels" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pQueueLabels ) );
-  j[ "cmdBufLabelCount" ] = p.cmdBufLabelCount;
-  j[ "pCmdBufLabels" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pCmdBufLabels ) );
-  j[ "objectCount" ] = p.objectCount;
-  j[ "pObjects" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pObjects ) );
+void to_json( nlohmann::json &j, const DebugUtilsMessengerCallbackDataEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDebugUtilsMessengerCallbackDataEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DebugUtilsMessengerCallbackDataEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDebugUtilsMessengerCallbackDataEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DebugUtilsMessengerCallbackDataEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DebugUtilsMessengerCallbackDataEXT" );
-  p.flags = DebugUtilsMessengerCallbackDataFlagsEXT ( j[ "flags" ] );
-  p.messageIdNumber = j[ "messageIdNumber" ];
-  p.queueLabelCount = j[ "queueLabelCount" ];
-  p.cmdBufLabelCount = j[ "cmdBufLabelCount" ];
-  p.objectCount = j[ "objectCount" ];
+  void from_json( const nlohmann::json &j, DebugUtilsMessengerCallbackDataEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDebugUtilsMessengerCallbackDataEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DebugUtilsMessengerCallbackDataEXT temp;
-  from_json( j, temp );
-  p = VkDebugUtilsMessengerCallbackDataEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkDebugUtilsMessengerCallbackDataEXT &p );
 
 
 #endif

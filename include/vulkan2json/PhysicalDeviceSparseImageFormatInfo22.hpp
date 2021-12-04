@@ -22,52 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESPARSEIMAGEFORMATINFO22_HPP
 #define VULKAN2JSON_PHYSICALDEVICESPARSEIMAGEFORMATINFO22_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/Format.hpp>
-#include <vulkan2json/ImageType.hpp>
-#include <vulkan2json/SampleCountFlags.hpp>
-#include <vulkan2json/ImageUsageFlags.hpp>
-#include <vulkan2json/ImageTiling.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceSparseImageFormatInfo2 &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "format" ] = p.format;
-  j[ "type" ] = p.type;
-  j[ "samples" ] = p.samples;
-  j[ "usage" ] = p.usage;
-  j[ "tiling" ] = p.tiling;
+void to_json( nlohmann::json &j, const PhysicalDeviceSparseImageFormatInfo2 &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceSparseImageFormatInfo2 &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceSparseImageFormatInfo2 ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceSparseImageFormatInfo2 &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceSparseImageFormatInfo2 &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceSparseImageFormatInfo2" );
-  p.format = Format ( j[ "format" ] );
-  p.type = ImageType ( j[ "type" ] );
-  p.samples = SampleCountFlagBits ( j[ "samples" ] );
-  p.usage = ImageUsageFlags ( j[ "usage" ] );
-  p.tiling = ImageTiling ( j[ "tiling" ] );
+  void from_json( const nlohmann::json &j, PhysicalDeviceSparseImageFormatInfo2 &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceSparseImageFormatInfo2 &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceSparseImageFormatInfo2 temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceSparseImageFormatInfo2 ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceSparseImageFormatInfo2 &p );
 
 
 #endif

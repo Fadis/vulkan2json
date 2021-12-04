@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_TIMELINESEMAPHORESUBMITINFO_HPP
 #define VULKAN2JSON_TIMELINESEMAPHORESUBMITINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const TimelineSemaphoreSubmitInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "waitSemaphoreValueCount" ] = p.waitSemaphoreValueCount;
-  j[ "pWaitSemaphoreValues" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pWaitSemaphoreValues ) );
-  j[ "signalSemaphoreValueCount" ] = p.signalSemaphoreValueCount;
-  j[ "pSignalSemaphoreValues" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pSignalSemaphoreValues ) );
+void to_json( nlohmann::json &j, const TimelineSemaphoreSubmitInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkTimelineSemaphoreSubmitInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: TimelineSemaphoreSubmitInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkTimelineSemaphoreSubmitInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, TimelineSemaphoreSubmitInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for TimelineSemaphoreSubmitInfo" );
-  p.waitSemaphoreValueCount = j[ "waitSemaphoreValueCount" ];
-  p.signalSemaphoreValueCount = j[ "signalSemaphoreValueCount" ];
+  void from_json( const nlohmann::json &j, TimelineSemaphoreSubmitInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkTimelineSemaphoreSubmitInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: TimelineSemaphoreSubmitInfo temp;
-  from_json( j, temp );
-  p = VkTimelineSemaphoreSubmitInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkTimelineSemaphoreSubmitInfo &p );
 
 
 #endif

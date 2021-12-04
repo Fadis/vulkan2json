@@ -22,48 +22,19 @@
 #ifndef VULKAN2JSON_SPARSEIMAGEMEMORYBIND_HPP
 #define VULKAN2JSON_SPARSEIMAGEMEMORYBIND_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/ImageSubresource.hpp>
-#include <vulkan2json/Offset3D.hpp>
-#include <vulkan2json/Extent3D.hpp>
-#include <vulkan2json/SparseMemoryBindFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SparseImageMemoryBind &p ) {
-  j = nlohmann::json::object();
-  j[ "subresource" ] = p.subresource;
-  j[ "offset" ] = p.offset;
-  j[ "extent" ] = p.extent;
-  j[ "memoryOffset" ] = p.memoryOffset;
-  j[ "flags" ] = p.flags;
+void to_json( nlohmann::json &j, const SparseImageMemoryBind &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSparseImageMemoryBind &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SparseImageMemoryBind ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSparseImageMemoryBind &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SparseImageMemoryBind &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SparseImageMemoryBind" );
-  p.subresource = ImageSubresource ( j[ "subresource" ] );
-  p.offset = Offset3D ( j[ "offset" ] );
-  p.extent = Extent3D ( j[ "extent" ] );
-  p.memoryOffset = j[ "memoryOffset" ];
-  p.flags = SparseMemoryBindFlags ( j[ "flags" ] );
+  void from_json( const nlohmann::json &j, SparseImageMemoryBind &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSparseImageMemoryBind &p ) {
-  VULKAN_HPP_NAMESPACE :: SparseImageMemoryBind temp;
-  from_json( j, temp );
-  p = VkSparseImageMemoryBind ( temp );
-}
+void from_json( const nlohmann::json &j, VkSparseImageMemoryBind &p );
 
 
 #endif

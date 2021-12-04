@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_INTERNALALLOCATIONTYPE_HPP
 #define VULKAN2JSON_INTERNALALLOCATIONTYPE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const InternalAllocationType &p ) {
+void to_json( nlohmann::json &j, const InternalAllocationType &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkInternalAllocationType &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: InternalAllocationType ( p ) );
-}
+void to_json( nlohmann::json &j, const VkInternalAllocationType &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, InternalAllocationType &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for InternalAllocationType" );
-  }
-  if( j.is_number() ) {
-    p = InternalAllocationType ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for InternalAllocationType" );
+void from_json( const nlohmann::json &j, InternalAllocationType &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkInternalAllocationType &p ) {
-  VULKAN_HPP_NAMESPACE :: InternalAllocationType temp;
-  from_json( j, temp );
-  p = VkInternalAllocationType ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkInternalAllocationType &p );
 
 
 #endif

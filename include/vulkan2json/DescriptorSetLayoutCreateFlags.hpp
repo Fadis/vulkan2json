@@ -22,100 +22,17 @@
 #ifndef VULKAN2JSON_DESCRIPTORSETLAYOUTCREATEFLAGS_HPP
 #define VULKAN2JSON_DESCRIPTORSETLAYOUTCREATEFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DescriptorSetLayoutCreateFlagBits &p ) {
-  if( DescriptorSetLayoutCreateFlagBits :: eUpdateAfterBindPool == p ) {
-    j = "UpdateAfterBindPool";
-    return;
-  }
-  if( DescriptorSetLayoutCreateFlagBits :: ePushDescriptorKHR == p ) {
-    j = "PushDescriptorKHR";
-    return;
-  }
-  if( DescriptorSetLayoutCreateFlagBits :: eHostOnlyPoolVALVE == p ) {
-    j = "HostOnlyPoolVALVE";
-    return;
-  }
+  void to_json( nlohmann::json &j, const DescriptorSetLayoutCreateFlagBits &p );
+  void to_json( nlohmann::json &j, const DescriptorSetLayoutCreateFlags &p );
+  void from_json( const nlohmann::json &j, DescriptorSetLayoutCreateFlagBits &p );
+  void from_json( const nlohmann::json &j, DescriptorSetLayoutCreateFlags &p );
 }
-inline void from_json( const nlohmann::json &j, DescriptorSetLayoutCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "UpdateAfterBindPool" == j.get< std::string >() ) {
-      p = DescriptorSetLayoutCreateFlagBits :: eUpdateAfterBindPool ;
-      return;
-    }
-    if( "eUpdateAfterBindPool" == j.get< std::string >() ) {
-      p = DescriptorSetLayoutCreateFlagBits :: eUpdateAfterBindPool ;
-      return;
-    }
-    if( "VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT" == j.get< std::string >() ) {
-      p = DescriptorSetLayoutCreateFlagBits :: eUpdateAfterBindPool ;
-      return;
-    }
-    if( "PushDescriptorKHR" == j.get< std::string >() ) {
-      p = DescriptorSetLayoutCreateFlagBits :: ePushDescriptorKHR ;
-      return;
-    }
-    if( "ePushDescriptorKHR" == j.get< std::string >() ) {
-      p = DescriptorSetLayoutCreateFlagBits :: ePushDescriptorKHR ;
-      return;
-    }
-    if( "VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR" == j.get< std::string >() ) {
-      p = DescriptorSetLayoutCreateFlagBits :: ePushDescriptorKHR ;
-      return;
-    }
-    if( "HostOnlyPoolVALVE" == j.get< std::string >() ) {
-      p = DescriptorSetLayoutCreateFlagBits :: eHostOnlyPoolVALVE ;
-      return;
-    }
-    if( "eHostOnlyPoolVALVE" == j.get< std::string >() ) {
-      p = DescriptorSetLayoutCreateFlagBits :: eHostOnlyPoolVALVE ;
-      return;
-    }
-    if( "VK_DESCRIPTOR_SET_LAYOUT_CREATE_HOST_ONLY_POOL_BIT_VALVE" == j.get< std::string >() ) {
-      p = DescriptorSetLayoutCreateFlagBits :: eHostOnlyPoolVALVE ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DescriptorSetLayoutCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = DescriptorSetLayoutCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DescriptorSetLayoutCreateFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const DescriptorSetLayoutCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DescriptorSetLayoutCreateFlagBits ) * 8u; ++n ) {
-    if( p & DescriptorSetLayoutCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DescriptorSetLayoutCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, DescriptorSetLayoutCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = DescriptorSetLayoutCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      DescriptorSetLayoutCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DescriptorSetLayoutCreateFlags" );
-}
-}
-#endif
 
 
 #endif

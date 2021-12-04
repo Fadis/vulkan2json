@@ -27,13 +27,15 @@ import os
 from enum import Enum
 
 from vulkan_header_parser.get_enum import get_enum
-from vulkan_header_parser.header import get_header
+from vulkan_header_parser.header import get_header, get_test_header, get_source_header, get_forward_header
 from vulkan_header_parser.footer import get_footer
 from vulkan_header_parser.get_struct import get_struct
 from vulkan_header_parser.get_class_name import get_class_name, get_handle_name
+from vulkan_header_parser.get_header_version import get_header_version
 
 vulkan_header_path = '/usr/include/vulkan'
 
+header_version = get_header_version( os.path.join( vulkan_header_path, 'vulkan.hpp' ) )
 (enums,flags) = get_enum( os.path.join( vulkan_header_path, 'vulkan_enums.hpp' ) )
 class_names = get_class_name( vulkan_header_path )
 handle_names = get_handle_name( vulkan_header_path )
@@ -41,26 +43,57 @@ structs = get_struct( os.path.join( vulkan_header_path, 'vulkan_structs.hpp' ), 
 
 
 outdir = '../include/vulkan2json'
+srcdir = '../src'
+testdir = '../test'
+
+cpp_out = get_source_header()
 
 for v in enums.values():
-  with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
-    out = get_header( v.name.get_include_name() )
-    out += v.generate_impl()
-    out += get_footer()
-    fd.write( out )
+  if v.conditional:
+    with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
+      out = get_header( v.name.get_include_name(), header_version )
+      out += v.generate_impl()
+      out += get_footer()
+      fd.write( out )
+  else:
+    with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
+      out = get_forward_header( v.name.get_include_name(), header_version )
+      out += v.generate_forward()
+      out += get_footer()
+      fd.write( out )
+    cpp_out += v.generate_impl()
 
 for v in flags.values():
-  with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
-    out = get_header( v.name.get_include_name() )
-    out += v.generate_impl()
-    out += get_footer()
-    fd.write( out )
+  if v.conditional:
+    with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
+      out = get_header( v.name.get_include_name(), header_version )
+      out += v.generate_impl()
+      out += get_footer()
+      fd.write( out )
+  else:
+    with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
+      out = get_forward_header( v.name.get_include_name(), header_version )
+      out += v.generate_forward()
+      out += get_footer()
+      fd.write( out )
+    cpp_out += v.generate_impl()
 
 for v in structs.values():
-  with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
-    out = get_header( v.name.get_include_name() )
-    out += v.generate_includes()
-    out += v.generate_impl()
-    out += get_footer()
-    fd.write( out )
+  if v.conditional:
+    with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
+      out = get_header( v.name.get_include_name(), header_version )
+      out += v.generate_includes()
+      out += v.generate_impl()
+      out += get_footer()
+      fd.write( out )
+  else:
+    with open( os.path.join( outdir, v.name.get_include_name()+'.hpp' ), 'w' ) as fd:
+      out = get_forward_header( v.name.get_include_name(), header_version )
+      out += v.generate_forward()
+      out += get_footer()
+      fd.write( out )
+    cpp_out += v.generate_impl()
+
+with open( os.path.join( srcdir, 'vulkan2json.cpp' ), 'w' ) as fd:
+  fd.write( cpp_out )
 

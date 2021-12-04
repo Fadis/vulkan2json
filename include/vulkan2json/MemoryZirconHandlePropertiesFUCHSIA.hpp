@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_USE_PLATFORM_FUCHSIA )
 namespace VULKAN_HPP_NAMESPACE {
@@ -48,7 +51,9 @@ inline void to_json( nlohmann::json &j, const VkMemoryZirconHandlePropertiesFUCH
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, MemoryZirconHandlePropertiesFUCHSIA &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MemoryZirconHandlePropertiesFUCHSIA" );
-  p.memoryTypeBits = j[ "memoryTypeBits" ];
+  if( j.find( "memoryTypeBits" ) != j.end() ) {
+    p.memoryTypeBits = j[ "memoryTypeBits" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkMemoryZirconHandlePropertiesFUCHSIA &p ) {

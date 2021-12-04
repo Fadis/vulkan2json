@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_DESCRIPTORSETLAYOUTBINDINGFLAGSCREATEINFO_HPP
 #define VULKAN2JSON_DESCRIPTORSETLAYOUTBINDINGFLAGSCREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DescriptorSetLayoutBindingFlagsCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "bindingCount" ] = p.bindingCount;
-  j[ "pBindingFlags" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pBindingFlags ) );
+void to_json( nlohmann::json &j, const DescriptorSetLayoutBindingFlagsCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDescriptorSetLayoutBindingFlagsCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DescriptorSetLayoutBindingFlagsCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDescriptorSetLayoutBindingFlagsCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DescriptorSetLayoutBindingFlagsCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DescriptorSetLayoutBindingFlagsCreateInfo" );
-  p.bindingCount = j[ "bindingCount" ];
+  void from_json( const nlohmann::json &j, DescriptorSetLayoutBindingFlagsCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDescriptorSetLayoutBindingFlagsCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: DescriptorSetLayoutBindingFlagsCreateInfo temp;
-  from_json( j, temp );
-  p = VkDescriptorSetLayoutBindingFlagsCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkDescriptorSetLayoutBindingFlagsCreateInfo &p );
 
 
 #endif

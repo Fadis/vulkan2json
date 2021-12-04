@@ -22,37 +22,19 @@
 #ifndef VULKAN2JSON_SPARSEBUFFERMEMORYBINDINFO_HPP
 #define VULKAN2JSON_SPARSEBUFFERMEMORYBINDINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SparseBufferMemoryBindInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "bindCount" ] = p.bindCount;
-  j[ "pBinds" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pBinds ) );
+void to_json( nlohmann::json &j, const SparseBufferMemoryBindInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSparseBufferMemoryBindInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SparseBufferMemoryBindInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSparseBufferMemoryBindInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SparseBufferMemoryBindInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SparseBufferMemoryBindInfo" );
-  p.bindCount = j[ "bindCount" ];
+  void from_json( const nlohmann::json &j, SparseBufferMemoryBindInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSparseBufferMemoryBindInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: SparseBufferMemoryBindInfo temp;
-  from_json( j, temp );
-  p = VkSparseBufferMemoryBindInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkSparseBufferMemoryBindInfo &p );
 
 
 #endif

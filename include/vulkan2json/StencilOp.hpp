@@ -22,153 +22,19 @@
 #ifndef VULKAN2JSON_STENCILOP_HPP
 #define VULKAN2JSON_STENCILOP_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const StencilOp &p ) {
-  if( StencilOp :: eKeep == p ) {
-    j = "Keep";
-    return;
-  }
-  if( StencilOp :: eZero == p ) {
-    j = "Zero";
-    return;
-  }
-  if( StencilOp :: eReplace == p ) {
-    j = "Replace";
-    return;
-  }
-  if( StencilOp :: eIncrementAndClamp == p ) {
-    j = "IncrementAndClamp";
-    return;
-  }
-  if( StencilOp :: eDecrementAndClamp == p ) {
-    j = "DecrementAndClamp";
-    return;
-  }
-  if( StencilOp :: eInvert == p ) {
-    j = "Invert";
-    return;
-  }
-  if( StencilOp :: eIncrementAndWrap == p ) {
-    j = "IncrementAndWrap";
-    return;
-  }
+void to_json( nlohmann::json &j, const StencilOp &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkStencilOp &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: StencilOp ( p ) );
-}
+void to_json( nlohmann::json &j, const VkStencilOp &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, StencilOp &p ) {
-  if( j.is_string() ) {
-    if( "Keep" == j.get< std::string >() ) {
-      p = StencilOp :: eKeep ;
-      return;
-    }
-    if( "eKeep" == j.get< std::string >() ) {
-      p = StencilOp :: eKeep ;
-      return;
-    }
-    if( "VK_STENCIL_OP_KEEP" == j.get< std::string >() ) {
-      p = StencilOp :: eKeep ;
-      return;
-    }
-    if( "Zero" == j.get< std::string >() ) {
-      p = StencilOp :: eZero ;
-      return;
-    }
-    if( "eZero" == j.get< std::string >() ) {
-      p = StencilOp :: eZero ;
-      return;
-    }
-    if( "VK_STENCIL_OP_ZERO" == j.get< std::string >() ) {
-      p = StencilOp :: eZero ;
-      return;
-    }
-    if( "Replace" == j.get< std::string >() ) {
-      p = StencilOp :: eReplace ;
-      return;
-    }
-    if( "eReplace" == j.get< std::string >() ) {
-      p = StencilOp :: eReplace ;
-      return;
-    }
-    if( "VK_STENCIL_OP_REPLACE" == j.get< std::string >() ) {
-      p = StencilOp :: eReplace ;
-      return;
-    }
-    if( "IncrementAndClamp" == j.get< std::string >() ) {
-      p = StencilOp :: eIncrementAndClamp ;
-      return;
-    }
-    if( "eIncrementAndClamp" == j.get< std::string >() ) {
-      p = StencilOp :: eIncrementAndClamp ;
-      return;
-    }
-    if( "VK_STENCIL_OP_INCREMENT_AND_CLAMP" == j.get< std::string >() ) {
-      p = StencilOp :: eIncrementAndClamp ;
-      return;
-    }
-    if( "DecrementAndClamp" == j.get< std::string >() ) {
-      p = StencilOp :: eDecrementAndClamp ;
-      return;
-    }
-    if( "eDecrementAndClamp" == j.get< std::string >() ) {
-      p = StencilOp :: eDecrementAndClamp ;
-      return;
-    }
-    if( "VK_STENCIL_OP_DECREMENT_AND_CLAMP" == j.get< std::string >() ) {
-      p = StencilOp :: eDecrementAndClamp ;
-      return;
-    }
-    if( "Invert" == j.get< std::string >() ) {
-      p = StencilOp :: eInvert ;
-      return;
-    }
-    if( "eInvert" == j.get< std::string >() ) {
-      p = StencilOp :: eInvert ;
-      return;
-    }
-    if( "VK_STENCIL_OP_INVERT" == j.get< std::string >() ) {
-      p = StencilOp :: eInvert ;
-      return;
-    }
-    if( "IncrementAndWrap" == j.get< std::string >() ) {
-      p = StencilOp :: eIncrementAndWrap ;
-      return;
-    }
-    if( "eIncrementAndWrap" == j.get< std::string >() ) {
-      p = StencilOp :: eIncrementAndWrap ;
-      return;
-    }
-    if( "VK_STENCIL_OP_INCREMENT_AND_WRAP" == j.get< std::string >() ) {
-      p = StencilOp :: eIncrementAndWrap ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for StencilOp" );
-  }
-  if( j.is_number() ) {
-    p = StencilOp ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for StencilOp" );
+void from_json( const nlohmann::json &j, StencilOp &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkStencilOp &p ) {
-  VULKAN_HPP_NAMESPACE :: StencilOp temp;
-  from_json( j, temp );
-  p = VkStencilOp ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkStencilOp &p );
 
 
 #endif

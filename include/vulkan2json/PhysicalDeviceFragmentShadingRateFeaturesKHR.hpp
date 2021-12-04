@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEFRAGMENTSHADINGRATEFEATURESKHR_HPP
 #define VULKAN2JSON_PHYSICALDEVICEFRAGMENTSHADINGRATEFEATURESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceFragmentShadingRateFeaturesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "pipelineFragmentShadingRate" ] = bool( p.pipelineFragmentShadingRate );
-  j[ "primitiveFragmentShadingRate" ] = bool( p.primitiveFragmentShadingRate );
-  j[ "attachmentFragmentShadingRate" ] = bool( p.attachmentFragmentShadingRate );
+void to_json( nlohmann::json &j, const PhysicalDeviceFragmentShadingRateFeaturesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceFragmentShadingRateFeaturesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceFragmentShadingRateFeaturesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceFragmentShadingRateFeaturesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceFragmentShadingRateFeaturesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceFragmentShadingRateFeaturesKHR" );
-  p.pipelineFragmentShadingRate = j[ "pipelineFragmentShadingRate" ];
-  p.primitiveFragmentShadingRate = j[ "primitiveFragmentShadingRate" ];
-  p.attachmentFragmentShadingRate = j[ "attachmentFragmentShadingRate" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceFragmentShadingRateFeaturesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceFragmentShadingRateFeaturesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceFragmentShadingRateFeaturesKHR temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceFragmentShadingRateFeaturesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceFragmentShadingRateFeaturesKHR &p );
 
 
 #endif

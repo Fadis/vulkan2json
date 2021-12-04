@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_SHARINGMODE_HPP
 #define VULKAN2JSON_SHARINGMODE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SharingMode &p ) {
-  if( SharingMode :: eExclusive == p ) {
-    j = "Exclusive";
-    return;
-  }
+void to_json( nlohmann::json &j, const SharingMode &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSharingMode &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SharingMode ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSharingMode &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SharingMode &p ) {
-  if( j.is_string() ) {
-    if( "Exclusive" == j.get< std::string >() ) {
-      p = SharingMode :: eExclusive ;
-      return;
-    }
-    if( "eExclusive" == j.get< std::string >() ) {
-      p = SharingMode :: eExclusive ;
-      return;
-    }
-    if( "VK_SHARING_MODE_EXCLUSIVE" == j.get< std::string >() ) {
-      p = SharingMode :: eExclusive ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for SharingMode" );
-  }
-  if( j.is_number() ) {
-    p = SharingMode ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for SharingMode" );
+void from_json( const nlohmann::json &j, SharingMode &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSharingMode &p ) {
-  VULKAN_HPP_NAMESPACE :: SharingMode temp;
-  from_json( j, temp );
-  p = VkSharingMode ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkSharingMode &p );
 
 
 #endif

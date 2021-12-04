@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_BINDBUFFERMEMORYDEVICEGROUPINFO_HPP
 #define VULKAN2JSON_BINDBUFFERMEMORYDEVICEGROUPINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const BindBufferMemoryDeviceGroupInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "deviceIndexCount" ] = p.deviceIndexCount;
-  j[ "pDeviceIndices" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pDeviceIndices ) );
+void to_json( nlohmann::json &j, const BindBufferMemoryDeviceGroupInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkBindBufferMemoryDeviceGroupInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: BindBufferMemoryDeviceGroupInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkBindBufferMemoryDeviceGroupInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, BindBufferMemoryDeviceGroupInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for BindBufferMemoryDeviceGroupInfo" );
-  p.deviceIndexCount = j[ "deviceIndexCount" ];
+  void from_json( const nlohmann::json &j, BindBufferMemoryDeviceGroupInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkBindBufferMemoryDeviceGroupInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: BindBufferMemoryDeviceGroupInfo temp;
-  from_json( j, temp );
-  p = VkBindBufferMemoryDeviceGroupInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkBindBufferMemoryDeviceGroupInfo &p );
 
 
 #endif

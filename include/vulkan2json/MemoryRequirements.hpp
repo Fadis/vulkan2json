@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_MEMORYREQUIREMENTS_HPP
 #define VULKAN2JSON_MEMORYREQUIREMENTS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MemoryRequirements &p ) {
-  j = nlohmann::json::object();
-  j[ "size" ] = p.size;
-  j[ "alignment" ] = p.alignment;
-  j[ "memoryTypeBits" ] = p.memoryTypeBits;
+void to_json( nlohmann::json &j, const MemoryRequirements &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkMemoryRequirements &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: MemoryRequirements ( p ) );
-}
+void to_json( nlohmann::json &j, const VkMemoryRequirements &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, MemoryRequirements &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MemoryRequirements" );
-  p.size = j[ "size" ];
-  p.alignment = j[ "alignment" ];
-  p.memoryTypeBits = j[ "memoryTypeBits" ];
+  void from_json( const nlohmann::json &j, MemoryRequirements &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkMemoryRequirements &p ) {
-  VULKAN_HPP_NAMESPACE :: MemoryRequirements temp;
-  from_json( j, temp );
-  p = VkMemoryRequirements ( temp );
-}
+void from_json( const nlohmann::json &j, VkMemoryRequirements &p );
 
 
 #endif

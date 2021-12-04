@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_ATTACHMENTSTOREOP_HPP
 #define VULKAN2JSON_ATTACHMENTSTOREOP_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AttachmentStoreOp &p ) {
-  if( AttachmentStoreOp :: eStore == p ) {
-    j = "Store";
-    return;
-  }
-  if( AttachmentStoreOp :: eDontCare == p ) {
-    j = "DontCare";
-    return;
-  }
+void to_json( nlohmann::json &j, const AttachmentStoreOp &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAttachmentStoreOp &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AttachmentStoreOp ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAttachmentStoreOp &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AttachmentStoreOp &p ) {
-  if( j.is_string() ) {
-    if( "Store" == j.get< std::string >() ) {
-      p = AttachmentStoreOp :: eStore ;
-      return;
-    }
-    if( "eStore" == j.get< std::string >() ) {
-      p = AttachmentStoreOp :: eStore ;
-      return;
-    }
-    if( "VK_ATTACHMENT_STORE_OP_STORE" == j.get< std::string >() ) {
-      p = AttachmentStoreOp :: eStore ;
-      return;
-    }
-    if( "DontCare" == j.get< std::string >() ) {
-      p = AttachmentStoreOp :: eDontCare ;
-      return;
-    }
-    if( "eDontCare" == j.get< std::string >() ) {
-      p = AttachmentStoreOp :: eDontCare ;
-      return;
-    }
-    if( "VK_ATTACHMENT_STORE_OP_DONT_CARE" == j.get< std::string >() ) {
-      p = AttachmentStoreOp :: eDontCare ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for AttachmentStoreOp" );
-  }
-  if( j.is_number() ) {
-    p = AttachmentStoreOp ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for AttachmentStoreOp" );
+void from_json( const nlohmann::json &j, AttachmentStoreOp &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAttachmentStoreOp &p ) {
-  VULKAN_HPP_NAMESPACE :: AttachmentStoreOp temp;
-  from_json( j, temp );
-  p = VkAttachmentStoreOp ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkAttachmentStoreOp &p );
 
 
 #endif

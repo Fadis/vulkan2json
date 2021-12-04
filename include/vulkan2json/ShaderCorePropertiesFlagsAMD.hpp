@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_SHADERCOREPROPERTIESFLAGSAMD_HPP
 #define VULKAN2JSON_SHADERCOREPROPERTIESFLAGSAMD_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_AMD_SHADER_CORE_PROPERTIES_2_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ShaderCorePropertiesFlagBitsAMD &p ) {
+  void to_json( nlohmann::json &j, const ShaderCorePropertiesFlagBitsAMD &p );
+  void to_json( nlohmann::json &j, const ShaderCorePropertiesFlagsAMD &p );
+  void from_json( const nlohmann::json &j, ShaderCorePropertiesFlagBitsAMD &p );
+  void from_json( const nlohmann::json &j, ShaderCorePropertiesFlagsAMD &p );
 }
-inline void from_json( const nlohmann::json &j, ShaderCorePropertiesFlagBitsAMD &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ShaderCorePropertiesFlagBitsAMD" );
-  }
-  if( j.is_number() ) {
-    p = ShaderCorePropertiesFlagBitsAMD ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ShaderCorePropertiesFlagBitsAMD" );
-}
-inline void to_json( nlohmann::json &j, const ShaderCorePropertiesFlagsAMD &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( ShaderCorePropertiesFlagBitsAMD ) * 8u; ++n ) {
-    if( p & ShaderCorePropertiesFlagsAMD ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, ShaderCorePropertiesFlagBitsAMD ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, ShaderCorePropertiesFlagsAMD &p ) {
-  if( j.is_array() ) {
-    p = ShaderCorePropertiesFlagsAMD ( 0 );
-    for( auto &e:  j ) {
-      ShaderCorePropertiesFlagBitsAMD temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for ShaderCorePropertiesFlagsAMD" );
-}
-}
-#endif
 
 
 #endif

@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const ExternalMemoryHandleTypeFlagBits &p ) {
   if( ExternalMemoryHandleTypeFlagBits :: eOpaqueFd == p ) {
@@ -67,7 +68,7 @@ inline void to_json( nlohmann::json &j, const ExternalMemoryHandleTypeFlagBits &
     j = "DmaBufEXT";
     return;
   }
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
   if( ExternalMemoryHandleTypeFlagBits :: eAndroidHardwareBufferANDROID == p ) {
     j = "AndroidHardwareBufferANDROID";
     return;
@@ -180,19 +181,19 @@ inline void from_json( const nlohmann::json &j, ExternalMemoryHandleTypeFlagBits
       p = ExternalMemoryHandleTypeFlagBits :: eDmaBufEXT ;
       return;
     }
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "AndroidHardwareBufferANDROID" == j.get< std::string >() ) {
       p = ExternalMemoryHandleTypeFlagBits :: eAndroidHardwareBufferANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "eAndroidHardwareBufferANDROID" == j.get< std::string >() ) {
       p = ExternalMemoryHandleTypeFlagBits :: eAndroidHardwareBufferANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID" == j.get< std::string >() ) {
       p = ExternalMemoryHandleTypeFlagBits :: eAndroidHardwareBufferANDROID ;
       return;
@@ -251,7 +252,6 @@ inline void from_json( const nlohmann::json &j, ExternalMemoryHandleTypeFlags &p
   else throw vulkan2json::invalid_flag_value( "incompatible value for ExternalMemoryHandleTypeFlags" );
 }
 }
-#endif
 
 
 #endif

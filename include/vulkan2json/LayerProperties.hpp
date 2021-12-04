@@ -22,54 +22,19 @@
 #ifndef VULKAN2JSON_LAYERPROPERTIES_HPP
 #define VULKAN2JSON_LAYERPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const LayerProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "layerName" ] = std::string( p.layerName.begin(), std::find( p.layerName.begin(), p.layerName.end(), '\0' ) );
-  j[ "specVersion" ] = p.specVersion;
-  j[ "implementationVersion" ] = p.implementationVersion;
-  j[ "description" ] = std::string( p.description.begin(), std::find( p.description.begin(), p.description.end(), '\0' ) );
+void to_json( nlohmann::json &j, const LayerProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkLayerProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: LayerProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkLayerProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, LayerProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for LayerProperties" );
-  {
-    std::string s = j[ "layerName" ];
-    if( !p.layerName.empty() ) {
-      p.layerName[ p.layerName.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.layerName.size() - 1u ) ), p.layerName.begin() );
-    }
-  }
-  p.specVersion = j[ "specVersion" ];
-  p.implementationVersion = j[ "implementationVersion" ];
-  {
-    std::string s = j[ "description" ];
-    if( !p.description.empty() ) {
-      p.description[ p.description.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.description.size() - 1u ) ), p.description.begin() );
-    }
-  }
+  void from_json( const nlohmann::json &j, LayerProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkLayerProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: LayerProperties temp;
-  from_json( j, temp );
-  p = VkLayerProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkLayerProperties &p );
 
 
 #endif

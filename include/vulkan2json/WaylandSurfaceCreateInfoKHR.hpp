@@ -32,6 +32,10 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/WaylandSurfaceCreateFlagsKHR.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/WaylandSurfaceCreateFlagsKHR.hpp>
 #if defined( VK_USE_PLATFORM_WAYLAND_KHR )
@@ -51,7 +55,9 @@ inline void to_json( nlohmann::json &j, const VkWaylandSurfaceCreateInfoKHR &p )
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, WaylandSurfaceCreateInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for WaylandSurfaceCreateInfoKHR" );
-  p.flags = WaylandSurfaceCreateFlagsKHR ( j[ "flags" ] );
+  if( j.find( "flags" ) != j.end() ) {
+    p.flags = WaylandSurfaceCreateFlagsKHR ( j[ "flags" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkWaylandSurfaceCreateInfoKHR &p ) {

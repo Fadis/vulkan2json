@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_DEBUGUTILSMESSENGERCALLBACKDATAFLAGSEXT_HPP
 #define VULKAN2JSON_DEBUGUTILSMESSENGERCALLBACKDATAFLAGSEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_DEBUG_UTILS_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DebugUtilsMessengerCallbackDataFlagBitsEXT &p ) {
+  void to_json( nlohmann::json &j, const DebugUtilsMessengerCallbackDataFlagBitsEXT &p );
+  void to_json( nlohmann::json &j, const DebugUtilsMessengerCallbackDataFlagsEXT &p );
+  void from_json( const nlohmann::json &j, DebugUtilsMessengerCallbackDataFlagBitsEXT &p );
+  void from_json( const nlohmann::json &j, DebugUtilsMessengerCallbackDataFlagsEXT &p );
 }
-inline void from_json( const nlohmann::json &j, DebugUtilsMessengerCallbackDataFlagBitsEXT &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DebugUtilsMessengerCallbackDataFlagBitsEXT" );
-  }
-  if( j.is_number() ) {
-    p = DebugUtilsMessengerCallbackDataFlagBitsEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DebugUtilsMessengerCallbackDataFlagBitsEXT" );
-}
-inline void to_json( nlohmann::json &j, const DebugUtilsMessengerCallbackDataFlagsEXT &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DebugUtilsMessengerCallbackDataFlagBitsEXT ) * 8u; ++n ) {
-    if( p & DebugUtilsMessengerCallbackDataFlagsEXT ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DebugUtilsMessengerCallbackDataFlagBitsEXT ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, DebugUtilsMessengerCallbackDataFlagsEXT &p ) {
-  if( j.is_array() ) {
-    p = DebugUtilsMessengerCallbackDataFlagsEXT ( 0 );
-    for( auto &e:  j ) {
-      DebugUtilsMessengerCallbackDataFlagBitsEXT temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DebugUtilsMessengerCallbackDataFlagsEXT" );
-}
-}
-#endif
 
 
 #endif

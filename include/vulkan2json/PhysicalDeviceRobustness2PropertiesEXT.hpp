@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEROBUSTNESS2PROPERTIESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICEROBUSTNESS2PROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceRobustness2PropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "robustStorageBufferAccessSizeAlignment" ] = p.robustStorageBufferAccessSizeAlignment;
-  j[ "robustUniformBufferAccessSizeAlignment" ] = p.robustUniformBufferAccessSizeAlignment;
+void to_json( nlohmann::json &j, const PhysicalDeviceRobustness2PropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceRobustness2PropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceRobustness2PropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceRobustness2PropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceRobustness2PropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceRobustness2PropertiesEXT" );
-  p.robustStorageBufferAccessSizeAlignment = j[ "robustStorageBufferAccessSizeAlignment" ];
-  p.robustUniformBufferAccessSizeAlignment = j[ "robustUniformBufferAccessSizeAlignment" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceRobustness2PropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceRobustness2PropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceRobustness2PropertiesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceRobustness2PropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceRobustness2PropertiesEXT &p );
 
 
 #endif

@@ -22,52 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEMEMORYPROPERTIES_HPP
 #define VULKAN2JSON_PHYSICALDEVICEMEMORYPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/MemoryType.hpp>
-#include <vulkan2json/MemoryHeap.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceMemoryProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "memoryTypeCount" ] = p.memoryTypeCount;
-  j[ "memoryTypes" ] = nlohmann::json::array();
-  std::copy( p.memoryTypes.begin(), p.memoryTypes.end(), std::back_inserter( j[ "memoryTypes" ] ) );
-  j[ "memoryHeapCount" ] = p.memoryHeapCount;
-  j[ "memoryHeaps" ] = nlohmann::json::array();
-  std::copy( p.memoryHeaps.begin(), p.memoryHeaps.end(), std::back_inserter( j[ "memoryHeaps" ] ) );
+void to_json( nlohmann::json &j, const PhysicalDeviceMemoryProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceMemoryProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceMemoryProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceMemoryProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceMemoryProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceMemoryProperties" );
-  p.memoryTypeCount = j[ "memoryTypeCount" ];
-  if( !j[ "memoryTypes" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PhysicalDeviceMemoryProperties.memoryTypes" );
-  if( !j[ "memoryTypes" ].size() > p.memoryTypes.size() ) throw vulkan2json::invalid_array_value(  "too many values in array for PhysicalDeviceMemoryProperties.memoryTypes" );
-  std::fill( p.memoryTypes.begin(), p.memoryTypes.end(), std::remove_cv_t< std::remove_reference_t< decltype( *p.memoryTypes.begin() ) > >() );
-  std::copy( j[ "memoryTypes" ].begin(), j[ "memoryTypes" ].end(), p.memoryTypes.begin() );
-  p.memoryHeapCount = j[ "memoryHeapCount" ];
-  if( !j[ "memoryHeaps" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PhysicalDeviceMemoryProperties.memoryHeaps" );
-  if( !j[ "memoryHeaps" ].size() > p.memoryHeaps.size() ) throw vulkan2json::invalid_array_value(  "too many values in array for PhysicalDeviceMemoryProperties.memoryHeaps" );
-  std::fill( p.memoryHeaps.begin(), p.memoryHeaps.end(), std::remove_cv_t< std::remove_reference_t< decltype( *p.memoryHeaps.begin() ) > >() );
-  std::copy( j[ "memoryHeaps" ].begin(), j[ "memoryHeaps" ].end(), p.memoryHeaps.begin() );
+  void from_json( const nlohmann::json &j, PhysicalDeviceMemoryProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceMemoryProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceMemoryProperties temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceMemoryProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceMemoryProperties &p );
 
 
 #endif

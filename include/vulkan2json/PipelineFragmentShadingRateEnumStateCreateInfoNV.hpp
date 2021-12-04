@@ -22,50 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINEFRAGMENTSHADINGRATEENUMSTATECREATEINFONV_HPP
 #define VULKAN2JSON_PIPELINEFRAGMENTSHADINGRATEENUMSTATECREATEINFONV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/FragmentShadingRateTypeNV.hpp>
-#include <vulkan2json/FragmentShadingRateNV.hpp>
-#include <vulkan2json/FragmentShadingRateCombinerOpKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineFragmentShadingRateEnumStateCreateInfoNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "shadingRateType" ] = p.shadingRateType;
-  j[ "shadingRate" ] = p.shadingRate;
-  j[ "combinerOps" ] = nlohmann::json::array();
-  std::copy( p.combinerOps.begin(), p.combinerOps.end(), std::back_inserter( j[ "combinerOps" ] ) );
+void to_json( nlohmann::json &j, const PipelineFragmentShadingRateEnumStateCreateInfoNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineFragmentShadingRateEnumStateCreateInfoNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineFragmentShadingRateEnumStateCreateInfoNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineFragmentShadingRateEnumStateCreateInfoNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineFragmentShadingRateEnumStateCreateInfoNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineFragmentShadingRateEnumStateCreateInfoNV" );
-  p.shadingRateType = FragmentShadingRateTypeNV ( j[ "shadingRateType" ] );
-  p.shadingRate = FragmentShadingRateNV ( j[ "shadingRate" ] );
-  if( !j[ "combinerOps" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PipelineFragmentShadingRateEnumStateCreateInfoNV.combinerOps" );
-  if( !j[ "combinerOps" ].size() > p.combinerOps.size() ) throw vulkan2json::invalid_array_value(  "too many values in array for PipelineFragmentShadingRateEnumStateCreateInfoNV.combinerOps" );
-  std::fill( p.combinerOps.begin(), p.combinerOps.end(), std::remove_cv_t< std::remove_reference_t< decltype( *p.combinerOps.begin() ) > >() );
-  std::copy( j[ "combinerOps" ].begin(), j[ "combinerOps" ].end(), p.combinerOps.begin() );
+  void from_json( const nlohmann::json &j, PipelineFragmentShadingRateEnumStateCreateInfoNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineFragmentShadingRateEnumStateCreateInfoNV &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineFragmentShadingRateEnumStateCreateInfoNV temp;
-  from_json( j, temp );
-  p = VkPipelineFragmentShadingRateEnumStateCreateInfoNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineFragmentShadingRateEnumStateCreateInfoNV &p );
 
 
 #endif

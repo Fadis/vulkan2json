@@ -22,89 +22,19 @@
 #ifndef VULKAN2JSON_COARSESAMPLEORDERTYPENV_HPP
 #define VULKAN2JSON_COARSESAMPLEORDERTYPENV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_NV_SHADING_RATE_IMAGE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CoarseSampleOrderTypeNV &p ) {
-  if( CoarseSampleOrderTypeNV :: eDefault == p ) {
-    j = "Default";
-    return;
-  }
-  if( CoarseSampleOrderTypeNV :: eCustom == p ) {
-    j = "Custom";
-    return;
-  }
-  if( CoarseSampleOrderTypeNV :: ePixelMajor == p ) {
-    j = "PixelMajor";
-    return;
-  }
+void to_json( nlohmann::json &j, const CoarseSampleOrderTypeNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkCoarseSampleOrderTypeNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: CoarseSampleOrderTypeNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkCoarseSampleOrderTypeNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, CoarseSampleOrderTypeNV &p ) {
-  if( j.is_string() ) {
-    if( "Default" == j.get< std::string >() ) {
-      p = CoarseSampleOrderTypeNV :: eDefault ;
-      return;
-    }
-    if( "eDefault" == j.get< std::string >() ) {
-      p = CoarseSampleOrderTypeNV :: eDefault ;
-      return;
-    }
-    if( "VK_COARSE_SAMPLE_ORDER_TYPE_DEFAULT_NV" == j.get< std::string >() ) {
-      p = CoarseSampleOrderTypeNV :: eDefault ;
-      return;
-    }
-    if( "Custom" == j.get< std::string >() ) {
-      p = CoarseSampleOrderTypeNV :: eCustom ;
-      return;
-    }
-    if( "eCustom" == j.get< std::string >() ) {
-      p = CoarseSampleOrderTypeNV :: eCustom ;
-      return;
-    }
-    if( "VK_COARSE_SAMPLE_ORDER_TYPE_CUSTOM_NV" == j.get< std::string >() ) {
-      p = CoarseSampleOrderTypeNV :: eCustom ;
-      return;
-    }
-    if( "PixelMajor" == j.get< std::string >() ) {
-      p = CoarseSampleOrderTypeNV :: ePixelMajor ;
-      return;
-    }
-    if( "ePixelMajor" == j.get< std::string >() ) {
-      p = CoarseSampleOrderTypeNV :: ePixelMajor ;
-      return;
-    }
-    if( "VK_COARSE_SAMPLE_ORDER_TYPE_PIXEL_MAJOR_NV" == j.get< std::string >() ) {
-      p = CoarseSampleOrderTypeNV :: ePixelMajor ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for CoarseSampleOrderTypeNV" );
-  }
-  if( j.is_number() ) {
-    p = CoarseSampleOrderTypeNV ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for CoarseSampleOrderTypeNV" );
+void from_json( const nlohmann::json &j, CoarseSampleOrderTypeNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkCoarseSampleOrderTypeNV &p ) {
-  VULKAN_HPP_NAMESPACE :: CoarseSampleOrderTypeNV temp;
-  from_json( j, temp );
-  p = VkCoarseSampleOrderTypeNV ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkCoarseSampleOrderTypeNV &p );
 
 
 #endif

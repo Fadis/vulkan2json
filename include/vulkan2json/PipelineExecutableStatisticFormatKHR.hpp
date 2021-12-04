@@ -22,89 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINEEXECUTABLESTATISTICFORMATKHR_HPP
 #define VULKAN2JSON_PIPELINEEXECUTABLESTATISTICFORMATKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_PIPELINE_EXECUTABLE_PROPERTIES_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineExecutableStatisticFormatKHR &p ) {
-  if( PipelineExecutableStatisticFormatKHR :: eBool32 == p ) {
-    j = "Bool32";
-    return;
-  }
-  if( PipelineExecutableStatisticFormatKHR :: eInt64 == p ) {
-    j = "Int64";
-    return;
-  }
-  if( PipelineExecutableStatisticFormatKHR :: eUint64 == p ) {
-    j = "Uint64";
-    return;
-  }
+void to_json( nlohmann::json &j, const PipelineExecutableStatisticFormatKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineExecutableStatisticFormatKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineExecutableStatisticFormatKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineExecutableStatisticFormatKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineExecutableStatisticFormatKHR &p ) {
-  if( j.is_string() ) {
-    if( "Bool32" == j.get< std::string >() ) {
-      p = PipelineExecutableStatisticFormatKHR :: eBool32 ;
-      return;
-    }
-    if( "eBool32" == j.get< std::string >() ) {
-      p = PipelineExecutableStatisticFormatKHR :: eBool32 ;
-      return;
-    }
-    if( "VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR" == j.get< std::string >() ) {
-      p = PipelineExecutableStatisticFormatKHR :: eBool32 ;
-      return;
-    }
-    if( "Int64" == j.get< std::string >() ) {
-      p = PipelineExecutableStatisticFormatKHR :: eInt64 ;
-      return;
-    }
-    if( "eInt64" == j.get< std::string >() ) {
-      p = PipelineExecutableStatisticFormatKHR :: eInt64 ;
-      return;
-    }
-    if( "VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR" == j.get< std::string >() ) {
-      p = PipelineExecutableStatisticFormatKHR :: eInt64 ;
-      return;
-    }
-    if( "Uint64" == j.get< std::string >() ) {
-      p = PipelineExecutableStatisticFormatKHR :: eUint64 ;
-      return;
-    }
-    if( "eUint64" == j.get< std::string >() ) {
-      p = PipelineExecutableStatisticFormatKHR :: eUint64 ;
-      return;
-    }
-    if( "VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR" == j.get< std::string >() ) {
-      p = PipelineExecutableStatisticFormatKHR :: eUint64 ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineExecutableStatisticFormatKHR" );
-  }
-  if( j.is_number() ) {
-    p = PipelineExecutableStatisticFormatKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineExecutableStatisticFormatKHR" );
+void from_json( const nlohmann::json &j, PipelineExecutableStatisticFormatKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineExecutableStatisticFormatKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineExecutableStatisticFormatKHR temp;
-  from_json( j, temp );
-  p = VkPipelineExecutableStatisticFormatKHR ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPipelineExecutableStatisticFormatKHR &p );
 
 
 #endif

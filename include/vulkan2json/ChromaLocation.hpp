@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_CHROMALOCATION_HPP
 #define VULKAN2JSON_CHROMALOCATION_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ChromaLocation &p ) {
-  if( ChromaLocation :: eCositedEven == p ) {
-    j = "CositedEven";
-    return;
-  }
+void to_json( nlohmann::json &j, const ChromaLocation &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkChromaLocation &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ChromaLocation ( p ) );
-}
+void to_json( nlohmann::json &j, const VkChromaLocation &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ChromaLocation &p ) {
-  if( j.is_string() ) {
-    if( "CositedEven" == j.get< std::string >() ) {
-      p = ChromaLocation :: eCositedEven ;
-      return;
-    }
-    if( "eCositedEven" == j.get< std::string >() ) {
-      p = ChromaLocation :: eCositedEven ;
-      return;
-    }
-    if( "VK_CHROMA_LOCATION_COSITED_EVEN" == j.get< std::string >() ) {
-      p = ChromaLocation :: eCositedEven ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ChromaLocation" );
-  }
-  if( j.is_number() ) {
-    p = ChromaLocation ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ChromaLocation" );
+void from_json( const nlohmann::json &j, ChromaLocation &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkChromaLocation &p ) {
-  VULKAN_HPP_NAMESPACE :: ChromaLocation temp;
-  from_json( j, temp );
-  p = VkChromaLocation ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkChromaLocation &p );
 
 
 #endif

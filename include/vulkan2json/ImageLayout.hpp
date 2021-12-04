@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const ImageLayout &p ) {
   if( ImageLayout :: eUndefined == p ) {
@@ -99,19 +100,19 @@ inline void to_json( nlohmann::json &j, const ImageLayout &p ) {
     j = "PresentSrcKHR";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( ImageLayout :: eVideoDecodeDstKHR == p ) {
     j = "VideoDecodeDstKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( ImageLayout :: eVideoDecodeSrcKHR == p ) {
     j = "VideoDecodeSrcKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( ImageLayout :: eVideoDecodeDpbKHR == p ) {
     j = "VideoDecodeDpbKHR";
     return;
@@ -129,19 +130,19 @@ inline void to_json( nlohmann::json &j, const ImageLayout &p ) {
     j = "FragmentShadingRateAttachmentOptimalKHR";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( ImageLayout :: eVideoEncodeDstKHR == p ) {
     j = "VideoEncodeDstKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( ImageLayout :: eVideoEncodeSrcKHR == p ) {
     j = "VideoEncodeSrcKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( ImageLayout :: eVideoEncodeDpbKHR == p ) {
     j = "VideoEncodeDpbKHR";
     return;
@@ -379,55 +380,55 @@ inline void from_json( const nlohmann::json &j, ImageLayout &p ) {
       p = ImageLayout :: ePresentSrcKHR ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeDstKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoDecodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeDstKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoDecodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_IMAGE_LAYOUT_VIDEO_DECODE_DST_KHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoDecodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeSrcKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoDecodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeSrcKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoDecodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_IMAGE_LAYOUT_VIDEO_DECODE_SRC_KHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoDecodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeDpbKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoDecodeDpbKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeDpbKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoDecodeDpbKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_IMAGE_LAYOUT_VIDEO_DECODE_DPB_KHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoDecodeDpbKHR ;
       return;
@@ -469,55 +470,55 @@ inline void from_json( const nlohmann::json &j, ImageLayout &p ) {
       p = ImageLayout :: eFragmentShadingRateAttachmentOptimalKHR ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeDstKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoEncodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeDstKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoEncodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_IMAGE_LAYOUT_VIDEO_ENCODE_DST_KHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoEncodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeSrcKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoEncodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeSrcKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoEncodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_IMAGE_LAYOUT_VIDEO_ENCODE_SRC_KHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoEncodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeDpbKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoEncodeDpbKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeDpbKHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoEncodeDpbKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_IMAGE_LAYOUT_VIDEO_ENCODE_DPB_KHR" == j.get< std::string >() ) {
       p = ImageLayout :: eVideoEncodeDpbKHR ;
       return;
@@ -632,7 +633,6 @@ inline void from_json( const nlohmann::json &j, VkImageLayout &p ) {
   from_json( j, temp );
   p = VkImageLayout ( temp );
 }
-#endif
 
 
 #endif

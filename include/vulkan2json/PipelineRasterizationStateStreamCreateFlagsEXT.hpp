@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_PIPELINERASTERIZATIONSTATESTREAMCREATEFLAGSEXT_HPP
 #define VULKAN2JSON_PIPELINERASTERIZATIONSTATESTREAMCREATEFLAGSEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_TRANSFORM_FEEDBACK_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineRasterizationStateStreamCreateFlagBitsEXT &p ) {
+  void to_json( nlohmann::json &j, const PipelineRasterizationStateStreamCreateFlagBitsEXT &p );
+  void to_json( nlohmann::json &j, const PipelineRasterizationStateStreamCreateFlagsEXT &p );
+  void from_json( const nlohmann::json &j, PipelineRasterizationStateStreamCreateFlagBitsEXT &p );
+  void from_json( const nlohmann::json &j, PipelineRasterizationStateStreamCreateFlagsEXT &p );
 }
-inline void from_json( const nlohmann::json &j, PipelineRasterizationStateStreamCreateFlagBitsEXT &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineRasterizationStateStreamCreateFlagBitsEXT" );
-  }
-  if( j.is_number() ) {
-    p = PipelineRasterizationStateStreamCreateFlagBitsEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineRasterizationStateStreamCreateFlagBitsEXT" );
-}
-inline void to_json( nlohmann::json &j, const PipelineRasterizationStateStreamCreateFlagsEXT &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineRasterizationStateStreamCreateFlagBitsEXT ) * 8u; ++n ) {
-    if( p & PipelineRasterizationStateStreamCreateFlagsEXT ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineRasterizationStateStreamCreateFlagBitsEXT ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, PipelineRasterizationStateStreamCreateFlagsEXT &p ) {
-  if( j.is_array() ) {
-    p = PipelineRasterizationStateStreamCreateFlagsEXT ( 0 );
-    for( auto &e:  j ) {
-      PipelineRasterizationStateStreamCreateFlagBitsEXT temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineRasterizationStateStreamCreateFlagsEXT" );
-}
-}
-#endif
 
 
 #endif

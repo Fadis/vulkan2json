@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_PERFORMANCEQUERYSUBMITINFOKHR_HPP
 #define VULKAN2JSON_PERFORMANCEQUERYSUBMITINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PerformanceQuerySubmitInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "counterPassIndex" ] = p.counterPassIndex;
+void to_json( nlohmann::json &j, const PerformanceQuerySubmitInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPerformanceQuerySubmitInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PerformanceQuerySubmitInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPerformanceQuerySubmitInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PerformanceQuerySubmitInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PerformanceQuerySubmitInfoKHR" );
-  p.counterPassIndex = j[ "counterPassIndex" ];
+  void from_json( const nlohmann::json &j, PerformanceQuerySubmitInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPerformanceQuerySubmitInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PerformanceQuerySubmitInfoKHR temp;
-  from_json( j, temp );
-  p = VkPerformanceQuerySubmitInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPerformanceQuerySubmitInfoKHR &p );
 
 
 #endif

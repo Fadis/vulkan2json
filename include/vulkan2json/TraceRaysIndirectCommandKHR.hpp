@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_TRACERAYSINDIRECTCOMMANDKHR_HPP
 #define VULKAN2JSON_TRACERAYSINDIRECTCOMMANDKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const TraceRaysIndirectCommandKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "width" ] = p.width;
-  j[ "height" ] = p.height;
-  j[ "depth" ] = p.depth;
+void to_json( nlohmann::json &j, const TraceRaysIndirectCommandKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkTraceRaysIndirectCommandKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: TraceRaysIndirectCommandKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkTraceRaysIndirectCommandKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, TraceRaysIndirectCommandKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for TraceRaysIndirectCommandKHR" );
-  p.width = j[ "width" ];
-  p.height = j[ "height" ];
-  p.depth = j[ "depth" ];
+  void from_json( const nlohmann::json &j, TraceRaysIndirectCommandKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkTraceRaysIndirectCommandKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: TraceRaysIndirectCommandKHR temp;
-  from_json( j, temp );
-  p = VkTraceRaysIndirectCommandKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkTraceRaysIndirectCommandKHR &p );
 
 
 #endif

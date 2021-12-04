@@ -32,6 +32,11 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/FenceImportFlags.hpp>
+#include <vulkan2json/ExternalFenceHandleTypeFlags.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/FenceImportFlags.hpp>
 #include <vulkan2json/ExternalFenceHandleTypeFlags.hpp>
@@ -51,8 +56,12 @@ inline void to_json( nlohmann::json &j, const VkImportFenceWin32HandleInfoKHR &p
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, ImportFenceWin32HandleInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ImportFenceWin32HandleInfoKHR" );
-  p.flags = FenceImportFlags ( j[ "flags" ] );
-  p.handleType = ExternalFenceHandleTypeFlagBits ( j[ "handleType" ] );
+  if( j.find( "flags" ) != j.end() ) {
+    p.flags = FenceImportFlags ( j[ "flags" ] );
+  }
+  if( j.find( "handleType" ) != j.end() ) {
+    p.handleType = ExternalFenceHandleTypeFlagBits ( j[ "handleType" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkImportFenceWin32HandleInfoKHR &p ) {

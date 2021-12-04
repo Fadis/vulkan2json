@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_SYNCHRONIZATION_2_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const AccessFlagBits2KHR &p ) {
   if( AccessFlagBits2KHR :: eNone == p ) {
@@ -119,25 +120,25 @@ inline void to_json( nlohmann::json &j, const AccessFlagBits2KHR &p ) {
     j = "ShaderStorageWrite";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( AccessFlagBits2KHR :: eVideoDecodeRead == p ) {
     j = "VideoDecodeRead";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( AccessFlagBits2KHR :: eVideoDecodeWrite == p ) {
     j = "VideoDecodeWrite";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( AccessFlagBits2KHR :: eVideoEncodeRead == p ) {
     j = "VideoEncodeRead";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( AccessFlagBits2KHR :: eVideoEncodeWrite == p ) {
     j = "VideoEncodeWrite";
     return;
@@ -450,73 +451,73 @@ inline void from_json( const nlohmann::json &j, AccessFlagBits2KHR &p ) {
       p = AccessFlagBits2KHR :: eShaderStorageWrite ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeRead" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoDecodeRead ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeRead" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoDecodeRead ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_ACCESS_2_VIDEO_DECODE_READ_BIT_KHR" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoDecodeRead ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeWrite" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoDecodeWrite ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeWrite" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoDecodeWrite ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_ACCESS_2_VIDEO_DECODE_WRITE_BIT_KHR" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoDecodeWrite ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeRead" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoEncodeRead ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeRead" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoEncodeRead ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_ACCESS_2_VIDEO_ENCODE_READ_BIT_KHR" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoEncodeRead ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeWrite" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoEncodeWrite ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeWrite" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoEncodeWrite ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_ACCESS_2_VIDEO_ENCODE_WRITE_BIT_KHR" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eVideoEncodeWrite ;
       return;
@@ -707,7 +708,6 @@ inline void from_json( const nlohmann::json &j, AccessFlags2KHR &p ) {
   else throw vulkan2json::invalid_flag_value( "incompatible value for AccessFlags2KHR" );
 }
 }
-#endif
 
 
 #endif

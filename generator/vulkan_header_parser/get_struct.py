@@ -58,9 +58,10 @@ class member_type_t(Enum):
   array2d_of_vulkan_handler = 18
 
 class vulkan_struct_member:
-  def __init__( self, member_type, value_type, name, xor_defs ):
+  def __init__( self, member_type, value_type, base_type, name, xor_defs ):
     self.member_type = member_type
     self.value_type = value_type
+    self.base_type = base_type
     self.name = name
     self.xor_defs = xor_defs
 
@@ -70,6 +71,7 @@ class vulkan_struct:
     self.static_defs = copy.deepcopy( defs_ )
     self.members = []
     self.has_struct_type = False
+    self.conditional = len( self.static_defs ) != 0
   def add( self, type_, name_, defs_, handles, non_handles ):
     numeric_types = [ 'int', 'int8_t', 'uint8_t', 'int16_t', 'uint16_t', 'int32_t', 'uint32_t', 'int64_t', 'uint64_t', 'float', 'double', 'size_t', 'DWORD' ]
     vulkan_numeric_types = [
@@ -84,63 +86,65 @@ class vulkan_struct:
     for d in defs_.keys():
       if not d in self.static_defs:
         xor_defs[ d ] = defs_[ d ]
+    if len( xor_defs ):
+      self.conditional = True
     if type_ == 'StructureType':
       self.members.append(
-        vulkan_struct_member( member_type_t.vulkan_struct_type, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.vulkan_struct_type, type_, type_, name_, xor_defs )
       )
       return
     if type_ in vulkan_pointoid_types:
       self.members.append(
-        vulkan_struct_member( member_type_t.pointoid, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.pointoid, type_, type_, name_, xor_defs )
       )
       return
     if type_[0:4] == 'PFN_':
       self.members.append(
-        vulkan_struct_member( member_type_t.pointer, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.pointer, type_, type_, name_, xor_defs )
       )
       return
     if type_[0:2] == 'Vk':
       if type_[2:] in non_handles:
         self.members.append(
-          vulkan_struct_member( member_type_t.vulkan_c_struct, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.vulkan_c_struct, type_, non_handles[ type_[2:] ], name_, xor_defs )
         )
       elif type_[2:] in handles:
         self.members.append(
-          vulkan_struct_member( member_type_t.vulkan_c_handler, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.vulkan_c_handler, type_, handles[ type_[2:] ], name_, xor_defs )
         )
       else:
         self.members.append(
-          vulkan_struct_member( member_type_t.ignored, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.ignored, type_, type_, name_, xor_defs )
         )
       return
     if type_ in handles:
       self.members.append(
-        vulkan_struct_member( member_type_t.vulkan_handler, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.vulkan_handler, type_, handles[ type_ ], name_, xor_defs )
       )
       return
     if type_ in non_handles:
       self.members.append(
-        vulkan_struct_member( member_type_t.vulkan_struct, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.vulkan_struct, type_, non_handles[ type_ ], name_, xor_defs )
       )
       return
     if type_ == 'Bool32':
       self.members.append(
-        vulkan_struct_member( member_type_t.boolean, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.boolean, type_, type_, name_, xor_defs )
       )
       return
     if type_ in numeric_types:
       self.members.append(
-        vulkan_struct_member( member_type_t.numeric, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.numeric, type_, type_, name_, xor_defs )
       )
       return
     if type_ in vulkan_numeric_types:
       self.members.append(
-        vulkan_struct_member( member_type_t.numeric, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.numeric, type_, type_, name_, xor_defs )
       )
       return
     if type_[0:19] == 'ArrayWrapper1D<char':
       self.members.append(
-        vulkan_struct_member( member_type_t.string, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.string, type_, type_, name_, xor_defs )
       )
       return
     array_1d_match = re.match( array_1d_rule, type_ )
@@ -148,22 +152,22 @@ class vulkan_struct:
       value_type = array_1d_match.group( 1 ).lstrip().rstrip()
       if value_type in numeric_types:
         self.members.append(
-          vulkan_struct_member( member_type_t.array1d_of_numeric, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.array1d_of_numeric, type_, value_type, name_, xor_defs )
         )
         return
       if value_type in vulkan_numeric_types:
         self.members.append(
-          vulkan_struct_member( member_type_t.array1d_of_numeric, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.array1d_of_numeric, type_, value_type, name_, xor_defs )
         )
         return
       elif value_type in non_handles:
         self.members.append(
-          vulkan_struct_member( member_type_t.array1d_of_vulkan_struct, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.array1d_of_vulkan_struct, type_, non_handles[ value_type ], name_, xor_defs )
         )
         return
       elif value_type in handles:
         self.members.append(
-          vulkan_struct_member( member_type_t.array1d_of_vulkan_handler, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.array1d_of_vulkan_handler, type_, handles[ value_type ], name_, xor_defs )
         )
         return
     array_2d_match = re.match( array_2d_rule, type_ )
@@ -171,36 +175,36 @@ class vulkan_struct:
       value_type = array_2d_match.group( 1 ).lstrip().rstrip()
       if value_type in numeric_types:
         self.members.append(
-          vulkan_struct_member( member_type_t.array2d_of_numeric, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.array2d_of_numeric, type_, value_type, name_, xor_defs )
         )
         return
       if value_type in vulkan_numeric_types:
         self.members.append(
-          vulkan_struct_member( member_type_t.array2d_of_numeric, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.array2d_of_numeric, type_, value_type, name_, xor_defs )
         )
         return
       elif value_type in non_handles:
         self.members.append(
-          vulkan_struct_member( member_type_t.array2d_of_vulkan_struct, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.array2d_of_vulkan_struct, type_, non_handles[ value_type ], name_, xor_defs )
         )
         return
       elif value_type in handles:
         self.members.append(
-          vulkan_struct_member( member_type_t.array2d_of_vulkan_handler, type_, name_, xor_defs )
+          vulkan_struct_member( member_type_t.array2d_of_vulkan_handler, type_, handles[ value_type ], name_, xor_defs )
         )
         return
     if re.match( const_char_pointer_rule, type_ ):
       self.members.append(
-        vulkan_struct_member( member_type_t.string_pointer, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.string_pointer, type_, type_, name_, xor_defs )
       )
       return
     if type_[-1] == '*':
       self.members.append(
-        vulkan_struct_member( member_type_t.pointer, type_, name_, xor_defs )
+        vulkan_struct_member( member_type_t.pointer, type_, type_, name_, xor_defs )
       )
       return
     self.members.append(
-      vulkan_struct_member( member_type_t.ignored, type_, name_, xor_defs )
+      vulkan_struct_member( member_type_t.ignored, type_, type_, name_, xor_defs )
     )
   def __str__( self ):
     return json.dumps(
@@ -232,31 +236,27 @@ class vulkan_struct:
     m = ""
     for v in self.members:
       if v.member_type == member_type_t.vulkan_struct_type:
-        name = vulkan_class_name( v.value_type )
-        m += "#include <vulkan2json/%s.hpp>\n" % name.get_include_name()
+        m += "#include <vulkan2json/%s.hpp>\n" % vulkan_class_name( v.base_type ).get_include_name()
       elif v.member_type == member_type_t.vulkan_struct:
-        name = vulkan_class_name( v.value_type )
-        m += "#include <vulkan2json/%s.hpp>\n" % name.get_include_name()
+        m += "#include <vulkan2json/%s.hpp>\n" % vulkan_class_name( v.base_type ).get_include_name()
       elif v.member_type == member_type_t.array1d_of_vulkan_struct:
-        array_1d_match = re.match( array_1d_rule, v.value_type )
-        if array_1d_match:
-          name = vulkan_class_name( array_1d_match.group( 1 ) )
-          m += "#include <vulkan2json/%s.hpp>\n" % name.get_include_name()
+        m += "#include <vulkan2json/%s.hpp>\n" % vulkan_class_name( v.base_type ).get_include_name()
       elif v.member_type == member_type_t.array2d_of_vulkan_struct:
-        array_2d_match = re.match( array_2d_rule, v.value_type )
-        if array_2d_match:
-          name = vulkan_class_name( array_2d_match.group( 1 ) )
-          m += "#include <vulkan2json/%s.hpp>\n" % name.get_include_name()
+        m += "#include <vulkan2json/%s.hpp>\n" % vulkan_class_name( v.base_type ).get_include_name()
     return m
 
   def generate_impl( self ):
     name = self.name.get_name()
     cname = self.name.get_cname()
+    inline = ""
+    if self.conditional:
+      inline = "inline "
     m = ''
+    m += self.generate_includes()
     if len( self.static_defs ):
       m += '#if ' + ' && '.join( [ x for x in self.static_defs.keys() ] ) + '\n'
     m += "namespace VULKAN_HPP_NAMESPACE {\n"
-    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % name
+    m += "%svoid to_json( nlohmann::json &j, const %s &p ) {\n" % ( inline, name )
     m += "  j = nlohmann::json::object();\n"
     for v in self.members:
       if len( v.xor_defs ):
@@ -299,68 +299,82 @@ class vulkan_struct:
         m += "#endif\n"
     m += "}\n"
     m += "}\n"
-    m += "inline void to_json( nlohmann::json &j, const %s &p ) {\n" % cname
+    m += "%svoid to_json( nlohmann::json &j, const %s &p ) {\n" % ( inline, cname )
     m += "  to_json( j, VULKAN_HPP_NAMESPACE :: %s ( p ) );\n" % name
     m += "}\n"
     m += "namespace VULKAN_HPP_NAMESPACE {\n"
-    m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % name
+    m += "%svoid from_json( const nlohmann::json &j, %s &p ) {\n" % ( inline, name )
     m += "  if( !j.is_object() ) throw vulkan2json::invalid_object_value( \"incompatible value for %s\" );\n" % name
     for v in self.members:
+      temp = ""
+      available = False
       if len( v.xor_defs ):
-        m += "#if " + ' && '.join( [ x for x in v.xor_defs.keys() ] ) + '\n'
+        temp += "#if " + ' && '.join( [ x for x in v.xor_defs.keys() ] ) + '\n'
+      temp += "  if( j.find( \"%s\" ) != j.end() ) {\n" % v.name
       if v.member_type == member_type_t.vulkan_struct:
-        m+= "  p.%s = %s ( j[ \"%s\" ] );\n" % ( v.name, v.value_type, v.name )
+        temp += "    p.%s = %s ( j[ \"%s\" ] );\n" % ( v.name, v.value_type, v.name )
+        available = True
       elif v.member_type == member_type_t.boolean:
-        m+= "  p.%s = j[ \"%s\" ];\n" % ( v.name, v.name )
+        temp += "    p.%s = j[ \"%s\" ];\n" % ( v.name, v.name )
+        available = True
       elif v.member_type == member_type_t.numeric:
-        m+= "  p.%s = j[ \"%s\" ];\n" % ( v.name, v.name )
+        temp += "    p.%s = j[ \"%s\" ];\n" % ( v.name, v.name )
+        available = True
       elif v.member_type == member_type_t.string:
-        m+= "  {\n"
-        m+= "    std::string s = j[ \"%s\" ];\n" % v.name
-        m+= "    if( !p.%s.empty() ) {\n" % v.name
-        m+= "      p.%s[ p.%s.size() - 1u ] = '\\0';\n" % ( v.name, v.name )
-        m+= "      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.%s.size() - 1u ) ), p.%s.begin() );\n" % ( v.name, v.name )
-        m+= "    }\n"
-        m+= "  }\n"
+        temp += "    {\n"
+        temp += "      std::string s = j[ \"%s\" ];\n" % v.name
+        temp += "      if( !p.%s.empty() ) {\n" % v.name
+        temp += "        p.%s[ p.%s.size() - 1u ] = '\\0';\n" % ( v.name, v.name )
+        temp += "        std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.%s.size() - 1u ) ), p.%s.begin() );\n" % ( v.name, v.name )
+        temp += "      }\n"
+        temp += "    }\n"
+        available = True
       elif v.member_type == member_type_t.array1d_of_numeric:
-        m+= "  if( !j[ \"%s\" ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
-        m+= "  if( !j[ \"%s\" ].size() > p.%s.size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
-        m+= "  std::fill( p.%s.begin(), p.%s.end(), 0 );\n" % ( v.name, v.name )
-        m+= "  std::copy( j[ \"%s\" ].begin(), j[ \"%s\" ].end(), p.%s.begin() );\n" % ( v.name, v.name, v.name )
+        temp += "    if( !j[ \"%s\" ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
+        temp += "    if( !j[ \"%s\" ].size() > p.%s.size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
+        temp += "    std::fill( p.%s.begin(), p.%s.end(), 0 );\n" % ( v.name, v.name )
+        temp += "    std::copy( j[ \"%s\" ].begin(), j[ \"%s\" ].end(), p.%s.begin() );\n" % ( v.name, v.name, v.name )
+        available = True
       elif v.member_type == member_type_t.array1d_of_vulkan_struct:
-        m+= "  if( !j[ \"%s\" ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
-        m+= "  if( !j[ \"%s\" ].size() > p.%s.size() ) throw vulkan2json::invalid_array_value(  \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
-        m+= "  std::fill( p.%s.begin(), p.%s.end(), std::remove_cv_t< std::remove_reference_t< decltype( *p.%s.begin() ) > >() );\n" % ( v.name, v.name, v.name )
-        m+= "  std::copy( j[ \"%s\" ].begin(), j[ \"%s\" ].end(), p.%s.begin() );\n" % ( v.name, v.name, v.name )
+        temp += "    if( !j[ \"%s\" ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
+        temp += "    if( !j[ \"%s\" ].size() > p.%s.size() ) throw vulkan2json::invalid_array_value(  \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
+        temp += "    std::fill( p.%s.begin(), p.%s.end(), %s () );\n" % ( v.name, v.name, v.base_type )
+        temp += "    std::transform( j[ \"%s\" ].begin(), j[ \"%s\" ].end(), p.%s.begin(), []( const auto &v ) { return %s ( v ); } );\n" % ( v.name, v.name, v.name, v.base_type )
+        available = True
       elif v.member_type == member_type_t.array2d_of_numeric:
-        m+= "  if( !j[ \"%s\" ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
-        m+= "  if( !j[ \"%s\" ].size() > p.%s.size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
-        m+= "  for( std::size_t i = 0u; i != j[ \"%s\" ].size(); ++i ) {\n" % v.name
-        m+= "    if( !j[ \"%s\" ][ i ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
-        m+= "    if( !j[ \"%s\" ][ i ].size() > p.%s[ i ].size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
-        m+= "    std::fill( p.%s[ i ].begin(), p.%s[ i ].end(), 0 );\n" % ( v.name, v.name )
-        m+= "    std::copy( j[ \"%s\" ][ i ].begin(), j[ \"%s\" ][ i ].end(), p.%s[ i ].begin() );\n" % ( v.name, v.name, v.name )
-        m+= "  }\n"
-        m+= "  for( std::size_t i = j[ \"%s\" ].size(); i != p.%s.size(); ++i ) {\n" % ( v.name, v.name )
-        m+= "    std::fill( p.%s[ i ].begin(), p.%s[ i ].end(), 0 );\n" % ( v.name, v.name )
-        m+= "  }\n"
+        temp += "    if( !j[ \"%s\" ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
+        temp += "    if( !j[ \"%s\" ].size() > p.%s.size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
+        temp += "    for( std::size_t i = 0u; i != j[ \"%s\" ].size(); ++i ) {\n" % v.name
+        temp += "      if( !j[ \"%s\" ][ i ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
+        temp += "      if( !j[ \"%s\" ][ i ].size() > p.%s[ i ].size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
+        temp += "      std::fill( p.%s[ i ].begin(), p.%s[ i ].end(), 0 );\n" % ( v.name, v.name )
+        temp += "      std::copy( j[ \"%s\" ][ i ].begin(), j[ \"%s\" ][ i ].end(), p.%s[ i ].begin() );\n" % ( v.name, v.name, v.name )
+        temp += "    }\n"
+        temp += "    for( std::size_t i = j[ \"%s\" ].size(); i != p.%s.size(); ++i ) {\n" % ( v.name, v.name )
+        temp += "      std::fill( p.%s[ i ].begin(), p.%s[ i ].end(), 0 );\n" % ( v.name, v.name )
+        temp += "    }\n"
+        available = True
       elif v.member_type == member_type_t.array2d_of_vulkan_struct:
-        m+= "  if( !j[ \"%s\" ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
-        m+= "  if( !j[ \"%s\" ].size() > p.%s.size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
-        m+= "  for( std::size_t i = 0u; i != j[ \"%s\" ].size(); ++i ) {\n" % v.name
-        m+= "    if( !j[ \"%s\" ][ i ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
-        m+= "    if( !j[ \"%s\" ][ i ].size() > p.%s[ i ].size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
-        m+= "    std::fill( p.%s[ i ].begin(), p.%s[ i ].end(), std::remove_cv_t< std::remove_reference_t< decltype( *p.%s.begin() ) > >() );\n" % ( v.name, v.name )
-        m+= "    std::copy( j[ \"%s\" ][ i ].begin(), j[ \"%s\" ][ i ].end(), p.%s[ i ].begin() );\n" % ( v.name, v.name, v.name )
-        m+= "  }\n"
-        m+= "  for( std::size_t i = j[ \"%s\" ].size(); i != p.%s.size(); ++i ) {\n" % ( v.name, v.name )
-        m+= "    std::fill( p.%s[ i ].begin(), p.%s[ i ].end(), std::remove_cv_t< std::remove_reference_t< decltype( *p.%s.begin() ) > >() );\n" % ( v.name, v.name )
-        m+= "  }\n"
+        temp += "    if( !j[ \"%s\" ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
+        temp += "    if( !j[ \"%s\" ].size() > p.%s.size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
+        temp += "    for( std::size_t i = 0u; i != j[ \"%s\" ].size(); ++i ) {\n" % v.name
+        temp += "      if( !j[ \"%s\" ][ i ].is_array() ) throw vulkan2json::invalid_array_value( \"incompatible value for %s.%s\" );\n" % ( v.name, name, v.name )
+        temp += "      if( !j[ \"%s\" ][ i ].size() > p.%s[ i ].size() ) throw vulkan2json::invalid_array_value( \"too many values in array for %s.%s\" );\n" % ( v.name, v.name, name, v.name )
+        temp += "      std::fill( p.%s[ i ].begin(), p.%s[ i ].end(), %s () );\n" % ( v.name, v.name, v.base_type )
+        temp += "      std::transform( j[ \"%s\" ][ i ].begin(), j[ \"%s\" ][ i ].end(), p.%s[ i ].begin(), []( const auto &v ) { return %s ( v ); } );\n" % ( v.name, v.name, v.name, v.base_type )
+        temp += "    }\n"
+        temp += "    for( std::size_t i = j[ \"%s\" ].size(); i != p.%s.size(); ++i ) {\n" % ( v.name, v.name )
+        temp += "      std::fill( p.%s[ i ].begin(), p.%s[ i ].end(), %s () );\n" % ( v.name, v.name, v.base_type )
+        temp += "    }\n"
+        available = True
+      temp += "  }\n"
       if len( v.xor_defs ):
-        m += "#endif\n"
+        temp += "#endif\n"
+      if available:
+        m += temp
     m += "}\n"
     m += "}\n"
-    m += "inline void from_json( const nlohmann::json &j, %s &p ) {\n" % cname
+    m += "%svoid from_json( const nlohmann::json &j, %s &p ) {\n" % ( inline, cname )
     m += "  VULKAN_HPP_NAMESPACE :: %s temp;\n" % name
     m += "  from_json( j, temp );\n"
     m += "  p = %s ( temp );\n" % cname
@@ -371,10 +385,14 @@ class vulkan_struct:
   def generate_forward( self ):
     name = self.name.get_name()
     cname = self.name.get_cname()
-    m += "void to_json( nlohmann::json &j, const %s &p );\n" % name
+    m = "namespace VULKAN_HPP_NAMESPACE {\n"
+    m +=   "void to_json( nlohmann::json &j, const %s &p );\n" % name
+    m += "}\n"
     m += "void to_json( nlohmann::json &j, const %s &p );\n" % cname
-    m += "void from_json( const nlohmann::json &j, %s &p );\n" % name
-    m += "void from_json( const nlohmann::json &j, %s &p );\n" % name
+    m += "namespace VULKAN_HPP_NAMESPACE {\n"
+    m += "  void from_json( const nlohmann::json &j, %s &p );\n" % name
+    m += "}\n"
+    m += "void from_json( const nlohmann::json &j, %s &p );\n" % cname
     return m;
 
 class parse_state_t(Enum):

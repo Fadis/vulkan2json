@@ -32,6 +32,11 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/VideoBeginCodingFlagsKHR.hpp>
+#include <vulkan2json/VideoCodingQualityPresetFlagsKHR.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/VideoBeginCodingFlagsKHR.hpp>
 #include <vulkan2json/VideoCodingQualityPresetFlagsKHR.hpp>
@@ -53,9 +58,15 @@ inline void to_json( nlohmann::json &j, const VkVideoBeginCodingInfoKHR &p ) {
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoBeginCodingInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoBeginCodingInfoKHR" );
-  p.flags = VideoBeginCodingFlagsKHR ( j[ "flags" ] );
-  p.codecQualityPreset = VideoCodingQualityPresetFlagsKHR ( j[ "codecQualityPreset" ] );
-  p.referenceSlotCount = j[ "referenceSlotCount" ];
+  if( j.find( "flags" ) != j.end() ) {
+    p.flags = VideoBeginCodingFlagsKHR ( j[ "flags" ] );
+  }
+  if( j.find( "codecQualityPreset" ) != j.end() ) {
+    p.codecQualityPreset = VideoCodingQualityPresetFlagsKHR ( j[ "codecQualityPreset" ] );
+  }
+  if( j.find( "referenceSlotCount" ) != j.end() ) {
+    p.referenceSlotCount = j[ "referenceSlotCount" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoBeginCodingInfoKHR &p ) {

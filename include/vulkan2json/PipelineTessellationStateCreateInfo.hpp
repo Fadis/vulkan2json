@@ -22,42 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINETESSELLATIONSTATECREATEINFO_HPP
 #define VULKAN2JSON_PIPELINETESSELLATIONSTATECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineTessellationStateCreateFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineTessellationStateCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "patchControlPoints" ] = p.patchControlPoints;
+void to_json( nlohmann::json &j, const PipelineTessellationStateCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineTessellationStateCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineTessellationStateCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineTessellationStateCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineTessellationStateCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineTessellationStateCreateInfo" );
-  p.flags = PipelineTessellationStateCreateFlags ( j[ "flags" ] );
-  p.patchControlPoints = j[ "patchControlPoints" ];
+  void from_json( const nlohmann::json &j, PipelineTessellationStateCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineTessellationStateCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineTessellationStateCreateInfo temp;
-  from_json( j, temp );
-  p = VkPipelineTessellationStateCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineTessellationStateCreateInfo &p );
 
 
 #endif

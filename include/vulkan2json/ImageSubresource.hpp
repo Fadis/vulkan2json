@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_IMAGESUBRESOURCE_HPP
 #define VULKAN2JSON_IMAGESUBRESOURCE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/ImageAspectFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImageSubresource &p ) {
-  j = nlohmann::json::object();
-  j[ "aspectMask" ] = p.aspectMask;
-  j[ "mipLevel" ] = p.mipLevel;
-  j[ "arrayLayer" ] = p.arrayLayer;
+void to_json( nlohmann::json &j, const ImageSubresource &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkImageSubresource &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ImageSubresource ( p ) );
-}
+void to_json( nlohmann::json &j, const VkImageSubresource &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ImageSubresource &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ImageSubresource" );
-  p.aspectMask = ImageAspectFlags ( j[ "aspectMask" ] );
-  p.mipLevel = j[ "mipLevel" ];
-  p.arrayLayer = j[ "arrayLayer" ];
+  void from_json( const nlohmann::json &j, ImageSubresource &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkImageSubresource &p ) {
-  VULKAN_HPP_NAMESPACE :: ImageSubresource temp;
-  from_json( j, temp );
-  p = VkImageSubresource ( temp );
-}
+void from_json( const nlohmann::json &j, VkImageSubresource &p );
 
 
 #endif

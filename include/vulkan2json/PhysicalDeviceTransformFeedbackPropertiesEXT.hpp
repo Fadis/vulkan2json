@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICETRANSFORMFEEDBACKPROPERTIESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICETRANSFORMFEEDBACKPROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceTransformFeedbackPropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "maxTransformFeedbackStreams" ] = p.maxTransformFeedbackStreams;
-  j[ "maxTransformFeedbackBuffers" ] = p.maxTransformFeedbackBuffers;
-  j[ "maxTransformFeedbackBufferSize" ] = p.maxTransformFeedbackBufferSize;
-  j[ "maxTransformFeedbackStreamDataSize" ] = p.maxTransformFeedbackStreamDataSize;
-  j[ "maxTransformFeedbackBufferDataSize" ] = p.maxTransformFeedbackBufferDataSize;
-  j[ "maxTransformFeedbackBufferDataStride" ] = p.maxTransformFeedbackBufferDataStride;
-  j[ "transformFeedbackQueries" ] = bool( p.transformFeedbackQueries );
-  j[ "transformFeedbackStreamsLinesTriangles" ] = bool( p.transformFeedbackStreamsLinesTriangles );
-  j[ "transformFeedbackRasterizationStreamSelect" ] = bool( p.transformFeedbackRasterizationStreamSelect );
-  j[ "transformFeedbackDraw" ] = bool( p.transformFeedbackDraw );
+void to_json( nlohmann::json &j, const PhysicalDeviceTransformFeedbackPropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceTransformFeedbackPropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceTransformFeedbackPropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceTransformFeedbackPropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceTransformFeedbackPropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceTransformFeedbackPropertiesEXT" );
-  p.maxTransformFeedbackStreams = j[ "maxTransformFeedbackStreams" ];
-  p.maxTransformFeedbackBuffers = j[ "maxTransformFeedbackBuffers" ];
-  p.maxTransformFeedbackBufferSize = j[ "maxTransformFeedbackBufferSize" ];
-  p.maxTransformFeedbackStreamDataSize = j[ "maxTransformFeedbackStreamDataSize" ];
-  p.maxTransformFeedbackBufferDataSize = j[ "maxTransformFeedbackBufferDataSize" ];
-  p.maxTransformFeedbackBufferDataStride = j[ "maxTransformFeedbackBufferDataStride" ];
-  p.transformFeedbackQueries = j[ "transformFeedbackQueries" ];
-  p.transformFeedbackStreamsLinesTriangles = j[ "transformFeedbackStreamsLinesTriangles" ];
-  p.transformFeedbackRasterizationStreamSelect = j[ "transformFeedbackRasterizationStreamSelect" ];
-  p.transformFeedbackDraw = j[ "transformFeedbackDraw" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceTransformFeedbackPropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceTransformFeedbackPropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceTransformFeedbackPropertiesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceTransformFeedbackPropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceTransformFeedbackPropertiesEXT &p );
 
 
 #endif

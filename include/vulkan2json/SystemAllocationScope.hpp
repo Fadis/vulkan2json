@@ -22,105 +22,19 @@
 #ifndef VULKAN2JSON_SYSTEMALLOCATIONSCOPE_HPP
 #define VULKAN2JSON_SYSTEMALLOCATIONSCOPE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SystemAllocationScope &p ) {
-  if( SystemAllocationScope :: eCommand == p ) {
-    j = "Command";
-    return;
-  }
-  if( SystemAllocationScope :: eObject == p ) {
-    j = "Object";
-    return;
-  }
-  if( SystemAllocationScope :: eCache == p ) {
-    j = "Cache";
-    return;
-  }
-  if( SystemAllocationScope :: eDevice == p ) {
-    j = "Device";
-    return;
-  }
+void to_json( nlohmann::json &j, const SystemAllocationScope &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSystemAllocationScope &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SystemAllocationScope ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSystemAllocationScope &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SystemAllocationScope &p ) {
-  if( j.is_string() ) {
-    if( "Command" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eCommand ;
-      return;
-    }
-    if( "eCommand" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eCommand ;
-      return;
-    }
-    if( "VK_SYSTEM_ALLOCATION_SCOPE_COMMAND" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eCommand ;
-      return;
-    }
-    if( "Object" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eObject ;
-      return;
-    }
-    if( "eObject" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eObject ;
-      return;
-    }
-    if( "VK_SYSTEM_ALLOCATION_SCOPE_OBJECT" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eObject ;
-      return;
-    }
-    if( "Cache" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eCache ;
-      return;
-    }
-    if( "eCache" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eCache ;
-      return;
-    }
-    if( "VK_SYSTEM_ALLOCATION_SCOPE_CACHE" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eCache ;
-      return;
-    }
-    if( "Device" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eDevice ;
-      return;
-    }
-    if( "eDevice" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eDevice ;
-      return;
-    }
-    if( "VK_SYSTEM_ALLOCATION_SCOPE_DEVICE" == j.get< std::string >() ) {
-      p = SystemAllocationScope :: eDevice ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for SystemAllocationScope" );
-  }
-  if( j.is_number() ) {
-    p = SystemAllocationScope ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for SystemAllocationScope" );
+void from_json( const nlohmann::json &j, SystemAllocationScope &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSystemAllocationScope &p ) {
-  VULKAN_HPP_NAMESPACE :: SystemAllocationScope temp;
-  from_json( j, temp );
-  p = VkSystemAllocationScope ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkSystemAllocationScope &p );
 
 
 #endif

@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_USE_PLATFORM_WIN32_KHR )
 namespace VULKAN_HPP_NAMESPACE {
@@ -51,8 +54,12 @@ inline void to_json( nlohmann::json &j, const VkD3D12FenceSubmitInfoKHR &p ) {
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, D3D12FenceSubmitInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for D3D12FenceSubmitInfoKHR" );
-  p.waitSemaphoreValuesCount = j[ "waitSemaphoreValuesCount" ];
-  p.signalSemaphoreValuesCount = j[ "signalSemaphoreValuesCount" ];
+  if( j.find( "waitSemaphoreValuesCount" ) != j.end() ) {
+    p.waitSemaphoreValuesCount = j[ "waitSemaphoreValuesCount" ];
+  }
+  if( j.find( "signalSemaphoreValuesCount" ) != j.end() ) {
+    p.signalSemaphoreValuesCount = j[ "signalSemaphoreValuesCount" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkD3D12FenceSubmitInfoKHR &p ) {

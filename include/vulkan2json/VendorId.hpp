@@ -22,121 +22,19 @@
 #ifndef VULKAN2JSON_VENDORID_HPP
 #define VULKAN2JSON_VENDORID_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const VendorId &p ) {
-  if( VendorId :: eVIV == p ) {
-    j = "VIV";
-    return;
-  }
-  if( VendorId :: eVSI == p ) {
-    j = "VSI";
-    return;
-  }
-  if( VendorId :: eKazan == p ) {
-    j = "Kazan";
-    return;
-  }
-  if( VendorId :: eCodeplay == p ) {
-    j = "Codeplay";
-    return;
-  }
-  if( VendorId :: eMESA == p ) {
-    j = "MESA";
-    return;
-  }
+void to_json( nlohmann::json &j, const VendorId &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkVendorId &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: VendorId ( p ) );
-}
+void to_json( nlohmann::json &j, const VkVendorId &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, VendorId &p ) {
-  if( j.is_string() ) {
-    if( "VIV" == j.get< std::string >() ) {
-      p = VendorId :: eVIV ;
-      return;
-    }
-    if( "eVIV" == j.get< std::string >() ) {
-      p = VendorId :: eVIV ;
-      return;
-    }
-    if( "VK_VENDOR_ID_VIV" == j.get< std::string >() ) {
-      p = VendorId :: eVIV ;
-      return;
-    }
-    if( "VSI" == j.get< std::string >() ) {
-      p = VendorId :: eVSI ;
-      return;
-    }
-    if( "eVSI" == j.get< std::string >() ) {
-      p = VendorId :: eVSI ;
-      return;
-    }
-    if( "VK_VENDOR_ID_VSI" == j.get< std::string >() ) {
-      p = VendorId :: eVSI ;
-      return;
-    }
-    if( "Kazan" == j.get< std::string >() ) {
-      p = VendorId :: eKazan ;
-      return;
-    }
-    if( "eKazan" == j.get< std::string >() ) {
-      p = VendorId :: eKazan ;
-      return;
-    }
-    if( "VK_VENDOR_ID_KAZAN" == j.get< std::string >() ) {
-      p = VendorId :: eKazan ;
-      return;
-    }
-    if( "Codeplay" == j.get< std::string >() ) {
-      p = VendorId :: eCodeplay ;
-      return;
-    }
-    if( "eCodeplay" == j.get< std::string >() ) {
-      p = VendorId :: eCodeplay ;
-      return;
-    }
-    if( "VK_VENDOR_ID_CODEPLAY" == j.get< std::string >() ) {
-      p = VendorId :: eCodeplay ;
-      return;
-    }
-    if( "MESA" == j.get< std::string >() ) {
-      p = VendorId :: eMESA ;
-      return;
-    }
-    if( "eMESA" == j.get< std::string >() ) {
-      p = VendorId :: eMESA ;
-      return;
-    }
-    if( "VK_VENDOR_ID_MESA" == j.get< std::string >() ) {
-      p = VendorId :: eMESA ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for VendorId" );
-  }
-  if( j.is_number() ) {
-    p = VendorId ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for VendorId" );
+void from_json( const nlohmann::json &j, VendorId &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkVendorId &p ) {
-  VULKAN_HPP_NAMESPACE :: VendorId temp;
-  from_json( j, temp );
-  p = VkVendorId ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkVendorId &p );
 
 
 #endif

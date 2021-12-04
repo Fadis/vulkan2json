@@ -22,56 +22,19 @@
 #ifndef VULKAN2JSON_GRAPHICSPIPELINECREATEINFO_HPP
 #define VULKAN2JSON_GRAPHICSPIPELINECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineCreateFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const GraphicsPipelineCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "stageCount" ] = p.stageCount;
-  j[ "pStages" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pStages ) );
-  j[ "pVertexInputState" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pVertexInputState ) );
-  j[ "pInputAssemblyState" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pInputAssemblyState ) );
-  j[ "pTessellationState" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pTessellationState ) );
-  j[ "pViewportState" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pViewportState ) );
-  j[ "pRasterizationState" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pRasterizationState ) );
-  j[ "pMultisampleState" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pMultisampleState ) );
-  j[ "pDepthStencilState" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pDepthStencilState ) );
-  j[ "pColorBlendState" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pColorBlendState ) );
-  j[ "pDynamicState" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pDynamicState ) );
-  j[ "subpass" ] = p.subpass;
-  j[ "basePipelineIndex" ] = p.basePipelineIndex;
+void to_json( nlohmann::json &j, const GraphicsPipelineCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkGraphicsPipelineCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: GraphicsPipelineCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkGraphicsPipelineCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, GraphicsPipelineCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for GraphicsPipelineCreateInfo" );
-  p.flags = PipelineCreateFlags ( j[ "flags" ] );
-  p.stageCount = j[ "stageCount" ];
-  p.subpass = j[ "subpass" ];
-  p.basePipelineIndex = j[ "basePipelineIndex" ];
+  void from_json( const nlohmann::json &j, GraphicsPipelineCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkGraphicsPipelineCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: GraphicsPipelineCreateInfo temp;
-  from_json( j, temp );
-  p = VkGraphicsPipelineCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkGraphicsPipelineCreateInfo &p );
 
 
 #endif

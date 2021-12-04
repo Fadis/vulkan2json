@@ -22,38 +22,19 @@
 #ifndef VULKAN2JSON_MULTIDRAWINFOEXT_HPP
 #define VULKAN2JSON_MULTIDRAWINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MultiDrawInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "firstVertex" ] = p.firstVertex;
-  j[ "vertexCount" ] = p.vertexCount;
+void to_json( nlohmann::json &j, const MultiDrawInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkMultiDrawInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: MultiDrawInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkMultiDrawInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, MultiDrawInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MultiDrawInfoEXT" );
-  p.firstVertex = j[ "firstVertex" ];
-  p.vertexCount = j[ "vertexCount" ];
+  void from_json( const nlohmann::json &j, MultiDrawInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkMultiDrawInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: MultiDrawInfoEXT temp;
-  from_json( j, temp );
-  p = VkMultiDrawInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkMultiDrawInfoEXT &p );
 
 
 #endif

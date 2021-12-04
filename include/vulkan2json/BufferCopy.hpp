@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_BUFFERCOPY_HPP
 #define VULKAN2JSON_BUFFERCOPY_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const BufferCopy &p ) {
-  j = nlohmann::json::object();
-  j[ "srcOffset" ] = p.srcOffset;
-  j[ "dstOffset" ] = p.dstOffset;
-  j[ "size" ] = p.size;
+void to_json( nlohmann::json &j, const BufferCopy &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkBufferCopy &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: BufferCopy ( p ) );
-}
+void to_json( nlohmann::json &j, const VkBufferCopy &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, BufferCopy &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for BufferCopy" );
-  p.srcOffset = j[ "srcOffset" ];
-  p.dstOffset = j[ "dstOffset" ];
-  p.size = j[ "size" ];
+  void from_json( const nlohmann::json &j, BufferCopy &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkBufferCopy &p ) {
-  VULKAN_HPP_NAMESPACE :: BufferCopy temp;
-  from_json( j, temp );
-  p = VkBufferCopy ( temp );
-}
+void from_json( const nlohmann::json &j, VkBufferCopy &p );
 
 
 #endif

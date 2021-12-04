@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_PIPELINEVERTEXINPUTSTATECREATEFLAGS_HPP
 #define VULKAN2JSON_PIPELINEVERTEXINPUTSTATECREATEFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineVertexInputStateCreateFlagBits &p ) {
+  void to_json( nlohmann::json &j, const PipelineVertexInputStateCreateFlagBits &p );
+  void to_json( nlohmann::json &j, const PipelineVertexInputStateCreateFlags &p );
+  void from_json( const nlohmann::json &j, PipelineVertexInputStateCreateFlagBits &p );
+  void from_json( const nlohmann::json &j, PipelineVertexInputStateCreateFlags &p );
 }
-inline void from_json( const nlohmann::json &j, PipelineVertexInputStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineVertexInputStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineVertexInputStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineVertexInputStateCreateFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const PipelineVertexInputStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineVertexInputStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineVertexInputStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineVertexInputStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, PipelineVertexInputStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineVertexInputStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineVertexInputStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineVertexInputStateCreateFlags" );
-}
-}
-#endif
 
 
 #endif

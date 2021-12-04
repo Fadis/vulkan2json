@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEMAINTENANCE3PROPERTIES_HPP
 #define VULKAN2JSON_PHYSICALDEVICEMAINTENANCE3PROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceMaintenance3Properties &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "maxPerSetDescriptors" ] = p.maxPerSetDescriptors;
-  j[ "maxMemoryAllocationSize" ] = p.maxMemoryAllocationSize;
+void to_json( nlohmann::json &j, const PhysicalDeviceMaintenance3Properties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceMaintenance3Properties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceMaintenance3Properties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceMaintenance3Properties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceMaintenance3Properties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceMaintenance3Properties" );
-  p.maxPerSetDescriptors = j[ "maxPerSetDescriptors" ];
-  p.maxMemoryAllocationSize = j[ "maxMemoryAllocationSize" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceMaintenance3Properties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceMaintenance3Properties &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceMaintenance3Properties temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceMaintenance3Properties ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceMaintenance3Properties &p );
 
 
 #endif

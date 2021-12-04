@@ -22,105 +22,19 @@
 #ifndef VULKAN2JSON_INDEXTYPE_HPP
 #define VULKAN2JSON_INDEXTYPE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const IndexType &p ) {
-  if( IndexType :: eUint16 == p ) {
-    j = "Uint16";
-    return;
-  }
-  if( IndexType :: eUint32 == p ) {
-    j = "Uint32";
-    return;
-  }
-  if( IndexType :: eNoneKHR == p ) {
-    j = "NoneKHR";
-    return;
-  }
-  if( IndexType :: eUint8EXT == p ) {
-    j = "Uint8EXT";
-    return;
-  }
+void to_json( nlohmann::json &j, const IndexType &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkIndexType &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: IndexType ( p ) );
-}
+void to_json( nlohmann::json &j, const VkIndexType &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, IndexType &p ) {
-  if( j.is_string() ) {
-    if( "Uint16" == j.get< std::string >() ) {
-      p = IndexType :: eUint16 ;
-      return;
-    }
-    if( "eUint16" == j.get< std::string >() ) {
-      p = IndexType :: eUint16 ;
-      return;
-    }
-    if( "VK_INDEX_TYPE_UINT16" == j.get< std::string >() ) {
-      p = IndexType :: eUint16 ;
-      return;
-    }
-    if( "Uint32" == j.get< std::string >() ) {
-      p = IndexType :: eUint32 ;
-      return;
-    }
-    if( "eUint32" == j.get< std::string >() ) {
-      p = IndexType :: eUint32 ;
-      return;
-    }
-    if( "VK_INDEX_TYPE_UINT32" == j.get< std::string >() ) {
-      p = IndexType :: eUint32 ;
-      return;
-    }
-    if( "NoneKHR" == j.get< std::string >() ) {
-      p = IndexType :: eNoneKHR ;
-      return;
-    }
-    if( "eNoneKHR" == j.get< std::string >() ) {
-      p = IndexType :: eNoneKHR ;
-      return;
-    }
-    if( "VK_INDEX_TYPE_NONE_KHR" == j.get< std::string >() ) {
-      p = IndexType :: eNoneKHR ;
-      return;
-    }
-    if( "Uint8EXT" == j.get< std::string >() ) {
-      p = IndexType :: eUint8EXT ;
-      return;
-    }
-    if( "eUint8EXT" == j.get< std::string >() ) {
-      p = IndexType :: eUint8EXT ;
-      return;
-    }
-    if( "VK_INDEX_TYPE_UINT8_EXT" == j.get< std::string >() ) {
-      p = IndexType :: eUint8EXT ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for IndexType" );
-  }
-  if( j.is_number() ) {
-    p = IndexType ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for IndexType" );
+void from_json( const nlohmann::json &j, IndexType &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkIndexType &p ) {
-  VULKAN_HPP_NAMESPACE :: IndexType temp;
-  from_json( j, temp );
-  p = VkIndexType ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkIndexType &p );
 
 
 #endif

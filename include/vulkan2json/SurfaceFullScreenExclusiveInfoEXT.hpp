@@ -32,6 +32,10 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/FullScreenExclusiveEXT.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/FullScreenExclusiveEXT.hpp>
 #if defined( VK_USE_PLATFORM_WIN32_KHR )
@@ -49,7 +53,9 @@ inline void to_json( nlohmann::json &j, const VkSurfaceFullScreenExclusiveInfoEX
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, SurfaceFullScreenExclusiveInfoEXT &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SurfaceFullScreenExclusiveInfoEXT" );
-  p.fullScreenExclusive = FullScreenExclusiveEXT ( j[ "fullScreenExclusive" ] );
+  if( j.find( "fullScreenExclusive" ) != j.end() ) {
+    p.fullScreenExclusive = FullScreenExclusiveEXT ( j[ "fullScreenExclusive" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkSurfaceFullScreenExclusiveInfoEXT &p ) {

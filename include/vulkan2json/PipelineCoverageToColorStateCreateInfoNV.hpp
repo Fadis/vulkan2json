@@ -22,44 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECOVERAGETOCOLORSTATECREATEINFONV_HPP
 #define VULKAN2JSON_PIPELINECOVERAGETOCOLORSTATECREATEINFONV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineCoverageToColorStateCreateFlagsNV.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineCoverageToColorStateCreateInfoNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "coverageToColorEnable" ] = bool( p.coverageToColorEnable );
-  j[ "coverageToColorLocation" ] = p.coverageToColorLocation;
+void to_json( nlohmann::json &j, const PipelineCoverageToColorStateCreateInfoNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineCoverageToColorStateCreateInfoNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineCoverageToColorStateCreateInfoNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineCoverageToColorStateCreateInfoNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineCoverageToColorStateCreateInfoNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineCoverageToColorStateCreateInfoNV" );
-  p.flags = PipelineCoverageToColorStateCreateFlagsNV ( j[ "flags" ] );
-  p.coverageToColorEnable = j[ "coverageToColorEnable" ];
-  p.coverageToColorLocation = j[ "coverageToColorLocation" ];
+  void from_json( const nlohmann::json &j, PipelineCoverageToColorStateCreateInfoNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineCoverageToColorStateCreateInfoNV &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineCoverageToColorStateCreateInfoNV temp;
-  from_json( j, temp );
-  p = VkPipelineCoverageToColorStateCreateInfoNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineCoverageToColorStateCreateInfoNV &p );
 
 
 #endif

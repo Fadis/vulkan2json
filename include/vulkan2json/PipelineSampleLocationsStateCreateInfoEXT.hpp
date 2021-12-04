@@ -22,42 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINESAMPLELOCATIONSSTATECREATEINFOEXT_HPP
 #define VULKAN2JSON_PIPELINESAMPLELOCATIONSSTATECREATEINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/SampleLocationsInfoEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineSampleLocationsStateCreateInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "sampleLocationsEnable" ] = bool( p.sampleLocationsEnable );
-  j[ "sampleLocationsInfo" ] = p.sampleLocationsInfo;
+void to_json( nlohmann::json &j, const PipelineSampleLocationsStateCreateInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineSampleLocationsStateCreateInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineSampleLocationsStateCreateInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineSampleLocationsStateCreateInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineSampleLocationsStateCreateInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineSampleLocationsStateCreateInfoEXT" );
-  p.sampleLocationsEnable = j[ "sampleLocationsEnable" ];
-  p.sampleLocationsInfo = SampleLocationsInfoEXT ( j[ "sampleLocationsInfo" ] );
+  void from_json( const nlohmann::json &j, PipelineSampleLocationsStateCreateInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineSampleLocationsStateCreateInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineSampleLocationsStateCreateInfoEXT temp;
-  from_json( j, temp );
-  p = VkPipelineSampleLocationsStateCreateInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineSampleLocationsStateCreateInfoEXT &p );
 
 
 #endif

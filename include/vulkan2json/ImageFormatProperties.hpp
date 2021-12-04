@@ -22,46 +22,19 @@
 #ifndef VULKAN2JSON_IMAGEFORMATPROPERTIES_HPP
 #define VULKAN2JSON_IMAGEFORMATPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/Extent3D.hpp>
-#include <vulkan2json/SampleCountFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImageFormatProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "maxExtent" ] = p.maxExtent;
-  j[ "maxMipLevels" ] = p.maxMipLevels;
-  j[ "maxArrayLayers" ] = p.maxArrayLayers;
-  j[ "sampleCounts" ] = p.sampleCounts;
-  j[ "maxResourceSize" ] = p.maxResourceSize;
+void to_json( nlohmann::json &j, const ImageFormatProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkImageFormatProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ImageFormatProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkImageFormatProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ImageFormatProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ImageFormatProperties" );
-  p.maxExtent = Extent3D ( j[ "maxExtent" ] );
-  p.maxMipLevels = j[ "maxMipLevels" ];
-  p.maxArrayLayers = j[ "maxArrayLayers" ];
-  p.sampleCounts = SampleCountFlags ( j[ "sampleCounts" ] );
-  p.maxResourceSize = j[ "maxResourceSize" ];
+  void from_json( const nlohmann::json &j, ImageFormatProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkImageFormatProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: ImageFormatProperties temp;
-  from_json( j, temp );
-  p = VkImageFormatProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkImageFormatProperties &p );
 
 
 #endif

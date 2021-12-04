@@ -22,55 +22,19 @@
 #ifndef VULKAN2JSON_DISPLAYSURFACECREATEINFOKHR_HPP
 #define VULKAN2JSON_DISPLAYSURFACECREATEINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DisplaySurfaceCreateFlagsKHR.hpp>
-#include <vulkan2json/SurfaceTransformFlagsKHR.hpp>
-#include <vulkan2json/DisplayPlaneAlphaFlagsKHR.hpp>
-#include <vulkan2json/Extent2D.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DisplaySurfaceCreateInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "planeIndex" ] = p.planeIndex;
-  j[ "planeStackIndex" ] = p.planeStackIndex;
-  j[ "transform" ] = p.transform;
-  j[ "globalAlpha" ] = p.globalAlpha;
-  j[ "alphaMode" ] = p.alphaMode;
-  j[ "imageExtent" ] = p.imageExtent;
+void to_json( nlohmann::json &j, const DisplaySurfaceCreateInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDisplaySurfaceCreateInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DisplaySurfaceCreateInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDisplaySurfaceCreateInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DisplaySurfaceCreateInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DisplaySurfaceCreateInfoKHR" );
-  p.flags = DisplaySurfaceCreateFlagsKHR ( j[ "flags" ] );
-  p.planeIndex = j[ "planeIndex" ];
-  p.planeStackIndex = j[ "planeStackIndex" ];
-  p.transform = SurfaceTransformFlagBitsKHR ( j[ "transform" ] );
-  p.globalAlpha = j[ "globalAlpha" ];
-  p.alphaMode = DisplayPlaneAlphaFlagBitsKHR ( j[ "alphaMode" ] );
-  p.imageExtent = Extent2D ( j[ "imageExtent" ] );
+  void from_json( const nlohmann::json &j, DisplaySurfaceCreateInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDisplaySurfaceCreateInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: DisplaySurfaceCreateInfoKHR temp;
-  from_json( j, temp );
-  p = VkDisplaySurfaceCreateInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkDisplaySurfaceCreateInfoKHR &p );
 
 
 #endif

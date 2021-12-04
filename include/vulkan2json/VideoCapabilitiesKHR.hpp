@@ -32,6 +32,13 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/VideoCapabilitiesFlagsKHR.hpp>
+#include <vulkan2json/Extent2D.hpp>
+#include <vulkan2json/Extent2D.hpp>
+#include <vulkan2json/Extent2D.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/VideoCapabilitiesFlagsKHR.hpp>
 #include <vulkan2json/Extent2D.hpp>
@@ -59,14 +66,30 @@ inline void to_json( nlohmann::json &j, const VkVideoCapabilitiesKHR &p ) {
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoCapabilitiesKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoCapabilitiesKHR" );
-  p.capabilityFlags = VideoCapabilitiesFlagsKHR ( j[ "capabilityFlags" ] );
-  p.minBitstreamBufferOffsetAlignment = j[ "minBitstreamBufferOffsetAlignment" ];
-  p.minBitstreamBufferSizeAlignment = j[ "minBitstreamBufferSizeAlignment" ];
-  p.videoPictureExtentGranularity = Extent2D ( j[ "videoPictureExtentGranularity" ] );
-  p.minExtent = Extent2D ( j[ "minExtent" ] );
-  p.maxExtent = Extent2D ( j[ "maxExtent" ] );
-  p.maxReferencePicturesSlotsCount = j[ "maxReferencePicturesSlotsCount" ];
-  p.maxReferencePicturesActiveCount = j[ "maxReferencePicturesActiveCount" ];
+  if( j.find( "capabilityFlags" ) != j.end() ) {
+    p.capabilityFlags = VideoCapabilitiesFlagsKHR ( j[ "capabilityFlags" ] );
+  }
+  if( j.find( "minBitstreamBufferOffsetAlignment" ) != j.end() ) {
+    p.minBitstreamBufferOffsetAlignment = j[ "minBitstreamBufferOffsetAlignment" ];
+  }
+  if( j.find( "minBitstreamBufferSizeAlignment" ) != j.end() ) {
+    p.minBitstreamBufferSizeAlignment = j[ "minBitstreamBufferSizeAlignment" ];
+  }
+  if( j.find( "videoPictureExtentGranularity" ) != j.end() ) {
+    p.videoPictureExtentGranularity = Extent2D ( j[ "videoPictureExtentGranularity" ] );
+  }
+  if( j.find( "minExtent" ) != j.end() ) {
+    p.minExtent = Extent2D ( j[ "minExtent" ] );
+  }
+  if( j.find( "maxExtent" ) != j.end() ) {
+    p.maxExtent = Extent2D ( j[ "maxExtent" ] );
+  }
+  if( j.find( "maxReferencePicturesSlotsCount" ) != j.end() ) {
+    p.maxReferencePicturesSlotsCount = j[ "maxReferencePicturesSlotsCount" ];
+  }
+  if( j.find( "maxReferencePicturesActiveCount" ) != j.end() ) {
+    p.maxReferencePicturesActiveCount = j[ "maxReferencePicturesActiveCount" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoCapabilitiesKHR &p ) {

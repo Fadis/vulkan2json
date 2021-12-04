@@ -22,52 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINEMULTISAMPLESTATECREATEINFO_HPP
 #define VULKAN2JSON_PIPELINEMULTISAMPLESTATECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineMultisampleStateCreateFlags.hpp>
-#include <vulkan2json/SampleCountFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineMultisampleStateCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "rasterizationSamples" ] = p.rasterizationSamples;
-  j[ "sampleShadingEnable" ] = bool( p.sampleShadingEnable );
-  j[ "minSampleShading" ] = p.minSampleShading;
-  j[ "pSampleMask" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pSampleMask ) );
-  j[ "alphaToCoverageEnable" ] = bool( p.alphaToCoverageEnable );
-  j[ "alphaToOneEnable" ] = bool( p.alphaToOneEnable );
+void to_json( nlohmann::json &j, const PipelineMultisampleStateCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineMultisampleStateCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineMultisampleStateCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineMultisampleStateCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineMultisampleStateCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineMultisampleStateCreateInfo" );
-  p.flags = PipelineMultisampleStateCreateFlags ( j[ "flags" ] );
-  p.rasterizationSamples = SampleCountFlagBits ( j[ "rasterizationSamples" ] );
-  p.sampleShadingEnable = j[ "sampleShadingEnable" ];
-  p.minSampleShading = j[ "minSampleShading" ];
-  p.alphaToCoverageEnable = j[ "alphaToCoverageEnable" ];
-  p.alphaToOneEnable = j[ "alphaToOneEnable" ];
+  void from_json( const nlohmann::json &j, PipelineMultisampleStateCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineMultisampleStateCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineMultisampleStateCreateInfo temp;
-  from_json( j, temp );
-  p = VkPipelineMultisampleStateCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineMultisampleStateCreateInfo &p );
 
 
 #endif

@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECREATIONFEEDBACKEXT_HPP
 #define VULKAN2JSON_PIPELINECREATIONFEEDBACKEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/PipelineCreationFeedbackFlagsEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineCreationFeedbackEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "flags" ] = p.flags;
-  j[ "duration" ] = p.duration;
+void to_json( nlohmann::json &j, const PipelineCreationFeedbackEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineCreationFeedbackEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineCreationFeedbackEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineCreationFeedbackEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineCreationFeedbackEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineCreationFeedbackEXT" );
-  p.flags = PipelineCreationFeedbackFlagsEXT ( j[ "flags" ] );
-  p.duration = j[ "duration" ];
+  void from_json( const nlohmann::json &j, PipelineCreationFeedbackEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineCreationFeedbackEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineCreationFeedbackEXT temp;
-  from_json( j, temp );
-  p = VkPipelineCreationFeedbackEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineCreationFeedbackEXT &p );
 
 
 #endif

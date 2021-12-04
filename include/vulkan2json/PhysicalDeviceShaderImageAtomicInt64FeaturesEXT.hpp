@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESHADERIMAGEATOMICINT64FEATURESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICESHADERIMAGEATOMICINT64FEATURESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceShaderImageAtomicInt64FeaturesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "shaderImageInt64Atomics" ] = bool( p.shaderImageInt64Atomics );
-  j[ "sparseImageInt64Atomics" ] = bool( p.sparseImageInt64Atomics );
+void to_json( nlohmann::json &j, const PhysicalDeviceShaderImageAtomicInt64FeaturesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderImageAtomicInt64FeaturesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceShaderImageAtomicInt64FeaturesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT" );
-  p.shaderImageInt64Atomics = j[ "shaderImageInt64Atomics" ];
-  p.sparseImageInt64Atomics = j[ "sparseImageInt64Atomics" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceShaderImageAtomicInt64FeaturesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderImageAtomicInt64FeaturesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT &p );
 
 
 #endif

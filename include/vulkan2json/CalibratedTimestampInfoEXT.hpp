@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_CALIBRATEDTIMESTAMPINFOEXT_HPP
 #define VULKAN2JSON_CALIBRATEDTIMESTAMPINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/TimeDomainEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CalibratedTimestampInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "timeDomain" ] = p.timeDomain;
+void to_json( nlohmann::json &j, const CalibratedTimestampInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkCalibratedTimestampInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: CalibratedTimestampInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkCalibratedTimestampInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, CalibratedTimestampInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for CalibratedTimestampInfoEXT" );
-  p.timeDomain = TimeDomainEXT ( j[ "timeDomain" ] );
+  void from_json( const nlohmann::json &j, CalibratedTimestampInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkCalibratedTimestampInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: CalibratedTimestampInfoEXT temp;
-  from_json( j, temp );
-  p = VkCalibratedTimestampInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkCalibratedTimestampInfoEXT &p );
 
 
 #endif

@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_SEMAPHORETYPE_HPP
 #define VULKAN2JSON_SEMAPHORETYPE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_2
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SemaphoreType &p ) {
-  if( SemaphoreType :: eBinary == p ) {
-    j = "Binary";
-    return;
-  }
+void to_json( nlohmann::json &j, const SemaphoreType &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSemaphoreType &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SemaphoreType ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSemaphoreType &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SemaphoreType &p ) {
-  if( j.is_string() ) {
-    if( "Binary" == j.get< std::string >() ) {
-      p = SemaphoreType :: eBinary ;
-      return;
-    }
-    if( "eBinary" == j.get< std::string >() ) {
-      p = SemaphoreType :: eBinary ;
-      return;
-    }
-    if( "VK_SEMAPHORE_TYPE_BINARY" == j.get< std::string >() ) {
-      p = SemaphoreType :: eBinary ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for SemaphoreType" );
-  }
-  if( j.is_number() ) {
-    p = SemaphoreType ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for SemaphoreType" );
+void from_json( const nlohmann::json &j, SemaphoreType &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSemaphoreType &p ) {
-  VULKAN_HPP_NAMESPACE :: SemaphoreType temp;
-  from_json( j, temp );
-  p = VkSemaphoreType ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkSemaphoreType &p );
 
 
 #endif

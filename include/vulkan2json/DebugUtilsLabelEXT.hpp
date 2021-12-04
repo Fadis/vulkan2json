@@ -22,44 +22,19 @@
 #ifndef VULKAN2JSON_DEBUGUTILSLABELEXT_HPP
 #define VULKAN2JSON_DEBUGUTILSLABELEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DebugUtilsLabelEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  if( p.pLabelName ) j[ "pLabelName" ] = std::string( p.pLabelName );
-  j[ "color" ] = nlohmann::json::array();
-  std::copy( p.color.begin(), p.color.end(), std::back_inserter( j[ "color" ] ) );
+void to_json( nlohmann::json &j, const DebugUtilsLabelEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDebugUtilsLabelEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DebugUtilsLabelEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDebugUtilsLabelEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DebugUtilsLabelEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DebugUtilsLabelEXT" );
-  if( !j[ "color" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for DebugUtilsLabelEXT.color" );
-  if( !j[ "color" ].size() > p.color.size() ) throw vulkan2json::invalid_array_value( "too many values in array for DebugUtilsLabelEXT.color" );
-  std::fill( p.color.begin(), p.color.end(), 0 );
-  std::copy( j[ "color" ].begin(), j[ "color" ].end(), p.color.begin() );
+  void from_json( const nlohmann::json &j, DebugUtilsLabelEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDebugUtilsLabelEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DebugUtilsLabelEXT temp;
-  from_json( j, temp );
-  p = VkDebugUtilsLabelEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkDebugUtilsLabelEXT &p );
 
 
 #endif

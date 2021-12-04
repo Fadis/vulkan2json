@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_PERFORMANCEOVERRIDETYPEINTEL_HPP
 #define VULKAN2JSON_PERFORMANCEOVERRIDETYPEINTEL_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_INTEL_PERFORMANCE_QUERY_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PerformanceOverrideTypeINTEL &p ) {
-  if( PerformanceOverrideTypeINTEL :: eNullHardware == p ) {
-    j = "NullHardware";
-    return;
-  }
+void to_json( nlohmann::json &j, const PerformanceOverrideTypeINTEL &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPerformanceOverrideTypeINTEL &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PerformanceOverrideTypeINTEL ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPerformanceOverrideTypeINTEL &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PerformanceOverrideTypeINTEL &p ) {
-  if( j.is_string() ) {
-    if( "NullHardware" == j.get< std::string >() ) {
-      p = PerformanceOverrideTypeINTEL :: eNullHardware ;
-      return;
-    }
-    if( "eNullHardware" == j.get< std::string >() ) {
-      p = PerformanceOverrideTypeINTEL :: eNullHardware ;
-      return;
-    }
-    if( "VK_PERFORMANCE_OVERRIDE_TYPE_NULL_HARDWARE_INTEL" == j.get< std::string >() ) {
-      p = PerformanceOverrideTypeINTEL :: eNullHardware ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PerformanceOverrideTypeINTEL" );
-  }
-  if( j.is_number() ) {
-    p = PerformanceOverrideTypeINTEL ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PerformanceOverrideTypeINTEL" );
+void from_json( const nlohmann::json &j, PerformanceOverrideTypeINTEL &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPerformanceOverrideTypeINTEL &p ) {
-  VULKAN_HPP_NAMESPACE :: PerformanceOverrideTypeINTEL temp;
-  from_json( j, temp );
-  p = VkPerformanceOverrideTypeINTEL ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPerformanceOverrideTypeINTEL &p );
 
 
 #endif

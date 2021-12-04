@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESUBPASSSHADINGPROPERTIESHUAWEI_HPP
 #define VULKAN2JSON_PHYSICALDEVICESUBPASSSHADINGPROPERTIESHUAWEI_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceSubpassShadingPropertiesHUAWEI &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "maxSubpassShadingWorkgroupSizeAspectRatio" ] = p.maxSubpassShadingWorkgroupSizeAspectRatio;
+void to_json( nlohmann::json &j, const PhysicalDeviceSubpassShadingPropertiesHUAWEI &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceSubpassShadingPropertiesHUAWEI &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceSubpassShadingPropertiesHUAWEI ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceSubpassShadingPropertiesHUAWEI &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceSubpassShadingPropertiesHUAWEI &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceSubpassShadingPropertiesHUAWEI" );
-  p.maxSubpassShadingWorkgroupSizeAspectRatio = j[ "maxSubpassShadingWorkgroupSizeAspectRatio" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceSubpassShadingPropertiesHUAWEI &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceSubpassShadingPropertiesHUAWEI &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceSubpassShadingPropertiesHUAWEI temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceSubpassShadingPropertiesHUAWEI ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceSubpassShadingPropertiesHUAWEI &p );
 
 
 #endif

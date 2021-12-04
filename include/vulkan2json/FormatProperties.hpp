@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_FORMATPROPERTIES_HPP
 #define VULKAN2JSON_FORMATPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/FormatFeatureFlags.hpp>
-#include <vulkan2json/FormatFeatureFlags.hpp>
-#include <vulkan2json/FormatFeatureFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const FormatProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "linearTilingFeatures" ] = p.linearTilingFeatures;
-  j[ "optimalTilingFeatures" ] = p.optimalTilingFeatures;
-  j[ "bufferFeatures" ] = p.bufferFeatures;
+void to_json( nlohmann::json &j, const FormatProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkFormatProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: FormatProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkFormatProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, FormatProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for FormatProperties" );
-  p.linearTilingFeatures = FormatFeatureFlags ( j[ "linearTilingFeatures" ] );
-  p.optimalTilingFeatures = FormatFeatureFlags ( j[ "optimalTilingFeatures" ] );
-  p.bufferFeatures = FormatFeatureFlags ( j[ "bufferFeatures" ] );
+  void from_json( const nlohmann::json &j, FormatProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkFormatProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: FormatProperties temp;
-  from_json( j, temp );
-  p = VkFormatProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkFormatProperties &p );
 
 
 #endif

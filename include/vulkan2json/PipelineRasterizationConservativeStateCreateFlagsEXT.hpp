@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_PIPELINERASTERIZATIONCONSERVATIVESTATECREATEFLAGSEXT_HPP
 #define VULKAN2JSON_PIPELINERASTERIZATIONCONSERVATIVESTATECREATEFLAGSEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineRasterizationConservativeStateCreateFlagBitsEXT &p ) {
+  void to_json( nlohmann::json &j, const PipelineRasterizationConservativeStateCreateFlagBitsEXT &p );
+  void to_json( nlohmann::json &j, const PipelineRasterizationConservativeStateCreateFlagsEXT &p );
+  void from_json( const nlohmann::json &j, PipelineRasterizationConservativeStateCreateFlagBitsEXT &p );
+  void from_json( const nlohmann::json &j, PipelineRasterizationConservativeStateCreateFlagsEXT &p );
 }
-inline void from_json( const nlohmann::json &j, PipelineRasterizationConservativeStateCreateFlagBitsEXT &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineRasterizationConservativeStateCreateFlagBitsEXT" );
-  }
-  if( j.is_number() ) {
-    p = PipelineRasterizationConservativeStateCreateFlagBitsEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineRasterizationConservativeStateCreateFlagBitsEXT" );
-}
-inline void to_json( nlohmann::json &j, const PipelineRasterizationConservativeStateCreateFlagsEXT &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineRasterizationConservativeStateCreateFlagBitsEXT ) * 8u; ++n ) {
-    if( p & PipelineRasterizationConservativeStateCreateFlagsEXT ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineRasterizationConservativeStateCreateFlagBitsEXT ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, PipelineRasterizationConservativeStateCreateFlagsEXT &p ) {
-  if( j.is_array() ) {
-    p = PipelineRasterizationConservativeStateCreateFlagsEXT ( 0 );
-    for( auto &e:  j ) {
-      PipelineRasterizationConservativeStateCreateFlagBitsEXT temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineRasterizationConservativeStateCreateFlagsEXT" );
-}
-}
-#endif
 
 
 #endif

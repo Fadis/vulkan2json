@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const ExternalSemaphoreHandleTypeFlagBits &p ) {
   if( ExternalSemaphoreHandleTypeFlagBits :: eOpaqueFd == p ) {
@@ -55,7 +56,7 @@ inline void to_json( nlohmann::json &j, const ExternalSemaphoreHandleTypeFlagBit
     j = "SyncFd";
     return;
   }
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
   if( ExternalSemaphoreHandleTypeFlagBits :: eZirconEventFUCHSIA == p ) {
     j = "ZirconEventFUCHSIA";
     return;
@@ -124,19 +125,19 @@ inline void from_json( const nlohmann::json &j, ExternalSemaphoreHandleTypeFlagB
       p = ExternalSemaphoreHandleTypeFlagBits :: eSyncFd ;
       return;
     }
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "ZirconEventFUCHSIA" == j.get< std::string >() ) {
       p = ExternalSemaphoreHandleTypeFlagBits :: eZirconEventFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "eZirconEventFUCHSIA" == j.get< std::string >() ) {
       p = ExternalSemaphoreHandleTypeFlagBits :: eZirconEventFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_ZIRCON_EVENT_BIT_FUCHSIA" == j.get< std::string >() ) {
       p = ExternalSemaphoreHandleTypeFlagBits :: eZirconEventFUCHSIA ;
       return;
@@ -171,7 +172,6 @@ inline void from_json( const nlohmann::json &j, ExternalSemaphoreHandleTypeFlags
   else throw vulkan2json::invalid_flag_value( "incompatible value for ExternalSemaphoreHandleTypeFlags" );
 }
 }
-#endif
 
 
 #endif

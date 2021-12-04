@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_QUEUEFAMILYCHECKPOINTPROPERTIES22NV_HPP
 #define VULKAN2JSON_QUEUEFAMILYCHECKPOINTPROPERTIES22NV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineStageFlags2KHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const QueueFamilyCheckpointProperties2NV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "checkpointExecutionStageMask" ] = p.checkpointExecutionStageMask;
+void to_json( nlohmann::json &j, const QueueFamilyCheckpointProperties2NV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkQueueFamilyCheckpointProperties2NV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: QueueFamilyCheckpointProperties2NV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkQueueFamilyCheckpointProperties2NV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, QueueFamilyCheckpointProperties2NV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for QueueFamilyCheckpointProperties2NV" );
-  p.checkpointExecutionStageMask = PipelineStageFlags2KHR ( j[ "checkpointExecutionStageMask" ] );
+  void from_json( const nlohmann::json &j, QueueFamilyCheckpointProperties2NV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkQueueFamilyCheckpointProperties2NV &p ) {
-  VULKAN_HPP_NAMESPACE :: QueueFamilyCheckpointProperties2NV temp;
-  from_json( j, temp );
-  p = VkQueueFamilyCheckpointProperties2NV ( temp );
-}
+void from_json( const nlohmann::json &j, VkQueueFamilyCheckpointProperties2NV &p );
 
 
 #endif

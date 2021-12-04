@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_COMPUTEPIPELINECREATEINFO_HPP
 #define VULKAN2JSON_COMPUTEPIPELINECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineCreateFlags.hpp>
-#include <vulkan2json/PipelineShaderStageCreateInfo.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ComputePipelineCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "stage" ] = p.stage;
-  j[ "basePipelineIndex" ] = p.basePipelineIndex;
+void to_json( nlohmann::json &j, const ComputePipelineCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkComputePipelineCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ComputePipelineCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkComputePipelineCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ComputePipelineCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ComputePipelineCreateInfo" );
-  p.flags = PipelineCreateFlags ( j[ "flags" ] );
-  p.stage = PipelineShaderStageCreateInfo ( j[ "stage" ] );
-  p.basePipelineIndex = j[ "basePipelineIndex" ];
+  void from_json( const nlohmann::json &j, ComputePipelineCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkComputePipelineCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: ComputePipelineCreateInfo temp;
-  from_json( j, temp );
-  p = VkComputePipelineCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkComputePipelineCreateInfo &p );
 
 
 #endif

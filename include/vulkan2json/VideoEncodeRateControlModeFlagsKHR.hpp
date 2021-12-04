@@ -32,16 +32,17 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_VIDEO_ENCODE_QUEUE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoEncodeRateControlModeFlagBitsKHR &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoEncodeRateControlModeFlagBitsKHR :: eNone == p ) {
     j = "None";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoEncodeRateControlModeFlagBitsKHR :: eCbr == p ) {
     j = "Cbr";
     return;
@@ -50,37 +51,37 @@ inline void to_json( nlohmann::json &j, const VideoEncodeRateControlModeFlagBits
 }
 inline void from_json( const nlohmann::json &j, VideoEncodeRateControlModeFlagBitsKHR &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "None" == j.get< std::string >() ) {
       p = VideoEncodeRateControlModeFlagBitsKHR :: eNone ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eNone" == j.get< std::string >() ) {
       p = VideoEncodeRateControlModeFlagBitsKHR :: eNone ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_ENCODE_RATE_CONTROL_MODE_NONE_BIT_KHR" == j.get< std::string >() ) {
       p = VideoEncodeRateControlModeFlagBitsKHR :: eNone ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Cbr" == j.get< std::string >() ) {
       p = VideoEncodeRateControlModeFlagBitsKHR :: eCbr ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eCbr" == j.get< std::string >() ) {
       p = VideoEncodeRateControlModeFlagBitsKHR :: eCbr ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_ENCODE_RATE_CONTROL_MODE_CBR_BIT_KHR" == j.get< std::string >() ) {
       p = VideoEncodeRateControlModeFlagBitsKHR :: eCbr ;
       return;
@@ -115,7 +116,6 @@ inline void from_json( const nlohmann::json &j, VideoEncodeRateControlModeFlagsK
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoEncodeRateControlModeFlagsKHR" );
 }
 }
-#endif
 
 
 #endif

@@ -22,55 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICECONSERVATIVERASTERIZATIONPROPERTIESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICECONSERVATIVERASTERIZATIONPROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceConservativeRasterizationPropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "primitiveOverestimationSize" ] = p.primitiveOverestimationSize;
-  j[ "maxExtraPrimitiveOverestimationSize" ] = p.maxExtraPrimitiveOverestimationSize;
-  j[ "extraPrimitiveOverestimationSizeGranularity" ] = p.extraPrimitiveOverestimationSizeGranularity;
-  j[ "primitiveUnderestimation" ] = bool( p.primitiveUnderestimation );
-  j[ "conservativePointAndLineRasterization" ] = bool( p.conservativePointAndLineRasterization );
-  j[ "degenerateTrianglesRasterized" ] = bool( p.degenerateTrianglesRasterized );
-  j[ "degenerateLinesRasterized" ] = bool( p.degenerateLinesRasterized );
-  j[ "fullyCoveredFragmentShaderInputVariable" ] = bool( p.fullyCoveredFragmentShaderInputVariable );
-  j[ "conservativeRasterizationPostDepthCoverage" ] = bool( p.conservativeRasterizationPostDepthCoverage );
+void to_json( nlohmann::json &j, const PhysicalDeviceConservativeRasterizationPropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceConservativeRasterizationPropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceConservativeRasterizationPropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceConservativeRasterizationPropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceConservativeRasterizationPropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceConservativeRasterizationPropertiesEXT" );
-  p.primitiveOverestimationSize = j[ "primitiveOverestimationSize" ];
-  p.maxExtraPrimitiveOverestimationSize = j[ "maxExtraPrimitiveOverestimationSize" ];
-  p.extraPrimitiveOverestimationSizeGranularity = j[ "extraPrimitiveOverestimationSizeGranularity" ];
-  p.primitiveUnderestimation = j[ "primitiveUnderestimation" ];
-  p.conservativePointAndLineRasterization = j[ "conservativePointAndLineRasterization" ];
-  p.degenerateTrianglesRasterized = j[ "degenerateTrianglesRasterized" ];
-  p.degenerateLinesRasterized = j[ "degenerateLinesRasterized" ];
-  p.fullyCoveredFragmentShaderInputVariable = j[ "fullyCoveredFragmentShaderInputVariable" ];
-  p.conservativeRasterizationPostDepthCoverage = j[ "conservativeRasterizationPostDepthCoverage" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceConservativeRasterizationPropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceConservativeRasterizationPropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceConservativeRasterizationPropertiesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceConservativeRasterizationPropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceConservativeRasterizationPropertiesEXT &p );
 
 
 #endif

@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECACHEHEADERVERSION_HPP
 #define VULKAN2JSON_PIPELINECACHEHEADERVERSION_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineCacheHeaderVersion &p ) {
+void to_json( nlohmann::json &j, const PipelineCacheHeaderVersion &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineCacheHeaderVersion &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineCacheHeaderVersion ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineCacheHeaderVersion &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineCacheHeaderVersion &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineCacheHeaderVersion" );
-  }
-  if( j.is_number() ) {
-    p = PipelineCacheHeaderVersion ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineCacheHeaderVersion" );
+void from_json( const nlohmann::json &j, PipelineCacheHeaderVersion &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineCacheHeaderVersion &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineCacheHeaderVersion temp;
-  from_json( j, temp );
-  p = VkPipelineCacheHeaderVersion ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPipelineCacheHeaderVersion &p );
 
 
 #endif

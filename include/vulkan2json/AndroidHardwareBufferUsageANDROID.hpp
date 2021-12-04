@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_USE_PLATFORM_ANDROID_KHR )
 namespace VULKAN_HPP_NAMESPACE {
@@ -48,7 +51,9 @@ inline void to_json( nlohmann::json &j, const VkAndroidHardwareBufferUsageANDROI
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, AndroidHardwareBufferUsageANDROID &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AndroidHardwareBufferUsageANDROID" );
-  p.androidHardwareBufferUsage = j[ "androidHardwareBufferUsage" ];
+  if( j.find( "androidHardwareBufferUsage" ) != j.end() ) {
+    p.androidHardwareBufferUsage = j[ "androidHardwareBufferUsage" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkAndroidHardwareBufferUsageANDROID &p ) {

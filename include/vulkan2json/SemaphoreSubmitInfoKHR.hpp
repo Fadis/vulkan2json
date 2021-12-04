@@ -22,44 +22,19 @@
 #ifndef VULKAN2JSON_SEMAPHORESUBMITINFOKHR_HPP
 #define VULKAN2JSON_SEMAPHORESUBMITINFOKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineStageFlags2KHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SemaphoreSubmitInfoKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "value" ] = p.value;
-  j[ "stageMask" ] = p.stageMask;
-  j[ "deviceIndex" ] = p.deviceIndex;
+void to_json( nlohmann::json &j, const SemaphoreSubmitInfoKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSemaphoreSubmitInfoKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SemaphoreSubmitInfoKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSemaphoreSubmitInfoKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SemaphoreSubmitInfoKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SemaphoreSubmitInfoKHR" );
-  p.value = j[ "value" ];
-  p.stageMask = PipelineStageFlags2KHR ( j[ "stageMask" ] );
-  p.deviceIndex = j[ "deviceIndex" ];
+  void from_json( const nlohmann::json &j, SemaphoreSubmitInfoKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSemaphoreSubmitInfoKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: SemaphoreSubmitInfoKHR temp;
-  from_json( j, temp );
-  p = VkSemaphoreSubmitInfoKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkSemaphoreSubmitInfoKHR &p );
 
 
 #endif

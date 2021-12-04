@@ -32,6 +32,13 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/VideoSessionCreateFlagsKHR.hpp>
+#include <vulkan2json/Format.hpp>
+#include <vulkan2json/Extent2D.hpp>
+#include <vulkan2json/Format.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/VideoSessionCreateFlagsKHR.hpp>
 #include <vulkan2json/Format.hpp>
@@ -59,13 +66,27 @@ inline void to_json( nlohmann::json &j, const VkVideoSessionCreateInfoKHR &p ) {
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoSessionCreateInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoSessionCreateInfoKHR" );
-  p.queueFamilyIndex = j[ "queueFamilyIndex" ];
-  p.flags = VideoSessionCreateFlagsKHR ( j[ "flags" ] );
-  p.pictureFormat = Format ( j[ "pictureFormat" ] );
-  p.maxCodedExtent = Extent2D ( j[ "maxCodedExtent" ] );
-  p.referencePicturesFormat = Format ( j[ "referencePicturesFormat" ] );
-  p.maxReferencePicturesSlotsCount = j[ "maxReferencePicturesSlotsCount" ];
-  p.maxReferencePicturesActiveCount = j[ "maxReferencePicturesActiveCount" ];
+  if( j.find( "queueFamilyIndex" ) != j.end() ) {
+    p.queueFamilyIndex = j[ "queueFamilyIndex" ];
+  }
+  if( j.find( "flags" ) != j.end() ) {
+    p.flags = VideoSessionCreateFlagsKHR ( j[ "flags" ] );
+  }
+  if( j.find( "pictureFormat" ) != j.end() ) {
+    p.pictureFormat = Format ( j[ "pictureFormat" ] );
+  }
+  if( j.find( "maxCodedExtent" ) != j.end() ) {
+    p.maxCodedExtent = Extent2D ( j[ "maxCodedExtent" ] );
+  }
+  if( j.find( "referencePicturesFormat" ) != j.end() ) {
+    p.referencePicturesFormat = Format ( j[ "referencePicturesFormat" ] );
+  }
+  if( j.find( "maxReferencePicturesSlotsCount" ) != j.end() ) {
+    p.maxReferencePicturesSlotsCount = j[ "maxReferencePicturesSlotsCount" ];
+  }
+  if( j.find( "maxReferencePicturesActiveCount" ) != j.end() ) {
+    p.maxReferencePicturesActiveCount = j[ "maxReferencePicturesActiveCount" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoSessionCreateInfoKHR &p ) {

@@ -22,46 +22,19 @@
 #ifndef VULKAN2JSON_DEVICEGROUPPRESENTCAPABILITIESKHR_HPP
 #define VULKAN2JSON_DEVICEGROUPPRESENTCAPABILITIESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DeviceGroupPresentModeFlagsKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DeviceGroupPresentCapabilitiesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "presentMask" ] = nlohmann::json::array();
-  std::copy( p.presentMask.begin(), p.presentMask.end(), std::back_inserter( j[ "presentMask" ] ) );
-  j[ "modes" ] = p.modes;
+void to_json( nlohmann::json &j, const DeviceGroupPresentCapabilitiesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDeviceGroupPresentCapabilitiesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DeviceGroupPresentCapabilitiesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDeviceGroupPresentCapabilitiesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DeviceGroupPresentCapabilitiesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DeviceGroupPresentCapabilitiesKHR" );
-  if( !j[ "presentMask" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for DeviceGroupPresentCapabilitiesKHR.presentMask" );
-  if( !j[ "presentMask" ].size() > p.presentMask.size() ) throw vulkan2json::invalid_array_value( "too many values in array for DeviceGroupPresentCapabilitiesKHR.presentMask" );
-  std::fill( p.presentMask.begin(), p.presentMask.end(), 0 );
-  std::copy( j[ "presentMask" ].begin(), j[ "presentMask" ].end(), p.presentMask.begin() );
-  p.modes = DeviceGroupPresentModeFlagsKHR ( j[ "modes" ] );
+  void from_json( const nlohmann::json &j, DeviceGroupPresentCapabilitiesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDeviceGroupPresentCapabilitiesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: DeviceGroupPresentCapabilitiesKHR temp;
-  from_json( j, temp );
-  p = VkDeviceGroupPresentCapabilitiesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkDeviceGroupPresentCapabilitiesKHR &p );
 
 
 #endif

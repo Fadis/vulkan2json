@@ -22,38 +22,19 @@
 #ifndef VULKAN2JSON_DRAWMESHTASKSINDIRECTCOMMANDNV_HPP
 #define VULKAN2JSON_DRAWMESHTASKSINDIRECTCOMMANDNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DrawMeshTasksIndirectCommandNV &p ) {
-  j = nlohmann::json::object();
-  j[ "taskCount" ] = p.taskCount;
-  j[ "firstTask" ] = p.firstTask;
+void to_json( nlohmann::json &j, const DrawMeshTasksIndirectCommandNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDrawMeshTasksIndirectCommandNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DrawMeshTasksIndirectCommandNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDrawMeshTasksIndirectCommandNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DrawMeshTasksIndirectCommandNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DrawMeshTasksIndirectCommandNV" );
-  p.taskCount = j[ "taskCount" ];
-  p.firstTask = j[ "firstTask" ];
+  void from_json( const nlohmann::json &j, DrawMeshTasksIndirectCommandNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDrawMeshTasksIndirectCommandNV &p ) {
-  VULKAN_HPP_NAMESPACE :: DrawMeshTasksIndirectCommandNV temp;
-  from_json( j, temp );
-  p = VkDrawMeshTasksIndirectCommandNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkDrawMeshTasksIndirectCommandNV &p );
 
 
 #endif

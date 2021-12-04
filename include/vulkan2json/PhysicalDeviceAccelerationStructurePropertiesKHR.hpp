@@ -22,53 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEACCELERATIONSTRUCTUREPROPERTIESKHR_HPP
 #define VULKAN2JSON_PHYSICALDEVICEACCELERATIONSTRUCTUREPROPERTIESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceAccelerationStructurePropertiesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "maxGeometryCount" ] = p.maxGeometryCount;
-  j[ "maxInstanceCount" ] = p.maxInstanceCount;
-  j[ "maxPrimitiveCount" ] = p.maxPrimitiveCount;
-  j[ "maxPerStageDescriptorAccelerationStructures" ] = p.maxPerStageDescriptorAccelerationStructures;
-  j[ "maxPerStageDescriptorUpdateAfterBindAccelerationStructures" ] = p.maxPerStageDescriptorUpdateAfterBindAccelerationStructures;
-  j[ "maxDescriptorSetAccelerationStructures" ] = p.maxDescriptorSetAccelerationStructures;
-  j[ "maxDescriptorSetUpdateAfterBindAccelerationStructures" ] = p.maxDescriptorSetUpdateAfterBindAccelerationStructures;
-  j[ "minAccelerationStructureScratchOffsetAlignment" ] = p.minAccelerationStructureScratchOffsetAlignment;
+void to_json( nlohmann::json &j, const PhysicalDeviceAccelerationStructurePropertiesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceAccelerationStructurePropertiesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceAccelerationStructurePropertiesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceAccelerationStructurePropertiesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceAccelerationStructurePropertiesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceAccelerationStructurePropertiesKHR" );
-  p.maxGeometryCount = j[ "maxGeometryCount" ];
-  p.maxInstanceCount = j[ "maxInstanceCount" ];
-  p.maxPrimitiveCount = j[ "maxPrimitiveCount" ];
-  p.maxPerStageDescriptorAccelerationStructures = j[ "maxPerStageDescriptorAccelerationStructures" ];
-  p.maxPerStageDescriptorUpdateAfterBindAccelerationStructures = j[ "maxPerStageDescriptorUpdateAfterBindAccelerationStructures" ];
-  p.maxDescriptorSetAccelerationStructures = j[ "maxDescriptorSetAccelerationStructures" ];
-  p.maxDescriptorSetUpdateAfterBindAccelerationStructures = j[ "maxDescriptorSetUpdateAfterBindAccelerationStructures" ];
-  p.minAccelerationStructureScratchOffsetAlignment = j[ "minAccelerationStructureScratchOffsetAlignment" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceAccelerationStructurePropertiesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceAccelerationStructurePropertiesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceAccelerationStructurePropertiesKHR temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceAccelerationStructurePropertiesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceAccelerationStructurePropertiesKHR &p );
 
 
 #endif

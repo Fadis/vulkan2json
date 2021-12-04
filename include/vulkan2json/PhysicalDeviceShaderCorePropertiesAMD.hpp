@@ -22,65 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESHADERCOREPROPERTIESAMD_HPP
 #define VULKAN2JSON_PHYSICALDEVICESHADERCOREPROPERTIESAMD_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceShaderCorePropertiesAMD &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "shaderEngineCount" ] = p.shaderEngineCount;
-  j[ "shaderArraysPerEngineCount" ] = p.shaderArraysPerEngineCount;
-  j[ "computeUnitsPerShaderArray" ] = p.computeUnitsPerShaderArray;
-  j[ "simdPerComputeUnit" ] = p.simdPerComputeUnit;
-  j[ "wavefrontsPerSimd" ] = p.wavefrontsPerSimd;
-  j[ "wavefrontSize" ] = p.wavefrontSize;
-  j[ "sgprsPerSimd" ] = p.sgprsPerSimd;
-  j[ "minSgprAllocation" ] = p.minSgprAllocation;
-  j[ "maxSgprAllocation" ] = p.maxSgprAllocation;
-  j[ "sgprAllocationGranularity" ] = p.sgprAllocationGranularity;
-  j[ "vgprsPerSimd" ] = p.vgprsPerSimd;
-  j[ "minVgprAllocation" ] = p.minVgprAllocation;
-  j[ "maxVgprAllocation" ] = p.maxVgprAllocation;
-  j[ "vgprAllocationGranularity" ] = p.vgprAllocationGranularity;
+void to_json( nlohmann::json &j, const PhysicalDeviceShaderCorePropertiesAMD &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceShaderCorePropertiesAMD &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderCorePropertiesAMD ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceShaderCorePropertiesAMD &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceShaderCorePropertiesAMD &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceShaderCorePropertiesAMD" );
-  p.shaderEngineCount = j[ "shaderEngineCount" ];
-  p.shaderArraysPerEngineCount = j[ "shaderArraysPerEngineCount" ];
-  p.computeUnitsPerShaderArray = j[ "computeUnitsPerShaderArray" ];
-  p.simdPerComputeUnit = j[ "simdPerComputeUnit" ];
-  p.wavefrontsPerSimd = j[ "wavefrontsPerSimd" ];
-  p.wavefrontSize = j[ "wavefrontSize" ];
-  p.sgprsPerSimd = j[ "sgprsPerSimd" ];
-  p.minSgprAllocation = j[ "minSgprAllocation" ];
-  p.maxSgprAllocation = j[ "maxSgprAllocation" ];
-  p.sgprAllocationGranularity = j[ "sgprAllocationGranularity" ];
-  p.vgprsPerSimd = j[ "vgprsPerSimd" ];
-  p.minVgprAllocation = j[ "minVgprAllocation" ];
-  p.maxVgprAllocation = j[ "maxVgprAllocation" ];
-  p.vgprAllocationGranularity = j[ "vgprAllocationGranularity" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceShaderCorePropertiesAMD &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceShaderCorePropertiesAMD &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderCorePropertiesAMD temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceShaderCorePropertiesAMD ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceShaderCorePropertiesAMD &p );
 
 
 #endif

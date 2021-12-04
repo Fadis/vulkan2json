@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESHADERINTEGERFUNCTIONS2FEATURESINTEL_HPP
 #define VULKAN2JSON_PHYSICALDEVICESHADERINTEGERFUNCTIONS2FEATURESINTEL_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "shaderIntegerFunctions2" ] = bool( p.shaderIntegerFunctions2 );
+void to_json( nlohmann::json &j, const PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL" );
-  p.shaderIntegerFunctions2 = j[ "shaderIntegerFunctions2" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL &p );
 
 
 #endif

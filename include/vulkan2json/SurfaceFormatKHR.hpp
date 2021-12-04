@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_SURFACEFORMATKHR_HPP
 #define VULKAN2JSON_SURFACEFORMATKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/Format.hpp>
-#include <vulkan2json/ColorSpaceKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SurfaceFormatKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "format" ] = p.format;
-  j[ "colorSpace" ] = p.colorSpace;
+void to_json( nlohmann::json &j, const SurfaceFormatKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSurfaceFormatKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SurfaceFormatKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSurfaceFormatKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SurfaceFormatKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SurfaceFormatKHR" );
-  p.format = Format ( j[ "format" ] );
-  p.colorSpace = ColorSpaceKHR ( j[ "colorSpace" ] );
+  void from_json( const nlohmann::json &j, SurfaceFormatKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSurfaceFormatKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: SurfaceFormatKHR temp;
-  from_json( j, temp );
-  p = VkSurfaceFormatKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkSurfaceFormatKHR &p );
 
 
 #endif

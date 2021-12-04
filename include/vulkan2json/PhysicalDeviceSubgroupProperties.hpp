@@ -22,47 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICESUBGROUPPROPERTIES_HPP
 #define VULKAN2JSON_PHYSICALDEVICESUBGROUPPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ShaderStageFlags.hpp>
-#include <vulkan2json/SubgroupFeatureFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceSubgroupProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "subgroupSize" ] = p.subgroupSize;
-  j[ "supportedStages" ] = p.supportedStages;
-  j[ "supportedOperations" ] = p.supportedOperations;
-  j[ "quadOperationsInAllStages" ] = bool( p.quadOperationsInAllStages );
+void to_json( nlohmann::json &j, const PhysicalDeviceSubgroupProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceSubgroupProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceSubgroupProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceSubgroupProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceSubgroupProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceSubgroupProperties" );
-  p.subgroupSize = j[ "subgroupSize" ];
-  p.supportedStages = ShaderStageFlags ( j[ "supportedStages" ] );
-  p.supportedOperations = SubgroupFeatureFlags ( j[ "supportedOperations" ] );
-  p.quadOperationsInAllStages = j[ "quadOperationsInAllStages" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceSubgroupProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceSubgroupProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceSubgroupProperties temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceSubgroupProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceSubgroupProperties &p );
 
 
 #endif

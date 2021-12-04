@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_VALIDATIONCHECKEXT_HPP
 #define VULKAN2JSON_VALIDATIONCHECKEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_VALIDATION_FLAGS_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ValidationCheckEXT &p ) {
-  if( ValidationCheckEXT :: eAll == p ) {
-    j = "All";
-    return;
-  }
+void to_json( nlohmann::json &j, const ValidationCheckEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkValidationCheckEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ValidationCheckEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkValidationCheckEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ValidationCheckEXT &p ) {
-  if( j.is_string() ) {
-    if( "All" == j.get< std::string >() ) {
-      p = ValidationCheckEXT :: eAll ;
-      return;
-    }
-    if( "eAll" == j.get< std::string >() ) {
-      p = ValidationCheckEXT :: eAll ;
-      return;
-    }
-    if( "VK_VALIDATION_CHECK_ALL_EXT" == j.get< std::string >() ) {
-      p = ValidationCheckEXT :: eAll ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ValidationCheckEXT" );
-  }
-  if( j.is_number() ) {
-    p = ValidationCheckEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ValidationCheckEXT" );
+void from_json( const nlohmann::json &j, ValidationCheckEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkValidationCheckEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: ValidationCheckEXT temp;
-  from_json( j, temp );
-  p = VkValidationCheckEXT ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkValidationCheckEXT &p );
 
 
 #endif

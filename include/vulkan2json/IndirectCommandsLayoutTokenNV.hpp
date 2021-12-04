@@ -22,62 +22,19 @@
 #ifndef VULKAN2JSON_INDIRECTCOMMANDSLAYOUTTOKENNV_HPP
 #define VULKAN2JSON_INDIRECTCOMMANDSLAYOUTTOKENNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/IndirectCommandsTokenTypeNV.hpp>
-#include <vulkan2json/ShaderStageFlags.hpp>
-#include <vulkan2json/IndirectStateFlagsNV.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const IndirectCommandsLayoutTokenNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "tokenType" ] = p.tokenType;
-  j[ "stream" ] = p.stream;
-  j[ "offset" ] = p.offset;
-  j[ "vertexBindingUnit" ] = p.vertexBindingUnit;
-  j[ "vertexDynamicStride" ] = bool( p.vertexDynamicStride );
-  j[ "pushconstantShaderStageFlags" ] = p.pushconstantShaderStageFlags;
-  j[ "pushconstantOffset" ] = p.pushconstantOffset;
-  j[ "pushconstantSize" ] = p.pushconstantSize;
-  j[ "indirectStateFlags" ] = p.indirectStateFlags;
-  j[ "indexTypeCount" ] = p.indexTypeCount;
-  j[ "pIndexTypes" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pIndexTypes ) );
-  j[ "pIndexTypeValues" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pIndexTypeValues ) );
+void to_json( nlohmann::json &j, const IndirectCommandsLayoutTokenNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkIndirectCommandsLayoutTokenNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: IndirectCommandsLayoutTokenNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkIndirectCommandsLayoutTokenNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, IndirectCommandsLayoutTokenNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for IndirectCommandsLayoutTokenNV" );
-  p.tokenType = IndirectCommandsTokenTypeNV ( j[ "tokenType" ] );
-  p.stream = j[ "stream" ];
-  p.offset = j[ "offset" ];
-  p.vertexBindingUnit = j[ "vertexBindingUnit" ];
-  p.vertexDynamicStride = j[ "vertexDynamicStride" ];
-  p.pushconstantShaderStageFlags = ShaderStageFlags ( j[ "pushconstantShaderStageFlags" ] );
-  p.pushconstantOffset = j[ "pushconstantOffset" ];
-  p.pushconstantSize = j[ "pushconstantSize" ];
-  p.indirectStateFlags = IndirectStateFlagsNV ( j[ "indirectStateFlags" ] );
-  p.indexTypeCount = j[ "indexTypeCount" ];
+  void from_json( const nlohmann::json &j, IndirectCommandsLayoutTokenNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkIndirectCommandsLayoutTokenNV &p ) {
-  VULKAN_HPP_NAMESPACE :: IndirectCommandsLayoutTokenNV temp;
-  from_json( j, temp );
-  p = VkIndirectCommandsLayoutTokenNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkIndirectCommandsLayoutTokenNV &p );
 
 
 #endif

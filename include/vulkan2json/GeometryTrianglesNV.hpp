@@ -22,55 +22,19 @@
 #ifndef VULKAN2JSON_GEOMETRYTRIANGLESNV_HPP
 #define VULKAN2JSON_GEOMETRYTRIANGLESNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/Format.hpp>
-#include <vulkan2json/IndexType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const GeometryTrianglesNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "vertexOffset" ] = p.vertexOffset;
-  j[ "vertexCount" ] = p.vertexCount;
-  j[ "vertexStride" ] = p.vertexStride;
-  j[ "vertexFormat" ] = p.vertexFormat;
-  j[ "indexOffset" ] = p.indexOffset;
-  j[ "indexCount" ] = p.indexCount;
-  j[ "indexType" ] = p.indexType;
-  j[ "transformOffset" ] = p.transformOffset;
+void to_json( nlohmann::json &j, const GeometryTrianglesNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkGeometryTrianglesNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: GeometryTrianglesNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkGeometryTrianglesNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, GeometryTrianglesNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for GeometryTrianglesNV" );
-  p.vertexOffset = j[ "vertexOffset" ];
-  p.vertexCount = j[ "vertexCount" ];
-  p.vertexStride = j[ "vertexStride" ];
-  p.vertexFormat = Format ( j[ "vertexFormat" ] );
-  p.indexOffset = j[ "indexOffset" ];
-  p.indexCount = j[ "indexCount" ];
-  p.indexType = IndexType ( j[ "indexType" ] );
-  p.transformOffset = j[ "transformOffset" ];
+  void from_json( const nlohmann::json &j, GeometryTrianglesNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkGeometryTrianglesNV &p ) {
-  VULKAN_HPP_NAMESPACE :: GeometryTrianglesNV temp;
-  from_json( j, temp );
-  p = VkGeometryTrianglesNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkGeometryTrianglesNV &p );
 
 
 #endif

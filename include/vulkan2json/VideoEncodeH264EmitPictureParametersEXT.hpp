@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_ENABLE_BETA_EXTENSIONS )
 namespace VULKAN_HPP_NAMESPACE {
@@ -51,9 +54,15 @@ inline void to_json( nlohmann::json &j, const VkVideoEncodeH264EmitPictureParame
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoEncodeH264EmitPictureParametersEXT &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoEncodeH264EmitPictureParametersEXT" );
-  p.spsId = j[ "spsId" ];
-  p.emitSpsEnable = j[ "emitSpsEnable" ];
-  p.ppsIdEntryCount = j[ "ppsIdEntryCount" ];
+  if( j.find( "spsId" ) != j.end() ) {
+    p.spsId = j[ "spsId" ];
+  }
+  if( j.find( "emitSpsEnable" ) != j.end() ) {
+    p.emitSpsEnable = j[ "emitSpsEnable" ];
+  }
+  if( j.find( "ppsIdEntryCount" ) != j.end() ) {
+    p.ppsIdEntryCount = j[ "ppsIdEntryCount" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoEncodeH264EmitPictureParametersEXT &p ) {

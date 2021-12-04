@@ -32,6 +32,16 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/VideoEncodeH264CapabilitiesFlagsEXT.hpp>
+#include <vulkan2json/VideoEncodeH264InputModeFlagsEXT.hpp>
+#include <vulkan2json/VideoEncodeH264OutputModeFlagsEXT.hpp>
+#include <vulkan2json/Extent2D.hpp>
+#include <vulkan2json/Extent2D.hpp>
+#include <vulkan2json/Extent2D.hpp>
+#include <vulkan2json/ExtensionProperties.hpp>
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/VideoEncodeH264CapabilitiesFlagsEXT.hpp>
 #include <vulkan2json/VideoEncodeH264InputModeFlagsEXT.hpp>
@@ -65,17 +75,39 @@ inline void to_json( nlohmann::json &j, const VkVideoEncodeH264CapabilitiesEXT &
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoEncodeH264CapabilitiesEXT &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoEncodeH264CapabilitiesEXT" );
-  p.flags = VideoEncodeH264CapabilitiesFlagsEXT ( j[ "flags" ] );
-  p.inputModeFlags = VideoEncodeH264InputModeFlagsEXT ( j[ "inputModeFlags" ] );
-  p.outputModeFlags = VideoEncodeH264OutputModeFlagsEXT ( j[ "outputModeFlags" ] );
-  p.minPictureSizeInMbs = Extent2D ( j[ "minPictureSizeInMbs" ] );
-  p.maxPictureSizeInMbs = Extent2D ( j[ "maxPictureSizeInMbs" ] );
-  p.inputImageDataAlignment = Extent2D ( j[ "inputImageDataAlignment" ] );
-  p.maxNumL0ReferenceForP = j[ "maxNumL0ReferenceForP" ];
-  p.maxNumL0ReferenceForB = j[ "maxNumL0ReferenceForB" ];
-  p.maxNumL1Reference = j[ "maxNumL1Reference" ];
-  p.qualityLevelCount = j[ "qualityLevelCount" ];
-  p.stdExtensionVersion = ExtensionProperties ( j[ "stdExtensionVersion" ] );
+  if( j.find( "flags" ) != j.end() ) {
+    p.flags = VideoEncodeH264CapabilitiesFlagsEXT ( j[ "flags" ] );
+  }
+  if( j.find( "inputModeFlags" ) != j.end() ) {
+    p.inputModeFlags = VideoEncodeH264InputModeFlagsEXT ( j[ "inputModeFlags" ] );
+  }
+  if( j.find( "outputModeFlags" ) != j.end() ) {
+    p.outputModeFlags = VideoEncodeH264OutputModeFlagsEXT ( j[ "outputModeFlags" ] );
+  }
+  if( j.find( "minPictureSizeInMbs" ) != j.end() ) {
+    p.minPictureSizeInMbs = Extent2D ( j[ "minPictureSizeInMbs" ] );
+  }
+  if( j.find( "maxPictureSizeInMbs" ) != j.end() ) {
+    p.maxPictureSizeInMbs = Extent2D ( j[ "maxPictureSizeInMbs" ] );
+  }
+  if( j.find( "inputImageDataAlignment" ) != j.end() ) {
+    p.inputImageDataAlignment = Extent2D ( j[ "inputImageDataAlignment" ] );
+  }
+  if( j.find( "maxNumL0ReferenceForP" ) != j.end() ) {
+    p.maxNumL0ReferenceForP = j[ "maxNumL0ReferenceForP" ];
+  }
+  if( j.find( "maxNumL0ReferenceForB" ) != j.end() ) {
+    p.maxNumL0ReferenceForB = j[ "maxNumL0ReferenceForB" ];
+  }
+  if( j.find( "maxNumL1Reference" ) != j.end() ) {
+    p.maxNumL1Reference = j[ "maxNumL1Reference" ];
+  }
+  if( j.find( "qualityLevelCount" ) != j.end() ) {
+    p.qualityLevelCount = j[ "qualityLevelCount" ];
+  }
+  if( j.find( "stdExtensionVersion" ) != j.end() ) {
+    p.stdExtensionVersion = ExtensionProperties ( j[ "stdExtensionVersion" ] );
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoEncodeH264CapabilitiesEXT &p ) {

@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICE4444FORMATSFEATURESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICE4444FORMATSFEATURESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDevice4444FormatsFeaturesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "formatA4R4G4B4" ] = bool( p.formatA4R4G4B4 );
-  j[ "formatA4B4G4R4" ] = bool( p.formatA4B4G4R4 );
+void to_json( nlohmann::json &j, const PhysicalDevice4444FormatsFeaturesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDevice4444FormatsFeaturesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDevice4444FormatsFeaturesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDevice4444FormatsFeaturesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDevice4444FormatsFeaturesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDevice4444FormatsFeaturesEXT" );
-  p.formatA4R4G4B4 = j[ "formatA4R4G4B4" ];
-  p.formatA4B4G4R4 = j[ "formatA4B4G4R4" ];
+  void from_json( const nlohmann::json &j, PhysicalDevice4444FormatsFeaturesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDevice4444FormatsFeaturesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDevice4444FormatsFeaturesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDevice4444FormatsFeaturesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDevice4444FormatsFeaturesEXT &p );
 
 
 #endif

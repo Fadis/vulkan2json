@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_RECT2D_HPP
 #define VULKAN2JSON_RECT2D_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/Offset2D.hpp>
-#include <vulkan2json/Extent2D.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const Rect2D &p ) {
-  j = nlohmann::json::object();
-  j[ "offset" ] = p.offset;
-  j[ "extent" ] = p.extent;
+void to_json( nlohmann::json &j, const Rect2D &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkRect2D &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: Rect2D ( p ) );
-}
+void to_json( nlohmann::json &j, const VkRect2D &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, Rect2D &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for Rect2D" );
-  p.offset = Offset2D ( j[ "offset" ] );
-  p.extent = Extent2D ( j[ "extent" ] );
+  void from_json( const nlohmann::json &j, Rect2D &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkRect2D &p ) {
-  VULKAN_HPP_NAMESPACE :: Rect2D temp;
-  from_json( j, temp );
-  p = VkRect2D ( temp );
-}
+void from_json( const nlohmann::json &j, VkRect2D &p );
 
 
 #endif

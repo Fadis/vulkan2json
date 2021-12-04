@@ -22,68 +22,17 @@
 #ifndef VULKAN2JSON_EXTERNALFENCEFEATUREFLAGS_HPP
 #define VULKAN2JSON_EXTERNALFENCEFEATUREFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ExternalFenceFeatureFlagBits &p ) {
-  if( ExternalFenceFeatureFlagBits :: eExportable == p ) {
-    j = "Exportable";
-    return;
-  }
+  void to_json( nlohmann::json &j, const ExternalFenceFeatureFlagBits &p );
+  void to_json( nlohmann::json &j, const ExternalFenceFeatureFlags &p );
+  void from_json( const nlohmann::json &j, ExternalFenceFeatureFlagBits &p );
+  void from_json( const nlohmann::json &j, ExternalFenceFeatureFlags &p );
 }
-inline void from_json( const nlohmann::json &j, ExternalFenceFeatureFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "Exportable" == j.get< std::string >() ) {
-      p = ExternalFenceFeatureFlagBits :: eExportable ;
-      return;
-    }
-    if( "eExportable" == j.get< std::string >() ) {
-      p = ExternalFenceFeatureFlagBits :: eExportable ;
-      return;
-    }
-    if( "VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT" == j.get< std::string >() ) {
-      p = ExternalFenceFeatureFlagBits :: eExportable ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ExternalFenceFeatureFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = ExternalFenceFeatureFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ExternalFenceFeatureFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const ExternalFenceFeatureFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( ExternalFenceFeatureFlagBits ) * 8u; ++n ) {
-    if( p & ExternalFenceFeatureFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, ExternalFenceFeatureFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, ExternalFenceFeatureFlags &p ) {
-  if( j.is_array() ) {
-    p = ExternalFenceFeatureFlags ( 0 );
-    for( auto &e:  j ) {
-      ExternalFenceFeatureFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for ExternalFenceFeatureFlags" );
-}
-}
-#endif
 
 
 #endif

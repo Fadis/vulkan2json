@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_USE_PLATFORM_WIN32_KHR )
 namespace VULKAN_HPP_NAMESPACE {
@@ -49,7 +52,9 @@ inline void to_json( nlohmann::json &j, const VkExportMemoryWin32HandleInfoKHR &
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, ExportMemoryWin32HandleInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ExportMemoryWin32HandleInfoKHR" );
-  p.dwAccess = j[ "dwAccess" ];
+  if( j.find( "dwAccess" ) != j.end() ) {
+    p.dwAccess = j[ "dwAccess" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkExportMemoryWin32HandleInfoKHR &p ) {

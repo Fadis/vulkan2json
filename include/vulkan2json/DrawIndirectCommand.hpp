@@ -22,42 +22,19 @@
 #ifndef VULKAN2JSON_DRAWINDIRECTCOMMAND_HPP
 #define VULKAN2JSON_DRAWINDIRECTCOMMAND_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DrawIndirectCommand &p ) {
-  j = nlohmann::json::object();
-  j[ "vertexCount" ] = p.vertexCount;
-  j[ "instanceCount" ] = p.instanceCount;
-  j[ "firstVertex" ] = p.firstVertex;
-  j[ "firstInstance" ] = p.firstInstance;
+void to_json( nlohmann::json &j, const DrawIndirectCommand &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDrawIndirectCommand &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DrawIndirectCommand ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDrawIndirectCommand &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DrawIndirectCommand &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DrawIndirectCommand" );
-  p.vertexCount = j[ "vertexCount" ];
-  p.instanceCount = j[ "instanceCount" ];
-  p.firstVertex = j[ "firstVertex" ];
-  p.firstInstance = j[ "firstInstance" ];
+  void from_json( const nlohmann::json &j, DrawIndirectCommand &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDrawIndirectCommand &p ) {
-  VULKAN_HPP_NAMESPACE :: DrawIndirectCommand temp;
-  from_json( j, temp );
-  p = VkDrawIndirectCommand ( temp );
-}
+void from_json( const nlohmann::json &j, VkDrawIndirectCommand &p );
 
 
 #endif

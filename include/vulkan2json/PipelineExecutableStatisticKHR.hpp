@@ -22,56 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINEEXECUTABLESTATISTICKHR_HPP
 #define VULKAN2JSON_PIPELINEEXECUTABLESTATISTICKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineExecutableStatisticFormatKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineExecutableStatisticKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "name" ] = std::string( p.name.begin(), std::find( p.name.begin(), p.name.end(), '\0' ) );
-  j[ "description" ] = std::string( p.description.begin(), std::find( p.description.begin(), p.description.end(), '\0' ) );
-  j[ "format" ] = p.format;
+void to_json( nlohmann::json &j, const PipelineExecutableStatisticKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineExecutableStatisticKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineExecutableStatisticKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineExecutableStatisticKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineExecutableStatisticKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineExecutableStatisticKHR" );
-  {
-    std::string s = j[ "name" ];
-    if( !p.name.empty() ) {
-      p.name[ p.name.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.name.size() - 1u ) ), p.name.begin() );
-    }
-  }
-  {
-    std::string s = j[ "description" ];
-    if( !p.description.empty() ) {
-      p.description[ p.description.size() - 1u ] = '\0';
-      std::copy( s.begin(), std::next( s.begin(), std::min( s.size(), p.description.size() - 1u ) ), p.description.begin() );
-    }
-  }
-  p.format = PipelineExecutableStatisticFormatKHR ( j[ "format" ] );
+  void from_json( const nlohmann::json &j, PipelineExecutableStatisticKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineExecutableStatisticKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineExecutableStatisticKHR temp;
-  from_json( j, temp );
-  p = VkPipelineExecutableStatisticKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineExecutableStatisticKHR &p );
 
 
 #endif

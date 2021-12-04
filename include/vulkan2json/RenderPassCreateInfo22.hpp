@@ -22,52 +22,19 @@
 #ifndef VULKAN2JSON_RENDERPASSCREATEINFO22_HPP
 #define VULKAN2JSON_RENDERPASSCREATEINFO22_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/RenderPassCreateFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const RenderPassCreateInfo2 &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "attachmentCount" ] = p.attachmentCount;
-  j[ "pAttachments" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pAttachments ) );
-  j[ "subpassCount" ] = p.subpassCount;
-  j[ "pSubpasses" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pSubpasses ) );
-  j[ "dependencyCount" ] = p.dependencyCount;
-  j[ "pDependencies" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pDependencies ) );
-  j[ "correlatedViewMaskCount" ] = p.correlatedViewMaskCount;
-  j[ "pCorrelatedViewMasks" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pCorrelatedViewMasks ) );
+void to_json( nlohmann::json &j, const RenderPassCreateInfo2 &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkRenderPassCreateInfo2 &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: RenderPassCreateInfo2 ( p ) );
-}
+void to_json( nlohmann::json &j, const VkRenderPassCreateInfo2 &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, RenderPassCreateInfo2 &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for RenderPassCreateInfo2" );
-  p.flags = RenderPassCreateFlags ( j[ "flags" ] );
-  p.attachmentCount = j[ "attachmentCount" ];
-  p.subpassCount = j[ "subpassCount" ];
-  p.dependencyCount = j[ "dependencyCount" ];
-  p.correlatedViewMaskCount = j[ "correlatedViewMaskCount" ];
+  void from_json( const nlohmann::json &j, RenderPassCreateInfo2 &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkRenderPassCreateInfo2 &p ) {
-  VULKAN_HPP_NAMESPACE :: RenderPassCreateInfo2 temp;
-  from_json( j, temp );
-  p = VkRenderPassCreateInfo2 ( temp );
-}
+void from_json( const nlohmann::json &j, VkRenderPassCreateInfo2 &p );
 
 
 #endif

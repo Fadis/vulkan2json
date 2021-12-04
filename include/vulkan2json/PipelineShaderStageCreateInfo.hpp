@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINESHADERSTAGECREATEINFO_HPP
 #define VULKAN2JSON_PIPELINESHADERSTAGECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineShaderStageCreateFlags.hpp>
-#include <vulkan2json/ShaderStageFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineShaderStageCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "stage" ] = p.stage;
-  if( p.pName ) j[ "pName" ] = std::string( p.pName );
-  j[ "pSpecializationInfo" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pSpecializationInfo ) );
+void to_json( nlohmann::json &j, const PipelineShaderStageCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineShaderStageCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineShaderStageCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineShaderStageCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineShaderStageCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineShaderStageCreateInfo" );
-  p.flags = PipelineShaderStageCreateFlags ( j[ "flags" ] );
-  p.stage = ShaderStageFlagBits ( j[ "stage" ] );
+  void from_json( const nlohmann::json &j, PipelineShaderStageCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineShaderStageCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineShaderStageCreateInfo temp;
-  from_json( j, temp );
-  p = VkPipelineShaderStageCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineShaderStageCreateInfo &p );
 
 
 #endif

@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const BufferUsageFlagBits &p ) {
   if( BufferUsageFlagBits :: eTransferSrc == p ) {
@@ -75,13 +76,13 @@ inline void to_json( nlohmann::json &j, const BufferUsageFlagBits &p ) {
     j = "ShaderDeviceAddress";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( BufferUsageFlagBits :: eVideoDecodeSrcKHR == p ) {
     j = "VideoDecodeSrcKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( BufferUsageFlagBits :: eVideoDecodeDstKHR == p ) {
     j = "VideoDecodeDstKHR";
     return;
@@ -111,13 +112,13 @@ inline void to_json( nlohmann::json &j, const BufferUsageFlagBits &p ) {
     j = "ShaderBindingTableKHR";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( BufferUsageFlagBits :: eVideoEncodeDstKHR == p ) {
     j = "VideoEncodeDstKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( BufferUsageFlagBits :: eVideoEncodeSrcKHR == p ) {
     j = "VideoEncodeSrcKHR";
     return;
@@ -254,37 +255,37 @@ inline void from_json( const nlohmann::json &j, BufferUsageFlagBits &p ) {
       p = BufferUsageFlagBits :: eShaderDeviceAddress ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeSrcKHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoDecodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeSrcKHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoDecodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_BUFFER_USAGE_VIDEO_DECODE_SRC_BIT_KHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoDecodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeDstKHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoDecodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeDstKHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoDecodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_BUFFER_USAGE_VIDEO_DECODE_DST_BIT_KHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoDecodeDstKHR ;
       return;
@@ -362,37 +363,37 @@ inline void from_json( const nlohmann::json &j, BufferUsageFlagBits &p ) {
       p = BufferUsageFlagBits :: eShaderBindingTableKHR ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeDstKHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoEncodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeDstKHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoEncodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_BUFFER_USAGE_VIDEO_ENCODE_DST_BIT_KHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoEncodeDstKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeSrcKHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoEncodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeSrcKHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoEncodeSrcKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_BUFFER_USAGE_VIDEO_ENCODE_SRC_BIT_KHR" == j.get< std::string >() ) {
       p = BufferUsageFlagBits :: eVideoEncodeSrcKHR ;
       return;
@@ -451,7 +452,6 @@ inline void from_json( const nlohmann::json &j, BufferUsageFlags &p ) {
   else throw vulkan2json::invalid_flag_value( "incompatible value for BufferUsageFlags" );
 }
 }
-#endif
 
 
 #endif

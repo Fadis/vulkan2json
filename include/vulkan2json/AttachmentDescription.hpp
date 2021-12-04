@@ -22,61 +22,19 @@
 #ifndef VULKAN2JSON_ATTACHMENTDESCRIPTION_HPP
 #define VULKAN2JSON_ATTACHMENTDESCRIPTION_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/AttachmentDescriptionFlags.hpp>
-#include <vulkan2json/Format.hpp>
-#include <vulkan2json/SampleCountFlags.hpp>
-#include <vulkan2json/AttachmentLoadOp.hpp>
-#include <vulkan2json/AttachmentStoreOp.hpp>
-#include <vulkan2json/AttachmentLoadOp.hpp>
-#include <vulkan2json/AttachmentStoreOp.hpp>
-#include <vulkan2json/ImageLayout.hpp>
-#include <vulkan2json/ImageLayout.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AttachmentDescription &p ) {
-  j = nlohmann::json::object();
-  j[ "flags" ] = p.flags;
-  j[ "format" ] = p.format;
-  j[ "samples" ] = p.samples;
-  j[ "loadOp" ] = p.loadOp;
-  j[ "storeOp" ] = p.storeOp;
-  j[ "stencilLoadOp" ] = p.stencilLoadOp;
-  j[ "stencilStoreOp" ] = p.stencilStoreOp;
-  j[ "initialLayout" ] = p.initialLayout;
-  j[ "finalLayout" ] = p.finalLayout;
+void to_json( nlohmann::json &j, const AttachmentDescription &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAttachmentDescription &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AttachmentDescription ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAttachmentDescription &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AttachmentDescription &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AttachmentDescription" );
-  p.flags = AttachmentDescriptionFlags ( j[ "flags" ] );
-  p.format = Format ( j[ "format" ] );
-  p.samples = SampleCountFlagBits ( j[ "samples" ] );
-  p.loadOp = AttachmentLoadOp ( j[ "loadOp" ] );
-  p.storeOp = AttachmentStoreOp ( j[ "storeOp" ] );
-  p.stencilLoadOp = AttachmentLoadOp ( j[ "stencilLoadOp" ] );
-  p.stencilStoreOp = AttachmentStoreOp ( j[ "stencilStoreOp" ] );
-  p.initialLayout = ImageLayout ( j[ "initialLayout" ] );
-  p.finalLayout = ImageLayout ( j[ "finalLayout" ] );
+  void from_json( const nlohmann::json &j, AttachmentDescription &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAttachmentDescription &p ) {
-  VULKAN_HPP_NAMESPACE :: AttachmentDescription temp;
-  from_json( j, temp );
-  p = VkAttachmentDescription ( temp );
-}
+void from_json( const nlohmann::json &j, VkAttachmentDescription &p );
 
 
 #endif

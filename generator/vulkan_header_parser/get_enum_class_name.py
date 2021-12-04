@@ -33,7 +33,7 @@ class parse_state_t(Enum):
   in_enum = 2
 
 def get_enum_class_name( filename ):
-  class_names = set()
+  class_names = {}
   multi_line_enum_rule = re.compile( "^\s*enum\s+class\s*$" );
   enum_rule = re.compile( "^\s*enum\s+class\s+(\S+)\s*$" );
   enum_name_rule = re.compile( "^\s*(\S+)\s*$" );
@@ -55,47 +55,49 @@ def get_enum_class_name( filename ):
           if re.match( flagbits_rule, enum_match.group( 1 ) ):
             names = vulkan_class_name( enum_match.group( 1 ) )
             names.remove_flagbits()
-            class_names.add( names.get_flagbits() )
-            class_names.add( names.get_flags() )
+            class_names[ names.get_flagbits() ] = names.get_flagbits()
+            class_names[ names.get_flags() ] = names.get_flags()
             parse_state = parse_state_t.in_enum
           else:
             names = vulkan_class_name( enum_match.group( 1 ) )
-            class_names.add( names.get_name() )
+            class_names[ names.get_name() ] = names.get_name()
             parse_state = parse_state_t.in_enum
           continue
         flags_match = re.match( flags_rule, line.rstrip() )
         if flags_match:
           names = vulkan_class_name( flags_match.group( 1 ) )
           names.remove_flagbits()
-          class_names.add( names.get_flagbits() )
-          class_names.add( names.get_flags() )
+          class_names[ names.get_flagbits() ] = names.get_flagbits()
+          class_names[ names.get_flags() ] = names.get_flags()
           parse_state = parse_state_t.in_enum
           continue
         using_match = re.match( using_rule, line.rstrip() )
         if using_match:
           if re.match( flagbits_rule, using_match.group( 1 ) ):
             names = vulkan_class_name( using_match.group( 1 ) )
+            base_name = vulkan_class_name( using_match.group( 2 ) )
             names.remove_flagbits()
-            class_names.add( names.get_flagbits() )
-            class_names.add( names.get_flags() )
+            class_names[ names.get_flagbits() ] = base_name.get_flagbits()
+            class_names[ names.get_flags() ] = base_name.get_flags()
           else:
             names = vulkan_class_name( using_match.group( 1 ) )
-            class_names.add( names.get_name() )
+            base_name = vulkan_class_name( using_match.group( 2 ) )
+            class_names[ names.get_name() ] = base_name.get_name()
             names.remove_flagbits()
           continue
       elif parse_state == parse_state_t.enum_name:
         enum_name_match = re.match( enum_name_rule, line.rstrip() )
         if enum_name_match:
           names = vulkan_class_name( enum_name_match.group( 1 ) )
-          class_names.add( names.get_name() )
+          class_names[ names.get_name() ] = names.get_name()
           continue
           parse_state = parse_state_t.in_enum
         flags_name_match = re.match( flags_name_rule, line.rstrip() )
         if flags_name_match:
           names = vulkan_class_name( flags_name_match.group( 1 ) )
           names.remove_flagbits()
-          class_names.add( names.get_flagbits() )
-          class_names.add( names.get_flags() )
+          class_names[ names.get_flagbits() ] = names.get_flagbits()
+          class_names[ names.get_flags() ] = names.get_flags()
           parse_state = parse_state_t.in_enum
           continue
       elif parse_state == parse_state_t.in_enum:

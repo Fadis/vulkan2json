@@ -22,47 +22,19 @@
 #ifndef VULKAN2JSON_DESCRIPTORUPDATETEMPLATEENTRY_HPP
 #define VULKAN2JSON_DESCRIPTORUPDATETEMPLATEENTRY_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/DescriptorType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DescriptorUpdateTemplateEntry &p ) {
-  j = nlohmann::json::object();
-  j[ "dstBinding" ] = p.dstBinding;
-  j[ "dstArrayElement" ] = p.dstArrayElement;
-  j[ "descriptorCount" ] = p.descriptorCount;
-  j[ "descriptorType" ] = p.descriptorType;
-  j[ "offset" ] = p.offset;
-  j[ "stride" ] = p.stride;
+void to_json( nlohmann::json &j, const DescriptorUpdateTemplateEntry &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDescriptorUpdateTemplateEntry &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DescriptorUpdateTemplateEntry ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDescriptorUpdateTemplateEntry &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DescriptorUpdateTemplateEntry &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DescriptorUpdateTemplateEntry" );
-  p.dstBinding = j[ "dstBinding" ];
-  p.dstArrayElement = j[ "dstArrayElement" ];
-  p.descriptorCount = j[ "descriptorCount" ];
-  p.descriptorType = DescriptorType ( j[ "descriptorType" ] );
-  p.offset = j[ "offset" ];
-  p.stride = j[ "stride" ];
+  void from_json( const nlohmann::json &j, DescriptorUpdateTemplateEntry &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDescriptorUpdateTemplateEntry &p ) {
-  VULKAN_HPP_NAMESPACE :: DescriptorUpdateTemplateEntry temp;
-  from_json( j, temp );
-  p = VkDescriptorUpdateTemplateEntry ( temp );
-}
+void from_json( const nlohmann::json &j, VkDescriptorUpdateTemplateEntry &p );
 
 
 #endif

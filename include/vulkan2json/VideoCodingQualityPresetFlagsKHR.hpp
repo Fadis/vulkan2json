@@ -32,22 +32,23 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_VIDEO_QUEUE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoCodingQualityPresetFlagBitsKHR &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoCodingQualityPresetFlagBitsKHR :: eDefault == p ) {
     j = "Default";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoCodingQualityPresetFlagBitsKHR :: eNormal == p ) {
     j = "Normal";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoCodingQualityPresetFlagBitsKHR :: ePower == p ) {
     j = "Power";
     return;
@@ -56,55 +57,55 @@ inline void to_json( nlohmann::json &j, const VideoCodingQualityPresetFlagBitsKH
 }
 inline void from_json( const nlohmann::json &j, VideoCodingQualityPresetFlagBitsKHR &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Default" == j.get< std::string >() ) {
       p = VideoCodingQualityPresetFlagBitsKHR :: eDefault ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eDefault" == j.get< std::string >() ) {
       p = VideoCodingQualityPresetFlagBitsKHR :: eDefault ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CODING_QUALITY_PRESET_DEFAULT_BIT_KHR" == j.get< std::string >() ) {
       p = VideoCodingQualityPresetFlagBitsKHR :: eDefault ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Normal" == j.get< std::string >() ) {
       p = VideoCodingQualityPresetFlagBitsKHR :: eNormal ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eNormal" == j.get< std::string >() ) {
       p = VideoCodingQualityPresetFlagBitsKHR :: eNormal ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CODING_QUALITY_PRESET_NORMAL_BIT_KHR" == j.get< std::string >() ) {
       p = VideoCodingQualityPresetFlagBitsKHR :: eNormal ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Power" == j.get< std::string >() ) {
       p = VideoCodingQualityPresetFlagBitsKHR :: ePower ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "ePower" == j.get< std::string >() ) {
       p = VideoCodingQualityPresetFlagBitsKHR :: ePower ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CODING_QUALITY_PRESET_POWER_BIT_KHR" == j.get< std::string >() ) {
       p = VideoCodingQualityPresetFlagBitsKHR :: ePower ;
       return;
@@ -139,7 +140,6 @@ inline void from_json( const nlohmann::json &j, VideoCodingQualityPresetFlagsKHR
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoCodingQualityPresetFlagsKHR" );
 }
 }
-#endif
 
 
 #endif

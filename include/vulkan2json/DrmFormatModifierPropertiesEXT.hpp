@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_DRMFORMATMODIFIERPROPERTIESEXT_HPP
 #define VULKAN2JSON_DRMFORMATMODIFIERPROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/FormatFeatureFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DrmFormatModifierPropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "drmFormatModifier" ] = p.drmFormatModifier;
-  j[ "drmFormatModifierPlaneCount" ] = p.drmFormatModifierPlaneCount;
-  j[ "drmFormatModifierTilingFeatures" ] = p.drmFormatModifierTilingFeatures;
+void to_json( nlohmann::json &j, const DrmFormatModifierPropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDrmFormatModifierPropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DrmFormatModifierPropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDrmFormatModifierPropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DrmFormatModifierPropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DrmFormatModifierPropertiesEXT" );
-  p.drmFormatModifier = j[ "drmFormatModifier" ];
-  p.drmFormatModifierPlaneCount = j[ "drmFormatModifierPlaneCount" ];
-  p.drmFormatModifierTilingFeatures = FormatFeatureFlags ( j[ "drmFormatModifierTilingFeatures" ] );
+  void from_json( const nlohmann::json &j, DrmFormatModifierPropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDrmFormatModifierPropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DrmFormatModifierPropertiesEXT temp;
-  from_json( j, temp );
-  p = VkDrmFormatModifierPropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkDrmFormatModifierPropertiesEXT &p );
 
 
 #endif

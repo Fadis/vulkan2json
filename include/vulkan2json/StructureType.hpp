@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const StructureType &p ) {
   if( StructureType :: eApplicationInfo == p ) {
@@ -711,31 +712,31 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "DisplayPresentInfoKHR";
     return;
   }
-#if defined(VK_USE_PLATFORM_XLIB_KHR)
+#if defined( VK_USE_PLATFORM_XLIB_KHR )
   if( StructureType :: eXlibSurfaceCreateInfoKHR == p ) {
     j = "XlibSurfaceCreateInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_XCB_KHR)
+#if defined( VK_USE_PLATFORM_XCB_KHR )
   if( StructureType :: eXcbSurfaceCreateInfoKHR == p ) {
     j = "XcbSurfaceCreateInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WAYLAND_KHR)
+#if defined( VK_USE_PLATFORM_WAYLAND_KHR )
   if( StructureType :: eWaylandSurfaceCreateInfoKHR == p ) {
     j = "WaylandSurfaceCreateInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
   if( StructureType :: eAndroidSurfaceCreateInfoKHR == p ) {
     j = "AndroidSurfaceCreateInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eWin32SurfaceCreateInfoKHR == p ) {
     j = "Win32SurfaceCreateInfoKHR";
     return;
@@ -757,103 +758,103 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "DebugMarkerMarkerInfoEXT";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoProfileKHR == p ) {
     j = "VideoProfileKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoCapabilitiesKHR == p ) {
     j = "VideoCapabilitiesKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoPictureResourceKHR == p ) {
     j = "VideoPictureResourceKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoGetMemoryPropertiesKHR == p ) {
     j = "VideoGetMemoryPropertiesKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoBindMemoryKHR == p ) {
     j = "VideoBindMemoryKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoSessionCreateInfoKHR == p ) {
     j = "VideoSessionCreateInfoKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoSessionParametersCreateInfoKHR == p ) {
     j = "VideoSessionParametersCreateInfoKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoSessionParametersUpdateInfoKHR == p ) {
     j = "VideoSessionParametersUpdateInfoKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoBeginCodingInfoKHR == p ) {
     j = "VideoBeginCodingInfoKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEndCodingInfoKHR == p ) {
     j = "VideoEndCodingInfoKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoCodingControlInfoKHR == p ) {
     j = "VideoCodingControlInfoKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoReferenceSlotKHR == p ) {
     j = "VideoReferenceSlotKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoQueueFamilyProperties2KHR == p ) {
     j = "VideoQueueFamilyProperties2KHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoProfilesKHR == p ) {
     j = "VideoProfilesKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: ePhysicalDeviceVideoFormatInfoKHR == p ) {
     j = "PhysicalDeviceVideoFormatInfoKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoFormatPropertiesKHR == p ) {
     j = "VideoFormatPropertiesKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeInfoKHR == p ) {
     j = "VideoDecodeInfoKHR";
     return;
@@ -899,91 +900,91 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "ImageViewAddressPropertiesNVX";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeH264CapabilitiesEXT == p ) {
     j = "VideoEncodeH264CapabilitiesEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeH264SessionCreateInfoEXT == p ) {
     j = "VideoEncodeH264SessionCreateInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeH264SessionParametersAddInfoEXT == p ) {
     j = "VideoEncodeH264SessionParametersAddInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeH264VclFrameInfoEXT == p ) {
     j = "VideoEncodeH264VclFrameInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeH264DpbSlotInfoEXT == p ) {
     j = "VideoEncodeH264DpbSlotInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeH264NaluSliceEXT == p ) {
     j = "VideoEncodeH264NaluSliceEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeH264EmitPictureParametersEXT == p ) {
     j = "VideoEncodeH264EmitPictureParametersEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeH264ProfileEXT == p ) {
     j = "VideoEncodeH264ProfileEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH264CapabilitiesEXT == p ) {
     j = "VideoDecodeH264CapabilitiesEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH264SessionCreateInfoEXT == p ) {
     j = "VideoDecodeH264SessionCreateInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH264PictureInfoEXT == p ) {
     j = "VideoDecodeH264PictureInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH264MvcEXT == p ) {
     j = "VideoDecodeH264MvcEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH264ProfileEXT == p ) {
     j = "VideoDecodeH264ProfileEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH264SessionParametersAddInfoEXT == p ) {
     j = "VideoDecodeH264SessionParametersAddInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH264DpbSlotInfoEXT == p ) {
     j = "VideoDecodeH264DpbSlotInfoEXT";
     return;
@@ -993,7 +994,7 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "TextureLodGatherFormatPropertiesAMD";
     return;
   }
-#if defined(VK_USE_PLATFORM_GGP)
+#if defined( VK_USE_PLATFORM_GGP )
   if( StructureType :: eStreamDescriptorSurfaceCreateInfoGGP == p ) {
     j = "StreamDescriptorSurfaceCreateInfoGGP";
     return;
@@ -1011,19 +1012,19 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "ExportMemoryAllocateInfoNV";
     return;
   }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eImportMemoryWin32HandleInfoNV == p ) {
     j = "ImportMemoryWin32HandleInfoNV";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eExportMemoryWin32HandleInfoNV == p ) {
     j = "ExportMemoryWin32HandleInfoNV";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eWin32KeyedMutexAcquireReleaseInfoNV == p ) {
     j = "Win32KeyedMutexAcquireReleaseInfoNV";
     return;
@@ -1033,7 +1034,7 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "ValidationFlagsEXT";
     return;
   }
-#if defined(VK_USE_PLATFORM_VI_NN)
+#if defined( VK_USE_PLATFORM_VI_NN )
   if( StructureType :: eViSurfaceCreateInfoNN == p ) {
     j = "ViSurfaceCreateInfoNN";
     return;
@@ -1047,25 +1048,25 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "PhysicalDeviceAstcDecodeFeaturesEXT";
     return;
   }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eImportMemoryWin32HandleInfoKHR == p ) {
     j = "ImportMemoryWin32HandleInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eExportMemoryWin32HandleInfoKHR == p ) {
     j = "ExportMemoryWin32HandleInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eMemoryWin32HandlePropertiesKHR == p ) {
     j = "MemoryWin32HandlePropertiesKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eMemoryGetWin32HandleInfoKHR == p ) {
     j = "MemoryGetWin32HandleInfoKHR";
     return;
@@ -1083,31 +1084,31 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "MemoryGetFdInfoKHR";
     return;
   }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eWin32KeyedMutexAcquireReleaseInfoKHR == p ) {
     j = "Win32KeyedMutexAcquireReleaseInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eImportSemaphoreWin32HandleInfoKHR == p ) {
     j = "ImportSemaphoreWin32HandleInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eExportSemaphoreWin32HandleInfoKHR == p ) {
     j = "ExportSemaphoreWin32HandleInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eD3D12FenceSubmitInfoKHR == p ) {
     j = "D3D12FenceSubmitInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eSemaphoreGetWin32HandleInfoKHR == p ) {
     j = "SemaphoreGetWin32HandleInfoKHR";
     return;
@@ -1185,19 +1186,19 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "SharedPresentSurfaceCapabilitiesKHR";
     return;
   }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eImportFenceWin32HandleInfoKHR == p ) {
     j = "ImportFenceWin32HandleInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eExportFenceWin32HandleInfoKHR == p ) {
     j = "ExportFenceWin32HandleInfoKHR";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eFenceGetWin32HandleInfoKHR == p ) {
     j = "FenceGetWin32HandleInfoKHR";
     return;
@@ -1271,13 +1272,13 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "DisplayPlaneCapabilities2KHR";
     return;
   }
-#if defined(VK_USE_PLATFORM_IOS_MVK)
+#if defined( VK_USE_PLATFORM_IOS_MVK )
   if( StructureType :: eIosSurfaceCreateInfoMVK == p ) {
     j = "IosSurfaceCreateInfoMVK";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_MACOS_MVK)
+#if defined( VK_USE_PLATFORM_MACOS_MVK )
   if( StructureType :: eMacosSurfaceCreateInfoMVK == p ) {
     j = "MacosSurfaceCreateInfoMVK";
     return;
@@ -1303,37 +1304,37 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "DebugUtilsMessengerCreateInfoEXT";
     return;
   }
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
   if( StructureType :: eAndroidHardwareBufferUsageANDROID == p ) {
     j = "AndroidHardwareBufferUsageANDROID";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
   if( StructureType :: eAndroidHardwareBufferPropertiesANDROID == p ) {
     j = "AndroidHardwareBufferPropertiesANDROID";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
   if( StructureType :: eAndroidHardwareBufferFormatPropertiesANDROID == p ) {
     j = "AndroidHardwareBufferFormatPropertiesANDROID";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
   if( StructureType :: eImportAndroidHardwareBufferInfoANDROID == p ) {
     j = "ImportAndroidHardwareBufferInfoANDROID";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
   if( StructureType :: eMemoryGetAndroidHardwareBufferInfoANDROID == p ) {
     j = "MemoryGetAndroidHardwareBufferInfoANDROID";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
   if( StructureType :: eExternalFormatANDROID == p ) {
     j = "ExternalFormatANDROID";
     return;
@@ -1475,13 +1476,13 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "ShaderModuleValidationCacheCreateInfoEXT";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: ePhysicalDevicePortabilitySubsetFeaturesKHR == p ) {
     j = "PhysicalDevicePortabilitySubsetFeaturesKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: ePhysicalDevicePortabilitySubsetPropertiesKHR == p ) {
     j = "PhysicalDevicePortabilitySubsetPropertiesKHR";
     return;
@@ -1567,37 +1568,37 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "PhysicalDeviceShaderCorePropertiesAMD";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH265CapabilitiesEXT == p ) {
     j = "VideoDecodeH265CapabilitiesEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH265SessionCreateInfoEXT == p ) {
     j = "VideoDecodeH265SessionCreateInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH265SessionParametersAddInfoEXT == p ) {
     j = "VideoDecodeH265SessionParametersAddInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH265ProfileEXT == p ) {
     j = "VideoDecodeH265ProfileEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH265PictureInfoEXT == p ) {
     j = "VideoDecodeH265PictureInfoEXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoDecodeH265DpbSlotInfoEXT == p ) {
     j = "VideoDecodeH265DpbSlotInfoEXT";
     return;
@@ -1607,7 +1608,7 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "DeviceMemoryOverallocationCreateInfoAMD";
     return;
   }
-#if defined(VK_USE_PLATFORM_GGP)
+#if defined( VK_USE_PLATFORM_GGP )
   if( StructureType :: ePresentFrameTokenGGP == p ) {
     j = "PresentFrameTokenGGP";
     return;
@@ -1673,13 +1674,13 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "SwapchainDisplayNativeHdrCreateInfoAMD";
     return;
   }
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
   if( StructureType :: eImagepipeSurfaceCreateInfoFUCHSIA == p ) {
     j = "ImagepipeSurfaceCreateInfoFUCHSIA";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_METAL_EXT)
+#if defined( VK_USE_PLATFORM_METAL_EXT )
   if( StructureType :: eMetalSurfaceCreateInfoEXT == p ) {
     j = "MetalSurfaceCreateInfoEXT";
     return;
@@ -1769,19 +1770,19 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "PhysicalDeviceProvokingVertexPropertiesEXT";
     return;
   }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eSurfaceFullScreenExclusiveInfoEXT == p ) {
     j = "SurfaceFullScreenExclusiveInfoEXT";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eSurfaceCapabilitiesFullScreenExclusiveEXT == p ) {
     j = "SurfaceCapabilitiesFullScreenExclusiveEXT";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
   if( StructureType :: eSurfaceFullScreenExclusiveWin32InfoEXT == p ) {
     j = "SurfaceFullScreenExclusiveWin32InfoEXT";
     return;
@@ -1903,13 +1904,13 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "PrivateDataSlotCreateInfoEXT";
     return;
   }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeInfoKHR == p ) {
     j = "VideoEncodeInfoKHR";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( StructureType :: eVideoEncodeRateControlInfoKHR == p ) {
     j = "VideoEncodeRateControlInfoKHR";
     return;
@@ -2023,7 +2024,7 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "PhysicalDevice4444FormatsFeaturesEXT";
     return;
   }
-#if defined(VK_USE_PLATFORM_DIRECTFB_EXT)
+#if defined( VK_USE_PLATFORM_DIRECTFB_EXT )
   if( StructureType :: eDirectfbSurfaceCreateInfoEXT == p ) {
     j = "DirectfbSurfaceCreateInfoEXT";
     return;
@@ -2045,31 +2046,31 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "PhysicalDeviceDrmPropertiesEXT";
     return;
   }
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
   if( StructureType :: eImportMemoryZirconHandleInfoFUCHSIA == p ) {
     j = "ImportMemoryZirconHandleInfoFUCHSIA";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
   if( StructureType :: eMemoryZirconHandlePropertiesFUCHSIA == p ) {
     j = "MemoryZirconHandlePropertiesFUCHSIA";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
   if( StructureType :: eMemoryGetZirconHandleInfoFUCHSIA == p ) {
     j = "MemoryGetZirconHandleInfoFUCHSIA";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
   if( StructureType :: eImportSemaphoreZirconHandleInfoFUCHSIA == p ) {
     j = "ImportSemaphoreZirconHandleInfoFUCHSIA";
     return;
   }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
   if( StructureType :: eSemaphoreGetZirconHandleInfoFUCHSIA == p ) {
     j = "SemaphoreGetZirconHandleInfoFUCHSIA";
     return;
@@ -2087,7 +2088,7 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "PhysicalDeviceSubpassShadingPropertiesHUAWEI";
     return;
   }
-#if defined(VK_USE_PLATFORM_SCREEN_QNX)
+#if defined( VK_USE_PLATFORM_SCREEN_QNX )
   if( StructureType :: eScreenSurfaceCreateInfoQNX == p ) {
     j = "ScreenSurfaceCreateInfoQNX";
     return;
@@ -4537,91 +4538,91 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eDisplayPresentInfoKHR ;
       return;
     }
-#if defined(VK_USE_PLATFORM_XLIB_KHR)
+#if defined( VK_USE_PLATFORM_XLIB_KHR )
     if( "XlibSurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eXlibSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_XLIB_KHR)
+#if defined( VK_USE_PLATFORM_XLIB_KHR )
     if( "eXlibSurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eXlibSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_XLIB_KHR)
+#if defined( VK_USE_PLATFORM_XLIB_KHR )
     if( "VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eXlibSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_XCB_KHR)
+#if defined( VK_USE_PLATFORM_XCB_KHR )
     if( "XcbSurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eXcbSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_XCB_KHR)
+#if defined( VK_USE_PLATFORM_XCB_KHR )
     if( "eXcbSurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eXcbSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_XCB_KHR)
+#if defined( VK_USE_PLATFORM_XCB_KHR )
     if( "VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eXcbSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WAYLAND_KHR)
+#if defined( VK_USE_PLATFORM_WAYLAND_KHR )
     if( "WaylandSurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eWaylandSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WAYLAND_KHR)
+#if defined( VK_USE_PLATFORM_WAYLAND_KHR )
     if( "eWaylandSurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eWaylandSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WAYLAND_KHR)
+#if defined( VK_USE_PLATFORM_WAYLAND_KHR )
     if( "VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eWaylandSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "AndroidSurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eAndroidSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "eAndroidSurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eAndroidSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eAndroidSurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "Win32SurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eWin32SurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eWin32SurfaceCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eWin32SurfaceCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eWin32SurfaceCreateInfoKHR ;
       return;
@@ -4675,307 +4676,307 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eDebugMarkerMarkerInfoEXT ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoProfileKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoProfileKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoProfileKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoProfileKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_PROFILE_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoProfileKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoCapabilitiesKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoCapabilitiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoCapabilitiesKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoCapabilitiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_CAPABILITIES_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoCapabilitiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoPictureResourceKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoPictureResourceKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoPictureResourceKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoPictureResourceKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_PICTURE_RESOURCE_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoPictureResourceKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoGetMemoryPropertiesKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoGetMemoryPropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoGetMemoryPropertiesKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoGetMemoryPropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_GET_MEMORY_PROPERTIES_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoGetMemoryPropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoBindMemoryKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoBindMemoryKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoBindMemoryKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoBindMemoryKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_BIND_MEMORY_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoBindMemoryKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoSessionCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoSessionCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoSessionCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoSessionCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_SESSION_CREATE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoSessionCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoSessionParametersCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoSessionParametersCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoSessionParametersCreateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoSessionParametersCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoSessionParametersCreateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoSessionParametersUpdateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoSessionParametersUpdateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoSessionParametersUpdateInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoSessionParametersUpdateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoSessionParametersUpdateInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoBeginCodingInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoBeginCodingInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoBeginCodingInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoBeginCodingInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_BEGIN_CODING_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoBeginCodingInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEndCodingInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoEndCodingInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEndCodingInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoEndCodingInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_END_CODING_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoEndCodingInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoCodingControlInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoCodingControlInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoCodingControlInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoCodingControlInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_CODING_CONTROL_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoCodingControlInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoReferenceSlotKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoReferenceSlotKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoReferenceSlotKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoReferenceSlotKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_REFERENCE_SLOT_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoReferenceSlotKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoQueueFamilyProperties2KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoQueueFamilyProperties2KHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoQueueFamilyProperties2KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoQueueFamilyProperties2KHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_QUEUE_FAMILY_PROPERTIES_2_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoQueueFamilyProperties2KHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoProfilesKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoProfilesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoProfilesKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoProfilesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_PROFILES_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoProfilesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "PhysicalDeviceVideoFormatInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDeviceVideoFormatInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "ePhysicalDeviceVideoFormatInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDeviceVideoFormatInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDeviceVideoFormatInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoFormatPropertiesKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoFormatPropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoFormatPropertiesKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoFormatPropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_FORMAT_PROPERTIES_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoFormatPropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeInfoKHR ;
       return;
@@ -5101,271 +5102,271 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eImageViewAddressPropertiesNVX ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeH264CapabilitiesEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264CapabilitiesEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeH264CapabilitiesEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264CapabilitiesEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_CAPABILITIES_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264CapabilitiesEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeH264SessionCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264SessionCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeH264SessionCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264SessionCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_SESSION_CREATE_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264SessionCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeH264SessionParametersAddInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264SessionParametersAddInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeH264SessionParametersAddInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264SessionParametersAddInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264SessionParametersAddInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeH264VclFrameInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264VclFrameInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeH264VclFrameInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264VclFrameInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264VclFrameInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeH264DpbSlotInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264DpbSlotInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeH264DpbSlotInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264DpbSlotInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264DpbSlotInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeH264NaluSliceEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264NaluSliceEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeH264NaluSliceEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264NaluSliceEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_NALU_SLICE_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264NaluSliceEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeH264EmitPictureParametersEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264EmitPictureParametersEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeH264EmitPictureParametersEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264EmitPictureParametersEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264EmitPictureParametersEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeH264ProfileEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264ProfileEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeH264ProfileEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264ProfileEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_PROFILE_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeH264ProfileEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH264CapabilitiesEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264CapabilitiesEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH264CapabilitiesEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264CapabilitiesEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_CAPABILITIES_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264CapabilitiesEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH264SessionCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264SessionCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH264SessionCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264SessionCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_SESSION_CREATE_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264SessionCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH264PictureInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264PictureInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH264PictureInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264PictureInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_PICTURE_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264PictureInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH264MvcEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264MvcEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH264MvcEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264MvcEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_MVC_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264MvcEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH264ProfileEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264ProfileEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH264ProfileEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264ProfileEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_PROFILE_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264ProfileEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH264SessionParametersAddInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264SessionParametersAddInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH264SessionParametersAddInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264SessionParametersAddInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264SessionParametersAddInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH264DpbSlotInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264DpbSlotInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH264DpbSlotInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264DpbSlotInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH264DpbSlotInfoEXT ;
       return;
@@ -5383,19 +5384,19 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eTextureLodGatherFormatPropertiesAMD ;
       return;
     }
-#if defined(VK_USE_PLATFORM_GGP)
+#if defined( VK_USE_PLATFORM_GGP )
     if( "StreamDescriptorSurfaceCreateInfoGGP" == j.get< std::string >() ) {
       p = StructureType :: eStreamDescriptorSurfaceCreateInfoGGP ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_GGP)
+#if defined( VK_USE_PLATFORM_GGP )
     if( "eStreamDescriptorSurfaceCreateInfoGGP" == j.get< std::string >() ) {
       p = StructureType :: eStreamDescriptorSurfaceCreateInfoGGP ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_GGP)
+#if defined( VK_USE_PLATFORM_GGP )
     if( "VK_STRUCTURE_TYPE_STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP" == j.get< std::string >() ) {
       p = StructureType :: eStreamDescriptorSurfaceCreateInfoGGP ;
       return;
@@ -5437,55 +5438,55 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eExportMemoryAllocateInfoNV ;
       return;
     }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "ImportMemoryWin32HandleInfoNV" == j.get< std::string >() ) {
       p = StructureType :: eImportMemoryWin32HandleInfoNV ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eImportMemoryWin32HandleInfoNV" == j.get< std::string >() ) {
       p = StructureType :: eImportMemoryWin32HandleInfoNV ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_IMPORT_MEMORY_WIN32_HANDLE_INFO_NV" == j.get< std::string >() ) {
       p = StructureType :: eImportMemoryWin32HandleInfoNV ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "ExportMemoryWin32HandleInfoNV" == j.get< std::string >() ) {
       p = StructureType :: eExportMemoryWin32HandleInfoNV ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eExportMemoryWin32HandleInfoNV" == j.get< std::string >() ) {
       p = StructureType :: eExportMemoryWin32HandleInfoNV ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_EXPORT_MEMORY_WIN32_HANDLE_INFO_NV" == j.get< std::string >() ) {
       p = StructureType :: eExportMemoryWin32HandleInfoNV ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "Win32KeyedMutexAcquireReleaseInfoNV" == j.get< std::string >() ) {
       p = StructureType :: eWin32KeyedMutexAcquireReleaseInfoNV ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eWin32KeyedMutexAcquireReleaseInfoNV" == j.get< std::string >() ) {
       p = StructureType :: eWin32KeyedMutexAcquireReleaseInfoNV ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV" == j.get< std::string >() ) {
       p = StructureType :: eWin32KeyedMutexAcquireReleaseInfoNV ;
       return;
@@ -5503,19 +5504,19 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eValidationFlagsEXT ;
       return;
     }
-#if defined(VK_USE_PLATFORM_VI_NN)
+#if defined( VK_USE_PLATFORM_VI_NN )
     if( "ViSurfaceCreateInfoNN" == j.get< std::string >() ) {
       p = StructureType :: eViSurfaceCreateInfoNN ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_VI_NN)
+#if defined( VK_USE_PLATFORM_VI_NN )
     if( "eViSurfaceCreateInfoNN" == j.get< std::string >() ) {
       p = StructureType :: eViSurfaceCreateInfoNN ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_VI_NN)
+#if defined( VK_USE_PLATFORM_VI_NN )
     if( "VK_STRUCTURE_TYPE_VI_SURFACE_CREATE_INFO_NN" == j.get< std::string >() ) {
       p = StructureType :: eViSurfaceCreateInfoNN ;
       return;
@@ -5545,73 +5546,73 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: ePhysicalDeviceAstcDecodeFeaturesEXT ;
       return;
     }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "ImportMemoryWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eImportMemoryWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eImportMemoryWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eImportMemoryWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eImportMemoryWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "ExportMemoryWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eExportMemoryWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eExportMemoryWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eExportMemoryWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eExportMemoryWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "MemoryWin32HandlePropertiesKHR" == j.get< std::string >() ) {
       p = StructureType :: eMemoryWin32HandlePropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eMemoryWin32HandlePropertiesKHR" == j.get< std::string >() ) {
       p = StructureType :: eMemoryWin32HandlePropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_MEMORY_WIN32_HANDLE_PROPERTIES_KHR" == j.get< std::string >() ) {
       p = StructureType :: eMemoryWin32HandlePropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "MemoryGetWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eMemoryGetWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eMemoryGetWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eMemoryGetWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_MEMORY_GET_WIN32_HANDLE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eMemoryGetWin32HandleInfoKHR ;
       return;
@@ -5653,91 +5654,91 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eMemoryGetFdInfoKHR ;
       return;
     }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "Win32KeyedMutexAcquireReleaseInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eWin32KeyedMutexAcquireReleaseInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eWin32KeyedMutexAcquireReleaseInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eWin32KeyedMutexAcquireReleaseInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eWin32KeyedMutexAcquireReleaseInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "ImportSemaphoreWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eImportSemaphoreWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eImportSemaphoreWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eImportSemaphoreWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eImportSemaphoreWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "ExportSemaphoreWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eExportSemaphoreWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eExportSemaphoreWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eExportSemaphoreWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eExportSemaphoreWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "D3D12FenceSubmitInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eD3D12FenceSubmitInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eD3D12FenceSubmitInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eD3D12FenceSubmitInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_D3D12_FENCE_SUBMIT_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eD3D12FenceSubmitInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "SemaphoreGetWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eSemaphoreGetWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eSemaphoreGetWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eSemaphoreGetWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eSemaphoreGetWin32HandleInfoKHR ;
       return;
@@ -5959,55 +5960,55 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eSharedPresentSurfaceCapabilitiesKHR ;
       return;
     }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "ImportFenceWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eImportFenceWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eImportFenceWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eImportFenceWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_IMPORT_FENCE_WIN32_HANDLE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eImportFenceWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "ExportFenceWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eExportFenceWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eExportFenceWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eExportFenceWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_EXPORT_FENCE_WIN32_HANDLE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eExportFenceWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "FenceGetWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eFenceGetWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eFenceGetWin32HandleInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eFenceGetWin32HandleInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_FENCE_GET_WIN32_HANDLE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eFenceGetWin32HandleInfoKHR ;
       return;
@@ -6217,37 +6218,37 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eDisplayPlaneCapabilities2KHR ;
       return;
     }
-#if defined(VK_USE_PLATFORM_IOS_MVK)
+#if defined( VK_USE_PLATFORM_IOS_MVK )
     if( "IosSurfaceCreateInfoMVK" == j.get< std::string >() ) {
       p = StructureType :: eIosSurfaceCreateInfoMVK ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_IOS_MVK)
+#if defined( VK_USE_PLATFORM_IOS_MVK )
     if( "eIosSurfaceCreateInfoMVK" == j.get< std::string >() ) {
       p = StructureType :: eIosSurfaceCreateInfoMVK ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_IOS_MVK)
+#if defined( VK_USE_PLATFORM_IOS_MVK )
     if( "VK_STRUCTURE_TYPE_IOS_SURFACE_CREATE_INFO_MVK" == j.get< std::string >() ) {
       p = StructureType :: eIosSurfaceCreateInfoMVK ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_MACOS_MVK)
+#if defined( VK_USE_PLATFORM_MACOS_MVK )
     if( "MacosSurfaceCreateInfoMVK" == j.get< std::string >() ) {
       p = StructureType :: eMacosSurfaceCreateInfoMVK ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_MACOS_MVK)
+#if defined( VK_USE_PLATFORM_MACOS_MVK )
     if( "eMacosSurfaceCreateInfoMVK" == j.get< std::string >() ) {
       p = StructureType :: eMacosSurfaceCreateInfoMVK ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_MACOS_MVK)
+#if defined( VK_USE_PLATFORM_MACOS_MVK )
     if( "VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK" == j.get< std::string >() ) {
       p = StructureType :: eMacosSurfaceCreateInfoMVK ;
       return;
@@ -6313,109 +6314,109 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eDebugUtilsMessengerCreateInfoEXT ;
       return;
     }
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "AndroidHardwareBufferUsageANDROID" == j.get< std::string >() ) {
       p = StructureType :: eAndroidHardwareBufferUsageANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "eAndroidHardwareBufferUsageANDROID" == j.get< std::string >() ) {
       p = StructureType :: eAndroidHardwareBufferUsageANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_USAGE_ANDROID" == j.get< std::string >() ) {
       p = StructureType :: eAndroidHardwareBufferUsageANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "AndroidHardwareBufferPropertiesANDROID" == j.get< std::string >() ) {
       p = StructureType :: eAndroidHardwareBufferPropertiesANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "eAndroidHardwareBufferPropertiesANDROID" == j.get< std::string >() ) {
       p = StructureType :: eAndroidHardwareBufferPropertiesANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID" == j.get< std::string >() ) {
       p = StructureType :: eAndroidHardwareBufferPropertiesANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "AndroidHardwareBufferFormatPropertiesANDROID" == j.get< std::string >() ) {
       p = StructureType :: eAndroidHardwareBufferFormatPropertiesANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "eAndroidHardwareBufferFormatPropertiesANDROID" == j.get< std::string >() ) {
       p = StructureType :: eAndroidHardwareBufferFormatPropertiesANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID" == j.get< std::string >() ) {
       p = StructureType :: eAndroidHardwareBufferFormatPropertiesANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "ImportAndroidHardwareBufferInfoANDROID" == j.get< std::string >() ) {
       p = StructureType :: eImportAndroidHardwareBufferInfoANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "eImportAndroidHardwareBufferInfoANDROID" == j.get< std::string >() ) {
       p = StructureType :: eImportAndroidHardwareBufferInfoANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "VK_STRUCTURE_TYPE_IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID" == j.get< std::string >() ) {
       p = StructureType :: eImportAndroidHardwareBufferInfoANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "MemoryGetAndroidHardwareBufferInfoANDROID" == j.get< std::string >() ) {
       p = StructureType :: eMemoryGetAndroidHardwareBufferInfoANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "eMemoryGetAndroidHardwareBufferInfoANDROID" == j.get< std::string >() ) {
       p = StructureType :: eMemoryGetAndroidHardwareBufferInfoANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "VK_STRUCTURE_TYPE_MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID" == j.get< std::string >() ) {
       p = StructureType :: eMemoryGetAndroidHardwareBufferInfoANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "ExternalFormatANDROID" == j.get< std::string >() ) {
       p = StructureType :: eExternalFormatANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "eExternalFormatANDROID" == j.get< std::string >() ) {
       p = StructureType :: eExternalFormatANDROID ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_ANDROID_KHR)
+#if defined( VK_USE_PLATFORM_ANDROID_KHR )
     if( "VK_STRUCTURE_TYPE_EXTERNAL_FORMAT_ANDROID" == j.get< std::string >() ) {
       p = StructureType :: eExternalFormatANDROID ;
       return;
@@ -6829,37 +6830,37 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eShaderModuleValidationCacheCreateInfoEXT ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "PhysicalDevicePortabilitySubsetFeaturesKHR" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDevicePortabilitySubsetFeaturesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "ePhysicalDevicePortabilitySubsetFeaturesKHR" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDevicePortabilitySubsetFeaturesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDevicePortabilitySubsetFeaturesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "PhysicalDevicePortabilitySubsetPropertiesKHR" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDevicePortabilitySubsetPropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "ePhysicalDevicePortabilitySubsetPropertiesKHR" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDevicePortabilitySubsetPropertiesKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDevicePortabilitySubsetPropertiesKHR ;
       return;
@@ -7105,109 +7106,109 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: ePhysicalDeviceShaderCorePropertiesAMD ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH265CapabilitiesEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265CapabilitiesEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH265CapabilitiesEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265CapabilitiesEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_CAPABILITIES_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265CapabilitiesEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH265SessionCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265SessionCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH265SessionCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265SessionCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_SESSION_CREATE_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265SessionCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH265SessionParametersAddInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265SessionParametersAddInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH265SessionParametersAddInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265SessionParametersAddInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265SessionParametersAddInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH265ProfileEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265ProfileEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH265ProfileEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265ProfileEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_PROFILE_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265ProfileEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH265PictureInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265PictureInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH265PictureInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265PictureInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_PICTURE_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265PictureInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoDecodeH265DpbSlotInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265DpbSlotInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoDecodeH265DpbSlotInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265DpbSlotInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eVideoDecodeH265DpbSlotInfoEXT ;
       return;
@@ -7225,19 +7226,19 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eDeviceMemoryOverallocationCreateInfoAMD ;
       return;
     }
-#if defined(VK_USE_PLATFORM_GGP)
+#if defined( VK_USE_PLATFORM_GGP )
     if( "PresentFrameTokenGGP" == j.get< std::string >() ) {
       p = StructureType :: ePresentFrameTokenGGP ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_GGP)
+#if defined( VK_USE_PLATFORM_GGP )
     if( "ePresentFrameTokenGGP" == j.get< std::string >() ) {
       p = StructureType :: ePresentFrameTokenGGP ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_GGP)
+#if defined( VK_USE_PLATFORM_GGP )
     if( "VK_STRUCTURE_TYPE_PRESENT_FRAME_TOKEN_GGP" == j.get< std::string >() ) {
       p = StructureType :: ePresentFrameTokenGGP ;
       return;
@@ -7423,37 +7424,37 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eSwapchainDisplayNativeHdrCreateInfoAMD ;
       return;
     }
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "ImagepipeSurfaceCreateInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eImagepipeSurfaceCreateInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "eImagepipeSurfaceCreateInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eImagepipeSurfaceCreateInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "VK_STRUCTURE_TYPE_IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eImagepipeSurfaceCreateInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_METAL_EXT)
+#if defined( VK_USE_PLATFORM_METAL_EXT )
     if( "MetalSurfaceCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eMetalSurfaceCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_METAL_EXT)
+#if defined( VK_USE_PLATFORM_METAL_EXT )
     if( "eMetalSurfaceCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eMetalSurfaceCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_METAL_EXT)
+#if defined( VK_USE_PLATFORM_METAL_EXT )
     if( "VK_STRUCTURE_TYPE_METAL_SURFACE_CREATE_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eMetalSurfaceCreateInfoEXT ;
       return;
@@ -7711,55 +7712,55 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: ePhysicalDeviceProvokingVertexPropertiesEXT ;
       return;
     }
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "SurfaceFullScreenExclusiveInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eSurfaceFullScreenExclusiveInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eSurfaceFullScreenExclusiveInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eSurfaceFullScreenExclusiveInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eSurfaceFullScreenExclusiveInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "SurfaceCapabilitiesFullScreenExclusiveEXT" == j.get< std::string >() ) {
       p = StructureType :: eSurfaceCapabilitiesFullScreenExclusiveEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eSurfaceCapabilitiesFullScreenExclusiveEXT" == j.get< std::string >() ) {
       p = StructureType :: eSurfaceCapabilitiesFullScreenExclusiveEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT" == j.get< std::string >() ) {
       p = StructureType :: eSurfaceCapabilitiesFullScreenExclusiveEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "SurfaceFullScreenExclusiveWin32InfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eSurfaceFullScreenExclusiveWin32InfoEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "eSurfaceFullScreenExclusiveWin32InfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eSurfaceFullScreenExclusiveWin32InfoEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
+#if defined( VK_USE_PLATFORM_WIN32_KHR )
     if( "VK_STRUCTURE_TYPE_SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eSurfaceFullScreenExclusiveWin32InfoEXT ;
       return;
@@ -8113,37 +8114,37 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: ePrivateDataSlotCreateInfoEXT ;
       return;
     }
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VideoEncodeRateControlInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeRateControlInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eVideoEncodeRateControlInfoKHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeRateControlInfoKHR ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_STRUCTURE_TYPE_VIDEO_ENCODE_RATE_CONTROL_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: eVideoEncodeRateControlInfoKHR ;
       return;
@@ -8473,19 +8474,19 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: ePhysicalDevice4444FormatsFeaturesEXT ;
       return;
     }
-#if defined(VK_USE_PLATFORM_DIRECTFB_EXT)
+#if defined( VK_USE_PLATFORM_DIRECTFB_EXT )
     if( "DirectfbSurfaceCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eDirectfbSurfaceCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_DIRECTFB_EXT)
+#if defined( VK_USE_PLATFORM_DIRECTFB_EXT )
     if( "eDirectfbSurfaceCreateInfoEXT" == j.get< std::string >() ) {
       p = StructureType :: eDirectfbSurfaceCreateInfoEXT ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_DIRECTFB_EXT)
+#if defined( VK_USE_PLATFORM_DIRECTFB_EXT )
     if( "VK_STRUCTURE_TYPE_DIRECTFB_SURFACE_CREATE_INFO_EXT" == j.get< std::string >() ) {
       p = StructureType :: eDirectfbSurfaceCreateInfoEXT ;
       return;
@@ -8539,91 +8540,91 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: ePhysicalDeviceDrmPropertiesEXT ;
       return;
     }
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "ImportMemoryZirconHandleInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eImportMemoryZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "eImportMemoryZirconHandleInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eImportMemoryZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "VK_STRUCTURE_TYPE_IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eImportMemoryZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "MemoryZirconHandlePropertiesFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eMemoryZirconHandlePropertiesFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "eMemoryZirconHandlePropertiesFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eMemoryZirconHandlePropertiesFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "VK_STRUCTURE_TYPE_MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eMemoryZirconHandlePropertiesFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "MemoryGetZirconHandleInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eMemoryGetZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "eMemoryGetZirconHandleInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eMemoryGetZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "VK_STRUCTURE_TYPE_MEMORY_GET_ZIRCON_HANDLE_INFO_FUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eMemoryGetZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "ImportSemaphoreZirconHandleInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eImportSemaphoreZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "eImportSemaphoreZirconHandleInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eImportSemaphoreZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_ZIRCON_HANDLE_INFO_FUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eImportSemaphoreZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "SemaphoreGetZirconHandleInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eSemaphoreGetZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "eSemaphoreGetZirconHandleInfoFUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eSemaphoreGetZirconHandleInfoFUCHSIA ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_FUCHSIA)
+#if defined( VK_USE_PLATFORM_FUCHSIA )
     if( "VK_STRUCTURE_TYPE_SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA" == j.get< std::string >() ) {
       p = StructureType :: eSemaphoreGetZirconHandleInfoFUCHSIA ;
       return;
@@ -8665,19 +8666,19 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: ePhysicalDeviceSubpassShadingPropertiesHUAWEI ;
       return;
     }
-#if defined(VK_USE_PLATFORM_SCREEN_QNX)
+#if defined( VK_USE_PLATFORM_SCREEN_QNX )
     if( "ScreenSurfaceCreateInfoQNX" == j.get< std::string >() ) {
       p = StructureType :: eScreenSurfaceCreateInfoQNX ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_SCREEN_QNX)
+#if defined( VK_USE_PLATFORM_SCREEN_QNX )
     if( "eScreenSurfaceCreateInfoQNX" == j.get< std::string >() ) {
       p = StructureType :: eScreenSurfaceCreateInfoQNX ;
       return;
     }
 #endif
-#if defined(VK_USE_PLATFORM_SCREEN_QNX)
+#if defined( VK_USE_PLATFORM_SCREEN_QNX )
     if( "VK_STRUCTURE_TYPE_SCREEN_SURFACE_CREATE_INFO_QNX" == j.get< std::string >() ) {
       p = StructureType :: eScreenSurfaceCreateInfoQNX ;
       return;
@@ -9920,7 +9921,6 @@ inline void from_json( const nlohmann::json &j, VkStructureType &p ) {
   from_json( j, temp );
   p = VkStructureType ( temp );
 }
-#endif
 
 
 #endif

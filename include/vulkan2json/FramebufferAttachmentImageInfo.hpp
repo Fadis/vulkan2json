@@ -22,52 +22,19 @@
 #ifndef VULKAN2JSON_FRAMEBUFFERATTACHMENTIMAGEINFO_HPP
 #define VULKAN2JSON_FRAMEBUFFERATTACHMENTIMAGEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ImageCreateFlags.hpp>
-#include <vulkan2json/ImageUsageFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const FramebufferAttachmentImageInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "usage" ] = p.usage;
-  j[ "width" ] = p.width;
-  j[ "height" ] = p.height;
-  j[ "layerCount" ] = p.layerCount;
-  j[ "viewFormatCount" ] = p.viewFormatCount;
-  j[ "pViewFormats" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pViewFormats ) );
+void to_json( nlohmann::json &j, const FramebufferAttachmentImageInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkFramebufferAttachmentImageInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: FramebufferAttachmentImageInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkFramebufferAttachmentImageInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, FramebufferAttachmentImageInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for FramebufferAttachmentImageInfo" );
-  p.flags = ImageCreateFlags ( j[ "flags" ] );
-  p.usage = ImageUsageFlags ( j[ "usage" ] );
-  p.width = j[ "width" ];
-  p.height = j[ "height" ];
-  p.layerCount = j[ "layerCount" ];
-  p.viewFormatCount = j[ "viewFormatCount" ];
+  void from_json( const nlohmann::json &j, FramebufferAttachmentImageInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkFramebufferAttachmentImageInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: FramebufferAttachmentImageInfo temp;
-  from_json( j, temp );
-  p = VkFramebufferAttachmentImageInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkFramebufferAttachmentImageInfo &p );
 
 
 #endif

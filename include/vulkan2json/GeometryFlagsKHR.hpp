@@ -22,68 +22,17 @@
 #ifndef VULKAN2JSON_GEOMETRYFLAGSKHR_HPP
 #define VULKAN2JSON_GEOMETRYFLAGSKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_ACCELERATION_STRUCTURE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const GeometryFlagBitsKHR &p ) {
-  if( GeometryFlagBitsKHR :: eOpaque == p ) {
-    j = "Opaque";
-    return;
-  }
+  void to_json( nlohmann::json &j, const GeometryFlagBitsKHR &p );
+  void to_json( nlohmann::json &j, const GeometryFlagsKHR &p );
+  void from_json( const nlohmann::json &j, GeometryFlagBitsKHR &p );
+  void from_json( const nlohmann::json &j, GeometryFlagsKHR &p );
 }
-inline void from_json( const nlohmann::json &j, GeometryFlagBitsKHR &p ) {
-  if( j.is_string() ) {
-    if( "Opaque" == j.get< std::string >() ) {
-      p = GeometryFlagBitsKHR :: eOpaque ;
-      return;
-    }
-    if( "eOpaque" == j.get< std::string >() ) {
-      p = GeometryFlagBitsKHR :: eOpaque ;
-      return;
-    }
-    if( "VK_GEOMETRY_OPAQUE_BIT_KHR" == j.get< std::string >() ) {
-      p = GeometryFlagBitsKHR :: eOpaque ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for GeometryFlagBitsKHR" );
-  }
-  if( j.is_number() ) {
-    p = GeometryFlagBitsKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for GeometryFlagBitsKHR" );
-}
-inline void to_json( nlohmann::json &j, const GeometryFlagsKHR &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( GeometryFlagBitsKHR ) * 8u; ++n ) {
-    if( p & GeometryFlagsKHR ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, GeometryFlagBitsKHR ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, GeometryFlagsKHR &p ) {
-  if( j.is_array() ) {
-    p = GeometryFlagsKHR ( 0 );
-    for( auto &e:  j ) {
-      GeometryFlagBitsKHR temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for GeometryFlagsKHR" );
-}
-}
-#endif
 
 
 #endif

@@ -22,40 +22,19 @@
 #ifndef VULKAN2JSON_SWAPCHAINCOUNTERCREATEINFOEXT_HPP
 #define VULKAN2JSON_SWAPCHAINCOUNTERCREATEINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/SurfaceCounterFlagsEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SwapchainCounterCreateInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "surfaceCounters" ] = p.surfaceCounters;
+void to_json( nlohmann::json &j, const SwapchainCounterCreateInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSwapchainCounterCreateInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SwapchainCounterCreateInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSwapchainCounterCreateInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SwapchainCounterCreateInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SwapchainCounterCreateInfoEXT" );
-  p.surfaceCounters = SurfaceCounterFlagsEXT ( j[ "surfaceCounters" ] );
+  void from_json( const nlohmann::json &j, SwapchainCounterCreateInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSwapchainCounterCreateInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: SwapchainCounterCreateInfoEXT temp;
-  from_json( j, temp );
-  p = VkSwapchainCounterCreateInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkSwapchainCounterCreateInfoEXT &p );
 
 
 #endif

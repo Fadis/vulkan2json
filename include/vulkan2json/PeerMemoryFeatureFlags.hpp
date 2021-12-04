@@ -22,100 +22,17 @@
 #ifndef VULKAN2JSON_PEERMEMORYFEATUREFLAGS_HPP
 #define VULKAN2JSON_PEERMEMORYFEATUREFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PeerMemoryFeatureFlagBits &p ) {
-  if( PeerMemoryFeatureFlagBits :: eCopySrc == p ) {
-    j = "CopySrc";
-    return;
-  }
-  if( PeerMemoryFeatureFlagBits :: eCopyDst == p ) {
-    j = "CopyDst";
-    return;
-  }
-  if( PeerMemoryFeatureFlagBits :: eGenericSrc == p ) {
-    j = "GenericSrc";
-    return;
-  }
+  void to_json( nlohmann::json &j, const PeerMemoryFeatureFlagBits &p );
+  void to_json( nlohmann::json &j, const PeerMemoryFeatureFlags &p );
+  void from_json( const nlohmann::json &j, PeerMemoryFeatureFlagBits &p );
+  void from_json( const nlohmann::json &j, PeerMemoryFeatureFlags &p );
 }
-inline void from_json( const nlohmann::json &j, PeerMemoryFeatureFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "CopySrc" == j.get< std::string >() ) {
-      p = PeerMemoryFeatureFlagBits :: eCopySrc ;
-      return;
-    }
-    if( "eCopySrc" == j.get< std::string >() ) {
-      p = PeerMemoryFeatureFlagBits :: eCopySrc ;
-      return;
-    }
-    if( "VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT" == j.get< std::string >() ) {
-      p = PeerMemoryFeatureFlagBits :: eCopySrc ;
-      return;
-    }
-    if( "CopyDst" == j.get< std::string >() ) {
-      p = PeerMemoryFeatureFlagBits :: eCopyDst ;
-      return;
-    }
-    if( "eCopyDst" == j.get< std::string >() ) {
-      p = PeerMemoryFeatureFlagBits :: eCopyDst ;
-      return;
-    }
-    if( "VK_PEER_MEMORY_FEATURE_COPY_DST_BIT" == j.get< std::string >() ) {
-      p = PeerMemoryFeatureFlagBits :: eCopyDst ;
-      return;
-    }
-    if( "GenericSrc" == j.get< std::string >() ) {
-      p = PeerMemoryFeatureFlagBits :: eGenericSrc ;
-      return;
-    }
-    if( "eGenericSrc" == j.get< std::string >() ) {
-      p = PeerMemoryFeatureFlagBits :: eGenericSrc ;
-      return;
-    }
-    if( "VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT" == j.get< std::string >() ) {
-      p = PeerMemoryFeatureFlagBits :: eGenericSrc ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PeerMemoryFeatureFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PeerMemoryFeatureFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PeerMemoryFeatureFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const PeerMemoryFeatureFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PeerMemoryFeatureFlagBits ) * 8u; ++n ) {
-    if( p & PeerMemoryFeatureFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PeerMemoryFeatureFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, PeerMemoryFeatureFlags &p ) {
-  if( j.is_array() ) {
-    p = PeerMemoryFeatureFlags ( 0 );
-    for( auto &e:  j ) {
-      PeerMemoryFeatureFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PeerMemoryFeatureFlags" );
-}
-}
-#endif
 
 
 #endif

@@ -22,39 +22,19 @@
 #ifndef VULKAN2JSON_DISPLAYPLANEINFO22KHR_HPP
 #define VULKAN2JSON_DISPLAYPLANEINFO22KHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DisplayPlaneInfo2KHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "planeIndex" ] = p.planeIndex;
+void to_json( nlohmann::json &j, const DisplayPlaneInfo2KHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDisplayPlaneInfo2KHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DisplayPlaneInfo2KHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDisplayPlaneInfo2KHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DisplayPlaneInfo2KHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DisplayPlaneInfo2KHR" );
-  p.planeIndex = j[ "planeIndex" ];
+  void from_json( const nlohmann::json &j, DisplayPlaneInfo2KHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDisplayPlaneInfo2KHR &p ) {
-  VULKAN_HPP_NAMESPACE :: DisplayPlaneInfo2KHR temp;
-  from_json( j, temp );
-  p = VkDisplayPlaneInfo2KHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkDisplayPlaneInfo2KHR &p );
 
 
 #endif

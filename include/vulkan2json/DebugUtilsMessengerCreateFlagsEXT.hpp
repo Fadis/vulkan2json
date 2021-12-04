@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_DEBUGUTILSMESSENGERCREATEFLAGSEXT_HPP
 #define VULKAN2JSON_DEBUGUTILSMESSENGERCREATEFLAGSEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_DEBUG_UTILS_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DebugUtilsMessengerCreateFlagBitsEXT &p ) {
+  void to_json( nlohmann::json &j, const DebugUtilsMessengerCreateFlagBitsEXT &p );
+  void to_json( nlohmann::json &j, const DebugUtilsMessengerCreateFlagsEXT &p );
+  void from_json( const nlohmann::json &j, DebugUtilsMessengerCreateFlagBitsEXT &p );
+  void from_json( const nlohmann::json &j, DebugUtilsMessengerCreateFlagsEXT &p );
 }
-inline void from_json( const nlohmann::json &j, DebugUtilsMessengerCreateFlagBitsEXT &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DebugUtilsMessengerCreateFlagBitsEXT" );
-  }
-  if( j.is_number() ) {
-    p = DebugUtilsMessengerCreateFlagBitsEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DebugUtilsMessengerCreateFlagBitsEXT" );
-}
-inline void to_json( nlohmann::json &j, const DebugUtilsMessengerCreateFlagsEXT &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DebugUtilsMessengerCreateFlagBitsEXT ) * 8u; ++n ) {
-    if( p & DebugUtilsMessengerCreateFlagsEXT ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DebugUtilsMessengerCreateFlagBitsEXT ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, DebugUtilsMessengerCreateFlagsEXT &p ) {
-  if( j.is_array() ) {
-    p = DebugUtilsMessengerCreateFlagsEXT ( 0 );
-    for( auto &e:  j ) {
-      DebugUtilsMessengerCreateFlagBitsEXT temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DebugUtilsMessengerCreateFlagsEXT" );
-}
-}
-#endif
 
 
 #endif

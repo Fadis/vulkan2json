@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_SAMPLERREDUCTIONMODE_HPP
 #define VULKAN2JSON_SAMPLERREDUCTIONMODE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_2
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SamplerReductionMode &p ) {
-  if( SamplerReductionMode :: eWeightedAverage == p ) {
-    j = "WeightedAverage";
-    return;
-  }
-  if( SamplerReductionMode :: eMin == p ) {
-    j = "Min";
-    return;
-  }
+void to_json( nlohmann::json &j, const SamplerReductionMode &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSamplerReductionMode &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SamplerReductionMode ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSamplerReductionMode &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SamplerReductionMode &p ) {
-  if( j.is_string() ) {
-    if( "WeightedAverage" == j.get< std::string >() ) {
-      p = SamplerReductionMode :: eWeightedAverage ;
-      return;
-    }
-    if( "eWeightedAverage" == j.get< std::string >() ) {
-      p = SamplerReductionMode :: eWeightedAverage ;
-      return;
-    }
-    if( "VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE" == j.get< std::string >() ) {
-      p = SamplerReductionMode :: eWeightedAverage ;
-      return;
-    }
-    if( "Min" == j.get< std::string >() ) {
-      p = SamplerReductionMode :: eMin ;
-      return;
-    }
-    if( "eMin" == j.get< std::string >() ) {
-      p = SamplerReductionMode :: eMin ;
-      return;
-    }
-    if( "VK_SAMPLER_REDUCTION_MODE_MIN" == j.get< std::string >() ) {
-      p = SamplerReductionMode :: eMin ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for SamplerReductionMode" );
-  }
-  if( j.is_number() ) {
-    p = SamplerReductionMode ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for SamplerReductionMode" );
+void from_json( const nlohmann::json &j, SamplerReductionMode &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSamplerReductionMode &p ) {
-  VULKAN_HPP_NAMESPACE :: SamplerReductionMode temp;
-  from_json( j, temp );
-  p = VkSamplerReductionMode ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkSamplerReductionMode &p );
 
 
 #endif

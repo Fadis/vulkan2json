@@ -22,47 +22,19 @@
 #ifndef VULKAN2JSON_SUBMITINFO_HPP
 #define VULKAN2JSON_SUBMITINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SubmitInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "waitSemaphoreCount" ] = p.waitSemaphoreCount;
-  j[ "pWaitSemaphores" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pWaitSemaphores ) );
-  j[ "pWaitDstStageMask" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pWaitDstStageMask ) );
-  j[ "commandBufferCount" ] = p.commandBufferCount;
-  j[ "pCommandBuffers" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pCommandBuffers ) );
-  j[ "signalSemaphoreCount" ] = p.signalSemaphoreCount;
-  j[ "pSignalSemaphores" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pSignalSemaphores ) );
+void to_json( nlohmann::json &j, const SubmitInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSubmitInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SubmitInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSubmitInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SubmitInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SubmitInfo" );
-  p.waitSemaphoreCount = j[ "waitSemaphoreCount" ];
-  p.commandBufferCount = j[ "commandBufferCount" ];
-  p.signalSemaphoreCount = j[ "signalSemaphoreCount" ];
+  void from_json( const nlohmann::json &j, SubmitInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSubmitInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: SubmitInfo temp;
-  from_json( j, temp );
-  p = VkSubmitInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkSubmitInfo &p );
 
 
 #endif

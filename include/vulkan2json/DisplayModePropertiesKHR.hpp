@@ -22,37 +22,19 @@
 #ifndef VULKAN2JSON_DISPLAYMODEPROPERTIESKHR_HPP
 #define VULKAN2JSON_DISPLAYMODEPROPERTIESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/DisplayModeParametersKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DisplayModePropertiesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "parameters" ] = p.parameters;
+void to_json( nlohmann::json &j, const DisplayModePropertiesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDisplayModePropertiesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DisplayModePropertiesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDisplayModePropertiesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DisplayModePropertiesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DisplayModePropertiesKHR" );
-  p.parameters = DisplayModeParametersKHR ( j[ "parameters" ] );
+  void from_json( const nlohmann::json &j, DisplayModePropertiesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDisplayModePropertiesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: DisplayModePropertiesKHR temp;
-  from_json( j, temp );
-  p = VkDisplayModePropertiesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkDisplayModePropertiesKHR &p );
 
 
 #endif

@@ -30,7 +30,8 @@ from vulkan_header_parser.get_struct_class_name import get_struct_class_name
 def get_class_name( prefix ):
   #return get_struct_class_name( os.path.join( prefix, 'vulkan_structs.hpp' ) )
   class_names = get_enum_class_name( os.path.join( prefix, 'vulkan_enums.hpp' ) )
-  return class_names.union( get_struct_class_name( os.path.join( prefix, 'vulkan_structs.hpp' ) ) )
+  class_names.update( get_struct_class_name( os.path.join( prefix, 'vulkan_structs.hpp' ) ) )
+  return class_names
 
 def get_handle_name( prefix ):
   return get_handle_class_name( os.path.join( prefix, 'vulkan_handles.hpp' ) )

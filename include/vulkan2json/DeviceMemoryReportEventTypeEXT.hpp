@@ -22,105 +22,19 @@
 #ifndef VULKAN2JSON_DEVICEMEMORYREPORTEVENTTYPEEXT_HPP
 #define VULKAN2JSON_DEVICEMEMORYREPORTEVENTTYPEEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_DEVICE_MEMORY_REPORT_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DeviceMemoryReportEventTypeEXT &p ) {
-  if( DeviceMemoryReportEventTypeEXT :: eAllocate == p ) {
-    j = "Allocate";
-    return;
-  }
-  if( DeviceMemoryReportEventTypeEXT :: eFree == p ) {
-    j = "Free";
-    return;
-  }
-  if( DeviceMemoryReportEventTypeEXT :: eImport == p ) {
-    j = "Import";
-    return;
-  }
-  if( DeviceMemoryReportEventTypeEXT :: eUnimport == p ) {
-    j = "Unimport";
-    return;
-  }
+void to_json( nlohmann::json &j, const DeviceMemoryReportEventTypeEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDeviceMemoryReportEventTypeEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DeviceMemoryReportEventTypeEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDeviceMemoryReportEventTypeEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DeviceMemoryReportEventTypeEXT &p ) {
-  if( j.is_string() ) {
-    if( "Allocate" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eAllocate ;
-      return;
-    }
-    if( "eAllocate" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eAllocate ;
-      return;
-    }
-    if( "VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_ALLOCATE_EXT" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eAllocate ;
-      return;
-    }
-    if( "Free" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eFree ;
-      return;
-    }
-    if( "eFree" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eFree ;
-      return;
-    }
-    if( "VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_FREE_EXT" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eFree ;
-      return;
-    }
-    if( "Import" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eImport ;
-      return;
-    }
-    if( "eImport" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eImport ;
-      return;
-    }
-    if( "VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_IMPORT_EXT" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eImport ;
-      return;
-    }
-    if( "Unimport" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eUnimport ;
-      return;
-    }
-    if( "eUnimport" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eUnimport ;
-      return;
-    }
-    if( "VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_UNIMPORT_EXT" == j.get< std::string >() ) {
-      p = DeviceMemoryReportEventTypeEXT :: eUnimport ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DeviceMemoryReportEventTypeEXT" );
-  }
-  if( j.is_number() ) {
-    p = DeviceMemoryReportEventTypeEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DeviceMemoryReportEventTypeEXT" );
+void from_json( const nlohmann::json &j, DeviceMemoryReportEventTypeEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDeviceMemoryReportEventTypeEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DeviceMemoryReportEventTypeEXT temp;
-  from_json( j, temp );
-  p = VkDeviceMemoryReportEventTypeEXT ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkDeviceMemoryReportEventTypeEXT &p );
 
 
 #endif

@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_DEVICEQUEUECREATEINFO_HPP
 #define VULKAN2JSON_DEVICEQUEUECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/DeviceQueueCreateFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DeviceQueueCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "queueFamilyIndex" ] = p.queueFamilyIndex;
-  j[ "queueCount" ] = p.queueCount;
-  j[ "pQueuePriorities" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pQueuePriorities ) );
+void to_json( nlohmann::json &j, const DeviceQueueCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDeviceQueueCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DeviceQueueCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDeviceQueueCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DeviceQueueCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DeviceQueueCreateInfo" );
-  p.flags = DeviceQueueCreateFlags ( j[ "flags" ] );
-  p.queueFamilyIndex = j[ "queueFamilyIndex" ];
-  p.queueCount = j[ "queueCount" ];
+  void from_json( const nlohmann::json &j, DeviceQueueCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDeviceQueueCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: DeviceQueueCreateInfo temp;
-  from_json( j, temp );
-  p = VkDeviceQueueCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkDeviceQueueCreateInfo &p );
 
 
 #endif

@@ -22,68 +22,17 @@
 #ifndef VULKAN2JSON_PERFORMANCECOUNTERDESCRIPTIONFLAGSKHR_HPP
 #define VULKAN2JSON_PERFORMANCECOUNTERDESCRIPTIONFLAGSKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_PERFORMANCE_QUERY_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PerformanceCounterDescriptionFlagBitsKHR &p ) {
-  if( PerformanceCounterDescriptionFlagBitsKHR :: ePerformanceImpacting == p ) {
-    j = "PerformanceImpacting";
-    return;
-  }
+  void to_json( nlohmann::json &j, const PerformanceCounterDescriptionFlagBitsKHR &p );
+  void to_json( nlohmann::json &j, const PerformanceCounterDescriptionFlagsKHR &p );
+  void from_json( const nlohmann::json &j, PerformanceCounterDescriptionFlagBitsKHR &p );
+  void from_json( const nlohmann::json &j, PerformanceCounterDescriptionFlagsKHR &p );
 }
-inline void from_json( const nlohmann::json &j, PerformanceCounterDescriptionFlagBitsKHR &p ) {
-  if( j.is_string() ) {
-    if( "PerformanceImpacting" == j.get< std::string >() ) {
-      p = PerformanceCounterDescriptionFlagBitsKHR :: ePerformanceImpacting ;
-      return;
-    }
-    if( "ePerformanceImpacting" == j.get< std::string >() ) {
-      p = PerformanceCounterDescriptionFlagBitsKHR :: ePerformanceImpacting ;
-      return;
-    }
-    if( "VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_BIT_KHR" == j.get< std::string >() ) {
-      p = PerformanceCounterDescriptionFlagBitsKHR :: ePerformanceImpacting ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PerformanceCounterDescriptionFlagBitsKHR" );
-  }
-  if( j.is_number() ) {
-    p = PerformanceCounterDescriptionFlagBitsKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PerformanceCounterDescriptionFlagBitsKHR" );
-}
-inline void to_json( nlohmann::json &j, const PerformanceCounterDescriptionFlagsKHR &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PerformanceCounterDescriptionFlagBitsKHR ) * 8u; ++n ) {
-    if( p & PerformanceCounterDescriptionFlagsKHR ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PerformanceCounterDescriptionFlagBitsKHR ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, PerformanceCounterDescriptionFlagsKHR &p ) {
-  if( j.is_array() ) {
-    p = PerformanceCounterDescriptionFlagsKHR ( 0 );
-    for( auto &e:  j ) {
-      PerformanceCounterDescriptionFlagBitsKHR temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PerformanceCounterDescriptionFlagsKHR" );
-}
-}
-#endif
 
 
 #endif

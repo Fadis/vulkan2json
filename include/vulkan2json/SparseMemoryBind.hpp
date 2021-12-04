@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_SPARSEMEMORYBIND_HPP
 #define VULKAN2JSON_SPARSEMEMORYBIND_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/SparseMemoryBindFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SparseMemoryBind &p ) {
-  j = nlohmann::json::object();
-  j[ "resourceOffset" ] = p.resourceOffset;
-  j[ "size" ] = p.size;
-  j[ "memoryOffset" ] = p.memoryOffset;
-  j[ "flags" ] = p.flags;
+void to_json( nlohmann::json &j, const SparseMemoryBind &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSparseMemoryBind &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SparseMemoryBind ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSparseMemoryBind &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SparseMemoryBind &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SparseMemoryBind" );
-  p.resourceOffset = j[ "resourceOffset" ];
-  p.size = j[ "size" ];
-  p.memoryOffset = j[ "memoryOffset" ];
-  p.flags = SparseMemoryBindFlags ( j[ "flags" ] );
+  void from_json( const nlohmann::json &j, SparseMemoryBind &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSparseMemoryBind &p ) {
-  VULKAN_HPP_NAMESPACE :: SparseMemoryBind temp;
-  from_json( j, temp );
-  p = VkSparseMemoryBind ( temp );
-}
+void from_json( const nlohmann::json &j, VkSparseMemoryBind &p );
 
 
 #endif

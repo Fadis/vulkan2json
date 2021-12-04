@@ -22,105 +22,19 @@
 #ifndef VULKAN2JSON_SAMPLERYCBCRMODELCONVERSION_HPP
 #define VULKAN2JSON_SAMPLERYCBCRMODELCONVERSION_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_1
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SamplerYcbcrModelConversion &p ) {
-  if( SamplerYcbcrModelConversion :: eRgbIdentity == p ) {
-    j = "RgbIdentity";
-    return;
-  }
-  if( SamplerYcbcrModelConversion :: eYcbcrIdentity == p ) {
-    j = "YcbcrIdentity";
-    return;
-  }
-  if( SamplerYcbcrModelConversion :: eYcbcr709 == p ) {
-    j = "Ycbcr709";
-    return;
-  }
-  if( SamplerYcbcrModelConversion :: eYcbcr601 == p ) {
-    j = "Ycbcr601";
-    return;
-  }
+void to_json( nlohmann::json &j, const SamplerYcbcrModelConversion &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSamplerYcbcrModelConversion &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SamplerYcbcrModelConversion ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSamplerYcbcrModelConversion &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SamplerYcbcrModelConversion &p ) {
-  if( j.is_string() ) {
-    if( "RgbIdentity" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eRgbIdentity ;
-      return;
-    }
-    if( "eRgbIdentity" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eRgbIdentity ;
-      return;
-    }
-    if( "VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eRgbIdentity ;
-      return;
-    }
-    if( "YcbcrIdentity" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eYcbcrIdentity ;
-      return;
-    }
-    if( "eYcbcrIdentity" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eYcbcrIdentity ;
-      return;
-    }
-    if( "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eYcbcrIdentity ;
-      return;
-    }
-    if( "Ycbcr709" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eYcbcr709 ;
-      return;
-    }
-    if( "eYcbcr709" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eYcbcr709 ;
-      return;
-    }
-    if( "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eYcbcr709 ;
-      return;
-    }
-    if( "Ycbcr601" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eYcbcr601 ;
-      return;
-    }
-    if( "eYcbcr601" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eYcbcr601 ;
-      return;
-    }
-    if( "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601" == j.get< std::string >() ) {
-      p = SamplerYcbcrModelConversion :: eYcbcr601 ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for SamplerYcbcrModelConversion" );
-  }
-  if( j.is_number() ) {
-    p = SamplerYcbcrModelConversion ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for SamplerYcbcrModelConversion" );
+void from_json( const nlohmann::json &j, SamplerYcbcrModelConversion &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSamplerYcbcrModelConversion &p ) {
-  VULKAN_HPP_NAMESPACE :: SamplerYcbcrModelConversion temp;
-  from_json( j, temp );
-  p = VkSamplerYcbcrModelConversion ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkSamplerYcbcrModelConversion &p );
 
 
 #endif

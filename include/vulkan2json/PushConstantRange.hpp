@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PUSHCONSTANTRANGE_HPP
 #define VULKAN2JSON_PUSHCONSTANTRANGE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/ShaderStageFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PushConstantRange &p ) {
-  j = nlohmann::json::object();
-  j[ "stageFlags" ] = p.stageFlags;
-  j[ "offset" ] = p.offset;
-  j[ "size" ] = p.size;
+void to_json( nlohmann::json &j, const PushConstantRange &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPushConstantRange &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PushConstantRange ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPushConstantRange &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PushConstantRange &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PushConstantRange" );
-  p.stageFlags = ShaderStageFlags ( j[ "stageFlags" ] );
-  p.offset = j[ "offset" ];
-  p.size = j[ "size" ];
+  void from_json( const nlohmann::json &j, PushConstantRange &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPushConstantRange &p ) {
-  VULKAN_HPP_NAMESPACE :: PushConstantRange temp;
-  from_json( j, temp );
-  p = VkPushConstantRange ( temp );
-}
+void from_json( const nlohmann::json &j, VkPushConstantRange &p );
 
 
 #endif

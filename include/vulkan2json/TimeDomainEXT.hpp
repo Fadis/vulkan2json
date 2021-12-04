@@ -22,89 +22,19 @@
 #ifndef VULKAN2JSON_TIMEDOMAINEXT_HPP
 #define VULKAN2JSON_TIMEDOMAINEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_EXT_CALIBRATED_TIMESTAMPS_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const TimeDomainEXT &p ) {
-  if( TimeDomainEXT :: eDevice == p ) {
-    j = "Device";
-    return;
-  }
-  if( TimeDomainEXT :: eClockMonotonic == p ) {
-    j = "ClockMonotonic";
-    return;
-  }
-  if( TimeDomainEXT :: eClockMonotonicRaw == p ) {
-    j = "ClockMonotonicRaw";
-    return;
-  }
+void to_json( nlohmann::json &j, const TimeDomainEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkTimeDomainEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: TimeDomainEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkTimeDomainEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, TimeDomainEXT &p ) {
-  if( j.is_string() ) {
-    if( "Device" == j.get< std::string >() ) {
-      p = TimeDomainEXT :: eDevice ;
-      return;
-    }
-    if( "eDevice" == j.get< std::string >() ) {
-      p = TimeDomainEXT :: eDevice ;
-      return;
-    }
-    if( "VK_TIME_DOMAIN_DEVICE_EXT" == j.get< std::string >() ) {
-      p = TimeDomainEXT :: eDevice ;
-      return;
-    }
-    if( "ClockMonotonic" == j.get< std::string >() ) {
-      p = TimeDomainEXT :: eClockMonotonic ;
-      return;
-    }
-    if( "eClockMonotonic" == j.get< std::string >() ) {
-      p = TimeDomainEXT :: eClockMonotonic ;
-      return;
-    }
-    if( "VK_TIME_DOMAIN_CLOCK_MONOTONIC_EXT" == j.get< std::string >() ) {
-      p = TimeDomainEXT :: eClockMonotonic ;
-      return;
-    }
-    if( "ClockMonotonicRaw" == j.get< std::string >() ) {
-      p = TimeDomainEXT :: eClockMonotonicRaw ;
-      return;
-    }
-    if( "eClockMonotonicRaw" == j.get< std::string >() ) {
-      p = TimeDomainEXT :: eClockMonotonicRaw ;
-      return;
-    }
-    if( "VK_TIME_DOMAIN_CLOCK_MONOTONIC_RAW_EXT" == j.get< std::string >() ) {
-      p = TimeDomainEXT :: eClockMonotonicRaw ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for TimeDomainEXT" );
-  }
-  if( j.is_number() ) {
-    p = TimeDomainEXT ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for TimeDomainEXT" );
+void from_json( const nlohmann::json &j, TimeDomainEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkTimeDomainEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: TimeDomainEXT temp;
-  from_json( j, temp );
-  p = VkTimeDomainEXT ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkTimeDomainEXT &p );
 
 
 #endif

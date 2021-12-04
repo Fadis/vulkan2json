@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICEMESHSHADERFEATURESNV_HPP
 #define VULKAN2JSON_PHYSICALDEVICEMESHSHADERFEATURESNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceMeshShaderFeaturesNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "taskShader" ] = bool( p.taskShader );
-  j[ "meshShader" ] = bool( p.meshShader );
+void to_json( nlohmann::json &j, const PhysicalDeviceMeshShaderFeaturesNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceMeshShaderFeaturesNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceMeshShaderFeaturesNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceMeshShaderFeaturesNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceMeshShaderFeaturesNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceMeshShaderFeaturesNV" );
-  p.taskShader = j[ "taskShader" ];
-  p.meshShader = j[ "meshShader" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceMeshShaderFeaturesNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceMeshShaderFeaturesNV &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceMeshShaderFeaturesNV temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceMeshShaderFeaturesNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceMeshShaderFeaturesNV &p );
 
 
 #endif

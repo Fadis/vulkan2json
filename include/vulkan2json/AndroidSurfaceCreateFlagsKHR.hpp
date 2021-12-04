@@ -32,7 +32,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_ANDROID_SURFACE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const AndroidSurfaceCreateFlagBitsKHR &p ) {
 }
@@ -67,7 +68,6 @@ inline void from_json( const nlohmann::json &j, AndroidSurfaceCreateFlagsKHR &p 
   else throw vulkan2json::invalid_flag_value( "incompatible value for AndroidSurfaceCreateFlagsKHR" );
 }
 }
-#endif
 
 
 #endif

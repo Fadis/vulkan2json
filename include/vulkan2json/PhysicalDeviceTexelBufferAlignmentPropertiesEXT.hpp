@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICETEXELBUFFERALIGNMENTPROPERTIESEXT_HPP
 #define VULKAN2JSON_PHYSICALDEVICETEXELBUFFERALIGNMENTPROPERTIESEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceTexelBufferAlignmentPropertiesEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "storageTexelBufferOffsetAlignmentBytes" ] = p.storageTexelBufferOffsetAlignmentBytes;
-  j[ "storageTexelBufferOffsetSingleTexelAlignment" ] = bool( p.storageTexelBufferOffsetSingleTexelAlignment );
-  j[ "uniformTexelBufferOffsetAlignmentBytes" ] = p.uniformTexelBufferOffsetAlignmentBytes;
-  j[ "uniformTexelBufferOffsetSingleTexelAlignment" ] = bool( p.uniformTexelBufferOffsetSingleTexelAlignment );
+void to_json( nlohmann::json &j, const PhysicalDeviceTexelBufferAlignmentPropertiesEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceTexelBufferAlignmentPropertiesEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceTexelBufferAlignmentPropertiesEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceTexelBufferAlignmentPropertiesEXT" );
-  p.storageTexelBufferOffsetAlignmentBytes = j[ "storageTexelBufferOffsetAlignmentBytes" ];
-  p.storageTexelBufferOffsetSingleTexelAlignment = j[ "storageTexelBufferOffsetSingleTexelAlignment" ];
-  p.uniformTexelBufferOffsetAlignmentBytes = j[ "uniformTexelBufferOffsetAlignmentBytes" ];
-  p.uniformTexelBufferOffsetSingleTexelAlignment = j[ "uniformTexelBufferOffsetSingleTexelAlignment" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceTexelBufferAlignmentPropertiesEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceTexelBufferAlignmentPropertiesEXT temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT &p );
 
 
 #endif

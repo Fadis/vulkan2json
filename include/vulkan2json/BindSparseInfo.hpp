@@ -22,52 +22,19 @@
 #ifndef VULKAN2JSON_BINDSPARSEINFO_HPP
 #define VULKAN2JSON_BINDSPARSEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const BindSparseInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "waitSemaphoreCount" ] = p.waitSemaphoreCount;
-  j[ "pWaitSemaphores" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pWaitSemaphores ) );
-  j[ "bufferBindCount" ] = p.bufferBindCount;
-  j[ "pBufferBinds" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pBufferBinds ) );
-  j[ "imageOpaqueBindCount" ] = p.imageOpaqueBindCount;
-  j[ "pImageOpaqueBinds" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pImageOpaqueBinds ) );
-  j[ "imageBindCount" ] = p.imageBindCount;
-  j[ "pImageBinds" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pImageBinds ) );
-  j[ "signalSemaphoreCount" ] = p.signalSemaphoreCount;
-  j[ "pSignalSemaphores" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pSignalSemaphores ) );
+void to_json( nlohmann::json &j, const BindSparseInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkBindSparseInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: BindSparseInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkBindSparseInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, BindSparseInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for BindSparseInfo" );
-  p.waitSemaphoreCount = j[ "waitSemaphoreCount" ];
-  p.bufferBindCount = j[ "bufferBindCount" ];
-  p.imageOpaqueBindCount = j[ "imageOpaqueBindCount" ];
-  p.imageBindCount = j[ "imageBindCount" ];
-  p.signalSemaphoreCount = j[ "signalSemaphoreCount" ];
+  void from_json( const nlohmann::json &j, BindSparseInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkBindSparseInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: BindSparseInfo temp;
-  from_json( j, temp );
-  p = VkBindSparseInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkBindSparseInfo &p );
 
 
 #endif

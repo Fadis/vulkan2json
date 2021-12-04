@@ -22,51 +22,19 @@
 #ifndef VULKAN2JSON_TRANSFORMMATRIXKHR_HPP
 #define VULKAN2JSON_TRANSFORMMATRIXKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const TransformMatrixKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "matrix" ] = nlohmann::json::array();
-  for( auto &e: p.matrix ) {
-    auto temp = nlohmann::json::array();
-    std::copy( e.begin(), e.end(), std::back_inserter( temp ) );
-    j[ "matrix" ].push_back( std::move( temp ) );
-  }
+void to_json( nlohmann::json &j, const TransformMatrixKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkTransformMatrixKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: TransformMatrixKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkTransformMatrixKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, TransformMatrixKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for TransformMatrixKHR" );
-  if( !j[ "matrix" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for TransformMatrixKHR.matrix" );
-  if( !j[ "matrix" ].size() > p.matrix.size() ) throw vulkan2json::invalid_array_value( "too many values in array for TransformMatrixKHR.matrix" );
-  for( std::size_t i = 0u; i != j[ "matrix" ].size(); ++i ) {
-    if( !j[ "matrix" ][ i ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for TransformMatrixKHR.matrix" );
-    if( !j[ "matrix" ][ i ].size() > p.matrix[ i ].size() ) throw vulkan2json::invalid_array_value( "too many values in array for TransformMatrixKHR.matrix" );
-    std::fill( p.matrix[ i ].begin(), p.matrix[ i ].end(), 0 );
-    std::copy( j[ "matrix" ][ i ].begin(), j[ "matrix" ][ i ].end(), p.matrix[ i ].begin() );
-  }
-  for( std::size_t i = j[ "matrix" ].size(); i != p.matrix.size(); ++i ) {
-    std::fill( p.matrix[ i ].begin(), p.matrix[ i ].end(), 0 );
-  }
+  void from_json( const nlohmann::json &j, TransformMatrixKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkTransformMatrixKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: TransformMatrixKHR temp;
-  from_json( j, temp );
-  p = VkTransformMatrixKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkTransformMatrixKHR &p );
 
 
 #endif

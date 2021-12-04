@@ -22,47 +22,19 @@
 #ifndef VULKAN2JSON_PHYSICALDEVICERAYTRACINGPIPELINEFEATURESKHR_HPP
 #define VULKAN2JSON_PHYSICALDEVICERAYTRACINGPIPELINEFEATURESKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PhysicalDeviceRayTracingPipelineFeaturesKHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "rayTracingPipeline" ] = bool( p.rayTracingPipeline );
-  j[ "rayTracingPipelineShaderGroupHandleCaptureReplay" ] = bool( p.rayTracingPipelineShaderGroupHandleCaptureReplay );
-  j[ "rayTracingPipelineShaderGroupHandleCaptureReplayMixed" ] = bool( p.rayTracingPipelineShaderGroupHandleCaptureReplayMixed );
-  j[ "rayTracingPipelineTraceRaysIndirect" ] = bool( p.rayTracingPipelineTraceRaysIndirect );
-  j[ "rayTraversalPrimitiveCulling" ] = bool( p.rayTraversalPrimitiveCulling );
+void to_json( nlohmann::json &j, const PhysicalDeviceRayTracingPipelineFeaturesKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPhysicalDeviceRayTracingPipelineFeaturesKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceRayTracingPipelineFeaturesKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceRayTracingPipelineFeaturesKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PhysicalDeviceRayTracingPipelineFeaturesKHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceRayTracingPipelineFeaturesKHR" );
-  p.rayTracingPipeline = j[ "rayTracingPipeline" ];
-  p.rayTracingPipelineShaderGroupHandleCaptureReplay = j[ "rayTracingPipelineShaderGroupHandleCaptureReplay" ];
-  p.rayTracingPipelineShaderGroupHandleCaptureReplayMixed = j[ "rayTracingPipelineShaderGroupHandleCaptureReplayMixed" ];
-  p.rayTracingPipelineTraceRaysIndirect = j[ "rayTracingPipelineTraceRaysIndirect" ];
-  p.rayTraversalPrimitiveCulling = j[ "rayTraversalPrimitiveCulling" ];
+  void from_json( const nlohmann::json &j, PhysicalDeviceRayTracingPipelineFeaturesKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPhysicalDeviceRayTracingPipelineFeaturesKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PhysicalDeviceRayTracingPipelineFeaturesKHR temp;
-  from_json( j, temp );
-  p = VkPhysicalDeviceRayTracingPipelineFeaturesKHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceRayTracingPipelineFeaturesKHR &p );
 
 
 #endif

@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_COMMANDBUFFERRESETFLAGS_HPP
 #define VULKAN2JSON_COMMANDBUFFERRESETFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CommandBufferResetFlagBits &p ) {
+  void to_json( nlohmann::json &j, const CommandBufferResetFlagBits &p );
+  void to_json( nlohmann::json &j, const CommandBufferResetFlags &p );
+  void from_json( const nlohmann::json &j, CommandBufferResetFlagBits &p );
+  void from_json( const nlohmann::json &j, CommandBufferResetFlags &p );
 }
-inline void from_json( const nlohmann::json &j, CommandBufferResetFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for CommandBufferResetFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = CommandBufferResetFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for CommandBufferResetFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const CommandBufferResetFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( CommandBufferResetFlagBits ) * 8u; ++n ) {
-    if( p & CommandBufferResetFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, CommandBufferResetFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, CommandBufferResetFlags &p ) {
-  if( j.is_array() ) {
-    p = CommandBufferResetFlags ( 0 );
-    for( auto &e:  j ) {
-      CommandBufferResetFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for CommandBufferResetFlags" );
-}
-}
-#endif
 
 
 #endif

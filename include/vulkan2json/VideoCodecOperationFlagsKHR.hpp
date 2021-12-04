@@ -32,22 +32,23 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_VIDEO_QUEUE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoCodecOperationFlagBitsKHR &p ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoCodecOperationFlagBitsKHR :: eInvalid == p ) {
     j = "Invalid";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoCodecOperationFlagBitsKHR :: eEncodeH264EXT == p ) {
     j = "EncodeH264EXT";
     return;
   }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
   if( VideoCodecOperationFlagBitsKHR :: eDecodeH264EXT == p ) {
     j = "DecodeH264EXT";
     return;
@@ -56,55 +57,55 @@ inline void to_json( nlohmann::json &j, const VideoCodecOperationFlagBitsKHR &p 
 }
 inline void from_json( const nlohmann::json &j, VideoCodecOperationFlagBitsKHR &p ) {
   if( j.is_string() ) {
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "Invalid" == j.get< std::string >() ) {
       p = VideoCodecOperationFlagBitsKHR :: eInvalid ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eInvalid" == j.get< std::string >() ) {
       p = VideoCodecOperationFlagBitsKHR :: eInvalid ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CODEC_OPERATION_INVALID_BIT_KHR" == j.get< std::string >() ) {
       p = VideoCodecOperationFlagBitsKHR :: eInvalid ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "EncodeH264EXT" == j.get< std::string >() ) {
       p = VideoCodecOperationFlagBitsKHR :: eEncodeH264EXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eEncodeH264EXT" == j.get< std::string >() ) {
       p = VideoCodecOperationFlagBitsKHR :: eEncodeH264EXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CODEC_OPERATION_ENCODE_H264_BIT_EXT" == j.get< std::string >() ) {
       p = VideoCodecOperationFlagBitsKHR :: eEncodeH264EXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "DecodeH264EXT" == j.get< std::string >() ) {
       p = VideoCodecOperationFlagBitsKHR :: eDecodeH264EXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "eDecodeH264EXT" == j.get< std::string >() ) {
       p = VideoCodecOperationFlagBitsKHR :: eDecodeH264EXT ;
       return;
     }
 #endif
-#if defined(VK_ENABLE_BETA_EXTENSIONS)
+#if defined( VK_ENABLE_BETA_EXTENSIONS )
     if( "VK_VIDEO_CODEC_OPERATION_DECODE_H264_BIT_EXT" == j.get< std::string >() ) {
       p = VideoCodecOperationFlagBitsKHR :: eDecodeH264EXT ;
       return;
@@ -139,7 +140,6 @@ inline void from_json( const nlohmann::json &j, VideoCodecOperationFlagsKHR &p )
   else throw vulkan2json::invalid_flag_value( "incompatible value for VideoCodecOperationFlagsKHR" );
 }
 }
-#endif
 
 
 #endif

@@ -22,46 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINEVIEWPORTSTATECREATEINFO_HPP
 #define VULKAN2JSON_PIPELINEVIEWPORTSTATECREATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineViewportStateCreateFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineViewportStateCreateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "viewportCount" ] = p.viewportCount;
-  j[ "pViewports" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pViewports ) );
-  j[ "scissorCount" ] = p.scissorCount;
-  j[ "pScissors" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pScissors ) );
+void to_json( nlohmann::json &j, const PipelineViewportStateCreateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineViewportStateCreateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineViewportStateCreateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineViewportStateCreateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineViewportStateCreateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineViewportStateCreateInfo" );
-  p.flags = PipelineViewportStateCreateFlags ( j[ "flags" ] );
-  p.viewportCount = j[ "viewportCount" ];
-  p.scissorCount = j[ "scissorCount" ];
+  void from_json( const nlohmann::json &j, PipelineViewportStateCreateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineViewportStateCreateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineViewportStateCreateInfo temp;
-  from_json( j, temp );
-  p = VkPipelineViewportStateCreateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineViewportStateCreateInfo &p );
 
 
 #endif

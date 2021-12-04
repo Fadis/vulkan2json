@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTUREMOTIONINSTANCETYPENV_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTUREMOTIONINSTANCETYPENV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_NV_RAY_TRACING_MOTION_BLUR_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureMotionInstanceTypeNV &p ) {
-  if( AccelerationStructureMotionInstanceTypeNV :: eStatic == p ) {
-    j = "Static";
-    return;
-  }
-  if( AccelerationStructureMotionInstanceTypeNV :: eMatrixMotion == p ) {
-    j = "MatrixMotion";
-    return;
-  }
+void to_json( nlohmann::json &j, const AccelerationStructureMotionInstanceTypeNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAccelerationStructureMotionInstanceTypeNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AccelerationStructureMotionInstanceTypeNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAccelerationStructureMotionInstanceTypeNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AccelerationStructureMotionInstanceTypeNV &p ) {
-  if( j.is_string() ) {
-    if( "Static" == j.get< std::string >() ) {
-      p = AccelerationStructureMotionInstanceTypeNV :: eStatic ;
-      return;
-    }
-    if( "eStatic" == j.get< std::string >() ) {
-      p = AccelerationStructureMotionInstanceTypeNV :: eStatic ;
-      return;
-    }
-    if( "VK_ACCELERATION_STRUCTURE_MOTION_INSTANCE_TYPE_STATIC_NV" == j.get< std::string >() ) {
-      p = AccelerationStructureMotionInstanceTypeNV :: eStatic ;
-      return;
-    }
-    if( "MatrixMotion" == j.get< std::string >() ) {
-      p = AccelerationStructureMotionInstanceTypeNV :: eMatrixMotion ;
-      return;
-    }
-    if( "eMatrixMotion" == j.get< std::string >() ) {
-      p = AccelerationStructureMotionInstanceTypeNV :: eMatrixMotion ;
-      return;
-    }
-    if( "VK_ACCELERATION_STRUCTURE_MOTION_INSTANCE_TYPE_MATRIX_MOTION_NV" == j.get< std::string >() ) {
-      p = AccelerationStructureMotionInstanceTypeNV :: eMatrixMotion ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for AccelerationStructureMotionInstanceTypeNV" );
-  }
-  if( j.is_number() ) {
-    p = AccelerationStructureMotionInstanceTypeNV ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for AccelerationStructureMotionInstanceTypeNV" );
+void from_json( const nlohmann::json &j, AccelerationStructureMotionInstanceTypeNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAccelerationStructureMotionInstanceTypeNV &p ) {
-  VULKAN_HPP_NAMESPACE :: AccelerationStructureMotionInstanceTypeNV temp;
-  from_json( j, temp );
-  p = VkAccelerationStructureMotionInstanceTypeNV ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkAccelerationStructureMotionInstanceTypeNV &p );
 
 
 #endif

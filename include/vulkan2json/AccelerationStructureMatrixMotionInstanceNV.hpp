@@ -22,48 +22,19 @@
 #ifndef VULKAN2JSON_ACCELERATIONSTRUCTUREMATRIXMOTIONINSTANCENV_HPP
 #define VULKAN2JSON_ACCELERATIONSTRUCTUREMATRIXMOTIONINSTANCENV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/TransformMatrixKHR.hpp>
-#include <vulkan2json/TransformMatrixKHR.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const AccelerationStructureMatrixMotionInstanceNV &p ) {
-  j = nlohmann::json::object();
-  j[ "transformT0" ] = p.transformT0;
-  j[ "transformT1" ] = p.transformT1;
-  j[ "instanceCustomIndex" ] = p.instanceCustomIndex;
-  j[ "mask" ] = p.mask;
-  j[ "instanceShaderBindingTableRecordOffset" ] = p.instanceShaderBindingTableRecordOffset;
-  j[ "accelerationStructureReference" ] = p.accelerationStructureReference;
+void to_json( nlohmann::json &j, const AccelerationStructureMatrixMotionInstanceNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkAccelerationStructureMatrixMotionInstanceNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: AccelerationStructureMatrixMotionInstanceNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkAccelerationStructureMatrixMotionInstanceNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, AccelerationStructureMatrixMotionInstanceNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for AccelerationStructureMatrixMotionInstanceNV" );
-  p.transformT0 = TransformMatrixKHR ( j[ "transformT0" ] );
-  p.transformT1 = TransformMatrixKHR ( j[ "transformT1" ] );
-  p.instanceCustomIndex = j[ "instanceCustomIndex" ];
-  p.mask = j[ "mask" ];
-  p.instanceShaderBindingTableRecordOffset = j[ "instanceShaderBindingTableRecordOffset" ];
-  p.accelerationStructureReference = j[ "accelerationStructureReference" ];
+  void from_json( const nlohmann::json &j, AccelerationStructureMatrixMotionInstanceNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkAccelerationStructureMatrixMotionInstanceNV &p ) {
-  VULKAN_HPP_NAMESPACE :: AccelerationStructureMatrixMotionInstanceNV temp;
-  from_json( j, temp );
-  p = VkAccelerationStructureMatrixMotionInstanceNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkAccelerationStructureMatrixMotionInstanceNV &p );
 
 
 #endif

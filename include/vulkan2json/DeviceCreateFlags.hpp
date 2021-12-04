@@ -22,52 +22,17 @@
 #ifndef VULKAN2JSON_DEVICECREATEFLAGS_HPP
 #define VULKAN2JSON_DEVICECREATEFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DeviceCreateFlagBits &p ) {
+  void to_json( nlohmann::json &j, const DeviceCreateFlagBits &p );
+  void to_json( nlohmann::json &j, const DeviceCreateFlags &p );
+  void from_json( const nlohmann::json &j, DeviceCreateFlagBits &p );
+  void from_json( const nlohmann::json &j, DeviceCreateFlags &p );
 }
-inline void from_json( const nlohmann::json &j, DeviceCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DeviceCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = DeviceCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DeviceCreateFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const DeviceCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DeviceCreateFlagBits ) * 8u; ++n ) {
-    if( p & DeviceCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DeviceCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, DeviceCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = DeviceCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      DeviceCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DeviceCreateFlags" );
-}
-}
-#endif
 
 
 #endif

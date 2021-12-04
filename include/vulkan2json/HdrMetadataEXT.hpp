@@ -22,57 +22,19 @@
 #ifndef VULKAN2JSON_HDRMETADATAEXT_HPP
 #define VULKAN2JSON_HDRMETADATAEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/XYColorEXT.hpp>
-#include <vulkan2json/XYColorEXT.hpp>
-#include <vulkan2json/XYColorEXT.hpp>
-#include <vulkan2json/XYColorEXT.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const HdrMetadataEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "displayPrimaryRed" ] = p.displayPrimaryRed;
-  j[ "displayPrimaryGreen" ] = p.displayPrimaryGreen;
-  j[ "displayPrimaryBlue" ] = p.displayPrimaryBlue;
-  j[ "whitePoint" ] = p.whitePoint;
-  j[ "maxLuminance" ] = p.maxLuminance;
-  j[ "minLuminance" ] = p.minLuminance;
-  j[ "maxContentLightLevel" ] = p.maxContentLightLevel;
-  j[ "maxFrameAverageLightLevel" ] = p.maxFrameAverageLightLevel;
+void to_json( nlohmann::json &j, const HdrMetadataEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkHdrMetadataEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: HdrMetadataEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkHdrMetadataEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, HdrMetadataEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for HdrMetadataEXT" );
-  p.displayPrimaryRed = XYColorEXT ( j[ "displayPrimaryRed" ] );
-  p.displayPrimaryGreen = XYColorEXT ( j[ "displayPrimaryGreen" ] );
-  p.displayPrimaryBlue = XYColorEXT ( j[ "displayPrimaryBlue" ] );
-  p.whitePoint = XYColorEXT ( j[ "whitePoint" ] );
-  p.maxLuminance = j[ "maxLuminance" ];
-  p.minLuminance = j[ "minLuminance" ];
-  p.maxContentLightLevel = j[ "maxContentLightLevel" ];
-  p.maxFrameAverageLightLevel = j[ "maxFrameAverageLightLevel" ];
+  void from_json( const nlohmann::json &j, HdrMetadataEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkHdrMetadataEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: HdrMetadataEXT temp;
-  from_json( j, temp );
-  p = VkHdrMetadataEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkHdrMetadataEXT &p );
 
 
 #endif

@@ -32,6 +32,9 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/StructureType.hpp>
 #if defined( VK_ENABLE_BETA_EXTENSIONS )
 namespace VULKAN_HPP_NAMESPACE {
@@ -48,7 +51,9 @@ inline void to_json( nlohmann::json &j, const VkVideoSessionParametersUpdateInfo
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoSessionParametersUpdateInfoKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoSessionParametersUpdateInfoKHR" );
-  p.updateSequenceCount = j[ "updateSequenceCount" ];
+  if( j.find( "updateSequenceCount" ) != j.end() ) {
+    p.updateSequenceCount = j[ "updateSequenceCount" ];
+  }
 }
 }
 inline void from_json( const nlohmann::json &j, VkVideoSessionParametersUpdateInfoKHR &p ) {

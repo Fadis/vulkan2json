@@ -22,84 +22,17 @@
 #ifndef VULKAN2JSON_COMMANDPOOLCREATEFLAGS_HPP
 #define VULKAN2JSON_COMMANDPOOLCREATEFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CommandPoolCreateFlagBits &p ) {
-  if( CommandPoolCreateFlagBits :: eTransient == p ) {
-    j = "Transient";
-    return;
-  }
-  if( CommandPoolCreateFlagBits :: eResetCommandBuffer == p ) {
-    j = "ResetCommandBuffer";
-    return;
-  }
+  void to_json( nlohmann::json &j, const CommandPoolCreateFlagBits &p );
+  void to_json( nlohmann::json &j, const CommandPoolCreateFlags &p );
+  void from_json( const nlohmann::json &j, CommandPoolCreateFlagBits &p );
+  void from_json( const nlohmann::json &j, CommandPoolCreateFlags &p );
 }
-inline void from_json( const nlohmann::json &j, CommandPoolCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "Transient" == j.get< std::string >() ) {
-      p = CommandPoolCreateFlagBits :: eTransient ;
-      return;
-    }
-    if( "eTransient" == j.get< std::string >() ) {
-      p = CommandPoolCreateFlagBits :: eTransient ;
-      return;
-    }
-    if( "VK_COMMAND_POOL_CREATE_TRANSIENT_BIT" == j.get< std::string >() ) {
-      p = CommandPoolCreateFlagBits :: eTransient ;
-      return;
-    }
-    if( "ResetCommandBuffer" == j.get< std::string >() ) {
-      p = CommandPoolCreateFlagBits :: eResetCommandBuffer ;
-      return;
-    }
-    if( "eResetCommandBuffer" == j.get< std::string >() ) {
-      p = CommandPoolCreateFlagBits :: eResetCommandBuffer ;
-      return;
-    }
-    if( "VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT" == j.get< std::string >() ) {
-      p = CommandPoolCreateFlagBits :: eResetCommandBuffer ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for CommandPoolCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = CommandPoolCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for CommandPoolCreateFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const CommandPoolCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( CommandPoolCreateFlagBits ) * 8u; ++n ) {
-    if( p & CommandPoolCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, CommandPoolCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, CommandPoolCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = CommandPoolCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      CommandPoolCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for CommandPoolCreateFlags" );
-}
-}
-#endif
 
 
 #endif

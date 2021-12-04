@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_EXTERNALMEMORYPROPERTIES_HPP
 #define VULKAN2JSON_EXTERNALMEMORYPROPERTIES_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/ExternalMemoryFeatureFlags.hpp>
-#include <vulkan2json/ExternalMemoryHandleTypeFlags.hpp>
-#include <vulkan2json/ExternalMemoryHandleTypeFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ExternalMemoryProperties &p ) {
-  j = nlohmann::json::object();
-  j[ "externalMemoryFeatures" ] = p.externalMemoryFeatures;
-  j[ "exportFromImportedHandleTypes" ] = p.exportFromImportedHandleTypes;
-  j[ "compatibleHandleTypes" ] = p.compatibleHandleTypes;
+void to_json( nlohmann::json &j, const ExternalMemoryProperties &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkExternalMemoryProperties &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ExternalMemoryProperties ( p ) );
-}
+void to_json( nlohmann::json &j, const VkExternalMemoryProperties &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ExternalMemoryProperties &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ExternalMemoryProperties" );
-  p.externalMemoryFeatures = ExternalMemoryFeatureFlags ( j[ "externalMemoryFeatures" ] );
-  p.exportFromImportedHandleTypes = ExternalMemoryHandleTypeFlags ( j[ "exportFromImportedHandleTypes" ] );
-  p.compatibleHandleTypes = ExternalMemoryHandleTypeFlags ( j[ "compatibleHandleTypes" ] );
+  void from_json( const nlohmann::json &j, ExternalMemoryProperties &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkExternalMemoryProperties &p ) {
-  VULKAN_HPP_NAMESPACE :: ExternalMemoryProperties temp;
-  from_json( j, temp );
-  p = VkExternalMemoryProperties ( temp );
-}
+void from_json( const nlohmann::json &j, VkExternalMemoryProperties &p );
 
 
 #endif

@@ -22,73 +22,19 @@
 #ifndef VULKAN2JSON_SHADERFLOATCONTROLSINDEPENDENCE_HPP
 #define VULKAN2JSON_SHADERFLOATCONTROLSINDEPENDENCE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_2
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ShaderFloatControlsIndependence &p ) {
-  if( ShaderFloatControlsIndependence :: e32BitOnly == p ) {
-    j = "32BitOnly";
-    return;
-  }
-  if( ShaderFloatControlsIndependence :: eAll == p ) {
-    j = "All";
-    return;
-  }
+void to_json( nlohmann::json &j, const ShaderFloatControlsIndependence &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkShaderFloatControlsIndependence &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ShaderFloatControlsIndependence ( p ) );
-}
+void to_json( nlohmann::json &j, const VkShaderFloatControlsIndependence &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ShaderFloatControlsIndependence &p ) {
-  if( j.is_string() ) {
-    if( "32BitOnly" == j.get< std::string >() ) {
-      p = ShaderFloatControlsIndependence :: e32BitOnly ;
-      return;
-    }
-    if( "e32BitOnly" == j.get< std::string >() ) {
-      p = ShaderFloatControlsIndependence :: e32BitOnly ;
-      return;
-    }
-    if( "VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_32_BIT_ONLY" == j.get< std::string >() ) {
-      p = ShaderFloatControlsIndependence :: e32BitOnly ;
-      return;
-    }
-    if( "All" == j.get< std::string >() ) {
-      p = ShaderFloatControlsIndependence :: eAll ;
-      return;
-    }
-    if( "eAll" == j.get< std::string >() ) {
-      p = ShaderFloatControlsIndependence :: eAll ;
-      return;
-    }
-    if( "VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_ALL" == j.get< std::string >() ) {
-      p = ShaderFloatControlsIndependence :: eAll ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for ShaderFloatControlsIndependence" );
-  }
-  if( j.is_number() ) {
-    p = ShaderFloatControlsIndependence ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for ShaderFloatControlsIndependence" );
+void from_json( const nlohmann::json &j, ShaderFloatControlsIndependence &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkShaderFloatControlsIndependence &p ) {
-  VULKAN_HPP_NAMESPACE :: ShaderFloatControlsIndependence temp;
-  from_json( j, temp );
-  p = VkShaderFloatControlsIndependence ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkShaderFloatControlsIndependence &p );
 
 
 #endif

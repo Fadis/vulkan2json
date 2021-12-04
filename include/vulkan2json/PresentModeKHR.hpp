@@ -22,121 +22,19 @@
 #ifndef VULKAN2JSON_PRESENTMODEKHR_HPP
 #define VULKAN2JSON_PRESENTMODEKHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_KHR_SURFACE_EXTENSION_NAME
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PresentModeKHR &p ) {
-  if( PresentModeKHR :: eImmediate == p ) {
-    j = "Immediate";
-    return;
-  }
-  if( PresentModeKHR :: eMailbox == p ) {
-    j = "Mailbox";
-    return;
-  }
-  if( PresentModeKHR :: eFifo == p ) {
-    j = "Fifo";
-    return;
-  }
-  if( PresentModeKHR :: eFifoRelaxed == p ) {
-    j = "FifoRelaxed";
-    return;
-  }
-  if( PresentModeKHR :: eSharedDemandRefresh == p ) {
-    j = "SharedDemandRefresh";
-    return;
-  }
+void to_json( nlohmann::json &j, const PresentModeKHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPresentModeKHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PresentModeKHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPresentModeKHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PresentModeKHR &p ) {
-  if( j.is_string() ) {
-    if( "Immediate" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eImmediate ;
-      return;
-    }
-    if( "eImmediate" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eImmediate ;
-      return;
-    }
-    if( "VK_PRESENT_MODE_IMMEDIATE_KHR" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eImmediate ;
-      return;
-    }
-    if( "Mailbox" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eMailbox ;
-      return;
-    }
-    if( "eMailbox" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eMailbox ;
-      return;
-    }
-    if( "VK_PRESENT_MODE_MAILBOX_KHR" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eMailbox ;
-      return;
-    }
-    if( "Fifo" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eFifo ;
-      return;
-    }
-    if( "eFifo" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eFifo ;
-      return;
-    }
-    if( "VK_PRESENT_MODE_FIFO_KHR" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eFifo ;
-      return;
-    }
-    if( "FifoRelaxed" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eFifoRelaxed ;
-      return;
-    }
-    if( "eFifoRelaxed" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eFifoRelaxed ;
-      return;
-    }
-    if( "VK_PRESENT_MODE_FIFO_RELAXED_KHR" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eFifoRelaxed ;
-      return;
-    }
-    if( "SharedDemandRefresh" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eSharedDemandRefresh ;
-      return;
-    }
-    if( "eSharedDemandRefresh" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eSharedDemandRefresh ;
-      return;
-    }
-    if( "VK_PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR" == j.get< std::string >() ) {
-      p = PresentModeKHR :: eSharedDemandRefresh ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PresentModeKHR" );
-  }
-  if( j.is_number() ) {
-    p = PresentModeKHR ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PresentModeKHR" );
+void from_json( const nlohmann::json &j, PresentModeKHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPresentModeKHR &p ) {
-  VULKAN_HPP_NAMESPACE :: PresentModeKHR temp;
-  from_json( j, temp );
-  p = VkPresentModeKHR ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkPresentModeKHR &p );
 
 
 #endif

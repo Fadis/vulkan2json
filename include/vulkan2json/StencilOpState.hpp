@@ -22,52 +22,19 @@
 #ifndef VULKAN2JSON_STENCILOPSTATE_HPP
 #define VULKAN2JSON_STENCILOPSTATE_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StencilOp.hpp>
-#include <vulkan2json/StencilOp.hpp>
-#include <vulkan2json/StencilOp.hpp>
-#include <vulkan2json/CompareOp.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const StencilOpState &p ) {
-  j = nlohmann::json::object();
-  j[ "failOp" ] = p.failOp;
-  j[ "passOp" ] = p.passOp;
-  j[ "depthFailOp" ] = p.depthFailOp;
-  j[ "compareOp" ] = p.compareOp;
-  j[ "compareMask" ] = p.compareMask;
-  j[ "writeMask" ] = p.writeMask;
-  j[ "reference" ] = p.reference;
+void to_json( nlohmann::json &j, const StencilOpState &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkStencilOpState &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: StencilOpState ( p ) );
-}
+void to_json( nlohmann::json &j, const VkStencilOpState &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, StencilOpState &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for StencilOpState" );
-  p.failOp = StencilOp ( j[ "failOp" ] );
-  p.passOp = StencilOp ( j[ "passOp" ] );
-  p.depthFailOp = StencilOp ( j[ "depthFailOp" ] );
-  p.compareOp = CompareOp ( j[ "compareOp" ] );
-  p.compareMask = j[ "compareMask" ];
-  p.writeMask = j[ "writeMask" ];
-  p.reference = j[ "reference" ];
+  void from_json( const nlohmann::json &j, StencilOpState &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkStencilOpState &p ) {
-  VULKAN_HPP_NAMESPACE :: StencilOpState temp;
-  from_json( j, temp );
-  p = VkStencilOpState ( temp );
-}
+void from_json( const nlohmann::json &j, VkStencilOpState &p );
 
 
 #endif

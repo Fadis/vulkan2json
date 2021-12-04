@@ -22,36 +22,19 @@
 #ifndef VULKAN2JSON_SETSTATEFLAGSINDIRECTCOMMANDNV_HPP
 #define VULKAN2JSON_SETSTATEFLAGSINDIRECTCOMMANDNV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
+
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const SetStateFlagsIndirectCommandNV &p ) {
-  j = nlohmann::json::object();
-  j[ "data" ] = p.data;
+void to_json( nlohmann::json &j, const SetStateFlagsIndirectCommandNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkSetStateFlagsIndirectCommandNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: SetStateFlagsIndirectCommandNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkSetStateFlagsIndirectCommandNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, SetStateFlagsIndirectCommandNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for SetStateFlagsIndirectCommandNV" );
-  p.data = j[ "data" ];
+  void from_json( const nlohmann::json &j, SetStateFlagsIndirectCommandNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkSetStateFlagsIndirectCommandNV &p ) {
-  VULKAN_HPP_NAMESPACE :: SetStateFlagsIndirectCommandNV temp;
-  from_json( j, temp );
-  p = VkSetStateFlagsIndirectCommandNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkSetStateFlagsIndirectCommandNV &p );
 
 
 #endif

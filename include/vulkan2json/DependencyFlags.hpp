@@ -22,116 +22,17 @@
 #ifndef VULKAN2JSON_DEPENDENCYFLAGS_HPP
 #define VULKAN2JSON_DEPENDENCYFLAGS_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DependencyFlagBits &p ) {
-  if( DependencyFlagBits :: eByRegion == p ) {
-    j = "ByRegion";
-    return;
-  }
-  if( DependencyFlagBits :: eDeviceGroup == p ) {
-    j = "DeviceGroup";
-    return;
-  }
-  if( DependencyFlagBits :: eViewLocal == p ) {
-    j = "ViewLocal";
-    return;
-  }
-  if( DependencyFlagBits :: eDeviceGroupKHR == p ) {
-    j = "DeviceGroupKHR";
-    return;
-  }
+  void to_json( nlohmann::json &j, const DependencyFlagBits &p );
+  void to_json( nlohmann::json &j, const DependencyFlags &p );
+  void from_json( const nlohmann::json &j, DependencyFlagBits &p );
+  void from_json( const nlohmann::json &j, DependencyFlags &p );
 }
-inline void from_json( const nlohmann::json &j, DependencyFlagBits &p ) {
-  if( j.is_string() ) {
-    if( "ByRegion" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eByRegion ;
-      return;
-    }
-    if( "eByRegion" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eByRegion ;
-      return;
-    }
-    if( "VK_DEPENDENCY_BY_REGION_BIT" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eByRegion ;
-      return;
-    }
-    if( "DeviceGroup" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eDeviceGroup ;
-      return;
-    }
-    if( "eDeviceGroup" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eDeviceGroup ;
-      return;
-    }
-    if( "VK_DEPENDENCY_DEVICE_GROUP_BIT" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eDeviceGroup ;
-      return;
-    }
-    if( "ViewLocal" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eViewLocal ;
-      return;
-    }
-    if( "eViewLocal" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eViewLocal ;
-      return;
-    }
-    if( "VK_DEPENDENCY_VIEW_LOCAL_BIT" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eViewLocal ;
-      return;
-    }
-    if( "DeviceGroupKHR" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eDeviceGroupKHR ;
-      return;
-    }
-    if( "eDeviceGroupKHR" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eDeviceGroupKHR ;
-      return;
-    }
-    if( "VK_DEPENDENCY_DEVICE_GROUP_BIT_KHR" == j.get< std::string >() ) {
-      p = DependencyFlagBits :: eDeviceGroupKHR ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DependencyFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = DependencyFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DependencyFlagBits" );
-}
-inline void to_json( nlohmann::json &j, const DependencyFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DependencyFlagBits ) * 8u; ++n ) {
-    if( p & DependencyFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DependencyFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-inline void from_json( const nlohmann::json &j, DependencyFlags &p ) {
-  if( j.is_array() ) {
-    p = DependencyFlags ( 0 );
-    for( auto &e:  j ) {
-      DependencyFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DependencyFlags" );
-}
-}
-#endif
 
 
 #endif

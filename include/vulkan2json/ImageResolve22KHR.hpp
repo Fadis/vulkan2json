@@ -22,52 +22,19 @@
 #ifndef VULKAN2JSON_IMAGERESOLVE22KHR_HPP
 #define VULKAN2JSON_IMAGERESOLVE22KHR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ImageSubresourceLayers.hpp>
-#include <vulkan2json/Offset3D.hpp>
-#include <vulkan2json/ImageSubresourceLayers.hpp>
-#include <vulkan2json/Offset3D.hpp>
-#include <vulkan2json/Extent3D.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const ImageResolve2KHR &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "srcSubresource" ] = p.srcSubresource;
-  j[ "srcOffset" ] = p.srcOffset;
-  j[ "dstSubresource" ] = p.dstSubresource;
-  j[ "dstOffset" ] = p.dstOffset;
-  j[ "extent" ] = p.extent;
+void to_json( nlohmann::json &j, const ImageResolve2KHR &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkImageResolve2KHR &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: ImageResolve2KHR ( p ) );
-}
+void to_json( nlohmann::json &j, const VkImageResolve2KHR &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, ImageResolve2KHR &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for ImageResolve2KHR" );
-  p.srcSubresource = ImageSubresourceLayers ( j[ "srcSubresource" ] );
-  p.srcOffset = Offset3D ( j[ "srcOffset" ] );
-  p.dstSubresource = ImageSubresourceLayers ( j[ "dstSubresource" ] );
-  p.dstOffset = Offset3D ( j[ "dstOffset" ] );
-  p.extent = Extent3D ( j[ "extent" ] );
+  void from_json( const nlohmann::json &j, ImageResolve2KHR &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkImageResolve2KHR &p ) {
-  VULKAN_HPP_NAMESPACE :: ImageResolve2KHR temp;
-  from_json( j, temp );
-  p = VkImageResolve2KHR ( temp );
-}
+void from_json( const nlohmann::json &j, VkImageResolve2KHR &p );
 
 
 #endif

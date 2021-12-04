@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_DEBUGUTILSOBJECTNAMEINFOEXT_HPP
 #define VULKAN2JSON_DEBUGUTILSOBJECTNAMEINFOEXT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/ObjectType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DebugUtilsObjectNameInfoEXT &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "objectType" ] = p.objectType;
-  j[ "objectHandle" ] = p.objectHandle;
-  if( p.pObjectName ) j[ "pObjectName" ] = std::string( p.pObjectName );
+void to_json( nlohmann::json &j, const DebugUtilsObjectNameInfoEXT &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDebugUtilsObjectNameInfoEXT &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DebugUtilsObjectNameInfoEXT ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDebugUtilsObjectNameInfoEXT &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DebugUtilsObjectNameInfoEXT &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DebugUtilsObjectNameInfoEXT" );
-  p.objectType = ObjectType ( j[ "objectType" ] );
-  p.objectHandle = j[ "objectHandle" ];
+  void from_json( const nlohmann::json &j, DebugUtilsObjectNameInfoEXT &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDebugUtilsObjectNameInfoEXT &p ) {
-  VULKAN_HPP_NAMESPACE :: DebugUtilsObjectNameInfoEXT temp;
-  from_json( j, temp );
-  p = VkDebugUtilsObjectNameInfoEXT ( temp );
-}
+void from_json( const nlohmann::json &j, VkDebugUtilsObjectNameInfoEXT &p );
 
 
 #endif

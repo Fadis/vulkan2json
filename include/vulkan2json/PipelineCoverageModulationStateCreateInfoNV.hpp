@@ -22,48 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECOVERAGEMODULATIONSTATECREATEINFONV_HPP
 #define VULKAN2JSON_PIPELINECOVERAGEMODULATIONSTATECREATEINFONV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineCoverageModulationStateCreateFlagsNV.hpp>
-#include <vulkan2json/CoverageModulationModeNV.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineCoverageModulationStateCreateInfoNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "coverageModulationMode" ] = p.coverageModulationMode;
-  j[ "coverageModulationTableEnable" ] = bool( p.coverageModulationTableEnable );
-  j[ "coverageModulationTableCount" ] = p.coverageModulationTableCount;
-  j[ "pCoverageModulationTable" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pCoverageModulationTable ) );
+void to_json( nlohmann::json &j, const PipelineCoverageModulationStateCreateInfoNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineCoverageModulationStateCreateInfoNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineCoverageModulationStateCreateInfoNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineCoverageModulationStateCreateInfoNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineCoverageModulationStateCreateInfoNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineCoverageModulationStateCreateInfoNV" );
-  p.flags = PipelineCoverageModulationStateCreateFlagsNV ( j[ "flags" ] );
-  p.coverageModulationMode = CoverageModulationModeNV ( j[ "coverageModulationMode" ] );
-  p.coverageModulationTableEnable = j[ "coverageModulationTableEnable" ];
-  p.coverageModulationTableCount = j[ "coverageModulationTableCount" ];
+  void from_json( const nlohmann::json &j, PipelineCoverageModulationStateCreateInfoNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineCoverageModulationStateCreateInfoNV &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineCoverageModulationStateCreateInfoNV temp;
-  from_json( j, temp );
-  p = VkPipelineCoverageModulationStateCreateInfoNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineCoverageModulationStateCreateInfoNV &p );
 
 
 #endif

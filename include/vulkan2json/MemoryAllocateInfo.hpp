@@ -22,41 +22,19 @@
 #ifndef VULKAN2JSON_MEMORYALLOCATEINFO_HPP
 #define VULKAN2JSON_MEMORYALLOCATEINFO_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const MemoryAllocateInfo &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "allocationSize" ] = p.allocationSize;
-  j[ "memoryTypeIndex" ] = p.memoryTypeIndex;
+void to_json( nlohmann::json &j, const MemoryAllocateInfo &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkMemoryAllocateInfo &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: MemoryAllocateInfo ( p ) );
-}
+void to_json( nlohmann::json &j, const VkMemoryAllocateInfo &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, MemoryAllocateInfo &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MemoryAllocateInfo" );
-  p.allocationSize = j[ "allocationSize" ];
-  p.memoryTypeIndex = j[ "memoryTypeIndex" ];
+  void from_json( const nlohmann::json &j, MemoryAllocateInfo &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkMemoryAllocateInfo &p ) {
-  VULKAN_HPP_NAMESPACE :: MemoryAllocateInfo temp;
-  from_json( j, temp );
-  p = VkMemoryAllocateInfo ( temp );
-}
+void from_json( const nlohmann::json &j, VkMemoryAllocateInfo &p );
 
 
 #endif

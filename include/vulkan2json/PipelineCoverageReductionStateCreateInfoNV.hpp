@@ -22,43 +22,19 @@
 #ifndef VULKAN2JSON_PIPELINECOVERAGEREDUCTIONSTATECREATEINFONV_HPP
 #define VULKAN2JSON_PIPELINECOVERAGEREDUCTIONSTATECREATEINFONV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineCoverageReductionStateCreateFlagsNV.hpp>
-#include <vulkan2json/CoverageReductionModeNV.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const PipelineCoverageReductionStateCreateInfoNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "flags" ] = p.flags;
-  j[ "coverageReductionMode" ] = p.coverageReductionMode;
+void to_json( nlohmann::json &j, const PipelineCoverageReductionStateCreateInfoNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkPipelineCoverageReductionStateCreateInfoNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineCoverageReductionStateCreateInfoNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkPipelineCoverageReductionStateCreateInfoNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, PipelineCoverageReductionStateCreateInfoNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineCoverageReductionStateCreateInfoNV" );
-  p.flags = PipelineCoverageReductionStateCreateFlagsNV ( j[ "flags" ] );
-  p.coverageReductionMode = CoverageReductionModeNV ( j[ "coverageReductionMode" ] );
+  void from_json( const nlohmann::json &j, PipelineCoverageReductionStateCreateInfoNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkPipelineCoverageReductionStateCreateInfoNV &p ) {
-  VULKAN_HPP_NAMESPACE :: PipelineCoverageReductionStateCreateInfoNV temp;
-  from_json( j, temp );
-  p = VkPipelineCoverageReductionStateCreateInfoNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkPipelineCoverageReductionStateCreateInfoNV &p );
 
 
 #endif

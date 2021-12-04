@@ -22,45 +22,19 @@
 #ifndef VULKAN2JSON_DESCRIPTORSETLAYOUTBINDING_HPP
 #define VULKAN2JSON_DESCRIPTORSETLAYOUTBINDING_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/DescriptorType.hpp>
-#include <vulkan2json/ShaderStageFlags.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const DescriptorSetLayoutBinding &p ) {
-  j = nlohmann::json::object();
-  j[ "binding" ] = p.binding;
-  j[ "descriptorType" ] = p.descriptorType;
-  j[ "descriptorCount" ] = p.descriptorCount;
-  j[ "stageFlags" ] = p.stageFlags;
-  j[ "pImmutableSamplers" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pImmutableSamplers ) );
+void to_json( nlohmann::json &j, const DescriptorSetLayoutBinding &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkDescriptorSetLayoutBinding &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: DescriptorSetLayoutBinding ( p ) );
-}
+void to_json( nlohmann::json &j, const VkDescriptorSetLayoutBinding &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, DescriptorSetLayoutBinding &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for DescriptorSetLayoutBinding" );
-  p.binding = j[ "binding" ];
-  p.descriptorType = DescriptorType ( j[ "descriptorType" ] );
-  p.descriptorCount = j[ "descriptorCount" ];
-  p.stageFlags = ShaderStageFlags ( j[ "stageFlags" ] );
+  void from_json( const nlohmann::json &j, DescriptorSetLayoutBinding &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkDescriptorSetLayoutBinding &p ) {
-  VULKAN_HPP_NAMESPACE :: DescriptorSetLayoutBinding temp;
-  from_json( j, temp );
-  p = VkDescriptorSetLayoutBinding ( temp );
-}
+void from_json( const nlohmann::json &j, VkDescriptorSetLayoutBinding &p );
 
 
 #endif

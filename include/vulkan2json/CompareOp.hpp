@@ -22,153 +22,19 @@
 #ifndef VULKAN2JSON_COMPAREOP_HPP
 #define VULKAN2JSON_COMPAREOP_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#ifdef VK_VERSION_1_0
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const CompareOp &p ) {
-  if( CompareOp :: eNever == p ) {
-    j = "Never";
-    return;
-  }
-  if( CompareOp :: eLess == p ) {
-    j = "Less";
-    return;
-  }
-  if( CompareOp :: eEqual == p ) {
-    j = "Equal";
-    return;
-  }
-  if( CompareOp :: eLessOrEqual == p ) {
-    j = "LessOrEqual";
-    return;
-  }
-  if( CompareOp :: eGreater == p ) {
-    j = "Greater";
-    return;
-  }
-  if( CompareOp :: eNotEqual == p ) {
-    j = "NotEqual";
-    return;
-  }
-  if( CompareOp :: eGreaterOrEqual == p ) {
-    j = "GreaterOrEqual";
-    return;
-  }
+void to_json( nlohmann::json &j, const CompareOp &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkCompareOp &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: CompareOp ( p ) );
-}
+void to_json( nlohmann::json &j, const VkCompareOp &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, CompareOp &p ) {
-  if( j.is_string() ) {
-    if( "Never" == j.get< std::string >() ) {
-      p = CompareOp :: eNever ;
-      return;
-    }
-    if( "eNever" == j.get< std::string >() ) {
-      p = CompareOp :: eNever ;
-      return;
-    }
-    if( "VK_COMPARE_OP_NEVER" == j.get< std::string >() ) {
-      p = CompareOp :: eNever ;
-      return;
-    }
-    if( "Less" == j.get< std::string >() ) {
-      p = CompareOp :: eLess ;
-      return;
-    }
-    if( "eLess" == j.get< std::string >() ) {
-      p = CompareOp :: eLess ;
-      return;
-    }
-    if( "VK_COMPARE_OP_LESS" == j.get< std::string >() ) {
-      p = CompareOp :: eLess ;
-      return;
-    }
-    if( "Equal" == j.get< std::string >() ) {
-      p = CompareOp :: eEqual ;
-      return;
-    }
-    if( "eEqual" == j.get< std::string >() ) {
-      p = CompareOp :: eEqual ;
-      return;
-    }
-    if( "VK_COMPARE_OP_EQUAL" == j.get< std::string >() ) {
-      p = CompareOp :: eEqual ;
-      return;
-    }
-    if( "LessOrEqual" == j.get< std::string >() ) {
-      p = CompareOp :: eLessOrEqual ;
-      return;
-    }
-    if( "eLessOrEqual" == j.get< std::string >() ) {
-      p = CompareOp :: eLessOrEqual ;
-      return;
-    }
-    if( "VK_COMPARE_OP_LESS_OR_EQUAL" == j.get< std::string >() ) {
-      p = CompareOp :: eLessOrEqual ;
-      return;
-    }
-    if( "Greater" == j.get< std::string >() ) {
-      p = CompareOp :: eGreater ;
-      return;
-    }
-    if( "eGreater" == j.get< std::string >() ) {
-      p = CompareOp :: eGreater ;
-      return;
-    }
-    if( "VK_COMPARE_OP_GREATER" == j.get< std::string >() ) {
-      p = CompareOp :: eGreater ;
-      return;
-    }
-    if( "NotEqual" == j.get< std::string >() ) {
-      p = CompareOp :: eNotEqual ;
-      return;
-    }
-    if( "eNotEqual" == j.get< std::string >() ) {
-      p = CompareOp :: eNotEqual ;
-      return;
-    }
-    if( "VK_COMPARE_OP_NOT_EQUAL" == j.get< std::string >() ) {
-      p = CompareOp :: eNotEqual ;
-      return;
-    }
-    if( "GreaterOrEqual" == j.get< std::string >() ) {
-      p = CompareOp :: eGreaterOrEqual ;
-      return;
-    }
-    if( "eGreaterOrEqual" == j.get< std::string >() ) {
-      p = CompareOp :: eGreaterOrEqual ;
-      return;
-    }
-    if( "VK_COMPARE_OP_GREATER_OR_EQUAL" == j.get< std::string >() ) {
-      p = CompareOp :: eGreaterOrEqual ;
-      return;
-    }
-    throw vulkan2json::invalid_enum_value( "unknown enum name for CompareOp" );
-  }
-  if( j.is_number() ) {
-    p = CompareOp ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for CompareOp" );
+void from_json( const nlohmann::json &j, CompareOp &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkCompareOp &p ) {
-  VULKAN_HPP_NAMESPACE :: CompareOp temp;
-  from_json( j, temp );
-  p = VkCompareOp ( temp );
-}
-#endif
+void from_json( const nlohmann::json &j, VkCompareOp &p );
 
 
 #endif

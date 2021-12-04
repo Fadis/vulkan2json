@@ -22,53 +22,19 @@
 #ifndef VULKAN2JSON_GENERATEDCOMMANDSINFONV_HPP
 #define VULKAN2JSON_GENERATEDCOMMANDSINFONV_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <utility>
-#include <cstring>
-#include <string>
-#include <algorithm>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
-#include <vulkan2json/exceptions.hpp>
 
-#include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/PipelineBindPoint.hpp>
+static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+
 namespace VULKAN_HPP_NAMESPACE {
-inline void to_json( nlohmann::json &j, const GeneratedCommandsInfoNV &p ) {
-  j = nlohmann::json::object();
-  j[ "sType" ] = p.sType;
-  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "pipelineBindPoint" ] = p.pipelineBindPoint;
-  j[ "streamCount" ] = p.streamCount;
-  j[ "pStreams" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pStreams ) );
-  j[ "sequencesCount" ] = p.sequencesCount;
-  j[ "preprocessOffset" ] = p.preprocessOffset;
-  j[ "preprocessSize" ] = p.preprocessSize;
-  j[ "sequencesCountOffset" ] = p.sequencesCountOffset;
-  j[ "sequencesIndexOffset" ] = p.sequencesIndexOffset;
+void to_json( nlohmann::json &j, const GeneratedCommandsInfoNV &p );
 }
-}
-inline void to_json( nlohmann::json &j, const VkGeneratedCommandsInfoNV &p ) {
-  to_json( j, VULKAN_HPP_NAMESPACE :: GeneratedCommandsInfoNV ( p ) );
-}
+void to_json( nlohmann::json &j, const VkGeneratedCommandsInfoNV &p );
 namespace VULKAN_HPP_NAMESPACE {
-inline void from_json( const nlohmann::json &j, GeneratedCommandsInfoNV &p ) {
-  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for GeneratedCommandsInfoNV" );
-  p.pipelineBindPoint = PipelineBindPoint ( j[ "pipelineBindPoint" ] );
-  p.streamCount = j[ "streamCount" ];
-  p.sequencesCount = j[ "sequencesCount" ];
-  p.preprocessOffset = j[ "preprocessOffset" ];
-  p.preprocessSize = j[ "preprocessSize" ];
-  p.sequencesCountOffset = j[ "sequencesCountOffset" ];
-  p.sequencesIndexOffset = j[ "sequencesIndexOffset" ];
+  void from_json( const nlohmann::json &j, GeneratedCommandsInfoNV &p );
 }
-}
-inline void from_json( const nlohmann::json &j, VkGeneratedCommandsInfoNV &p ) {
-  VULKAN_HPP_NAMESPACE :: GeneratedCommandsInfoNV temp;
-  from_json( j, temp );
-  p = VkGeneratedCommandsInfoNV ( temp );
-}
+void from_json( const nlohmann::json &j, VkGeneratedCommandsInfoNV &p );
 
 
 #endif
