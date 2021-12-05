@@ -35,7 +35,7 @@ from vulkan_header_parser.get_class_name import get_class_name, get_handle_name
 vulkan_header_path = '/usr/include/vulkan'
 
 (enums,flags) = get_enum( os.path.join( vulkan_header_path, 'vulkan_enums.hpp' ) )
-class_names = get_class_name( vulkan_header_path )
+( class_names, include_names ) = get_class_name( vulkan_header_path )
 handle_names = get_handle_name( vulkan_header_path )
 structs = get_struct( os.path.join( vulkan_header_path, 'vulkan_structs.hpp' ), handle_names, class_names )
 

@@ -52,10 +52,11 @@ class vulkan_class_name:
     if len( self.ext_suffix ):
       versioned_name = versioned_name[ :-len( self.ext_suffix ) ]
     self.version_suffix = get_version_suffix( versioned_name )
-    self.name = versioned_name
-    self.include_name = self.name
     if len( self.version_suffix ):
-      self.name = self.name[ :-len( self.version_suffix ) ]
+      self.name = versioned_name[ :-len( self.version_suffix ) ]
+    else:
+      self.name = versioned_name
+    self.include_name = self.name
     if not self.name in flags_black_list:
       if self.name[-8:] == 'FlagBits':
         self.name = self.name[:-8]

@@ -1,0 +1,1 @@
+ImageFormatProperties2.hpp

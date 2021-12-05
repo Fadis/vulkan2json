@@ -1,0 +1,1 @@
+ExternalSemaphoreHandleTypeFlags.hpp

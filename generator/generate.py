@@ -37,7 +37,7 @@ vulkan_header_path = '/usr/include/vulkan'
 
 header_version = get_header_version( os.path.join( vulkan_header_path, 'vulkan.hpp' ) )
 (enums,flags) = get_enum( os.path.join( vulkan_header_path, 'vulkan_enums.hpp' ) )
-class_names = get_class_name( vulkan_header_path )
+( class_names, include_names ) = get_class_name( vulkan_header_path )
 handle_names = get_handle_name( vulkan_header_path )
 structs = get_struct( os.path.join( vulkan_header_path, 'vulkan_structs.hpp' ), handle_names, class_names )
 
@@ -96,4 +96,11 @@ for v in structs.values():
 
 with open( os.path.join( srcdir, 'vulkan2json.cpp' ), 'w' ) as fd:
   fd.write( cpp_out )
+
+for v in include_names.items():
+  if v[ 0 ] != v[ 1 ]:
+    src = os.path.join( outdir, v[ 1 ]+'.hpp' )
+    dest = os.path.join( outdir, v[ 0 ]+'.hpp' )
+    if not os.path.exists( dest ) and os.path.exists( src ):
+      os.symlink( v[ 1 ]+'.hpp', dest )
 

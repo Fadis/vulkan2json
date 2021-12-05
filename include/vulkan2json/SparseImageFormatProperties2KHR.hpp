@@ -1,0 +1,1 @@
+SparseImageFormatProperties2.hpp

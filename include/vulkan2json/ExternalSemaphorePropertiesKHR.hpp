@@ -1,0 +1,1 @@
+ExternalSemaphoreProperties.hpp
