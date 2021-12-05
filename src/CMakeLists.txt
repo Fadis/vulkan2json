@@ -8,6 +8,6 @@ install( TARGETS vulkan2json )
 set_target_properties(
   vulkan2json
   PROPERTIES
-  VERSION 1.2.182
+  VERSION ${PROJECT_VERSION}
   SOVERSION 1
 )
