@@ -3211,6 +3211,13 @@ BOOST_AUTO_TEST_CASE(StructureType) {
     BOOST_CHECK( deserialized == original );
   }
   {
+    const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: ePhysicalDevicePresentWaitFeaturesKHR ;
+    const nlohmann::json expected = "PhysicalDevicePresentWaitFeaturesKHR";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
+  {
     const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: ePhysicalDeviceCooperativeMatrixFeaturesNV ;
     const nlohmann::json expected = "PhysicalDeviceCooperativeMatrixFeaturesNV";
     const nlohmann::json serialized = original;
@@ -3371,6 +3378,13 @@ BOOST_AUTO_TEST_CASE(StructureType) {
     BOOST_CHECK( deserialized == original );
   }
   {
+    const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: ePhysicalDeviceShaderAtomicFloat2FeaturesEXT ;
+    const nlohmann::json expected = "PhysicalDeviceShaderAtomicFloat2FeaturesEXT";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
+  {
     const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: eGraphicsShaderGroupCreateInfoNV ;
     const nlohmann::json expected = "GraphicsShaderGroupCreateInfoNV";
     const nlohmann::json serialized = original;
@@ -3471,6 +3485,20 @@ BOOST_AUTO_TEST_CASE(StructureType) {
   {
     const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: ePipelineLibraryCreateInfoKHR ;
     const nlohmann::json expected = "PipelineLibraryCreateInfoKHR";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
+  {
+    const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: ePresentIdKHR ;
+    const nlohmann::json expected = "PresentIdKHR";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
+  {
+    const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: ePhysicalDevicePresentIdFeaturesKHR ;
+    const nlohmann::json expected = "PhysicalDevicePresentIdFeaturesKHR";
     const nlohmann::json serialized = original;
     const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
     BOOST_CHECK( deserialized == original );
@@ -3786,8 +3814,8 @@ BOOST_AUTO_TEST_CASE(StructureType) {
   }
 #endif
   {
-    const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: eSubpasssShadingPipelineCreateInfoHUAWEI ;
-    const nlohmann::json expected = "SubpasssShadingPipelineCreateInfoHUAWEI";
+    const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: eSubpassShadingPipelineCreateInfoHUAWEI ;
+    const nlohmann::json expected = "SubpassShadingPipelineCreateInfoHUAWEI";
     const nlohmann::json serialized = original;
     const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
     BOOST_CHECK( deserialized == original );
@@ -3802,6 +3830,27 @@ BOOST_AUTO_TEST_CASE(StructureType) {
   {
     const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: ePhysicalDeviceSubpassShadingPropertiesHUAWEI ;
     const nlohmann::json expected = "PhysicalDeviceSubpassShadingPropertiesHUAWEI";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
+  {
+    const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: ePhysicalDeviceInvocationMaskFeaturesHUAWEI ;
+    const nlohmann::json expected = "PhysicalDeviceInvocationMaskFeaturesHUAWEI";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
+  {
+    const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: eMemoryGetRemoteAddressInfoNV ;
+    const nlohmann::json expected = "MemoryGetRemoteAddressInfoNV";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
+  {
+    const auto original = VULKAN_HPP_NAMESPACE :: StructureType :: ePhysicalDeviceExternalMemoryRdmaFeaturesNV ;
+    const nlohmann::json expected = "PhysicalDeviceExternalMemoryRdmaFeaturesNV";
     const nlohmann::json serialized = original;
     const auto deserialized = VULKAN_HPP_NAMESPACE :: StructureType ( serialized );
     BOOST_CHECK( deserialized == original );
@@ -8690,6 +8739,13 @@ BOOST_AUTO_TEST_CASE(AttachmentLoadOp) {
     const auto deserialized = VULKAN_HPP_NAMESPACE :: AttachmentLoadOp ( serialized );
     BOOST_CHECK( deserialized == original );
   }
+  {
+    const auto original = VULKAN_HPP_NAMESPACE :: AttachmentLoadOp :: eDontCare ;
+    const nlohmann::json expected = "DontCare";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: AttachmentLoadOp ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
 }
 #include <vulkan2json/AttachmentStoreOp.hpp>
 BOOST_AUTO_TEST_CASE(AttachmentStoreOp) {
@@ -8703,6 +8759,13 @@ BOOST_AUTO_TEST_CASE(AttachmentStoreOp) {
   {
     const auto original = VULKAN_HPP_NAMESPACE :: AttachmentStoreOp :: eDontCare ;
     const nlohmann::json expected = "DontCare";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: AttachmentStoreOp ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
+  {
+    const auto original = VULKAN_HPP_NAMESPACE :: AttachmentStoreOp :: eNoneEXT ;
+    const nlohmann::json expected = "NoneEXT";
     const nlohmann::json serialized = original;
     const auto deserialized = VULKAN_HPP_NAMESPACE :: AttachmentStoreOp ( serialized );
     BOOST_CHECK( deserialized == original );
@@ -8974,6 +9037,13 @@ BOOST_AUTO_TEST_CASE(DriverId) {
   {
     const auto original = VULKAN_HPP_NAMESPACE :: DriverId :: eCoreaviProprietary ;
     const nlohmann::json expected = "CoreaviProprietary";
+    const nlohmann::json serialized = original;
+    const auto deserialized = VULKAN_HPP_NAMESPACE :: DriverId ( serialized );
+    BOOST_CHECK( deserialized == original );
+  }
+  {
+    const auto original = VULKAN_HPP_NAMESPACE :: DriverId :: eJuiceProprietary ;
+    const nlohmann::json expected = "JuiceProprietary";
     const nlohmann::json serialized = original;
     const auto deserialized = VULKAN_HPP_NAMESPACE :: DriverId ( serialized );
     BOOST_CHECK( deserialized == original );

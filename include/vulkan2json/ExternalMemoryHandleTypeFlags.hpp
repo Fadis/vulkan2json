@@ -32,7 +32,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const ExternalMemoryHandleTypeFlagBits &p ) {
@@ -82,6 +82,12 @@ inline void to_json( nlohmann::json &j, const ExternalMemoryHandleTypeFlagBits &
     j = "HostMappedForeignMemoryEXT";
     return;
   }
+#if defined( VK_USE_PLATFORM_FUCHSIA )
+  if( ExternalMemoryHandleTypeFlagBits :: eZirconVmoFUCHSIA == p ) {
+    j = "ZirconVmoFUCHSIA";
+    return;
+  }
+#endif
 }
 inline void from_json( const nlohmann::json &j, ExternalMemoryHandleTypeFlagBits &p ) {
   if( j.is_string() ) {
@@ -223,6 +229,24 @@ inline void from_json( const nlohmann::json &j, ExternalMemoryHandleTypeFlagBits
       p = ExternalMemoryHandleTypeFlagBits :: eHostMappedForeignMemoryEXT ;
       return;
     }
+#if defined( VK_USE_PLATFORM_FUCHSIA )
+    if( "ZirconVmoFUCHSIA" == j.get< std::string >() ) {
+      p = ExternalMemoryHandleTypeFlagBits :: eZirconVmoFUCHSIA ;
+      return;
+    }
+#endif
+#if defined( VK_USE_PLATFORM_FUCHSIA )
+    if( "eZirconVmoFUCHSIA" == j.get< std::string >() ) {
+      p = ExternalMemoryHandleTypeFlagBits :: eZirconVmoFUCHSIA ;
+      return;
+    }
+#endif
+#if defined( VK_USE_PLATFORM_FUCHSIA )
+    if( "VK_EXTERNAL_MEMORY_HANDLE_TYPE_ZIRCON_VMO_BIT_FUCHSIA" == j.get< std::string >() ) {
+      p = ExternalMemoryHandleTypeFlagBits :: eZirconVmoFUCHSIA ;
+      return;
+    }
+#endif
     throw vulkan2json::invalid_enum_value( "unknown enum name for ExternalMemoryHandleTypeFlagBits" );
   }
   if( j.is_number() ) {

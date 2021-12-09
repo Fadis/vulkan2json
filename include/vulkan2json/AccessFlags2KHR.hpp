@@ -32,7 +32,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const AccessFlagBits2KHR &p ) {
@@ -186,6 +186,10 @@ inline void to_json( nlohmann::json &j, const AccessFlagBits2KHR &p ) {
   }
   if( AccessFlagBits2KHR :: eColorAttachmentReadNoncoherentEXT == p ) {
     j = "ColorAttachmentReadNoncoherentEXT";
+    return;
+  }
+  if( AccessFlagBits2KHR :: eInvocationMaskReadHUAWEI == p ) {
+    j = "InvocationMaskReadHUAWEI";
     return;
   }
   if( AccessFlagBits2KHR :: eAccelerationStructureReadNV == p ) {
@@ -653,6 +657,18 @@ inline void from_json( const nlohmann::json &j, AccessFlagBits2KHR &p ) {
     }
     if( "VK_ACCESS_2_COLOR_ATTACHMENT_READ_NONCOHERENT_BIT_EXT" == j.get< std::string >() ) {
       p = AccessFlagBits2KHR :: eColorAttachmentReadNoncoherentEXT ;
+      return;
+    }
+    if( "InvocationMaskReadHUAWEI" == j.get< std::string >() ) {
+      p = AccessFlagBits2KHR :: eInvocationMaskReadHUAWEI ;
+      return;
+    }
+    if( "eInvocationMaskReadHUAWEI" == j.get< std::string >() ) {
+      p = AccessFlagBits2KHR :: eInvocationMaskReadHUAWEI ;
+      return;
+    }
+    if( "VK_ACCESS_2_INVOCATION_MASK_READ_BIT_HUAWEI" == j.get< std::string >() ) {
+      p = AccessFlagBits2KHR :: eInvocationMaskReadHUAWEI ;
       return;
     }
     if( "AccelerationStructureReadNV" == j.get< std::string >() ) {

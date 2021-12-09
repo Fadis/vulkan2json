@@ -32,7 +32,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const StructureType &p ) {
@@ -1738,6 +1738,10 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "ValidationFeaturesEXT";
     return;
   }
+  if( StructureType :: ePhysicalDevicePresentWaitFeaturesKHR == p ) {
+    j = "PhysicalDevicePresentWaitFeaturesKHR";
+    return;
+  }
   if( StructureType :: ePhysicalDeviceCooperativeMatrixFeaturesNV == p ) {
     j = "PhysicalDeviceCooperativeMatrixFeaturesNV";
     return;
@@ -1832,6 +1836,10 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     j = "PipelineExecutableInternalRepresentationKHR";
     return;
   }
+  if( StructureType :: ePhysicalDeviceShaderAtomicFloat2FeaturesEXT == p ) {
+    j = "PhysicalDeviceShaderAtomicFloat2FeaturesEXT";
+    return;
+  }
   if( StructureType :: eGraphicsShaderGroupCreateInfoNV == p ) {
     j = "GraphicsShaderGroupCreateInfoNV";
     return;
@@ -1890,6 +1898,14 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
   }
   if( StructureType :: ePipelineLibraryCreateInfoKHR == p ) {
     j = "PipelineLibraryCreateInfoKHR";
+    return;
+  }
+  if( StructureType :: ePresentIdKHR == p ) {
+    j = "PresentIdKHR";
+    return;
+  }
+  if( StructureType :: ePhysicalDevicePresentIdFeaturesKHR == p ) {
+    j = "PhysicalDevicePresentIdFeaturesKHR";
     return;
   }
   if( StructureType :: ePhysicalDevicePrivateDataFeaturesEXT == p ) {
@@ -2076,8 +2092,8 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
     return;
   }
 #endif
-  if( StructureType :: eSubpasssShadingPipelineCreateInfoHUAWEI == p ) {
-    j = "SubpasssShadingPipelineCreateInfoHUAWEI";
+  if( StructureType :: eSubpassShadingPipelineCreateInfoHUAWEI == p ) {
+    j = "SubpassShadingPipelineCreateInfoHUAWEI";
     return;
   }
   if( StructureType :: ePhysicalDeviceSubpassShadingFeaturesHUAWEI == p ) {
@@ -2086,6 +2102,18 @@ inline void to_json( nlohmann::json &j, const StructureType &p ) {
   }
   if( StructureType :: ePhysicalDeviceSubpassShadingPropertiesHUAWEI == p ) {
     j = "PhysicalDeviceSubpassShadingPropertiesHUAWEI";
+    return;
+  }
+  if( StructureType :: ePhysicalDeviceInvocationMaskFeaturesHUAWEI == p ) {
+    j = "PhysicalDeviceInvocationMaskFeaturesHUAWEI";
+    return;
+  }
+  if( StructureType :: eMemoryGetRemoteAddressInfoNV == p ) {
+    j = "MemoryGetRemoteAddressInfoNV";
+    return;
+  }
+  if( StructureType :: ePhysicalDeviceExternalMemoryRdmaFeaturesNV == p ) {
+    j = "PhysicalDeviceExternalMemoryRdmaFeaturesNV";
     return;
   }
 #if defined( VK_USE_PLATFORM_SCREEN_QNX )
@@ -7616,6 +7644,18 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: eValidationFeaturesEXT ;
       return;
     }
+    if( "PhysicalDevicePresentWaitFeaturesKHR" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDevicePresentWaitFeaturesKHR ;
+      return;
+    }
+    if( "ePhysicalDevicePresentWaitFeaturesKHR" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDevicePresentWaitFeaturesKHR ;
+      return;
+    }
+    if( "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDevicePresentWaitFeaturesKHR ;
+      return;
+    }
     if( "PhysicalDeviceCooperativeMatrixFeaturesNV" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDeviceCooperativeMatrixFeaturesNV ;
       return;
@@ -7898,6 +7938,18 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       p = StructureType :: ePipelineExecutableInternalRepresentationKHR ;
       return;
     }
+    if( "PhysicalDeviceShaderAtomicFloat2FeaturesEXT" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDeviceShaderAtomicFloat2FeaturesEXT ;
+      return;
+    }
+    if( "ePhysicalDeviceShaderAtomicFloat2FeaturesEXT" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDeviceShaderAtomicFloat2FeaturesEXT ;
+      return;
+    }
+    if( "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDeviceShaderAtomicFloat2FeaturesEXT ;
+      return;
+    }
     if( "GraphicsShaderGroupCreateInfoNV" == j.get< std::string >() ) {
       p = StructureType :: eGraphicsShaderGroupCreateInfoNV ;
       return;
@@ -8076,6 +8128,30 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
     }
     if( "VK_STRUCTURE_TYPE_PIPELINE_LIBRARY_CREATE_INFO_KHR" == j.get< std::string >() ) {
       p = StructureType :: ePipelineLibraryCreateInfoKHR ;
+      return;
+    }
+    if( "PresentIdKHR" == j.get< std::string >() ) {
+      p = StructureType :: ePresentIdKHR ;
+      return;
+    }
+    if( "ePresentIdKHR" == j.get< std::string >() ) {
+      p = StructureType :: ePresentIdKHR ;
+      return;
+    }
+    if( "VK_STRUCTURE_TYPE_PRESENT_ID_KHR" == j.get< std::string >() ) {
+      p = StructureType :: ePresentIdKHR ;
+      return;
+    }
+    if( "PhysicalDevicePresentIdFeaturesKHR" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDevicePresentIdFeaturesKHR ;
+      return;
+    }
+    if( "ePhysicalDevicePresentIdFeaturesKHR" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDevicePresentIdFeaturesKHR ;
+      return;
+    }
+    if( "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDevicePresentIdFeaturesKHR ;
       return;
     }
     if( "PhysicalDevicePrivateDataFeaturesEXT" == j.get< std::string >() ) {
@@ -8630,16 +8706,16 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
       return;
     }
 #endif
-    if( "SubpasssShadingPipelineCreateInfoHUAWEI" == j.get< std::string >() ) {
-      p = StructureType :: eSubpasssShadingPipelineCreateInfoHUAWEI ;
+    if( "SubpassShadingPipelineCreateInfoHUAWEI" == j.get< std::string >() ) {
+      p = StructureType :: eSubpassShadingPipelineCreateInfoHUAWEI ;
       return;
     }
-    if( "eSubpasssShadingPipelineCreateInfoHUAWEI" == j.get< std::string >() ) {
-      p = StructureType :: eSubpasssShadingPipelineCreateInfoHUAWEI ;
+    if( "eSubpassShadingPipelineCreateInfoHUAWEI" == j.get< std::string >() ) {
+      p = StructureType :: eSubpassShadingPipelineCreateInfoHUAWEI ;
       return;
     }
-    if( "VK_STRUCTURE_TYPE_SUBPASSS_SHADING_PIPELINE_CREATE_INFO_HUAWEI" == j.get< std::string >() ) {
-      p = StructureType :: eSubpasssShadingPipelineCreateInfoHUAWEI ;
+    if( "VK_STRUCTURE_TYPE_SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI" == j.get< std::string >() ) {
+      p = StructureType :: eSubpassShadingPipelineCreateInfoHUAWEI ;
       return;
     }
     if( "PhysicalDeviceSubpassShadingFeaturesHUAWEI" == j.get< std::string >() ) {
@@ -8664,6 +8740,42 @@ inline void from_json( const nlohmann::json &j, StructureType &p ) {
     }
     if( "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI" == j.get< std::string >() ) {
       p = StructureType :: ePhysicalDeviceSubpassShadingPropertiesHUAWEI ;
+      return;
+    }
+    if( "PhysicalDeviceInvocationMaskFeaturesHUAWEI" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDeviceInvocationMaskFeaturesHUAWEI ;
+      return;
+    }
+    if( "ePhysicalDeviceInvocationMaskFeaturesHUAWEI" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDeviceInvocationMaskFeaturesHUAWEI ;
+      return;
+    }
+    if( "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDeviceInvocationMaskFeaturesHUAWEI ;
+      return;
+    }
+    if( "MemoryGetRemoteAddressInfoNV" == j.get< std::string >() ) {
+      p = StructureType :: eMemoryGetRemoteAddressInfoNV ;
+      return;
+    }
+    if( "eMemoryGetRemoteAddressInfoNV" == j.get< std::string >() ) {
+      p = StructureType :: eMemoryGetRemoteAddressInfoNV ;
+      return;
+    }
+    if( "VK_STRUCTURE_TYPE_MEMORY_GET_REMOTE_ADDRESS_INFO_NV" == j.get< std::string >() ) {
+      p = StructureType :: eMemoryGetRemoteAddressInfoNV ;
+      return;
+    }
+    if( "PhysicalDeviceExternalMemoryRdmaFeaturesNV" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDeviceExternalMemoryRdmaFeaturesNV ;
+      return;
+    }
+    if( "ePhysicalDeviceExternalMemoryRdmaFeaturesNV" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDeviceExternalMemoryRdmaFeaturesNV ;
+      return;
+    }
+    if( "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV" == j.get< std::string >() ) {
+      p = StructureType :: ePhysicalDeviceExternalMemoryRdmaFeaturesNV ;
       return;
     }
 #if defined( VK_USE_PLATFORM_SCREEN_QNX )

@@ -32,15 +32,15 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 #include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/VideoCapabilitiesFlagsKHR.hpp>
+#include <vulkan2json/VideoCapabilityFlagsKHR.hpp>
 #include <vulkan2json/Extent2D.hpp>
 #include <vulkan2json/Extent2D.hpp>
 #include <vulkan2json/Extent2D.hpp>
 #include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/VideoCapabilitiesFlagsKHR.hpp>
+#include <vulkan2json/VideoCapabilityFlagsKHR.hpp>
 #include <vulkan2json/Extent2D.hpp>
 #include <vulkan2json/Extent2D.hpp>
 #include <vulkan2json/Extent2D.hpp>
@@ -67,7 +67,7 @@ namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoCapabilitiesKHR &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoCapabilitiesKHR" );
   if( j.find( "capabilityFlags" ) != j.end() ) {
-    p.capabilityFlags = VideoCapabilitiesFlagsKHR ( j[ "capabilityFlags" ] );
+    p.capabilityFlags = VideoCapabilityFlagsKHR ( j[ "capabilityFlags" ] );
   }
   if( j.find( "minBitstreamBufferOffsetAlignment" ) != j.end() ) {
     p.minBitstreamBufferOffsetAlignment = j[ "minBitstreamBufferOffsetAlignment" ];

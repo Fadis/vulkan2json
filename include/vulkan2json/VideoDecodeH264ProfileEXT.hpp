@@ -32,19 +32,19 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 #include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/VideoDecodeH264FieldLayoutFlagsEXT.hpp>
+#include <vulkan2json/VideoDecodeH264PictureLayoutFlagsEXT.hpp>
 #include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/VideoDecodeH264FieldLayoutFlagsEXT.hpp>
+#include <vulkan2json/VideoDecodeH264PictureLayoutFlagsEXT.hpp>
 #if defined( VK_ENABLE_BETA_EXTENSIONS )
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const VideoDecodeH264ProfileEXT &p ) {
   j = nlohmann::json::object();
   j[ "sType" ] = p.sType;
   j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
-  j[ "fieldLayout" ] = p.fieldLayout;
+  j[ "pictureLayout" ] = p.pictureLayout;
 }
 }
 inline void to_json( nlohmann::json &j, const VkVideoDecodeH264ProfileEXT &p ) {
@@ -53,8 +53,8 @@ inline void to_json( nlohmann::json &j, const VkVideoDecodeH264ProfileEXT &p ) {
 namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoDecodeH264ProfileEXT &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoDecodeH264ProfileEXT" );
-  if( j.find( "fieldLayout" ) != j.end() ) {
-    p.fieldLayout = VideoDecodeH264FieldLayoutFlagsEXT ( j[ "fieldLayout" ] );
+  if( j.find( "pictureLayout" ) != j.end() ) {
+    p.pictureLayout = VideoDecodeH264PictureLayoutFlagsEXT ( j[ "pictureLayout" ] );
   }
 }
 }

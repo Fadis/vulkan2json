@@ -25,7 +25,7 @@
 #include <nlohmann/json_fwd.hpp>
 #include <vulkan/vulkan.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const PipelineDynamicStateCreateInfo &p );

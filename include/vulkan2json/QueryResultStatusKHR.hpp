@@ -32,7 +32,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 #if defined( VK_ENABLE_BETA_EXTENSIONS )
 namespace VULKAN_HPP_NAMESPACE {

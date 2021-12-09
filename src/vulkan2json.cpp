@@ -8446,6 +8446,10 @@ void to_json( nlohmann::json &j, const AttachmentLoadOp &p ) {
     j = "Clear";
     return;
   }
+  if( AttachmentLoadOp :: eDontCare == p ) {
+    j = "DontCare";
+    return;
+  }
 }
 }
 void to_json( nlohmann::json &j, const VkAttachmentLoadOp &p ) {
@@ -8478,6 +8482,18 @@ void from_json( const nlohmann::json &j, AttachmentLoadOp &p ) {
       p = AttachmentLoadOp :: eClear ;
       return;
     }
+    if( "DontCare" == j.get< std::string >() ) {
+      p = AttachmentLoadOp :: eDontCare ;
+      return;
+    }
+    if( "eDontCare" == j.get< std::string >() ) {
+      p = AttachmentLoadOp :: eDontCare ;
+      return;
+    }
+    if( "VK_ATTACHMENT_LOAD_OP_DONT_CARE" == j.get< std::string >() ) {
+      p = AttachmentLoadOp :: eDontCare ;
+      return;
+    }
     throw vulkan2json::invalid_enum_value( "unknown enum name for AttachmentLoadOp" );
   }
   if( j.is_number() ) {
@@ -8499,6 +8515,10 @@ void to_json( nlohmann::json &j, const AttachmentStoreOp &p ) {
   }
   if( AttachmentStoreOp :: eDontCare == p ) {
     j = "DontCare";
+    return;
+  }
+  if( AttachmentStoreOp :: eNoneEXT == p ) {
+    j = "NoneEXT";
     return;
   }
 }
@@ -8531,6 +8551,18 @@ void from_json( const nlohmann::json &j, AttachmentStoreOp &p ) {
     }
     if( "VK_ATTACHMENT_STORE_OP_DONT_CARE" == j.get< std::string >() ) {
       p = AttachmentStoreOp :: eDontCare ;
+      return;
+    }
+    if( "NoneEXT" == j.get< std::string >() ) {
+      p = AttachmentStoreOp :: eNoneEXT ;
+      return;
+    }
+    if( "eNoneEXT" == j.get< std::string >() ) {
+      p = AttachmentStoreOp :: eNoneEXT ;
+      return;
+    }
+    if( "VK_ATTACHMENT_STORE_OP_NONE_EXT" == j.get< std::string >() ) {
+      p = AttachmentStoreOp :: eNoneEXT ;
       return;
     }
     throw vulkan2json::invalid_enum_value( "unknown enum name for AttachmentStoreOp" );
@@ -9142,6 +9174,10 @@ void to_json( nlohmann::json &j, const DriverId &p ) {
     j = "CoreaviProprietary";
     return;
   }
+  if( DriverId :: eJuiceProprietary == p ) {
+    j = "JuiceProprietary";
+    return;
+  }
 }
 }
 void to_json( nlohmann::json &j, const VkDriverId &p ) {
@@ -9328,6 +9364,18 @@ void from_json( const nlohmann::json &j, DriverId &p ) {
     }
     if( "VK_DRIVER_ID_COREAVI_PROPRIETARY" == j.get< std::string >() ) {
       p = DriverId :: eCoreaviProprietary ;
+      return;
+    }
+    if( "JuiceProprietary" == j.get< std::string >() ) {
+      p = DriverId :: eJuiceProprietary ;
+      return;
+    }
+    if( "eJuiceProprietary" == j.get< std::string >() ) {
+      p = DriverId :: eJuiceProprietary ;
+      return;
+    }
+    if( "VK_DRIVER_ID_JUICE_PROPRIETARY" == j.get< std::string >() ) {
+      p = DriverId :: eJuiceProprietary ;
       return;
     }
     throw vulkan2json::invalid_enum_value( "unknown enum name for DriverId" );
@@ -14491,6 +14539,10 @@ void to_json( nlohmann::json &j, const MemoryPropertyFlagBits &p ) {
     j = "DeviceCoherentAMD";
     return;
   }
+  if( MemoryPropertyFlagBits :: eDeviceUncachedAMD == p ) {
+    j = "DeviceUncachedAMD";
+    return;
+  }
 }
 void from_json( const nlohmann::json &j, MemoryPropertyFlagBits &p ) {
   if( j.is_string() ) {
@@ -14576,6 +14628,18 @@ void from_json( const nlohmann::json &j, MemoryPropertyFlagBits &p ) {
     }
     if( "VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD" == j.get< std::string >() ) {
       p = MemoryPropertyFlagBits :: eDeviceCoherentAMD ;
+      return;
+    }
+    if( "DeviceUncachedAMD" == j.get< std::string >() ) {
+      p = MemoryPropertyFlagBits :: eDeviceUncachedAMD ;
+      return;
+    }
+    if( "eDeviceUncachedAMD" == j.get< std::string >() ) {
+      p = MemoryPropertyFlagBits :: eDeviceUncachedAMD ;
+      return;
+    }
+    if( "VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD" == j.get< std::string >() ) {
+      p = MemoryPropertyFlagBits :: eDeviceUncachedAMD ;
       return;
     }
     throw vulkan2json::invalid_enum_value( "unknown enum name for MemoryPropertyFlagBits" );
@@ -14738,6 +14802,40 @@ void from_json( const nlohmann::json &j, SampleCountFlags &p ) {
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const InstanceCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, InstanceCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for InstanceCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = InstanceCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for InstanceCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const InstanceCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( InstanceCreateFlagBits ) * 8u; ++n ) {
+    if( p & InstanceCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, InstanceCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, InstanceCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = InstanceCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      InstanceCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for InstanceCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const DeviceQueueCreateFlagBits &p ) {
 }
 void from_json( const nlohmann::json &j, DeviceQueueCreateFlagBits &p ) {
@@ -14769,6 +14867,40 @@ void from_json( const nlohmann::json &j, DeviceQueueCreateFlags &p ) {
     }
   }
   else throw vulkan2json::invalid_flag_value( "incompatible value for DeviceQueueCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const DeviceCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, DeviceCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for DeviceCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = DeviceCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for DeviceCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const DeviceCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( DeviceCreateFlagBits ) * 8u; ++n ) {
+    if( p & DeviceCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, DeviceCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, DeviceCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = DeviceCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      DeviceCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for DeviceCreateFlags" );
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
@@ -15270,6 +15402,40 @@ void from_json( const nlohmann::json &j, PipelineStageFlags &p ) {
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const MemoryMapFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, MemoryMapFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for MemoryMapFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = MemoryMapFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for MemoryMapFlagBits" );
+}
+void to_json( nlohmann::json &j, const MemoryMapFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( MemoryMapFlagBits ) * 8u; ++n ) {
+    if( p & MemoryMapFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, MemoryMapFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, MemoryMapFlags &p ) {
+  if( j.is_array() ) {
+    p = MemoryMapFlags ( 0 );
+    for( auto &e:  j ) {
+      MemoryMapFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for MemoryMapFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const ImageAspectFlagBits &p ) {
   if( ImageAspectFlagBits :: eColor == p ) {
     j = "Color";
@@ -15646,6 +15812,40 @@ void from_json( const nlohmann::json &j, FenceCreateFlags &p ) {
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const SemaphoreCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, SemaphoreCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for SemaphoreCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = SemaphoreCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for SemaphoreCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const SemaphoreCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( SemaphoreCreateFlagBits ) * 8u; ++n ) {
+    if( p & SemaphoreCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, SemaphoreCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, SemaphoreCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = SemaphoreCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      SemaphoreCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for SemaphoreCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const EventCreateFlagBits &p ) {
 }
 void from_json( const nlohmann::json &j, EventCreateFlagBits &p ) {
@@ -15956,6 +16156,40 @@ void from_json( const nlohmann::json &j, QueryResultFlags &p ) {
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const QueryPoolCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, QueryPoolCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for QueryPoolCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = QueryPoolCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for QueryPoolCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const QueryPoolCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( QueryPoolCreateFlagBits ) * 8u; ++n ) {
+    if( p & QueryPoolCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, QueryPoolCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, QueryPoolCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = QueryPoolCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      QueryPoolCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for QueryPoolCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const BufferCreateFlagBits &p ) {
   if( BufferCreateFlagBits :: eSparseBinding == p ) {
     j = "SparseBinding";
@@ -16083,6 +16317,40 @@ void from_json( const nlohmann::json &j, BufferCreateFlags &p ) {
     }
   }
   else throw vulkan2json::invalid_flag_value( "incompatible value for BufferCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const BufferViewCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, BufferViewCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for BufferViewCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = BufferViewCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for BufferViewCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const BufferViewCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( BufferViewCreateFlagBits ) * 8u; ++n ) {
+    if( p & BufferViewCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, BufferViewCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, BufferViewCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = BufferViewCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      BufferViewCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for BufferViewCreateFlags" );
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
@@ -17158,6 +17426,346 @@ void from_json( const nlohmann::json &j, ShaderStageFlags &p ) {
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineColorBlendStateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineColorBlendStateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineColorBlendStateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineColorBlendStateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineColorBlendStateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineColorBlendStateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineColorBlendStateCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineColorBlendStateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineColorBlendStateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineColorBlendStateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineColorBlendStateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineColorBlendStateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineColorBlendStateCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineDepthStencilStateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineDepthStencilStateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineDepthStencilStateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineDepthStencilStateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineDepthStencilStateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineDepthStencilStateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineDepthStencilStateCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineDepthStencilStateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineDepthStencilStateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineDepthStencilStateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineDepthStencilStateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineDepthStencilStateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineDepthStencilStateCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineDynamicStateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineDynamicStateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineDynamicStateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineDynamicStateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineDynamicStateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineDynamicStateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineDynamicStateCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineDynamicStateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineDynamicStateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineDynamicStateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineDynamicStateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineDynamicStateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineDynamicStateCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineInputAssemblyStateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineInputAssemblyStateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineInputAssemblyStateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineInputAssemblyStateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineInputAssemblyStateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineInputAssemblyStateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineInputAssemblyStateCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineInputAssemblyStateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineInputAssemblyStateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineInputAssemblyStateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineInputAssemblyStateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineInputAssemblyStateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineInputAssemblyStateCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineLayoutCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineLayoutCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineLayoutCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineLayoutCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineLayoutCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineLayoutCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineLayoutCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineLayoutCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineLayoutCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineLayoutCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineLayoutCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineLayoutCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineLayoutCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineMultisampleStateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineMultisampleStateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineMultisampleStateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineMultisampleStateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineMultisampleStateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineMultisampleStateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineMultisampleStateCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineMultisampleStateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineMultisampleStateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineMultisampleStateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineMultisampleStateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineMultisampleStateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineMultisampleStateCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineRasterizationStateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineRasterizationStateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineRasterizationStateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineRasterizationStateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineRasterizationStateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineRasterizationStateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineRasterizationStateCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineRasterizationStateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineRasterizationStateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineRasterizationStateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineRasterizationStateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineRasterizationStateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineRasterizationStateCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineTessellationStateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineTessellationStateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineTessellationStateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineTessellationStateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineTessellationStateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineTessellationStateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineTessellationStateCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineTessellationStateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineTessellationStateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineTessellationStateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineTessellationStateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineTessellationStateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineTessellationStateCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineVertexInputStateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineVertexInputStateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineVertexInputStateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineVertexInputStateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineVertexInputStateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineVertexInputStateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineVertexInputStateCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineVertexInputStateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineVertexInputStateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineVertexInputStateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineVertexInputStateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineVertexInputStateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineVertexInputStateCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineViewportStateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, PipelineViewportStateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineViewportStateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = PipelineViewportStateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineViewportStateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const PipelineViewportStateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( PipelineViewportStateCreateFlagBits ) * 8u; ++n ) {
+    if( p & PipelineViewportStateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, PipelineViewportStateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, PipelineViewportStateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = PipelineViewportStateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      PipelineViewportStateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineViewportStateCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const SamplerCreateFlagBits &p ) {
   if( SamplerCreateFlagBits :: eSubsampledEXT == p ) {
     j = "SubsampledEXT";
@@ -17369,6 +17977,40 @@ void from_json( const nlohmann::json &j, DescriptorSetLayoutCreateFlags &p ) {
     }
   }
   else throw vulkan2json::invalid_flag_value( "incompatible value for DescriptorSetLayoutCreateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const DescriptorPoolResetFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, DescriptorPoolResetFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for DescriptorPoolResetFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = DescriptorPoolResetFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for DescriptorPoolResetFlagBits" );
+}
+void to_json( nlohmann::json &j, const DescriptorPoolResetFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( DescriptorPoolResetFlagBits ) * 8u; ++n ) {
+    if( p & DescriptorPoolResetFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, DescriptorPoolResetFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, DescriptorPoolResetFlags &p ) {
+  if( j.is_array() ) {
+    p = DescriptorPoolResetFlags ( 0 );
+    for( auto &e:  j ) {
+      DescriptorPoolResetFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for DescriptorPoolResetFlags" );
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
@@ -18516,584 +19158,6 @@ void from_json( const nlohmann::json &j, StencilFaceFlags &p ) {
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const InstanceCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, InstanceCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for InstanceCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = InstanceCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for InstanceCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const InstanceCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( InstanceCreateFlagBits ) * 8u; ++n ) {
-    if( p & InstanceCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, InstanceCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, InstanceCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = InstanceCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      InstanceCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for InstanceCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const DeviceCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, DeviceCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DeviceCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = DeviceCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DeviceCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const DeviceCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DeviceCreateFlagBits ) * 8u; ++n ) {
-    if( p & DeviceCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DeviceCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, DeviceCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = DeviceCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      DeviceCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DeviceCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const MemoryMapFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, MemoryMapFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for MemoryMapFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = MemoryMapFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for MemoryMapFlagBits" );
-}
-void to_json( nlohmann::json &j, const MemoryMapFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( MemoryMapFlagBits ) * 8u; ++n ) {
-    if( p & MemoryMapFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, MemoryMapFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, MemoryMapFlags &p ) {
-  if( j.is_array() ) {
-    p = MemoryMapFlags ( 0 );
-    for( auto &e:  j ) {
-      MemoryMapFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for MemoryMapFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const SemaphoreCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, SemaphoreCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for SemaphoreCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = SemaphoreCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for SemaphoreCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const SemaphoreCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( SemaphoreCreateFlagBits ) * 8u; ++n ) {
-    if( p & SemaphoreCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, SemaphoreCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, SemaphoreCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = SemaphoreCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      SemaphoreCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for SemaphoreCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const QueryPoolCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, QueryPoolCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for QueryPoolCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = QueryPoolCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for QueryPoolCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const QueryPoolCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( QueryPoolCreateFlagBits ) * 8u; ++n ) {
-    if( p & QueryPoolCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, QueryPoolCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, QueryPoolCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = QueryPoolCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      QueryPoolCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for QueryPoolCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const BufferViewCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, BufferViewCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for BufferViewCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = BufferViewCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for BufferViewCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const BufferViewCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( BufferViewCreateFlagBits ) * 8u; ++n ) {
-    if( p & BufferViewCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, BufferViewCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, BufferViewCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = BufferViewCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      BufferViewCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for BufferViewCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineColorBlendStateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineColorBlendStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineColorBlendStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineColorBlendStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineColorBlendStateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineColorBlendStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineColorBlendStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineColorBlendStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineColorBlendStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineColorBlendStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineColorBlendStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineColorBlendStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineColorBlendStateCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineDepthStencilStateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineDepthStencilStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineDepthStencilStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineDepthStencilStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineDepthStencilStateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineDepthStencilStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineDepthStencilStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineDepthStencilStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineDepthStencilStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineDepthStencilStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineDepthStencilStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineDepthStencilStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineDepthStencilStateCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineDynamicStateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineDynamicStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineDynamicStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineDynamicStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineDynamicStateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineDynamicStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineDynamicStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineDynamicStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineDynamicStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineDynamicStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineDynamicStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineDynamicStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineDynamicStateCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineInputAssemblyStateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineInputAssemblyStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineInputAssemblyStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineInputAssemblyStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineInputAssemblyStateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineInputAssemblyStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineInputAssemblyStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineInputAssemblyStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineInputAssemblyStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineInputAssemblyStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineInputAssemblyStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineInputAssemblyStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineInputAssemblyStateCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineLayoutCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineLayoutCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineLayoutCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineLayoutCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineLayoutCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineLayoutCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineLayoutCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineLayoutCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineLayoutCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineLayoutCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineLayoutCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineLayoutCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineLayoutCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineMultisampleStateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineMultisampleStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineMultisampleStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineMultisampleStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineMultisampleStateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineMultisampleStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineMultisampleStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineMultisampleStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineMultisampleStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineMultisampleStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineMultisampleStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineMultisampleStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineMultisampleStateCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineRasterizationStateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineRasterizationStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineRasterizationStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineRasterizationStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineRasterizationStateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineRasterizationStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineRasterizationStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineRasterizationStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineRasterizationStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineRasterizationStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineRasterizationStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineRasterizationStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineRasterizationStateCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineTessellationStateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineTessellationStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineTessellationStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineTessellationStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineTessellationStateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineTessellationStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineTessellationStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineTessellationStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineTessellationStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineTessellationStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineTessellationStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineTessellationStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineTessellationStateCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineVertexInputStateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineVertexInputStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineVertexInputStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineVertexInputStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineVertexInputStateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineVertexInputStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineVertexInputStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineVertexInputStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineVertexInputStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineVertexInputStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineVertexInputStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineVertexInputStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineVertexInputStateCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const PipelineViewportStateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, PipelineViewportStateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for PipelineViewportStateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = PipelineViewportStateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for PipelineViewportStateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const PipelineViewportStateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( PipelineViewportStateCreateFlagBits ) * 8u; ++n ) {
-    if( p & PipelineViewportStateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, PipelineViewportStateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, PipelineViewportStateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = PipelineViewportStateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      PipelineViewportStateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for PipelineViewportStateCreateFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const DescriptorPoolResetFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, DescriptorPoolResetFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DescriptorPoolResetFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = DescriptorPoolResetFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DescriptorPoolResetFlagBits" );
-}
-void to_json( nlohmann::json &j, const DescriptorPoolResetFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DescriptorPoolResetFlagBits ) * 8u; ++n ) {
-    if( p & DescriptorPoolResetFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DescriptorPoolResetFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, DescriptorPoolResetFlags &p ) {
-  if( j.is_array() ) {
-    p = DescriptorPoolResetFlags ( 0 );
-    for( auto &e:  j ) {
-      DescriptorPoolResetFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DescriptorPoolResetFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const SubgroupFeatureFlagBits &p ) {
   if( SubgroupFeatureFlagBits :: eBasic == p ) {
     j = "Basic";
@@ -19401,6 +19465,74 @@ void from_json( const nlohmann::json &j, MemoryAllocateFlags &p ) {
     }
   }
   else throw vulkan2json::invalid_flag_value( "incompatible value for MemoryAllocateFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const CommandPoolTrimFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, CommandPoolTrimFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for CommandPoolTrimFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = CommandPoolTrimFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for CommandPoolTrimFlagBits" );
+}
+void to_json( nlohmann::json &j, const CommandPoolTrimFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( CommandPoolTrimFlagBits ) * 8u; ++n ) {
+    if( p & CommandPoolTrimFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, CommandPoolTrimFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, CommandPoolTrimFlags &p ) {
+  if( j.is_array() ) {
+    p = CommandPoolTrimFlags ( 0 );
+    for( auto &e:  j ) {
+      CommandPoolTrimFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for CommandPoolTrimFlags" );
+}
+}
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const DescriptorUpdateTemplateCreateFlagBits &p ) {
+}
+void from_json( const nlohmann::json &j, DescriptorUpdateTemplateCreateFlagBits &p ) {
+  if( j.is_string() ) {
+    throw vulkan2json::invalid_enum_value( "unknown enum name for DescriptorUpdateTemplateCreateFlagBits" );
+  }
+  if( j.is_number() ) {
+    p = DescriptorUpdateTemplateCreateFlagBits ( j.get< std::int64_t >() );
+  }
+  throw vulkan2json::invalid_enum_value( "incompatible value for DescriptorUpdateTemplateCreateFlagBits" );
+}
+void to_json( nlohmann::json &j, const DescriptorUpdateTemplateCreateFlags &p ) {
+  j = nlohmann::json::array();
+  for( unsigned int n = 0u; n != sizeof( DescriptorUpdateTemplateCreateFlagBits ) * 8u; ++n ) {
+    if( p & DescriptorUpdateTemplateCreateFlags ( 1 << n ) ) {
+      nlohmann::json temp;
+      to_json( temp, DescriptorUpdateTemplateCreateFlagBits ( 1 << n ) );
+      j.push_back( temp );
+    }
+  }
+}
+void from_json( const nlohmann::json &j, DescriptorUpdateTemplateCreateFlags &p ) {
+  if( j.is_array() ) {
+    p = DescriptorUpdateTemplateCreateFlags ( 0 );
+    for( auto &e:  j ) {
+      DescriptorUpdateTemplateCreateFlagBits temp;
+      from_json( e, temp );
+      p |= temp;
+    }
+  }
+  else throw vulkan2json::invalid_flag_value( "incompatible value for DescriptorUpdateTemplateCreateFlags" );
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
@@ -19717,74 +19849,6 @@ void from_json( const nlohmann::json &j, ExternalSemaphoreFeatureFlags &p ) {
     }
   }
   else throw vulkan2json::invalid_flag_value( "incompatible value for ExternalSemaphoreFeatureFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const CommandPoolTrimFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, CommandPoolTrimFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for CommandPoolTrimFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = CommandPoolTrimFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for CommandPoolTrimFlagBits" );
-}
-void to_json( nlohmann::json &j, const CommandPoolTrimFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( CommandPoolTrimFlagBits ) * 8u; ++n ) {
-    if( p & CommandPoolTrimFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, CommandPoolTrimFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, CommandPoolTrimFlags &p ) {
-  if( j.is_array() ) {
-    p = CommandPoolTrimFlags ( 0 );
-    for( auto &e:  j ) {
-      CommandPoolTrimFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for CommandPoolTrimFlags" );
-}
-}
-namespace VULKAN_HPP_NAMESPACE {
-void to_json( nlohmann::json &j, const DescriptorUpdateTemplateCreateFlagBits &p ) {
-}
-void from_json( const nlohmann::json &j, DescriptorUpdateTemplateCreateFlagBits &p ) {
-  if( j.is_string() ) {
-    throw vulkan2json::invalid_enum_value( "unknown enum name for DescriptorUpdateTemplateCreateFlagBits" );
-  }
-  if( j.is_number() ) {
-    p = DescriptorUpdateTemplateCreateFlagBits ( j.get< std::int64_t >() );
-  }
-  throw vulkan2json::invalid_enum_value( "incompatible value for DescriptorUpdateTemplateCreateFlagBits" );
-}
-void to_json( nlohmann::json &j, const DescriptorUpdateTemplateCreateFlags &p ) {
-  j = nlohmann::json::array();
-  for( unsigned int n = 0u; n != sizeof( DescriptorUpdateTemplateCreateFlagBits ) * 8u; ++n ) {
-    if( p & DescriptorUpdateTemplateCreateFlags ( 1 << n ) ) {
-      nlohmann::json temp;
-      to_json( temp, DescriptorUpdateTemplateCreateFlagBits ( 1 << n ) );
-      j.push_back( temp );
-    }
-  }
-}
-void from_json( const nlohmann::json &j, DescriptorUpdateTemplateCreateFlags &p ) {
-  if( j.is_array() ) {
-    p = DescriptorUpdateTemplateCreateFlags ( 0 );
-    for( auto &e:  j ) {
-      DescriptorUpdateTemplateCreateFlagBits temp;
-      from_json( e, temp );
-      p |= temp;
-    }
-  }
-  else throw vulkan2json::invalid_flag_value( "incompatible value for DescriptorUpdateTemplateCreateFlags" );
 }
 }
 namespace VULKAN_HPP_NAMESPACE {
@@ -21417,8 +21481,8 @@ void to_json( nlohmann::json &j, const GeometryInstanceFlagBitsKHR &p ) {
     j = "TriangleFacingCullDisable";
     return;
   }
-  if( GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwise == p ) {
-    j = "TriangleFrontCounterclockwise";
+  if( GeometryInstanceFlagBitsKHR :: eTriangleFlipFacing == p ) {
+    j = "TriangleFlipFacing";
     return;
   }
   if( GeometryInstanceFlagBitsKHR :: eForceOpaque == p ) {
@@ -21427,6 +21491,14 @@ void to_json( nlohmann::json &j, const GeometryInstanceFlagBitsKHR &p ) {
   }
   if( GeometryInstanceFlagBitsKHR :: eForceNoOpaque == p ) {
     j = "ForceNoOpaque";
+    return;
+  }
+  if( GeometryInstanceFlagBitsKHR :: eTriangleCullDisable == p ) {
+    j = "TriangleCullDisable";
+    return;
+  }
+  if( GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwiseKHR == p ) {
+    j = "TriangleFrontCounterclockwiseKHR";
     return;
   }
 }
@@ -21444,16 +21516,16 @@ void from_json( const nlohmann::json &j, GeometryInstanceFlagBitsKHR &p ) {
       p = GeometryInstanceFlagBitsKHR :: eTriangleFacingCullDisable ;
       return;
     }
-    if( "TriangleFrontCounterclockwise" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwise ;
+    if( "TriangleFlipFacing" == j.get< std::string >() ) {
+      p = GeometryInstanceFlagBitsKHR :: eTriangleFlipFacing ;
       return;
     }
-    if( "eTriangleFrontCounterclockwise" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwise ;
+    if( "eTriangleFlipFacing" == j.get< std::string >() ) {
+      p = GeometryInstanceFlagBitsKHR :: eTriangleFlipFacing ;
       return;
     }
-    if( "VK_GEOMETRY_INSTANCE_TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT_KHR" == j.get< std::string >() ) {
-      p = GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwise ;
+    if( "VK_GEOMETRY_INSTANCE_TRIANGLE_FLIP_FACING_BIT_KHR" == j.get< std::string >() ) {
+      p = GeometryInstanceFlagBitsKHR :: eTriangleFlipFacing ;
       return;
     }
     if( "ForceOpaque" == j.get< std::string >() ) {
@@ -21478,6 +21550,30 @@ void from_json( const nlohmann::json &j, GeometryInstanceFlagBitsKHR &p ) {
     }
     if( "VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQUE_BIT_KHR" == j.get< std::string >() ) {
       p = GeometryInstanceFlagBitsKHR :: eForceNoOpaque ;
+      return;
+    }
+    if( "TriangleCullDisable" == j.get< std::string >() ) {
+      p = GeometryInstanceFlagBitsKHR :: eTriangleCullDisable ;
+      return;
+    }
+    if( "eTriangleCullDisable" == j.get< std::string >() ) {
+      p = GeometryInstanceFlagBitsKHR :: eTriangleCullDisable ;
+      return;
+    }
+    if( "VK_GEOMETRY_INSTANCE_TRIANGLE_CULL_DISABLE_BIT_NV" == j.get< std::string >() ) {
+      p = GeometryInstanceFlagBitsKHR :: eTriangleCullDisable ;
+      return;
+    }
+    if( "TriangleFrontCounterclockwiseKHR" == j.get< std::string >() ) {
+      p = GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwiseKHR ;
+      return;
+    }
+    if( "eTriangleFrontCounterclockwiseKHR" == j.get< std::string >() ) {
+      p = GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwiseKHR ;
+      return;
+    }
+    if( "VK_GEOMETRY_INSTANCE_TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT_KHR" == j.get< std::string >() ) {
+      p = GeometryInstanceFlagBitsKHR :: eTriangleFrontCounterclockwiseKHR ;
       return;
     }
     throw vulkan2json::invalid_enum_value( "unknown enum name for GeometryInstanceFlagBitsKHR" );
@@ -31746,6 +31842,32 @@ void from_json( const nlohmann::json &j, VkMemoryGetFdInfoKHR &p ) {
   from_json( j, temp );
   p = VkMemoryGetFdInfoKHR ( temp );
 }
+#include <vulkan2json/StructureType.hpp>
+#include <vulkan2json/ExternalMemoryHandleTypeFlags.hpp>
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const MemoryGetRemoteAddressInfoNV &p ) {
+  j = nlohmann::json::object();
+  j[ "sType" ] = p.sType;
+  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
+  j[ "handleType" ] = p.handleType;
+}
+}
+void to_json( nlohmann::json &j, const VkMemoryGetRemoteAddressInfoNV &p ) {
+  to_json( j, VULKAN_HPP_NAMESPACE :: MemoryGetRemoteAddressInfoNV ( p ) );
+}
+namespace VULKAN_HPP_NAMESPACE {
+void from_json( const nlohmann::json &j, MemoryGetRemoteAddressInfoNV &p ) {
+  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for MemoryGetRemoteAddressInfoNV" );
+  if( j.find( "handleType" ) != j.end() ) {
+    p.handleType = ExternalMemoryHandleTypeFlagBits ( j[ "handleType" ] );
+  }
+}
+}
+void from_json( const nlohmann::json &j, VkMemoryGetRemoteAddressInfoNV &p ) {
+  VULKAN_HPP_NAMESPACE :: MemoryGetRemoteAddressInfoNV temp;
+  from_json( j, temp );
+  p = VkMemoryGetRemoteAddressInfoNV ( temp );
+}
 #include <vulkan2json/MemoryHeapFlags.hpp>
 namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const MemoryHeap &p ) {
@@ -33789,6 +33911,31 @@ void from_json( const nlohmann::json &j, VkPhysicalDeviceExternalMemoryHostPrope
   p = VkPhysicalDeviceExternalMemoryHostPropertiesEXT ( temp );
 }
 #include <vulkan2json/StructureType.hpp>
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PhysicalDeviceExternalMemoryRDMAFeaturesNV &p ) {
+  j = nlohmann::json::object();
+  j[ "sType" ] = p.sType;
+  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
+  j[ "externalMemoryRDMA" ] = bool( p.externalMemoryRDMA );
+}
+}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceExternalMemoryRDMAFeaturesNV &p ) {
+  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceExternalMemoryRDMAFeaturesNV ( p ) );
+}
+namespace VULKAN_HPP_NAMESPACE {
+void from_json( const nlohmann::json &j, PhysicalDeviceExternalMemoryRDMAFeaturesNV &p ) {
+  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceExternalMemoryRDMAFeaturesNV" );
+  if( j.find( "externalMemoryRDMA" ) != j.end() ) {
+    p.externalMemoryRDMA = j[ "externalMemoryRDMA" ];
+  }
+}
+}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceExternalMemoryRDMAFeaturesNV &p ) {
+  VULKAN_HPP_NAMESPACE :: PhysicalDeviceExternalMemoryRDMAFeaturesNV temp;
+  from_json( j, temp );
+  p = VkPhysicalDeviceExternalMemoryRDMAFeaturesNV ( temp );
+}
+#include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/ExternalSemaphoreHandleTypeFlags.hpp>
 namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const PhysicalDeviceExternalSemaphoreInfo &p ) {
@@ -34743,6 +34890,31 @@ void from_json( const nlohmann::json &j, VkPhysicalDeviceInlineUniformBlockPrope
   VULKAN_HPP_NAMESPACE :: PhysicalDeviceInlineUniformBlockPropertiesEXT temp;
   from_json( j, temp );
   p = VkPhysicalDeviceInlineUniformBlockPropertiesEXT ( temp );
+}
+#include <vulkan2json/StructureType.hpp>
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PhysicalDeviceInvocationMaskFeaturesHUAWEI &p ) {
+  j = nlohmann::json::object();
+  j[ "sType" ] = p.sType;
+  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
+  j[ "invocationMask" ] = bool( p.invocationMask );
+}
+}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceInvocationMaskFeaturesHUAWEI &p ) {
+  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceInvocationMaskFeaturesHUAWEI ( p ) );
+}
+namespace VULKAN_HPP_NAMESPACE {
+void from_json( const nlohmann::json &j, PhysicalDeviceInvocationMaskFeaturesHUAWEI &p ) {
+  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceInvocationMaskFeaturesHUAWEI" );
+  if( j.find( "invocationMask" ) != j.end() ) {
+    p.invocationMask = j[ "invocationMask" ];
+  }
+}
+}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceInvocationMaskFeaturesHUAWEI &p ) {
+  VULKAN_HPP_NAMESPACE :: PhysicalDeviceInvocationMaskFeaturesHUAWEI temp;
+  from_json( j, temp );
+  p = VkPhysicalDeviceInvocationMaskFeaturesHUAWEI ( temp );
 }
 #include <vulkan2json/SampleCountFlags.hpp>
 #include <vulkan2json/SampleCountFlags.hpp>
@@ -35891,6 +36063,56 @@ void from_json( const nlohmann::json &j, VkPhysicalDevicePointClippingProperties
 }
 #include <vulkan2json/StructureType.hpp>
 namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PhysicalDevicePresentIdFeaturesKHR &p ) {
+  j = nlohmann::json::object();
+  j[ "sType" ] = p.sType;
+  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
+  j[ "presentId" ] = bool( p.presentId );
+}
+}
+void to_json( nlohmann::json &j, const VkPhysicalDevicePresentIdFeaturesKHR &p ) {
+  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDevicePresentIdFeaturesKHR ( p ) );
+}
+namespace VULKAN_HPP_NAMESPACE {
+void from_json( const nlohmann::json &j, PhysicalDevicePresentIdFeaturesKHR &p ) {
+  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDevicePresentIdFeaturesKHR" );
+  if( j.find( "presentId" ) != j.end() ) {
+    p.presentId = j[ "presentId" ];
+  }
+}
+}
+void from_json( const nlohmann::json &j, VkPhysicalDevicePresentIdFeaturesKHR &p ) {
+  VULKAN_HPP_NAMESPACE :: PhysicalDevicePresentIdFeaturesKHR temp;
+  from_json( j, temp );
+  p = VkPhysicalDevicePresentIdFeaturesKHR ( temp );
+}
+#include <vulkan2json/StructureType.hpp>
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PhysicalDevicePresentWaitFeaturesKHR &p ) {
+  j = nlohmann::json::object();
+  j[ "sType" ] = p.sType;
+  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
+  j[ "presentWait" ] = bool( p.presentWait );
+}
+}
+void to_json( nlohmann::json &j, const VkPhysicalDevicePresentWaitFeaturesKHR &p ) {
+  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDevicePresentWaitFeaturesKHR ( p ) );
+}
+namespace VULKAN_HPP_NAMESPACE {
+void from_json( const nlohmann::json &j, PhysicalDevicePresentWaitFeaturesKHR &p ) {
+  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDevicePresentWaitFeaturesKHR" );
+  if( j.find( "presentWait" ) != j.end() ) {
+    p.presentWait = j[ "presentWait" ];
+  }
+}
+}
+void from_json( const nlohmann::json &j, VkPhysicalDevicePresentWaitFeaturesKHR &p ) {
+  VULKAN_HPP_NAMESPACE :: PhysicalDevicePresentWaitFeaturesKHR temp;
+  from_json( j, temp );
+  p = VkPhysicalDevicePresentWaitFeaturesKHR ( temp );
+}
+#include <vulkan2json/StructureType.hpp>
+namespace VULKAN_HPP_NAMESPACE {
 void to_json( nlohmann::json &j, const PhysicalDevicePrivateDataFeaturesEXT &p ) {
   j = nlohmann::json::object();
   j[ "sType" ] = p.sType;
@@ -36616,6 +36838,75 @@ void from_json( const nlohmann::json &j, VkPhysicalDeviceSeparateDepthStencilLay
   VULKAN_HPP_NAMESPACE :: PhysicalDeviceSeparateDepthStencilLayoutsFeatures temp;
   from_json( j, temp );
   p = VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures ( temp );
+}
+#include <vulkan2json/StructureType.hpp>
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PhysicalDeviceShaderAtomicFloat2FeaturesEXT &p ) {
+  j = nlohmann::json::object();
+  j[ "sType" ] = p.sType;
+  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
+  j[ "shaderBufferFloat16Atomics" ] = bool( p.shaderBufferFloat16Atomics );
+  j[ "shaderBufferFloat16AtomicAdd" ] = bool( p.shaderBufferFloat16AtomicAdd );
+  j[ "shaderBufferFloat16AtomicMinMax" ] = bool( p.shaderBufferFloat16AtomicMinMax );
+  j[ "shaderBufferFloat32AtomicMinMax" ] = bool( p.shaderBufferFloat32AtomicMinMax );
+  j[ "shaderBufferFloat64AtomicMinMax" ] = bool( p.shaderBufferFloat64AtomicMinMax );
+  j[ "shaderSharedFloat16Atomics" ] = bool( p.shaderSharedFloat16Atomics );
+  j[ "shaderSharedFloat16AtomicAdd" ] = bool( p.shaderSharedFloat16AtomicAdd );
+  j[ "shaderSharedFloat16AtomicMinMax" ] = bool( p.shaderSharedFloat16AtomicMinMax );
+  j[ "shaderSharedFloat32AtomicMinMax" ] = bool( p.shaderSharedFloat32AtomicMinMax );
+  j[ "shaderSharedFloat64AtomicMinMax" ] = bool( p.shaderSharedFloat64AtomicMinMax );
+  j[ "shaderImageFloat32AtomicMinMax" ] = bool( p.shaderImageFloat32AtomicMinMax );
+  j[ "sparseImageFloat32AtomicMinMax" ] = bool( p.sparseImageFloat32AtomicMinMax );
+}
+}
+void to_json( nlohmann::json &j, const VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT &p ) {
+  to_json( j, VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderAtomicFloat2FeaturesEXT ( p ) );
+}
+namespace VULKAN_HPP_NAMESPACE {
+void from_json( const nlohmann::json &j, PhysicalDeviceShaderAtomicFloat2FeaturesEXT &p ) {
+  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PhysicalDeviceShaderAtomicFloat2FeaturesEXT" );
+  if( j.find( "shaderBufferFloat16Atomics" ) != j.end() ) {
+    p.shaderBufferFloat16Atomics = j[ "shaderBufferFloat16Atomics" ];
+  }
+  if( j.find( "shaderBufferFloat16AtomicAdd" ) != j.end() ) {
+    p.shaderBufferFloat16AtomicAdd = j[ "shaderBufferFloat16AtomicAdd" ];
+  }
+  if( j.find( "shaderBufferFloat16AtomicMinMax" ) != j.end() ) {
+    p.shaderBufferFloat16AtomicMinMax = j[ "shaderBufferFloat16AtomicMinMax" ];
+  }
+  if( j.find( "shaderBufferFloat32AtomicMinMax" ) != j.end() ) {
+    p.shaderBufferFloat32AtomicMinMax = j[ "shaderBufferFloat32AtomicMinMax" ];
+  }
+  if( j.find( "shaderBufferFloat64AtomicMinMax" ) != j.end() ) {
+    p.shaderBufferFloat64AtomicMinMax = j[ "shaderBufferFloat64AtomicMinMax" ];
+  }
+  if( j.find( "shaderSharedFloat16Atomics" ) != j.end() ) {
+    p.shaderSharedFloat16Atomics = j[ "shaderSharedFloat16Atomics" ];
+  }
+  if( j.find( "shaderSharedFloat16AtomicAdd" ) != j.end() ) {
+    p.shaderSharedFloat16AtomicAdd = j[ "shaderSharedFloat16AtomicAdd" ];
+  }
+  if( j.find( "shaderSharedFloat16AtomicMinMax" ) != j.end() ) {
+    p.shaderSharedFloat16AtomicMinMax = j[ "shaderSharedFloat16AtomicMinMax" ];
+  }
+  if( j.find( "shaderSharedFloat32AtomicMinMax" ) != j.end() ) {
+    p.shaderSharedFloat32AtomicMinMax = j[ "shaderSharedFloat32AtomicMinMax" ];
+  }
+  if( j.find( "shaderSharedFloat64AtomicMinMax" ) != j.end() ) {
+    p.shaderSharedFloat64AtomicMinMax = j[ "shaderSharedFloat64AtomicMinMax" ];
+  }
+  if( j.find( "shaderImageFloat32AtomicMinMax" ) != j.end() ) {
+    p.shaderImageFloat32AtomicMinMax = j[ "shaderImageFloat32AtomicMinMax" ];
+  }
+  if( j.find( "sparseImageFloat32AtomicMinMax" ) != j.end() ) {
+    p.sparseImageFloat32AtomicMinMax = j[ "sparseImageFloat32AtomicMinMax" ];
+  }
+}
+}
+void from_json( const nlohmann::json &j, VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT &p ) {
+  VULKAN_HPP_NAMESPACE :: PhysicalDeviceShaderAtomicFloat2FeaturesEXT temp;
+  from_json( j, temp );
+  p = VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT ( temp );
 }
 #include <vulkan2json/StructureType.hpp>
 namespace VULKAN_HPP_NAMESPACE {
@@ -38673,6 +38964,49 @@ void from_json( const nlohmann::json &j, VkPipelineCacheCreateInfo &p ) {
   from_json( j, temp );
   p = VkPipelineCacheCreateInfo ( temp );
 }
+#include <vulkan2json/PipelineCacheHeaderVersion.hpp>
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PipelineCacheHeaderVersionOne &p ) {
+  j = nlohmann::json::object();
+  j[ "headerSize" ] = p.headerSize;
+  j[ "headerVersion" ] = p.headerVersion;
+  j[ "vendorID" ] = p.vendorID;
+  j[ "deviceID" ] = p.deviceID;
+  j[ "pipelineCacheUUID" ] = nlohmann::json::array();
+  std::copy( p.pipelineCacheUUID.begin(), p.pipelineCacheUUID.end(), std::back_inserter( j[ "pipelineCacheUUID" ] ) );
+}
+}
+void to_json( nlohmann::json &j, const VkPipelineCacheHeaderVersionOne &p ) {
+  to_json( j, VULKAN_HPP_NAMESPACE :: PipelineCacheHeaderVersionOne ( p ) );
+}
+namespace VULKAN_HPP_NAMESPACE {
+void from_json( const nlohmann::json &j, PipelineCacheHeaderVersionOne &p ) {
+  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PipelineCacheHeaderVersionOne" );
+  if( j.find( "headerSize" ) != j.end() ) {
+    p.headerSize = j[ "headerSize" ];
+  }
+  if( j.find( "headerVersion" ) != j.end() ) {
+    p.headerVersion = PipelineCacheHeaderVersion ( j[ "headerVersion" ] );
+  }
+  if( j.find( "vendorID" ) != j.end() ) {
+    p.vendorID = j[ "vendorID" ];
+  }
+  if( j.find( "deviceID" ) != j.end() ) {
+    p.deviceID = j[ "deviceID" ];
+  }
+  if( j.find( "pipelineCacheUUID" ) != j.end() ) {
+    if( !j[ "pipelineCacheUUID" ].is_array() ) throw vulkan2json::invalid_array_value( "incompatible value for PipelineCacheHeaderVersionOne.pipelineCacheUUID" );
+    if( !j[ "pipelineCacheUUID" ].size() > p.pipelineCacheUUID.size() ) throw vulkan2json::invalid_array_value( "too many values in array for PipelineCacheHeaderVersionOne.pipelineCacheUUID" );
+    std::fill( p.pipelineCacheUUID.begin(), p.pipelineCacheUUID.end(), 0 );
+    std::copy( j[ "pipelineCacheUUID" ].begin(), j[ "pipelineCacheUUID" ].end(), p.pipelineCacheUUID.begin() );
+  }
+}
+}
+void from_json( const nlohmann::json &j, VkPipelineCacheHeaderVersionOne &p ) {
+  VULKAN_HPP_NAMESPACE :: PipelineCacheHeaderVersionOne temp;
+  from_json( j, temp );
+  p = VkPipelineCacheHeaderVersionOne ( temp );
+}
 #include <vulkan2json/StructureType.hpp>
 #include <vulkan2json/BlendOverlapEXT.hpp>
 namespace VULKAN_HPP_NAMESPACE {
@@ -39891,6 +40225,32 @@ void from_json( const nlohmann::json &j, VkPipelineViewportWScalingStateCreateIn
   VULKAN_HPP_NAMESPACE :: PipelineViewportWScalingStateCreateInfoNV temp;
   from_json( j, temp );
   p = VkPipelineViewportWScalingStateCreateInfoNV ( temp );
+}
+#include <vulkan2json/StructureType.hpp>
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const PresentIdKHR &p ) {
+  j = nlohmann::json::object();
+  j[ "sType" ] = p.sType;
+  j[ "pNext" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pNext ) );
+  j[ "swapchainCount" ] = p.swapchainCount;
+  j[ "pPresentIds" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.pPresentIds ) );
+}
+}
+void to_json( nlohmann::json &j, const VkPresentIdKHR &p ) {
+  to_json( j, VULKAN_HPP_NAMESPACE :: PresentIdKHR ( p ) );
+}
+namespace VULKAN_HPP_NAMESPACE {
+void from_json( const nlohmann::json &j, PresentIdKHR &p ) {
+  if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for PresentIdKHR" );
+  if( j.find( "swapchainCount" ) != j.end() ) {
+    p.swapchainCount = j[ "swapchainCount" ];
+  }
+}
+}
+void from_json( const nlohmann::json &j, VkPresentIdKHR &p ) {
+  VULKAN_HPP_NAMESPACE :: PresentIdKHR temp;
+  from_json( j, temp );
+  p = VkPresentIdKHR ( temp );
 }
 #include <vulkan2json/StructureType.hpp>
 namespace VULKAN_HPP_NAMESPACE {

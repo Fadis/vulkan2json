@@ -32,10 +32,10 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 #include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/VideoEncodeH264CapabilitiesFlagsEXT.hpp>
+#include <vulkan2json/VideoEncodeH264CapabilityFlagsEXT.hpp>
 #include <vulkan2json/VideoEncodeH264InputModeFlagsEXT.hpp>
 #include <vulkan2json/VideoEncodeH264OutputModeFlagsEXT.hpp>
 #include <vulkan2json/Extent2D.hpp>
@@ -43,7 +43,7 @@ static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
 #include <vulkan2json/Extent2D.hpp>
 #include <vulkan2json/ExtensionProperties.hpp>
 #include <vulkan2json/StructureType.hpp>
-#include <vulkan2json/VideoEncodeH264CapabilitiesFlagsEXT.hpp>
+#include <vulkan2json/VideoEncodeH264CapabilityFlagsEXT.hpp>
 #include <vulkan2json/VideoEncodeH264InputModeFlagsEXT.hpp>
 #include <vulkan2json/VideoEncodeH264OutputModeFlagsEXT.hpp>
 #include <vulkan2json/Extent2D.hpp>
@@ -76,7 +76,7 @@ namespace VULKAN_HPP_NAMESPACE {
 inline void from_json( const nlohmann::json &j, VideoEncodeH264CapabilitiesEXT &p ) {
   if( !j.is_object() ) throw vulkan2json::invalid_object_value( "incompatible value for VideoEncodeH264CapabilitiesEXT" );
   if( j.find( "flags" ) != j.end() ) {
-    p.flags = VideoEncodeH264CapabilitiesFlagsEXT ( j[ "flags" ] );
+    p.flags = VideoEncodeH264CapabilityFlagsEXT ( j[ "flags" ] );
   }
   if( j.find( "inputModeFlags" ) != j.end() ) {
     p.inputModeFlags = VideoEncodeH264InputModeFlagsEXT ( j[ "inputModeFlags" ] );

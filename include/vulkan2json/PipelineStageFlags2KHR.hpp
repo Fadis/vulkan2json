@@ -32,7 +32,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const PipelineStageFlagBits2KHR &p ) {
@@ -186,6 +186,10 @@ inline void to_json( nlohmann::json &j, const PipelineStageFlagBits2KHR &p ) {
   }
   if( PipelineStageFlagBits2KHR :: eSubpassShadingHUAWEI == p ) {
     j = "SubpassShadingHUAWEI";
+    return;
+  }
+  if( PipelineStageFlagBits2KHR :: eInvocationMaskHUAWEI == p ) {
+    j = "InvocationMaskHUAWEI";
     return;
   }
   if( PipelineStageFlagBits2KHR :: eAccelerationStructureBuildNV == p ) {
@@ -657,6 +661,18 @@ inline void from_json( const nlohmann::json &j, PipelineStageFlagBits2KHR &p ) {
     }
     if( "VK_PIPELINE_STAGE_2_SUBPASS_SHADING_BIT_HUAWEI" == j.get< std::string >() ) {
       p = PipelineStageFlagBits2KHR :: eSubpassShadingHUAWEI ;
+      return;
+    }
+    if( "InvocationMaskHUAWEI" == j.get< std::string >() ) {
+      p = PipelineStageFlagBits2KHR :: eInvocationMaskHUAWEI ;
+      return;
+    }
+    if( "eInvocationMaskHUAWEI" == j.get< std::string >() ) {
+      p = PipelineStageFlagBits2KHR :: eInvocationMaskHUAWEI ;
+      return;
+    }
+    if( "VK_PIPELINE_STAGE_2_INVOCATION_MASK_BIT_HUAWEI" == j.get< std::string >() ) {
+      p = PipelineStageFlagBits2KHR :: eInvocationMaskHUAWEI ;
       return;
     }
     if( "AccelerationStructureBuildNV" == j.get< std::string >() ) {

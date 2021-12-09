@@ -32,7 +32,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
-static_assert( VK_HEADER_VERSION == 182, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 189, "Wrong VK_HEADER_VERSION!" );
 
 namespace VULKAN_HPP_NAMESPACE {
 inline void to_json( nlohmann::json &j, const ImageUsageFlagBits &p ) {
@@ -112,6 +112,10 @@ inline void to_json( nlohmann::json &j, const ImageUsageFlagBits &p ) {
     return;
   }
 #endif
+  if( ImageUsageFlagBits :: eInvocationMaskHUAWEI == p ) {
+    j = "InvocationMaskHUAWEI";
+    return;
+  }
 }
 inline void from_json( const nlohmann::json &j, ImageUsageFlagBits &p ) {
   if( j.is_string() ) {
@@ -343,6 +347,18 @@ inline void from_json( const nlohmann::json &j, ImageUsageFlagBits &p ) {
       return;
     }
 #endif
+    if( "InvocationMaskHUAWEI" == j.get< std::string >() ) {
+      p = ImageUsageFlagBits :: eInvocationMaskHUAWEI ;
+      return;
+    }
+    if( "eInvocationMaskHUAWEI" == j.get< std::string >() ) {
+      p = ImageUsageFlagBits :: eInvocationMaskHUAWEI ;
+      return;
+    }
+    if( "VK_IMAGE_USAGE_INVOCATION_MASK_BIT_HUAWEI" == j.get< std::string >() ) {
+      p = ImageUsageFlagBits :: eInvocationMaskHUAWEI ;
+      return;
+    }
     throw vulkan2json::invalid_enum_value( "unknown enum name for ImageUsageFlagBits" );
   }
   if( j.is_number() ) {
