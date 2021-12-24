@@ -1,1 +1,0 @@
-PointClippingBehavior.hpp

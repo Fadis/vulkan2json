@@ -1,1 +1,0 @@
-PhysicalDeviceMemoryProperties2.hpp

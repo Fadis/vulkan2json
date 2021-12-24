@@ -1,1 +1,0 @@
-AccelerationStructureTypeKHR.hpp

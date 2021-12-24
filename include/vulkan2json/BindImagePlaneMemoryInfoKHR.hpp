@@ -1,1 +1,0 @@
-BindImagePlaneMemoryInfo.hpp

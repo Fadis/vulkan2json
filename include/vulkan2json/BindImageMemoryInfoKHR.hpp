@@ -1,1 +1,0 @@
-BindImageMemoryInfo.hpp

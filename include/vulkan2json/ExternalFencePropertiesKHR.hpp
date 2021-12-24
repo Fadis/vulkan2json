@@ -1,1 +1,0 @@
-ExternalFenceProperties.hpp

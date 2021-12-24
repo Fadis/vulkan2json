@@ -1,13 +1,35 @@
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
+
 PROJECT(
   vulkan2json
   LANGUAGES CXX
   HOMEPAGE_URL https://github.com/Fadis/vulkan2json
   DESCRIPTION "C++ library that implements functions for nlohmann::json to serialize/deserialize Vulkan objects."
-  VERSION 1.2.182
 )
+
+find_package(Vulkan REQUIRED)
+
+try_run(
+  GET_VULKAN_VERSION_IS_EXECUTED GET_VULKAN_VERSION_IS_COMPILED
+  ${CMAKE_BINARY_DIR}/check ${CMAKE_SOURCE_DIR}/check/get_vulkan_version.cpp
+  COMPILE_DEFINITIONS -I${Vulkan_INCLUDE_DIRS}
+  RUN_OUTPUT_VARIABLE VULKAN_VERSION
+)
+message( "vulkan version : ${VULKAN_VERSION}" )
+message( "vulkan header dir : ${Vulkan_INCLUDE_DIRS}" )
+
+execute_process(
+  COMMAND "./generate.py" "${Vulkan_INCLUDE_DIRS}"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/generator
+)
+
+execute_process(
+  COMMAND "./generate_tests.py" "${Vulkan_INCLUDE_DIRS}"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/generator
+)
+
 include(CheckIncludeFiles)
 include(CheckCXXSourceCompiles)
 include(GNUInstallDirs)
@@ -61,7 +83,6 @@ set(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 set(CMAKE_CXX_FLAGS_RELEASE "-march=native -O2")
 set(CMAKE_C_FLAGS_RELEASE "-march=native -O2")
 
-find_package(Vulkan REQUIRED)
 find_package(JSON REQUIRED)
 
 INCLUDE_DIRECTORIES(
@@ -94,6 +115,7 @@ set( EASYPACK_RELEASE "1" )
 set( EASYPACK_MAINTAINER "Naomasa Matsubayashi <foo@exmple.com>" )
 set( EASYPACK_COMPRESSION_TYPE "xz" )
 set( EASYPACK_LICENSE_NAME "MIT" )
+set( PROJECT_VERSION "${VULKAN_VERSION}" )
 include(EasyPack)
 
 subdirs( include src test )

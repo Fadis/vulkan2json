@@ -1,1 +1,0 @@
-PhysicalDeviceVulkanMemoryModelFeatures.hpp

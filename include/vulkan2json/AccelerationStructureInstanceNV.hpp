@@ -1,1 +1,0 @@
-AccelerationStructureInstanceKHR.hpp

@@ -1,1 +1,5 @@
 generator/vulkan_header_parser/__pycache__/
+src/vulkan2json.cpp
+test/vulkan2json_tests.cpp
+include/vulkan2json/*.hpp
+!include/vulkan2json/exceptions.hpp

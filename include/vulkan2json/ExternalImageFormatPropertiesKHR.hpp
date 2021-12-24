@@ -1,1 +1,0 @@
-ExternalImageFormatProperties.hpp

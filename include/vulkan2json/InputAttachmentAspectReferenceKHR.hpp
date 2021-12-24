@@ -1,1 +1,0 @@
-InputAttachmentAspectReference.hpp

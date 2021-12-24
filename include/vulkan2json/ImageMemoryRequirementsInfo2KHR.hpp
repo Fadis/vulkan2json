@@ -1,1 +1,0 @@
-ImageMemoryRequirementsInfo2.hpp

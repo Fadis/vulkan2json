@@ -24,6 +24,7 @@
 
 
 import os
+import sys
 from enum import Enum
 
 from vulkan_header_parser.get_enum import get_enum
@@ -33,7 +34,7 @@ from vulkan_header_parser.get_struct import get_struct
 from vulkan_header_parser.get_class_name import get_class_name, get_handle_name
 from vulkan_header_parser.get_header_version import get_header_version
 
-vulkan_header_path = '/usr/include/vulkan'
+vulkan_header_path = os.path.join( sys.argv[ 1 ], 'vulkan' )
 
 header_version = get_header_version( os.path.join( vulkan_header_path, 'vulkan.hpp' ) )
 (enums,flags) = get_enum( os.path.join( vulkan_header_path, 'vulkan_enums.hpp' ) )

@@ -1,1 +1,0 @@
-SubpassDescriptionDepthStencilResolve.hpp

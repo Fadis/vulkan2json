@@ -1,1 +1,0 @@
-ImageStencilUsageCreateInfo.hpp

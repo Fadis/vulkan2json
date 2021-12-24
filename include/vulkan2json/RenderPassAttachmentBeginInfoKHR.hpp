@@ -1,1 +1,0 @@
-RenderPassAttachmentBeginInfo.hpp

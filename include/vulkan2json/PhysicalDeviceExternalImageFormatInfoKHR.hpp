@@ -1,1 +1,0 @@
-PhysicalDeviceExternalImageFormatInfo.hpp

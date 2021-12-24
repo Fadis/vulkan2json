@@ -1,1 +1,0 @@
-BuildAccelerationStructureFlagsKHR.hpp

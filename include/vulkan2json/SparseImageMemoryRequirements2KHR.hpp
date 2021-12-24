@@ -1,1 +1,0 @@
-SparseImageMemoryRequirements2.hpp

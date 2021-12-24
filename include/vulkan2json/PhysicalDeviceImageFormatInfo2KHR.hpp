@@ -1,1 +1,0 @@
-PhysicalDeviceImageFormatInfo2.hpp
