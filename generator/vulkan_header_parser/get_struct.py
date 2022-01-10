@@ -93,11 +93,6 @@ class vulkan_struct:
         vulkan_struct_member( member_type_t.vulkan_struct_type, type_, type_, name_, xor_defs )
       )
       return
-    if type_ in vulkan_pointoid_types:
-      self.members.append(
-        vulkan_struct_member( member_type_t.pointoid, type_, type_, name_, xor_defs )
-      )
-      return
     if type_[0:4] == 'PFN_':
       self.members.append(
         vulkan_struct_member( member_type_t.pointer, type_, type_, name_, xor_defs )
@@ -112,6 +107,10 @@ class vulkan_struct:
         self.members.append(
           vulkan_struct_member( member_type_t.vulkan_c_handler, type_, handles[ type_[2:] ], name_, xor_defs )
         )
+      elif type_[2:] in vulkan_pointoid_types:
+        self.members.append(
+          vulkan_struct_member( member_type_t.pointoid, type_, type_, name_, xor_defs )
+        )
       else:
         self.members.append(
           vulkan_struct_member( member_type_t.ignored, type_, type_, name_, xor_defs )
@@ -125,6 +124,11 @@ class vulkan_struct:
     if type_ in non_handles:
       self.members.append(
         vulkan_struct_member( member_type_t.vulkan_struct, type_, non_handles[ type_ ], name_, xor_defs )
+      )
+      return
+    elif type_ in vulkan_pointoid_types:
+      self.members.append(
+        vulkan_struct_member( member_type_t.pointoid, type_, type_, name_, xor_defs )
       )
       return
     if type_ == 'Bool32':
@@ -275,6 +279,8 @@ class vulkan_struct:
         m+= "  if( p.%s ) j[ \"%s\" ] = std::string( p.%s );\n" % ( v.name, v.name, v.name )
       elif v.member_type == member_type_t.pointer:
         m+= "  j[ \"%s\" ] = reinterpret_cast< std::uintptr_t >( reinterpret_cast< const void* >( p.%s ) );\n" % ( v.name, v.name )
+      elif v.member_type == member_type_t.pointoid:
+        m+= "  j[ \"%s\" ] = p.%s;\n" % ( v.name, v.name )
       elif v.member_type == member_type_t.array1d_of_numeric:
         m+= "  j[ \"%s\" ] = nlohmann::json::array();\n" % v.name
         m+= "  std::copy( p.%s.begin(), p.%s.end(), std::back_inserter( j[ \"%s\" ] ) );\n" % ( v.name, v.name, v.name )

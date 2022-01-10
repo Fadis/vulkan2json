@@ -166,4 +166,12 @@ def get_source_header():
 #include <vulkan/vulkan.hpp>
 #include <vulkan2json/exceptions.hpp>
 
+namespace VULKAN_HPP_NAMESPACE {
+void to_json( nlohmann::json &j, const vk::DeviceOrHostAddressConstKHR &p ) {
+  j = p.deviceAddress;
+}
+void to_json( nlohmann::json &j, const vk::DeviceOrHostAddressKHR &p ) {
+  j = p.deviceAddress;
+}
+}
 '''
