@@ -401,7 +401,7 @@ def get_enum( filename ):
   end_rule = re.compile( "^\s*};\s*$" );
   
   flagbits_rule = re.compile( "\S+?FlagBits.*" );
-  assign_rule = re.compile( "^\s*(\S+?)\s*=\s*(\S+?)\s*,\s*$" );
+  assign_rule = re.compile( "^\s*(\S+?)\s*=\s*(\S+?)\s*,?\s*$" );
   
   ifdef = {}
   ifdef_stack = []
