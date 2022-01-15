@@ -336,6 +336,7 @@ class parse_state_t(Enum):
   namespace = 0
   enum_name = 1
   in_enum = 2
+  wrapped = 3
 
 def get_enum_class_name( filename ):
   class_names = set()
@@ -402,6 +403,8 @@ def get_enum( filename ):
   
   flagbits_rule = re.compile( "\S+?FlagBits.*" );
   assign_rule = re.compile( "^\s*(\S+?)\s*=\s*(\S+?)\s*,?\s*$" );
+  wrapped_assign_name_rule = re.compile( "^\s*(\S+?)\s*=\s*$" );
+  wrapped_assign_value_rule = re.compile( "^\s*(\S+?)\s*,?\s*$" );
   
   ifdef = {}
   ifdef_stack = []
@@ -492,11 +495,26 @@ def get_enum( filename ):
             vulkan_enums[ current_enum ].add( assign_match.group( 1 ), assign_match.group( 2 ), ifdef )
           elif current_flag != '':
             vulkan_flags[ current_flag ].add( assign_match.group( 1 ), assign_match.group( 2 ), ifdef )
+          continue
+        wrapped_assign_match = re.match( wrapped_assign_name_rule, line.rstrip() )
+        if wrapped_assign_match:
+          wrapped_enum_name = wrapped_assign_match.group( 1 )
+          parse_state = parse_state_t.wrapped
+          continue
         end_match = re.match( end_rule, line.rstrip() )
         if end_match:
           current_enum = ''
           current_flag = ''
           parse_state = parse_state_t.namespace
-        continue
+          continue
+      elif parse_state == parse_state_t.wrapped:
+        wrapped_assign_match = re.match( wrapped_assign_value_rule, line.rstrip() )
+        if wrapped_assign_match:
+          if current_enum != '':
+            vulkan_enums[ current_enum ].add( wrapped_enum_name, wrapped_assign_match.group( 1 ), ifdef )
+          elif current_flag != '':
+            vulkan_flags[ current_flag ].add( wrapped_enum_name, wrapped_assign_match.group( 1 ), ifdef )
+          parse_state = parse_state_t.in_enum;
+          continue
     return ( vulkan_enums, vulkan_flags )
 
