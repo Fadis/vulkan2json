@@ -72,6 +72,7 @@ class vulkan_struct:
     self.members = []
     self.has_struct_type = False
     self.conditional = len( self.static_defs ) != 0
+    self.not_assignable = False
   def add( self, type_, name_, defs_, handles, non_handles ):
     numeric_types = [ 'int', 'int8_t', 'uint8_t', 'int16_t', 'uint16_t', 'int32_t', 'uint32_t', 'int64_t', 'uint64_t', 'float', 'double', 'size_t', 'DWORD' ]
     vulkan_numeric_types = [
@@ -306,7 +307,10 @@ class vulkan_struct:
     m += "}\n"
     m += "}\n"
     m += "%svoid to_json( nlohmann::json &j, const %s &p ) {\n" % ( inline, cname )
-    m += "  to_json( j, VULKAN_HPP_NAMESPACE :: %s ( p ) );\n" % name
+    if self.not_assignable:
+      m += "  to_json( j, *reinterpret_cast< const VULKAN_HPP_NAMESPACE :: %s * >( &p ) );\n" % name
+    else:
+      m += "  to_json( j, VULKAN_HPP_NAMESPACE :: %s ( p ) );\n" % name
     m += "}\n"
     m += "namespace VULKAN_HPP_NAMESPACE {\n"
     m += "%svoid from_json( const nlohmann::json &j, %s &p ) {\n" % ( inline, name )
@@ -515,6 +519,7 @@ def get_struct( filename, handles, non_handles ):
         structs[ struct_name ].add( assign_type, name, ifdef, handles, non_handles )
         parse_state = parse_state_t.in_struct_members
         continue
-
+  if "DeviceFaultInfoEXT" in structs:
+    structs[ "DeviceFaultInfoEXT" ].not_assignable = True
   return structs
 
