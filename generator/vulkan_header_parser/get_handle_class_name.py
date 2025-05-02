@@ -28,8 +28,8 @@ import re
 
 def get_handle_class_name( filename ):
   class_names = {}
-  class_rule = re.compile( "^\s*class\s*(\S+)\s*$" )
-  using_rule = re.compile( "^\s*using\s+(\S+)\s*=\s*(\S+?)\s*;\s*$" )
+  class_rule = re.compile( r"^\s*class\s*(\S+)\s*$" )
+  using_rule = re.compile( r"^\s*using\s+(\S+)\s*=\s*(\S+?)\s*;\s*$" )
   with open( filename, 'r' ) as fd:
     for line in fd:
       class_match = re.match( class_rule, line.rstrip() )

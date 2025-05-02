@@ -34,13 +34,13 @@ class parse_state_t(Enum):
   in_union = 4
 
 def get_struct_class_name( filename ):
-  multi_line_struct_rule = re.compile( "^\s*struct\s*$" );
-  struct_name_rule = re.compile( "^\s*(\S+)\s*$" );
-  struct_rule = re.compile( "^\s*struct\s*(\S+)\s*$" );
-  union_rule = re.compile( "^\s*union\s*(\S+)\s*$" );
-  public_rule = re.compile( "^\s*public:\s*$" );
-  end_rule = re.compile( "^\s*};\s*$" );
-  using_rule = re.compile( "^\s*using\s+(\S+)\s*=\s*(\S+?)\s*;\s*$" );
+  multi_line_struct_rule = re.compile( r"^\s*struct\s*$" );
+  struct_name_rule = re.compile( r"^\s*(\S+)\s*$" );
+  struct_rule = re.compile( r"^\s*struct\s*(\S+)\s*$" );
+  union_rule = re.compile( r"^\s*union\s*(\S+)\s*$" );
+  public_rule = re.compile( r"^\s*public:\s*$" );
+  end_rule = re.compile( r"^\s*};\s*$" );
+  using_rule = re.compile( r"^\s*using\s+(\S+)\s*=\s*(\S+?)\s*;\s*$" );
   struct_name = ''
   parse_state = parse_state_t.namespace
   class_names = {}

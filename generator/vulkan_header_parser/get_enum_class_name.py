@@ -35,14 +35,14 @@ class parse_state_t(Enum):
 def get_enum_class_name( filename ):
   class_names = {}
   include_names = {}
-  multi_line_enum_rule = re.compile( "^\s*enum\s+class\s*$" );
-  enum_rule = re.compile( "^\s*enum\s+class\s+(\S+)\s*$" );
-  enum_name_rule = re.compile( "^\s*(\S+)\s*$" );
-  flags_rule = re.compile( "^\s*enum\s+class\s+(\S+)\s+:\s*(\S+)\s*$" );
-  flags_name_rule = re.compile( "^\s*(\S+)\s+:\s*(\S+)\s*$" );
-  end_rule = re.compile( "^\s*};\s*$" );
-  using_rule = re.compile( "^\s*using\s+(\S+)\s*=\s*(\S+?)\s*;\s*$" );
-  flagbits_rule = re.compile( "\S+?FlagBits.*" );
+  multi_line_enum_rule = re.compile( r"^\s*enum\s+class\s*$" );
+  enum_rule = re.compile( r"^\s*enum\s+class\s+(\S+)\s*$" );
+  enum_name_rule = re.compile( r"^\s*(\S+)\s*$" );
+  flags_rule = re.compile( r"^\s*enum\s+class\s+(\S+)\s+:\s*(\S+)\s*$" );
+  flags_name_rule = re.compile( r"^\s*(\S+)\s+:\s*(\S+)\s*$" );
+  end_rule = re.compile( r"^\s*};\s*$" );
+  using_rule = re.compile( r"^\s*using\s+(\S+)\s*=\s*(\S+?)\s*;\s*$" );
+  flagbits_rule = re.compile( r"\S+?FlagBits.*" );
   parse_state = parse_state_t.namespace
   with open( filename, 'r' ) as fd:
     for line in fd:

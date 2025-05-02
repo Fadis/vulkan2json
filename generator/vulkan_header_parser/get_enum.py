@@ -29,7 +29,7 @@ from enum import Enum
 from vulkan_header_parser.vulkan_class_name import vulkan_class_name
 from vulkan_header_parser.to_extension_name_def import to_extension_name_def
 
-e_rule = re.compile( '^e(.*)' )
+e_rule = re.compile( r'^e(.*)' )
 
 class vulkan_enum:
   def __init__( self, name_, ext_, defs_ ):
@@ -340,12 +340,12 @@ class parse_state_t(Enum):
 
 def get_enum_class_name( filename ):
   class_names = set()
-  multi_line_enum_rule = re.compile( "^\s*enum\s+class\s*$" );
-  enum_rule = re.compile( "^\s*enum\s+class\s+(\S+)\s*$" );
-  enum_name_rule = re.compile( "^\s*(\S+)\s*$" );
-  flags_rule = re.compile( "^\s*enum\s+class\s+(\S+)\s+:\s*(\S+)\s*$" );
-  flags_name_rule = re.compile( "^\s*(\S+)\s+:\s*(\S+)\s*$" );
-  end_rule = re.compile( "^\s*};\s*$" );
+  multi_line_enum_rule = re.compile( r"^\s*enum\s+class\s*$" );
+  enum_rule = re.compile( r"^\s*enum\s+class\s+(\S+)\s*$" );
+  enum_name_rule = re.compile( r"^\s*(\S+)\s*$" );
+  flags_rule = re.compile( r"^\s*enum\s+class\s+(\S+)\s+:\s*(\S+)\s*$" );
+  flags_name_rule = re.compile( r"^\s*(\S+)\s+:\s*(\S+)\s*$" );
+  end_rule = re.compile( r"^\s*};\s*$" );
   parse_state = parse_state_t.namespace
   with open( filename, 'r' ) as fd:
     for line in fd:
@@ -389,22 +389,22 @@ def get_enum_class_name( filename ):
 
 
 def get_enum( filename ):
-  ext_rule = re.compile( "\s*//===\s*(\S+)\s*===\s*" );
-  if_rule = re.compile( "^#\s*if\s+(.+)$" );
-  ifdef_rule = re.compile( "^#\s*ifdef\s+(.+)$" );
-  endif_rule = re.compile( "^#\s*endif.*$" );
+  ext_rule = re.compile( r"\s*//===\s*(\S+)\s*===\s*" );
+  if_rule = re.compile( r"^#\s*if\s+(.+)$" );
+  ifdef_rule = re.compile( r"^#\s*ifdef\s+(.+)$" );
+  endif_rule = re.compile( r"^#\s*endif.*$" );
 
-  multi_line_enum_rule = re.compile( "^\s*enum\s+class\s*$" );
-  enum_rule = re.compile( "^\s*enum\s+class\s+(\S+)\s*$" );
-  enum_name_rule = re.compile( "^\s*(\S+)\s*$" );
-  flags_rule = re.compile( "^\s*enum\s+class\s+(\S+)\s+:\s*(\S+)\s*$" );
-  flags_name_rule = re.compile( "^\s*(\S+)\s+:\s*(\S+)\s*$" );
-  end_rule = re.compile( "^\s*};\s*$" );
+  multi_line_enum_rule = re.compile( r"^\s*enum\s+class\s*$" );
+  enum_rule = re.compile( r"^\s*enum\s+class\s+(\S+)\s*$" );
+  enum_name_rule = re.compile( r"^\s*(\S+)\s*$" );
+  flags_rule = re.compile( r"^\s*enum\s+class\s+(\S+)\s+:\s*(\S+)\s*$" );
+  flags_name_rule = re.compile( r"^\s*(\S+)\s+:\s*(\S+)\s*$" );
+  end_rule = re.compile( r"^\s*};\s*$" );
   
-  flagbits_rule = re.compile( "\S+?FlagBits.*" );
-  assign_rule = re.compile( "^\s*(\S+?)\s*=\s*(\S+?)\s*,?\s*$" );
-  wrapped_assign_name_rule = re.compile( "^\s*(\S+?)\s*=\s*$" );
-  wrapped_assign_value_rule = re.compile( "^\s*(\S+?)\s*,?\s*$" );
+  flagbits_rule = re.compile( r"\S+?FlagBits.*" );
+  assign_rule = re.compile( r"^\s*(\S+?)\s*=\s*(\S+?)\s*,?\s*$" );
+  wrapped_assign_name_rule = re.compile( r"^\s*(\S+?)\s*=\s*$" );
+  wrapped_assign_value_rule = re.compile( r"^\s*(\S+?)\s*,?\s*$" );
   
   ifdef = {}
   ifdef_stack = []

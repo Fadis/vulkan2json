@@ -41,7 +41,12 @@ def get_version_suffix( name ):
   else:
     return ""
 
-flags_black_list = set( [ "ValidationFlags" ] )
+flags_black_list = set( [
+  "ValidationFlags",
+  "ClusterAccelerationStructureGeometryIndexAndGeometryFlags",
+  "MemoryBarrierAccessFlags",
+  "PartitionedAccelerationStructureFlags"
+] )
 
 class vulkan_class_name:
   def __init__( self, name_ ):

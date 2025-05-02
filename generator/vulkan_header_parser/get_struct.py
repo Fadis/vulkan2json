@@ -31,10 +31,10 @@ from vulkan_header_parser.vulkan_class_name import vulkan_class_name
 from vulkan_header_parser.to_extension_name_def import to_extension_name_def
 from vulkan_header_parser.get_end_of_typename import get_end_of_typename
 
-e_rule = re.compile( '^e(.*)' )
-const_char_pointer_rule = re.compile( '^\s*const\s+char\s+(const\s+)?\*\s*$' )
-array_1d_rule = re.compile( '^\s*ArrayWrapper1D<\s*(\S+?)\s*,.*$' )
-array_2d_rule = re.compile( '^\s*ArrayWrapper2D<\s*(\S+?)\s*,.*$' )
+e_rule = re.compile( r'^e(.*)' )
+const_char_pointer_rule = re.compile( r'^\s*const\s+char\s+(const\s+)?\*\s*$' )
+array_1d_rule = re.compile( r'^\s*ArrayWrapper1D<\s*(\S+?)\s*,.*$' )
+array_2d_rule = re.compile( r'^\s*ArrayWrapper2D<\s*(\S+?)\s*,.*$' )
 
 class member_type_t(Enum):
   ignored = 0
@@ -413,22 +413,22 @@ class parse_state_t(Enum):
   in_union = 4
 
 def get_struct( filename, handles, non_handles ):
-  ext_rule = re.compile( "\s*//===\s*(\S+)\s*===\s*" );
-  if_rule = re.compile( "^#\s*if\s+(.+)$" );
-  ifdef_rule = re.compile( "^#\s*ifdef\s+(.+)$" );
-  endif_rule = re.compile( "^#\s*endif.*$" );
-  multi_line_struct_rule = re.compile( "^\s*struct\s*$" );
-  struct_name_rule = re.compile( "^\s*(\S+)\s*$" );
-  struct_rule = re.compile( "^\s*struct\s*(\S+)\s*$" );
-  union_rule = re.compile( "^\s*union\s*(\S+)\s*$" );
-  public_rule = re.compile( "^\s*public:\s*$" );
-  end_rule = re.compile( "^\s*};\s*$" );
-  flagbits_rule = re.compile( "\S+?FlagBits" );
-  flags_rule = re.compile( "^\s*enum\s+class\s+(\S+)\s+:\s*(\S+)\s*$" );
-  end_of_def_rule = re.compile( "^\s*};\s*$" );
-  assign_rule = re.compile( "^\s*(.+?)\s+(\S+)\s+=.*$" );
-  multi_line_assign_rule1 = re.compile( "^\s*(\S+)\s*$" );
-  multi_line_assign_rule2 = re.compile( "^\s*(\S+)\s+=.*$" );
+  ext_rule = re.compile( r"\s*//===\s*(\S+)\s*===\s*" );
+  if_rule = re.compile( r"^#\s*if\s+(.+)$" );
+  ifdef_rule = re.compile( r"^#\s*ifdef\s+(.+)$" );
+  endif_rule = re.compile( r"^#\s*endif.*$" );
+  multi_line_struct_rule = re.compile( r"^\s*struct\s*$" );
+  struct_name_rule = re.compile( r"^\s*(\S+)\s*$" );
+  struct_rule = re.compile( r"^\s*struct\s*(\S+)\s*$" );
+  union_rule = re.compile( r"^\s*union\s*(\S+)\s*$" );
+  public_rule = re.compile( r"^\s*public:\s*$" );
+  end_rule = re.compile( r"^\s*};\s*$" );
+  flagbits_rule = re.compile( r"\S+?FlagBits" );
+  flags_rule = re.compile( r"^\s*enum\s+class\s+(\S+)\s+:\s*(\S+)\s*$" );
+  end_of_def_rule = re.compile( r"^\s*};\s*$" );
+  assign_rule = re.compile( r"^\s*(.+?)\s+(\S+)\s+=.*$" );
+  multi_line_assign_rule1 = re.compile( r"^\s*(\S+)\s*$" );
+  multi_line_assign_rule2 = re.compile( r"^\s*(\S+)\s+=.*$" );
 
   ifdef = {}
   ifdef_stack = []
