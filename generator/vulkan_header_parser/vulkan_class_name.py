@@ -25,7 +25,7 @@
 
 import re
 
-ext_suffix_rule = re.compile( '.+?([A-Z]{2,10})$' )
+ext_suffix_rule = re.compile( r'.+?([A-Z]{2,10})$' )
 def get_extension_suffix( name ):
   es_match = re.match( ext_suffix_rule, name )
   if es_match:
@@ -33,7 +33,7 @@ def get_extension_suffix( name ):
   else:
     return ""
 
-version_suffix_rule = re.compile( '.+?([0-9]+)$' )
+version_suffix_rule = re.compile( r'.+?([0-9]+)$' )
 def get_version_suffix( name ):
   vs_match = re.match( version_suffix_rule, name )
   if vs_match:

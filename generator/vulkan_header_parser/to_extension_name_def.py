@@ -25,8 +25,8 @@
 
 import re
 
-version_rule = re.compile( 'VK_VERSION' )
-number_rule = re.compile( '([0-9]+)' )
+version_rule = re.compile( r'VK_VERSION' )
+number_rule = re.compile( r'([0-9]+)' )
 
 def to_extension_name_def( ext ):
   if re.match( version_rule, ext ):

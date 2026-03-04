@@ -24,13 +24,13 @@
 
 import re
 
-header_version_rule = re.compile( "\s*static_assert\(\s*VK_HEADER_VERSION\s*==\s*([0-9]+)\s*,.*" )
+header_version_rule = re.compile( r"\s*(static_assert|VULKAN_HPP_STATIC_ASSERT)\(\s*VK_HEADER_VERSION\s*==\s*([0-9]+)\s*,.*" )
 
 def get_header_version( filename ):
   with open( filename, 'r' ) as fd:
     for line in fd:
       header_version_match = re.match( header_version_rule, line.rstrip() )
       if header_version_match:
-        return int( header_version_match.group( 1 ) )
+        return int( header_version_match.group( 2 ) )
   raise ValueError( "Unable to detect header version." )
 
